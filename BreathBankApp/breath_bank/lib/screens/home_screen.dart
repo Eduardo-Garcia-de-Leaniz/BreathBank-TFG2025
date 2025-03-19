@@ -15,9 +15,10 @@ class HomeScreen extends StatelessWidget {
               const Text(
                 'BreathBank',
                 style: TextStyle(
+                  color: Colors.blue,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
+                  fontFamily: 'Prototype',
                 ),
                 textAlign: TextAlign.center,
               ),
