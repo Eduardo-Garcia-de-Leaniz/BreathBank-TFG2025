@@ -1,3 +1,8 @@
+import 'package:breath_bank/widgets/widgets_botones/BtnRegister.dart';
+import 'package:breath_bank/widgets/widgets_botones/BtnLogin.dart';
+import 'package:breath_bank/widgets/widgets_home_screen/Image_logo.dart';
+import 'package:breath_bank/widgets/widgets_home_screen/Text_title_home_page.dart';
+import 'package:breath_bank/widgets/widgets_home_screen/Text_home_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,26 +11,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(50),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const Text(
-                'BreathBank',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Prototype',
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
+      body: Column(
+        children: [
+          TextTitle_HomePage(),
+          ImagenLogo(),
+          Text_home_screen(),
+          BtnLogin(),
+          BtnRegister(),
+        ],
       ),
+      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
     );
   }
 }

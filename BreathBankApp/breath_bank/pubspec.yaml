@@ -61,9 +61,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/LogoPrincipal_BreathBank-sin_fondo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -96,6 +95,66 @@ flutter:
        fonts:
          - asset: assets/fonts/VertigoFLF.ttf
          - asset: assets/fonts/VertigoPlusFLF.ttf
+     - family: TopGun
+       fonts:
+         - asset: assets/fonts/TOP GUN.ttf
+     - family: Tejaratchi 
+       fonts:
+         - asset: assets/fonts/Tejaratchi Regular.ttf
+     - family: Montague
+       fonts:
+         - asset: assets/fonts/Montague.ttf
+     - family: Incredibles
+       fonts:
+         - asset: assets/fonts/Incredibles.ttf
+     - family: IMPOS10_
+       fonts:
+         - asset: assets/fonts/IMPOS10_.ttf
+     - family: Hollywood
+       fonts:
+         - asset: assets/fonts/Hollywood Capital Hills (Final).ttf
+     - family: Hanged Letters
+       fonts:
+         - asset: assets/fonts/Hanged Letters.ttf
+     - family: DISCOVERY
+       fonts:
+         - asset: assets/fonts/DISCOVERY.ttf
+     - family: Cowboys
+       fonts:
+         - asset: assets/fonts/Cowboys.ttf
+     - family: CheapSign
+       fonts:
+         - asset: assets/fonts/CheapSign.ttf
+     - family: Alphabet Fantasie
+       fonts:
+         - asset: assets/fonts/Alphabet Fantasie.ttf
+     - family: Aadhunik
+       fonts:
+         - asset: assets/fonts/Aadhunik.ttf
+     - family: yorkwhiteletter
+       fonts:
+         - asset: assets/fonts/yorkwhiteletter.ttf   
+     - family: vermin_vibes_slant
+       fonts:
+         - asset: assets/fonts/vermin_vibes_slant.ttf   
+     - family: Sketch
+       fonts:
+         - asset: assets/fonts/Sketch.ttf   
+     - family: SF Sports Night
+       fonts:
+         - asset: assets/fonts/SF Sports Night.ttf   
+     - family: Rockout
+       fonts:
+         - asset: assets/fonts/Rockout.otf   
+     - family: Prisma
+       fonts:
+         - asset: assets/fonts/Prisma.ttf   
+     - family: airstrike
+       fonts:
+         - asset: assets/fonts/airstrike.ttf   
+     - family: PoiretOne-Regular
+       fonts:
+         - asset: assets/fonts/PoiretOne-Regular.ttf                                                                           
       
 
 

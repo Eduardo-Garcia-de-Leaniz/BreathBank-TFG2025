@@ -1,7 +1,9 @@
+import 'package:breath_bank/screens/Register_screen.dart';
+import 'package:breath_bank/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 // Mis widgets
-import 'package:breath_bank/screens/home_screen.dart';
+import 'package:breath_bank/screens/Home_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,7 +20,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
+      },
     );
   }
 }
