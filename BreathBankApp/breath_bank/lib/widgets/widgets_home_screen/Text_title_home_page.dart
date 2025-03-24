@@ -8,7 +8,7 @@ class TextTitle_HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 120),
+      padding: const EdgeInsets.only(top: 60),
       child: Center(
         child: Column(
           children: [

@@ -13,11 +13,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          TextTitle_HomePage(),
-          ImagenLogo(),
-          Text_home_screen(),
-          BtnLogin(),
-          BtnRegister(),
+          Container(
+            height: MediaQuery.of(context).padding.top,
+            color: Color.fromARGB(255, 7, 71, 94),
+          ),
+
+          Column(
+            children: [
+              TextTitle_HomePage(),
+              ImagenLogo(),
+              Text_home_screen(),
+              BtnLogin(),
+              BtnRegister(),
+            ],
+          ),
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),

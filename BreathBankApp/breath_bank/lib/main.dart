@@ -1,3 +1,4 @@
+import 'package:breath_bank/screens/Evaluation_screen.dart';
 import 'package:breath_bank/screens/Register_screen.dart';
 import 'package:breath_bank/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
+        '/evaluation': (context) => EvaluationScreen(),
       },
     );
   }
