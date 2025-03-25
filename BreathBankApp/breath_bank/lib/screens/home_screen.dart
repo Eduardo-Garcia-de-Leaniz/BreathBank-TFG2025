@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
           Column(
             children: [
               TextTitle_HomePage(),
-              ImagenLogo(),
+              ImagenLogo(imageWidth: 200, imageHeight: 200),
               Text_home_screen(),
               BtnLogin(),
               BtnRegister(),
