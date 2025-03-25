@@ -30,37 +30,6 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-class BtnNext extends StatelessWidget {
-  final String route;
-
-  const BtnNext({super.key, required this.route});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () {
-          //Navigator.pushNamed(context, route);
-          //register();
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-          backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        ),
-        child: const Text(
-          'Siguiente',
-          style: TextStyle(
-            fontFamily: 'Roboto',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
 
@@ -94,6 +63,42 @@ class _RegisterFormState extends State<RegisterForm> {
         errorMessage = e.message ?? 'Error desconocido';
       });
     }
+  }
+
+  // Principio SOLID: Open/Closed Principle
+  bool validateInputs() {
+    if (emailController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Introduce un correo electrónico';
+      });
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Introduce una contraseña';
+      });
+      return false;
+    } else if (confirmPasswordController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Repite la contraseña';
+      });
+      return false;
+    } else if (!emailController.text.contains('@')) {
+      setState(() {
+        errorMessage = 'Correo electrónico inválido';
+      });
+      return false;
+    } else if (passwordController.text.length < 6) {
+      setState(() {
+        errorMessage = 'La contraseña debe tener al menos 6 caracteres';
+      });
+      return false;
+    } else if (passwordController.text != confirmPasswordController.text) {
+      setState(() {
+        errorMessage = 'Las contraseñas no coinciden';
+      });
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -240,6 +245,12 @@ class _RegisterFormState extends State<RegisterForm> {
               BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
                 onPressed: () {
+                  if (!validateInputs()) {
+                    return;
+                  }
+                  setState(() {
+                    errorMessage = '';
+                  });
                   register();
                   if (errorMessage.isEmpty) {
                     Navigator.pushNamed(context, '/dashboard');
