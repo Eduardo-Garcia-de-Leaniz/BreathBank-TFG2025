@@ -30,37 +30,6 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class BtnNext extends StatelessWidget {
-  final String route;
-
-  const BtnNext({super.key, required this.route});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: ElevatedButton(
-        onPressed: () {
-          //Navigator.pushNamed(context, route);
-          //register();
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-          backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        ),
-        child: const Text(
-          'Siguiente',
-          style: TextStyle(
-            fontFamily: 'Roboto',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -69,8 +38,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String errorMessage = '';
 
@@ -92,6 +61,32 @@ class _LoginFormState extends State<LoginForm> {
         errorMessage = e.message ?? 'Error desconocido';
       });
     }
+  }
+
+  // Principio SOLID: Open/Closed Principle
+  bool validateInputs() {
+    if (emailController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Introduce un correo electrónico';
+      });
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      setState(() {
+        errorMessage = 'Introduce una contraseña';
+      });
+      return false;
+    } else if (!emailController.text.contains('@')) {
+      setState(() {
+        errorMessage = 'Correo electrónico inválido';
+      });
+      return false;
+    } else if (passwordController.text.length < 6) {
+      setState(() {
+        errorMessage = 'La contraseña debe tener al menos 6 caracteres';
+      });
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -118,6 +113,7 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(width: 10),
                   Expanded(
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         hintText: 'Ingrese su correo electrónico',
                         hintStyle: TextStyle(
@@ -156,6 +152,7 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(width: 10),
                   Expanded(
                     child: TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         hintText: 'Ingrese su contraseña',
                         hintStyle: TextStyle(
@@ -192,8 +189,16 @@ class _LoginFormState extends State<LoginForm> {
               BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
                 onPressed: () {
+                  if (!validateInputs()) {
+                    return;
+                  }
                   signIn();
-                  Navigator.pushNamed(context, '/evaluation');
+                  if (errorMessage.isEmpty) {
+                    setState(() {
+                      errorMessage = '';
+                    });
+                    Navigator.pushNamed(context, '/dashboard');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(

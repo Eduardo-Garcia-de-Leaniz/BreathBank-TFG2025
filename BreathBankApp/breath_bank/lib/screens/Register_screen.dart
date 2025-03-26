@@ -52,16 +52,25 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
-  void register() async {
+  Future<bool> register() async {
     try {
       await authenticationService.value.createAccount(
         email: emailController.text,
         password: passwordController.text,
       );
+      return true;
     } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message ?? 'Error desconocido';
-      });
+      if (e.code == 'email-already-in-use') {
+        setState(() {
+          errorMessage = 'El correo electrónico ya está registrado';
+        });
+        return false;
+      } else {
+        setState(() {
+          errorMessage = e.message ?? 'Error desconocido';
+        });
+        return false;
+      }
     }
   }
 
@@ -244,16 +253,19 @@ class _RegisterFormState extends State<RegisterForm> {
             children: [
               BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
-                onPressed: () {
-                  if (!validateInputs()) {
-                    return;
-                  }
+                onPressed: () async {
                   setState(() {
                     errorMessage = '';
                   });
-                  register();
+                  if (!validateInputs()) {
+                    return;
+                  }
+                  await register();
                   if (errorMessage.isEmpty) {
-                    Navigator.pushNamed(context, '/dashboard');
+                    setState(() {
+                      errorMessage = '';
+                    });
+                    Navigator.pushNamed(context, '/evaluation');
                   }
                 },
                 style: ElevatedButton.styleFrom(
