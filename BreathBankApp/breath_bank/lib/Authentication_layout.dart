@@ -3,7 +3,6 @@ import 'package:breath_bank/screens/Dashboard_screen.dart';
 import 'package:breath_bank/screens/Loading_screen.dart';
 import 'package:breath_bank/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:breath_bank/Authentication_service.dart';
 
 class AuthenticationLayout extends StatelessWidget {
   const AuthenticationLayout({super.key, this.pageIfNotConnected});
