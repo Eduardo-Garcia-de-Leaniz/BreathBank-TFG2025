@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       //debugShowCheckedModeBanner: false,
       title: 'BreathBank',
       theme: ThemeData(
-        fontFamily: 'Airmill',
+        fontFamily: 'Arial',
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

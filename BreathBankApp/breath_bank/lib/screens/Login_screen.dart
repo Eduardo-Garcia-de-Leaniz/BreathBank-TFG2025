@@ -1,8 +1,9 @@
 import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/widgets/widgets_botones/BtnBack.dart';
 import 'package:breath_bank/widgets/widgets_home_screen/Image_logo.dart';
-import 'package:breath_bank/widgets/widgets_login_screen/AppBar_Login.dart';
+import 'package:breath_bank/widgets/widgets_appbars/AppBar_Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -38,6 +39,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  Database_service db = Database_service();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -95,84 +97,9 @@ class _LoginFormState extends State<LoginForm> {
       padding: const EdgeInsets.all(40),
       child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Correo Electrónico',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
-                  color: Color.fromARGB(255, 7, 71, 94),
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        hintText: 'Ingrese su correo electrónico',
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 7, 71, 94),
-                          fontSize: 16,
-                          fontFamily: 'Arial',
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 7, 71, 94),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          TextFieldEmail(emailController: emailController),
           SizedBox(height: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Contraseña',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
-                  color: Color.fromARGB(255, 7, 71, 94),
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: 'Ingrese su contraseña',
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 7, 71, 94),
-                          fontSize: 16,
-                          fontFamily: 'Arial',
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'Arial',
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 7, 71, 94),
-                      ),
-                      obscureText: true,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          TextFieldPassword(passwordController: passwordController),
           const SizedBox(height: 10),
           Text(
             errorMessage,
@@ -188,7 +115,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (!validateInputs()) {
                     return;
                   }
@@ -198,8 +125,21 @@ class _LoginFormState extends State<LoginForm> {
                       errorMessage = '';
                     });
                     Navigator.pushNamed(context, '/dashboard');
+                    Navigator.pop(context);
+                    try {
+                      await db.updateFechaUltimoAcceso(
+                        userId: authenticationService.value.currentUser!.uid,
+                        fechaUltimoAcceso: DateTime.now(),
+                      );
+                    } catch (e) {
+                      setState(() {
+                        errorMessage =
+                            'Error al actualizar datos de usuario: $e';
+                      });
+                    }
                   }
                 },
+
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40,
@@ -221,6 +161,103 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class TextFieldPassword extends StatelessWidget {
+  const TextFieldPassword({super.key, required this.passwordController});
+
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Contraseña',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arial',
+            color: Color.fromARGB(255, 7, 71, 94),
+          ),
+        ),
+        Row(
+          children: [
+            Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: passwordController,
+                decoration: InputDecoration(
+                  hintText: 'Ingrese su contraseña',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+                style: TextStyle(
+                  fontFamily: 'Arial',
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 7, 71, 94),
+                ),
+                obscureText: true,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class TextFieldEmail extends StatelessWidget {
+  const TextFieldEmail({super.key, required this.emailController});
+
+  final TextEditingController emailController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Correo Electrónico',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arial',
+            color: Color.fromARGB(255, 7, 71, 94),
+          ),
+        ),
+        Row(
+          children: [
+            Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  hintText: 'Ingrese su correo electrónico',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+                style: TextStyle(
+                  fontFamily: 'Arial',
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 7, 71, 94),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

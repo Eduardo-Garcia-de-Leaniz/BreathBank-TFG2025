@@ -1,8 +1,9 @@
 import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/widgets/widgets_botones/BtnBack.dart';
 import 'package:breath_bank/widgets/widgets_home_screen/Image_logo.dart';
-import 'package:breath_bank/widgets/widgets_login_screen/AppBar_Register.dart';
+import 'package:breath_bank/widgets/widgets_appbars/AppBar_Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -38,6 +39,7 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  Database_service db = Database_service();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -116,127 +118,12 @@ class _RegisterFormState extends State<RegisterForm> {
       padding: const EdgeInsets.all(40),
       child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Correo Electrónico',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
-                  color: Color.fromARGB(255, 7, 71, 94),
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        hintText: 'Introduce tu correo electrónico',
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 7, 71, 94),
-                          fontSize: 16,
-                          fontFamily: 'Arial',
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Arial',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          TextFieldEmail(emailController: emailController),
           SizedBox(height: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Contraseña',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
-                  color: Color.fromARGB(255, 7, 71, 94),
-                ),
-              ),
-
-              Row(
-                children: [
-                  Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: 'Introduce tu contraseña',
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 7, 71, 94),
-                          fontSize: 16,
-                          fontFamily: 'Arial',
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Arial',
-                        color: Color.fromARGB(255, 7, 71, 94),
-                      ),
-                      obscureText: true,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          TextFieldPassword(passwordController: passwordController),
           SizedBox(height: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Repetir Contraseña',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Arial',
-                  color: Color.fromARGB(255, 7, 71, 94),
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.lock_outline,
-                    color: Color.fromARGB(255, 7, 71, 94),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: TextField(
-                      controller: confirmPasswordController,
-                      decoration: InputDecoration(
-                        hintText: 'Repite tu contraseña',
-                        hintStyle: TextStyle(
-                          color: Color.fromARGB(255, 7, 71, 94),
-                          fontSize: 16,
-                          fontFamily: 'Arial',
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Arial',
-                        color: Color.fromARGB(255, 7, 71, 94),
-                      ),
-                      obscureText: true,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          TextFieldPasswordRepeat(
+            confirmPasswordController: confirmPasswordController,
           ),
           const SizedBox(height: 10),
           Text(
@@ -265,7 +152,147 @@ class _RegisterFormState extends State<RegisterForm> {
                     setState(() {
                       errorMessage = '';
                     });
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        final TextEditingController nameController =
+                            TextEditingController();
+                        final TextEditingController surnameController =
+                            TextEditingController();
+
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              color: Color.fromARGB(
+                                255,
+                                7,
+                                71,
+                                94,
+                              ), // Azul oscuro
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            188,
+                            252,
+                            245,
+                          ),
+                          title: const Text(
+                            'Registro de Usuario',
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 7, 71, 94),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text(
+                                'Por favor, introduce tu nombre y apellidos:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Arial',
+                                  color: Color.fromARGB(255, 7, 71, 94),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              TextField(
+                                controller: nameController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Nombre',
+                                  hintText: 'Introduce tu nombre',
+                                  hintStyle: TextStyle(
+                                    color: Color.fromARGB(255, 7, 71, 94),
+                                    fontSize: 16,
+                                    fontFamily: 'Arial',
+                                  ),
+                                ),
+                              ),
+                              TextField(
+                                controller: surnameController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Apellidos',
+                                  hintText: 'Introduce tus apellidos',
+                                  hintStyle: TextStyle(
+                                    color: Color.fromARGB(255, 7, 71, 94),
+                                    fontSize: 16,
+                                    fontFamily: 'Arial',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(
+                                  255,
+                                  7,
+                                  71,
+                                  94,
+                                ),
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pushNamed(context, "/register");
+                              },
+                              child: const Text('Cancelar'),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(
+                                  255,
+                                  7,
+                                  71,
+                                  94,
+                                ),
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () async {
+                                final String name = nameController.text.trim();
+                                final String surname =
+                                    surnameController.text.trim();
+
+                                if (name.isEmpty || surname.isEmpty) {
+                                  setState(() {
+                                    errorMessage =
+                                        'Por favor, completa todos los campos';
+                                  });
+                                  return;
+                                }
+
+                                try {
+                                  await db.addNewUser(
+                                    userId:
+                                        authenticationService
+                                            .value
+                                            .currentUser!
+                                            .uid,
+                                    nombre: name,
+                                    apellidos: surname,
+                                    fechaCreacion: DateTime.now(),
+                                  );
+
+                                  Navigator.pushNamed(context, "/evaluation");
+                                  Navigator.pop(context);
+                                } catch (e) {
+                                  setState(() {
+                                    errorMessage =
+                                        'Error al guardar los datos: $e';
+                                  });
+                                }
+                              },
+                              child: const Text('Guardar'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                     Navigator.pushNamed(context, '/evaluation');
+                    Navigator.pop(context);
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -276,7 +303,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   backgroundColor: const Color.fromARGB(255, 7, 71, 94),
                 ),
                 child: const Text(
-                  'Siguiente',
+                  'Registrarse',
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 16,
@@ -289,6 +316,156 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class TextFieldPasswordRepeat extends StatelessWidget {
+  const TextFieldPasswordRepeat({
+    super.key,
+    required this.confirmPasswordController,
+  });
+
+  final TextEditingController confirmPasswordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Repetir Contraseña',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arial',
+            color: Color.fromARGB(255, 7, 71, 94),
+          ),
+        ),
+        Row(
+          children: [
+            Icon(Icons.lock_outline, color: Color.fromARGB(255, 7, 71, 94)),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: confirmPasswordController,
+                decoration: InputDecoration(
+                  hintText: 'Repite tu contraseña',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Arial',
+                  color: Color.fromARGB(255, 7, 71, 94),
+                ),
+                obscureText: true,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class TextFieldPassword extends StatelessWidget {
+  const TextFieldPassword({super.key, required this.passwordController});
+
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Contraseña',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arial',
+            color: Color.fromARGB(255, 7, 71, 94),
+          ),
+        ),
+
+        Row(
+          children: [
+            Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: passwordController,
+                decoration: InputDecoration(
+                  hintText: 'Introduce tu contraseña',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Arial',
+                  color: Color.fromARGB(255, 7, 71, 94),
+                ),
+                obscureText: true,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class TextFieldEmail extends StatelessWidget {
+  const TextFieldEmail({super.key, required this.emailController});
+
+  final TextEditingController emailController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Correo Electrónico',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arial',
+            color: Color.fromARGB(255, 7, 71, 94),
+          ),
+        ),
+        Row(
+          children: [
+            Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
+            SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  hintText: 'Introduce tu correo electrónico',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Arial',
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
