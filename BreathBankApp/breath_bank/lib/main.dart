@@ -1,6 +1,9 @@
 import 'package:breath_bank/screens/Dashboard_screen.dart';
 import 'package:breath_bank/screens/Evaluation_screen.dart';
 import 'package:breath_bank/screens/Register_screen.dart';
+import 'package:breath_bank/screens/Test1_screen.dart';
+import 'package:breath_bank/screens/Test2_screen.dart';
+import 'package:breath_bank/screens/Test3_screen.dart';
 import 'package:breath_bank/screens/login_screen.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +49,9 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterScreen(),
         '/evaluation': (context) => EvaluationScreen(),
         '/dashboard': (context) => DashboardScreen(),
+        '/evaluation/test1': (context) => Test1Screen(),
+        '/evaluation/test2': (context) => Test2Screen(),
+        '/evaluation/test3': (context) => Test3Screen(),
       },
     );
   }

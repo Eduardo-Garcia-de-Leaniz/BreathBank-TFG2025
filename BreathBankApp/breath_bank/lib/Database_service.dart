@@ -59,6 +59,19 @@ class Database_service {
     );
   }
 
+  Future<String?> getNombreUsuario({required String userId}) async {
+    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
+      collectionPath: 'Usuarios',
+      docId: userId,
+    );
+
+    if (snapshot != null && snapshot.data() != null) {
+      print(snapshot.data()!['Nombre'] as String); // Depuración
+      return snapshot.data()!['Nombre'] as String;
+    }
+    return null;
+  }
+
   Future<void> updateFechaUltimoAcceso({
     required String userId,
     required DateTime fechaUltimoAcceso,

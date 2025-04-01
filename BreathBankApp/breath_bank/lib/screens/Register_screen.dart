@@ -152,147 +152,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     setState(() {
                       errorMessage = '';
                     });
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        final TextEditingController nameController =
-                            TextEditingController();
-                        final TextEditingController surnameController =
-                            TextEditingController();
-
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: Color.fromARGB(
-                                255,
-                                7,
-                                71,
-                                94,
-                              ), // Azul oscuro
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          backgroundColor: const Color.fromARGB(
-                            255,
-                            188,
-                            252,
-                            245,
-                          ),
-                          title: const Text(
-                            'Registro de Usuario',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 7, 71, 94),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text(
-                                'Por favor, introduce tu nombre y apellidos:',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Arial',
-                                  color: Color.fromARGB(255, 7, 71, 94),
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              TextField(
-                                controller: nameController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Nombre',
-                                  hintText: 'Introduce tu nombre',
-                                  hintStyle: TextStyle(
-                                    color: Color.fromARGB(255, 7, 71, 94),
-                                    fontSize: 16,
-                                    fontFamily: 'Arial',
-                                  ),
-                                ),
-                              ),
-                              TextField(
-                                controller: surnameController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Apellidos',
-                                  hintText: 'Introduce tus apellidos',
-                                  hintStyle: TextStyle(
-                                    color: Color.fromARGB(255, 7, 71, 94),
-                                    fontSize: 16,
-                                    fontFamily: 'Arial',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  7,
-                                  71,
-                                  94,
-                                ),
-                                foregroundColor: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, "/register");
-                              },
-                              child: const Text('Cancelar'),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  7,
-                                  71,
-                                  94,
-                                ),
-                                foregroundColor: Colors.white,
-                              ),
-                              onPressed: () async {
-                                final String name = nameController.text.trim();
-                                final String surname =
-                                    surnameController.text.trim();
-
-                                if (name.isEmpty || surname.isEmpty) {
-                                  setState(() {
-                                    errorMessage =
-                                        'Por favor, completa todos los campos';
-                                  });
-                                  return;
-                                }
-
-                                try {
-                                  await db.addNewUser(
-                                    userId:
-                                        authenticationService
-                                            .value
-                                            .currentUser!
-                                            .uid,
-                                    nombre: name,
-                                    apellidos: surname,
-                                    fechaCreacion: DateTime.now(),
-                                  );
-
-                                  Navigator.pushNamed(context, "/evaluation");
-                                  Navigator.pop(context);
-                                } catch (e) {
-                                  setState(() {
-                                    errorMessage =
-                                        'Error al guardar los datos: $e';
-                                  });
-                                }
-                              },
-                              child: const Text('Guardar'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                    Navigator.pushNamed(context, '/evaluation');
-                    Navigator.pop(context);
+                    await showWindowUserRegister(context);
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -316,6 +176,113 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<dynamic> showWindowUserRegister(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        final TextEditingController nameController = TextEditingController();
+        final TextEditingController surnameController = TextEditingController();
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Color.fromARGB(255, 7, 71, 94), width: 2),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          backgroundColor: const Color.fromARGB(255, 188, 252, 245),
+          title: const Text(
+            'Bienvenid@',
+            style: TextStyle(
+              color: Color.fromARGB(255, 7, 71, 94),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Por favor, introduce tu nombre y apellidos:',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Arial',
+                  color: Color.fromARGB(255, 7, 71, 94),
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nombre',
+                  hintText: 'Introduce tu nombre',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+              ),
+              TextField(
+                controller: surnameController,
+                decoration: const InputDecoration(
+                  labelText: 'Apellidos',
+                  hintText: 'Introduce tus apellidos',
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 7, 71, 94),
+                    fontSize: 16,
+                    fontFamily: 'Arial',
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () async {
+                final String name = nameController.text.trim();
+                final String surname = surnameController.text.trim();
+
+                if (name.isEmpty || surname.isEmpty) {
+                  setState(() {
+                    errorMessage = 'Por favor, completa todos los campos';
+                  });
+                  return;
+                }
+
+                try {
+                  await db.addNewUser(
+                    userId: authenticationService.value.currentUser!.uid,
+                    nombre: name,
+                    apellidos: surname,
+                    fechaCreacion: DateTime.now(),
+                  );
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/evaluation");
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Usuario registrado correctamente. Bienvenid@ $name',
+                      ),
+                      duration: Duration(seconds: 2),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                } catch (e) {
+                  setState(() {
+                    errorMessage = 'Error al guardar los datos: $e';
+                  });
+                }
+              },
+              child: const Text('Guardar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

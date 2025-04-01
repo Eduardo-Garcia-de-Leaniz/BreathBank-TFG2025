@@ -124,8 +124,6 @@ class _LoginFormState extends State<LoginForm> {
                     setState(() {
                       errorMessage = '';
                     });
-                    Navigator.pushNamed(context, '/dashboard');
-                    Navigator.pop(context);
                     try {
                       await db.updateFechaUltimoAcceso(
                         userId: authenticationService.value.currentUser!.uid,
@@ -137,6 +135,20 @@ class _LoginFormState extends State<LoginForm> {
                             'Error al actualizar datos de usuario: $e';
                       });
                     }
+                    final String? nombreUsuario = await db.getNombreUsuario(
+                      userId: authenticationService.value.currentUser!.uid,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
+                        ),
+                        duration: Duration(seconds: 2),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/dashboard');
                   }
                 },
 
