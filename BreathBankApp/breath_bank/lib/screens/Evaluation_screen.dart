@@ -142,7 +142,9 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                   onPressed:
                       testCompleted.values.every((e) => e)
                           ? () {
-                            Navigator.of(context).pushNamed('/resultado');
+                            Navigator.of(
+                              context,
+                            ).pushNamed('/evaluation/result');
                           }
                           : null,
                   style: ElevatedButton.styleFrom(
