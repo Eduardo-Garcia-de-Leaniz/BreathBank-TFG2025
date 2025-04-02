@@ -1,7 +1,41 @@
 import 'package:flutter/material.dart';
 
-class EvaluationScreen extends StatelessWidget {
+class EvaluationScreen extends StatefulWidget {
   const EvaluationScreen({super.key});
+
+  @override
+  _EvaluationScreenState createState() => _EvaluationScreenState();
+}
+
+class _EvaluationScreenState extends State<EvaluationScreen> {
+  Map<String, bool> testCompleted = {
+    'test1': false,
+    'test2': false,
+    'test3': false,
+  };
+
+  void completeTest(String testKey) {
+    setState(() {
+      testCompleted[testKey] = true;
+
+      // Verificar si todas las pruebas están completas
+      if (testCompleted.values.every((e) => e)) {
+        Future.delayed(Duration(milliseconds: 300), () {
+          showCompletionMessage();
+        });
+      }
+    });
+  }
+
+  void showCompletionMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('¡Felicidades! Has completado todas las pruebas 🎉'),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 3),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,27 +55,44 @@ class EvaluationScreen extends StatelessWidget {
                 children: [
                   const Text(
                     'Evaluación',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 7, 71, 94),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   const Text(
                     'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 7, 71, 94),
+                    ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      'Has superado ${testCompleted.values.where((e) => e).length} de 3 pruebas',
+                      style: const TextStyle(
+                        fontSize: 16,
+
+                        color: const Color.fromARGB(255, 7, 71, 94),
+                      ),
+                    ),
+                  ),
                   Stack(
                     children: [
                       LinearProgressIndicator(
-                        value:
-                            0.0, // Cambiar este valor dinámicamente según el progreso
+                        value: testCompleted.values.where((e) => e).length / 3,
                         backgroundColor: Colors.grey[300],
                         color: Colors.blue,
-                        minHeight: 30, // Hacer la barra más ancha
+                        minHeight: 30,
                       ),
                       Positioned.fill(
                         child: Center(
                           child: Text(
-                            '0%', // Cambiar este texto dinámicamente según el progreso
+                            '${(testCompleted.values.where((e) => e).length / 3 * 100).toInt()}%',
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -52,128 +103,29 @@ class EvaluationScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 50),
                   Center(
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.check,
-                              color: Colors.transparent,
-                            ), // Cambiar a Icons.check cuando se complete
-                            const SizedBox(width: 8),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Navegar a la página de la primera prueba
-                                Navigator.pushNamed(
-                                  context,
-                                  '/evaluation/test1',
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 15.0,
-                                  horizontal: 45.0,
-                                ),
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  7,
-                                  71,
-                                  94,
-                                ), // Azul oscuro
-                                foregroundColor: Colors.white, // Letras blancas
-                              ),
-                              child: const Text(
-                                'Prueba 1',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                        buildTestRow(
+                          context,
+                          'Prueba 1',
+                          '/evaluation/test1',
+                          'test1',
                         ),
                         const SizedBox(height: 40),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.check,
-                              color: Colors.transparent,
-                            ), // Cambiar a Icons.check cuando se complete
-                            const SizedBox(width: 8),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Navegar a la página de la segunda prueba
-                                Navigator.pushNamed(
-                                  context,
-                                  '/evaluation/test2',
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 15.0,
-                                  horizontal: 45.0,
-                                ),
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  7,
-                                  71,
-                                  94,
-                                ), // Azul oscuro
-                                foregroundColor: Colors.white, // Letras blancas
-                              ),
-                              child: const Text(
-                                'Prueba 2',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                        buildTestRow(
+                          context,
+                          'Prueba 2',
+                          '/evaluation/test2',
+                          'test2',
                         ),
                         const SizedBox(height: 40),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.check,
-                              color: Colors.transparent,
-                            ), // Cambiar a Icons.check cuando se complete
-                            const SizedBox(width: 8),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Navegar a la página de la tercera prueba
-                                Navigator.pushNamed(
-                                  context,
-                                  '/evaluation/test3',
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 15.0,
-                                  horizontal: 45.0,
-                                ),
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  7,
-                                  71,
-                                  94,
-                                ), // Azul oscuro
-                                foregroundColor: Colors.white, // Letras blancas
-                              ),
-                              child: const Text(
-                                'Prueba 3',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                        buildTestRow(
+                          context,
+                          'Prueba 3',
+                          '/evaluation/test3',
+                          'test3',
                         ),
                       ],
                     ),
@@ -181,31 +133,25 @@ class EvaluationScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
                   onPressed:
-                      false
-                          ? null
-                          : () {
-                            // Acción al completar las 3 pruebas
+                      testCompleted.values.every((e) => e)
+                          ? () {
                             Navigator.of(context).pushNamed('/resultado');
-                          },
+                          }
+                          : null,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       vertical: 16.0,
                       horizontal: 32.0,
                     ),
-                    backgroundColor: const Color.fromARGB(
-                      255,
-                      7,
-                      71,
-                      94,
-                    ), // Azul oscuro
-                    foregroundColor: Colors.white, // Letras blancas
+                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                    foregroundColor: Colors.white,
                   ),
                   child: const Text('Continuar'),
                 ),
@@ -215,6 +161,45 @@ class EvaluationScreen extends StatelessWidget {
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
+    );
+  }
+
+  Widget buildTestRow(
+    BuildContext context,
+    String testName,
+    String route,
+    String testKey,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          testCompleted[testKey]!
+              ? Icons.check_circle
+              : Icons.radio_button_unchecked,
+          color: testCompleted[testKey]! ? Colors.green : Colors.grey,
+          size: 30,
+        ),
+        const SizedBox(width: 8),
+        ElevatedButton(
+          onPressed: () async {
+            await Navigator.pushNamed(context, route);
+            completeTest(testKey);
+          },
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              vertical: 15.0,
+              horizontal: 45.0,
+            ),
+            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+            foregroundColor: Colors.white,
+          ),
+          child: Text(
+            testName,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -238,7 +223,7 @@ class AppBar_Evaluation extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () {
-          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+          Navigator.of(context).pop();
         },
       ),
     );
