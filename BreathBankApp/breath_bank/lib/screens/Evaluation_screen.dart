@@ -58,7 +58,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 7, 71, 94),
+                      color: Color.fromARGB(255, 7, 71, 94),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -66,7 +66,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
                     style: TextStyle(
                       fontSize: 16,
-                      color: const Color.fromARGB(255, 7, 71, 94),
+                      color: Color.fromARGB(255, 7, 71, 94),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -76,8 +76,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                       'Has superado ${testCompleted.values.where((e) => e).length} de 3 pruebas',
                       style: const TextStyle(
                         fontSize: 16,
-
-                        color: const Color.fromARGB(255, 7, 71, 94),
+                        color: Color.fromARGB(255, 7, 71, 94),
                       ),
                     ),
                   ),
@@ -184,10 +183,13 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
         ),
         const SizedBox(width: 8),
         ElevatedButton(
-          onPressed: () async {
-            await Navigator.pushNamed(context, route);
-            completeTest(testKey);
-          },
+          onPressed:
+              testCompleted[testKey]!
+                  ? null
+                  : () async {
+                    await Navigator.pushNamed(context, route);
+                    completeTest(testKey);
+                  },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(
               vertical: 15.0,
@@ -215,7 +217,7 @@ class AppBar_Evaluation extends StatelessWidget {
       title: const Text(
         'Evaluación',
         style: TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: Colors.white,
           fontSize: 25,
           fontWeight: FontWeight.bold,
           fontFamily: 'Arial',

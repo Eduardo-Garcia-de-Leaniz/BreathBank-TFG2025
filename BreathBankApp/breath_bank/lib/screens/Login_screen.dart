@@ -52,7 +52,8 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  void signIn() async {
+  Future<bool> signIn() async {
+    errorMessage = '';
     try {
       await authenticationService.value.signIn(
         email: emailController.text,
@@ -62,7 +63,9 @@ class _LoginFormState extends State<LoginForm> {
       setState(() {
         errorMessage = e.message ?? 'Error desconocido';
       });
+      return false;
     }
+    return true;
   }
 
   // Principio SOLID: Open/Closed Principle
@@ -119,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
                   if (!validateInputs()) {
                     return;
                   }
-                  signIn();
+                  await signIn();
                   if (errorMessage.isEmpty) {
                     setState(() {
                       errorMessage = '';

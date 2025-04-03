@@ -67,6 +67,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/LogoPrincipal_BreathBank-sin_fondo.png
+    - assets/texts/description_test1.txt
+    - assets/texts/instructions_test1.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
