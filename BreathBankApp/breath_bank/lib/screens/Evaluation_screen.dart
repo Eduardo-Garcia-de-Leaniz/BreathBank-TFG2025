@@ -1,3 +1,4 @@
+import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
 
 class EvaluationScreen extends StatefulWidget {
@@ -8,6 +9,11 @@ class EvaluationScreen extends StatefulWidget {
 }
 
 class _EvaluationScreenState extends State<EvaluationScreen> {
+  Database_service db = Database_service();
+  int resultado_prueba1 = 0;
+  int resultado_prueba2 = 0;
+  int resultado_prueba3 = 0;
+
   Map<String, bool> testCompleted = {
     'test1': false,
     'test2': false,
@@ -187,9 +193,25 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
               testCompleted[testKey]!
                   ? null
                   : () async {
-                    await Navigator.pushNamed(context, route);
+                    final resultado = await Navigator.pushNamed(context, route);
+                    if (resultado is int) {
+                      setState(() {
+                        switch (testKey) {
+                          case 'test1':
+                            resultado_prueba1 = resultado;
+                            break;
+                          case 'test2':
+                            resultado_prueba2 = resultado;
+                            break;
+                          case 'test3':
+                            resultado_prueba3 = resultado;
+                            break;
+                        }
+                      });
+                    }
                     completeTest(testKey);
                   },
+
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(
               vertical: 15.0,

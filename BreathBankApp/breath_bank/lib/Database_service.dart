@@ -176,4 +176,49 @@ class Database_service {
       },
     );
   }
+
+  Future<void> updateResultadoPrueba1({
+    required String userId,
+    required DateTime fechaEvaluacion,
+    required double resultadoPrueba1,
+  }) async {
+    final String evaluacionId =
+        '${userId}_${fechaEvaluacion.toIso8601String()}';
+
+    await update(
+      collectionPath: 'Evaluaciones/$evaluacionId/PruebasEvaluación',
+      docId: 'Resultados',
+      data: {'ResultadoPrueba1': resultadoPrueba1},
+    );
+  }
+
+  Future<void> updateResultadoPrueba2({
+    required String userId,
+    required DateTime fechaEvaluacion,
+    required double resultadoPrueba2,
+  }) async {
+    final String evaluacionId =
+        '${userId}_${fechaEvaluacion.toIso8601String()}';
+
+    await update(
+      collectionPath: 'Evaluaciones/$evaluacionId/PruebasEvaluación',
+      docId: 'Resultados',
+      data: {'ResultadoPrueba2': resultadoPrueba2},
+    );
+  }
+
+  Future<void> updateResultadoPrueba3({
+    required String userId,
+    required DateTime fechaEvaluacion,
+    required double resultadoPrueba3,
+  }) async {
+    final String evaluacionId =
+        '${userId}_${fechaEvaluacion.toIso8601String()}';
+
+    await update(
+      collectionPath: 'Evaluaciones/$evaluacionId/PruebasEvaluación',
+      docId: 'Resultados',
+      data: {'ResultadoPrueba3': resultadoPrueba3},
+    );
+  }
 }
