@@ -45,129 +45,133 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: AppBar_Evaluation(),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Evaluación',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 7, 71, 94),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: AppBar_Evaluation(),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Evaluación',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 7, 71, 94),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color.fromARGB(255, 7, 71, 94),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(
-                      'Has superado ${testCompleted.values.where((e) => e).length} de 3 pruebas',
-                      style: const TextStyle(
+                    const SizedBox(height: 16),
+                    const Text(
+                      'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
+                      style: TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 7, 71, 94),
                       ),
                     ),
-                  ),
-                  Stack(
-                    children: [
-                      LinearProgressIndicator(
-                        value: testCompleted.values.where((e) => e).length / 3,
-                        backgroundColor: Colors.grey[300],
-                        color: Colors.blue,
-                        minHeight: 30,
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(
+                        'Has superado ${testCompleted.values.where((e) => e).length} de 3 pruebas',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 7, 71, 94),
+                        ),
                       ),
-                      Positioned.fill(
-                        child: Center(
-                          child: Text(
-                            '${(testCompleted.values.where((e) => e).length / 3 * 100).toInt()}%',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                    ),
+                    Stack(
+                      children: [
+                        LinearProgressIndicator(
+                          value:
+                              testCompleted.values.where((e) => e).length / 3,
+                          backgroundColor: Colors.grey[300],
+                          color: Colors.blue,
+                          minHeight: 30,
+                        ),
+                        Positioned.fill(
+                          child: Center(
+                            child: Text(
+                              '${(testCompleted.values.where((e) => e).length / 3 * 100).toInt()}%',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-                  Center(
-                    child: Column(
-                      children: [
-                        buildTestRow(
-                          context,
-                          'Prueba 1',
-                          '/evaluation/test1',
-                          'test1',
-                        ),
-                        const SizedBox(height: 40),
-                        buildTestRow(
-                          context,
-                          'Prueba 2',
-                          '/evaluation/test2',
-                          'test2',
-                        ),
-                        const SizedBox(height: 40),
-                        buildTestRow(
-                          context,
-                          'Prueba 3',
-                          '/evaluation/test3',
-                          'test3',
-                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed:
-                      testCompleted.values.every((e) => e)
-                          ? () {
-                            Navigator.of(
-                              context,
-                            ).pushNamed('/evaluation/result');
-                          }
-                          : null,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16.0,
-                      horizontal: 32.0,
+                    const SizedBox(height: 50),
+                    Center(
+                      child: Column(
+                        children: [
+                          buildTestRow(
+                            context,
+                            'Prueba 1',
+                            '/evaluation/test1',
+                            'test1',
+                          ),
+                          const SizedBox(height: 40),
+                          buildTestRow(
+                            context,
+                            'Prueba 2',
+                            '/evaluation/test2',
+                            'test2',
+                          ),
+                          const SizedBox(height: 40),
+                          buildTestRow(
+                            context,
+                            'Prueba 3',
+                            '/evaluation/test3',
+                            'test3',
+                          ),
+                        ],
+                      ),
                     ),
-                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Continuar'),
+                  ],
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed:
+                        testCompleted.values.every((e) => e)
+                            ? () {
+                              Navigator.of(
+                                context,
+                              ).pushNamed('/evaluation/result');
+                            }
+                            : null,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16.0,
+                        horizontal: 32.0,
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Continuar'),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+        backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       ),
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
     );
   }
 
@@ -236,6 +240,7 @@ class AppBar_Evaluation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text(
         'Evaluación',
         style: TextStyle(

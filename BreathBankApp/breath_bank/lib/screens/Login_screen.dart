@@ -1,7 +1,5 @@
 import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/widgets/widgets_botones/BtnBack.dart';
-import 'package:breath_bank/widgets/widgets_home_screen/Image_logo.dart';
-import 'package:breath_bank/widgets/widgets_appbars/AppBar_Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,7 @@ class LoginScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ImagenLogo(imageWidth: 150, imageHeight: 150),
+            ImageLogo(imageWidth: 150, imageHeight: 150),
             ClickableTextLoginRegister(),
             LoginForm(),
           ],
@@ -35,10 +33,10 @@ class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  LoginFormState createState() => LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class LoginFormState extends State<LoginForm> {
   Database_service db = Database_service();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -69,6 +67,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   // Principio SOLID: Open/Closed Principle
+  // Se crea un método para añadir futuras validaciones solo en este punto, y no en todo el código
   bool validateInputs() {
     if (emailController.text.isEmpty) {
       setState(() {
@@ -104,14 +103,7 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 20),
           TextFieldPassword(passwordController: passwordController),
           const SizedBox(height: 10),
-          Text(
-            errorMessage,
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Arial',
-              color: Colors.redAccent,
-            ),
-          ),
+          ErrorMessageWidget(errorMessage: errorMessage),
           SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,7 +143,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     );
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, '/dashboard');
+                    Navigator.pushReplacementNamed(context, "/dashboard");
                   }
                 },
 
@@ -175,6 +167,24 @@ class _LoginFormState extends State<LoginForm> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ErrorMessageWidget extends StatelessWidget {
+  const ErrorMessageWidget({super.key, required this.errorMessage});
+
+  final String errorMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      errorMessage,
+      style: TextStyle(
+        fontSize: 16,
+        fontFamily: 'Arial',
+        color: Colors.redAccent,
       ),
     );
   }
@@ -315,6 +325,50 @@ class ClickableTextLoginRegister extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ImageLogo extends StatelessWidget {
+  final double imageWidth;
+  final double imageHeight;
+
+  const ImageLogo({
+    super.key,
+    required this.imageWidth,
+    required this.imageHeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(40),
+      child: Image.asset(
+        'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
+        fit: BoxFit.cover,
+        width: imageWidth,
+        height: imageHeight,
+      ),
+    );
+  }
+}
+
+class AppBar_Login extends StatelessWidget {
+  const AppBar_Login({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text(
+        'Inicio de Sesión',
+        style: TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Arial',
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
     );
   }
 }

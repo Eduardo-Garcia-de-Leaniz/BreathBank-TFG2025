@@ -1,7 +1,5 @@
 import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/widgets/widgets_botones/BtnBack.dart';
-import 'package:breath_bank/widgets/widgets_home_screen/Image_logo.dart';
-import 'package:breath_bank/widgets/widgets_appbars/AppBar_Register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,7 @@ class RegisterScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ImagenLogo(imageWidth: 100, imageHeight: 100),
+            ImageLogo(imageWidth: 100, imageHeight: 100),
             ClickableTextLoginRegister(),
             RegisterForm(),
           ],
@@ -35,10 +33,10 @@ class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
 
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  RegisterFormState createState() => RegisterFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class RegisterFormState extends State<RegisterForm> {
   Database_service db = Database_service();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -77,6 +75,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   // Principio SOLID: Open/Closed Principle
+  // Se crea un método para añadir futuras validaciones solo en este punto, y no en todo el código
   bool validateInputs() {
     if (emailController.text.isEmpty) {
       setState(() {
@@ -126,14 +125,7 @@ class _RegisterFormState extends State<RegisterForm> {
             confirmPasswordController: confirmPasswordController,
           ),
           const SizedBox(height: 10),
-          Text(
-            errorMessage,
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Arial',
-              color: Colors.redAccent,
-            ),
-          ),
+          ErrorMessageWidget(errorMessage: errorMessage),
           SizedBox(height: 50),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,7 +144,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     setState(() {
                       errorMessage = '';
                     });
-                    await showWindowUserRegister(context);
+                    await WindowUserRegister(context);
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -165,7 +157,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 child: const Text(
                   'Registrarse',
                   style: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Arial',
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -179,7 +171,7 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  Future<dynamic> showWindowUserRegister(BuildContext context) {
+  Future<dynamic> WindowUserRegister(BuildContext context) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -262,7 +254,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     fechaCreacion: DateTime.now(),
                   );
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, "/evaluation");
+                  Navigator.pushReplacementNamed(context, "/evaluation");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
@@ -283,6 +275,24 @@ class _RegisterFormState extends State<RegisterForm> {
           ],
         );
       },
+    );
+  }
+}
+
+class ErrorMessageWidget extends StatelessWidget {
+  const ErrorMessageWidget({super.key, required this.errorMessage});
+
+  final String errorMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      errorMessage,
+      style: TextStyle(
+        fontSize: 16,
+        fontFamily: 'Arial',
+        color: Colors.redAccent,
+      ),
     );
   }
 }
@@ -476,6 +486,50 @@ class ClickableTextLoginRegister extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ImageLogo extends StatelessWidget {
+  final double imageWidth;
+  final double imageHeight;
+
+  const ImageLogo({
+    super.key,
+    required this.imageWidth,
+    required this.imageHeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(40),
+      child: Image.asset(
+        'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
+        fit: BoxFit.cover,
+        width: imageWidth,
+        height: imageHeight,
+      ),
+    );
+  }
+}
+
+class AppBar_Register extends StatelessWidget {
+  const AppBar_Register({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text(
+        'Registro',
+        style: TextStyle(
+          color: Color.fromARGB(255, 255, 255, 255),
+          fontSize: 25,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Arial',
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
     );
   }
 }
