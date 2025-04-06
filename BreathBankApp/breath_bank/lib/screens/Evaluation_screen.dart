@@ -5,35 +5,36 @@ class EvaluationScreen extends StatefulWidget {
   const EvaluationScreen({super.key});
 
   @override
-  _EvaluationScreenState createState() => _EvaluationScreenState();
+  EvaluationScreenState createState() => EvaluationScreenState();
 }
 
-class _EvaluationScreenState extends State<EvaluationScreen> {
+class EvaluationScreenState extends State<EvaluationScreen> {
   Database_service db = Database_service();
-  int resultado_prueba1 = 0;
-  int resultado_prueba2 = 0;
-  int resultado_prueba3 = 0;
+  int result_test1 = 0;
+  int result_test2 = 0;
+  int result_test3 = 0;
 
+  // Variables para almacenar el estado de las pruebas
   Map<String, bool> testCompleted = {
     'test1': false,
     'test2': false,
     'test3': false,
   };
 
+  // Marca como completada una prueba y verifica si todas las pruebas están completas
   void completeTest(String testKey) {
     setState(() {
       testCompleted[testKey] = true;
 
-      // Verificar si todas las pruebas están completas
       if (testCompleted.values.every((e) => e)) {
         Future.delayed(Duration(milliseconds: 300), () {
-          showCompletionMessage();
+          allTestsDoneMessage();
         });
       }
     });
   }
 
-  void showCompletionMessage() {
+  void allTestsDoneMessage() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('¡Felicidades! Has completado todas las pruebas 🎉'),
@@ -46,7 +47,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => false, // Evita que el usuario vuelva atrás
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
@@ -61,75 +62,31 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Evaluación',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 7, 71, 94),
-                      ),
-                    ),
+                    TextTitleEvaluationScreen(),
                     const SizedBox(height: 16),
-                    const Text(
-                      'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 7, 71, 94),
-                      ),
-                    ),
+                    TextEvaluationScreen(),
                     const SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        'Has superado ${testCompleted.values.where((e) => e).length} de 3 pruebas',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 7, 71, 94),
-                        ),
-                      ),
-                    ),
-                    Stack(
-                      children: [
-                        LinearProgressIndicator(
-                          value:
-                              testCompleted.values.where((e) => e).length / 3,
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.blue,
-                          minHeight: 30,
-                        ),
-                        Positioned.fill(
-                          child: Center(
-                            child: Text(
-                              '${(testCompleted.values.where((e) => e).length / 3 * 100).toInt()}%',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    TextProgressionBar(testCompleted: testCompleted),
+                    ProgressionBar(testCompleted: testCompleted),
                     const SizedBox(height: 50),
                     Center(
                       child: Column(
                         children: [
-                          buildTestRow(
+                          BtnsTest(
                             context,
                             'Prueba 1',
                             '/evaluation/test1',
                             'test1',
                           ),
                           const SizedBox(height: 40),
-                          buildTestRow(
+                          BtnsTest(
                             context,
                             'Prueba 2',
                             '/evaluation/test2',
                             'test2',
                           ),
                           const SizedBox(height: 40),
-                          buildTestRow(
+                          BtnsTest(
                             context,
                             'Prueba 3',
                             '/evaluation/test3',
@@ -142,31 +99,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed:
-                        testCompleted.values.every((e) => e)
-                            ? () {
-                              Navigator.of(
-                                context,
-                              ).pushNamed('/evaluation/result');
-                            }
-                            : null,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                        horizontal: 32.0,
-                      ),
-                      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const Text('Continuar'),
-                  ),
-                ),
-              ),
+              BtnNext(testCompleted: testCompleted),
             ],
           ),
         ),
@@ -175,7 +108,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
     );
   }
 
-  Widget buildTestRow(
+  Widget BtnsTest(
     BuildContext context,
     String testName,
     String route,
@@ -202,13 +135,13 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                       setState(() {
                         switch (testKey) {
                           case 'test1':
-                            resultado_prueba1 = resultado;
+                            result_test1 = resultado;
                             break;
                           case 'test2':
-                            resultado_prueba2 = resultado;
+                            result_test2 = resultado;
                             break;
                           case 'test3':
-                            resultado_prueba3 = resultado;
+                            result_test3 = resultado;
                             break;
                         }
                       });
@@ -230,6 +163,119 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class BtnNext extends StatelessWidget {
+  const BtnNext({super.key, required this.testCompleted});
+
+  final Map<String, bool> testCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed:
+              testCompleted.values.every((e) => e)
+                  ? () {
+                    Navigator.of(context).pushNamed('/evaluation/result');
+                  }
+                  : null,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              vertical: 16.0,
+              horizontal: 32.0,
+            ),
+            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+            foregroundColor: Colors.white,
+          ),
+          child: const Text('Continuar'),
+        ),
+      ),
+    );
+  }
+}
+
+class ProgressionBar extends StatelessWidget {
+  const ProgressionBar({super.key, required this.testCompleted});
+
+  final Map<String, bool> testCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        LinearProgressIndicator(
+          value: testCompleted.values.where((e) => e).length / 3,
+          backgroundColor: Colors.grey[300],
+          color: Colors.blue,
+          minHeight: 30,
+        ),
+        Positioned.fill(
+          child: Center(
+            child: Text(
+              '${(testCompleted.values.where((e) => e).length / 3 * 100).toInt()}%',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TextProgressionBar extends StatelessWidget {
+  const TextProgressionBar({super.key, required this.testCompleted});
+
+  final Map<String, bool> testCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Text(
+        'Has superado ${testCompleted.values.where((e) => e).length} de 3 pruebas',
+        style: const TextStyle(
+          fontSize: 16,
+          color: Color.fromARGB(255, 7, 71, 94),
+        ),
+      ),
+    );
+  }
+}
+
+class TextEvaluationScreen extends StatelessWidget {
+  const TextEvaluationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
+      style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 7, 71, 94)),
+    );
+  }
+}
+
+class TextTitleEvaluationScreen extends StatelessWidget {
+  const TextTitleEvaluationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Evaluación',
+      style: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(255, 7, 71, 94),
+      ),
     );
   }
 }
