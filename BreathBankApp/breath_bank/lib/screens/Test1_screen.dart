@@ -14,6 +14,9 @@ class Test1ScreenState extends State<Test1Screen>
   Database_service db = Database_service();
   String userId = authenticationService.value.currentUser!.uid;
 
+  final TextEditingController resultFieldController = TextEditingController();
+  String resultValue = '';
+
   String descripcion = "Cargando...";
   String instrucciones = "Cargando...";
 
@@ -122,18 +125,33 @@ class Test1ScreenState extends State<Test1Screen>
                 Container(
                   padding: EdgeInsets.all(16.0),
                   color: const Color.fromARGB(255, 188, 252, 245),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TestTitleText(),
-                      SizedBox(height: 25),
-                      Text(descripcion, style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 16),
-                      InstructionsTitleText(),
-                      SizedBox(height: 8),
-                      Text(instrucciones, style: TextStyle(fontSize: 16)),
-                    ],
+                  child: Container(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TestTitleText(),
+                        SizedBox(height: 25),
+                        Text(
+                          descripcion,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: const Color.fromARGB(255, 7, 71, 94),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        InstructionsTitleText(),
+                        SizedBox(height: 8),
+                        Text(
+                          instrucciones,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: const Color.fromARGB(255, 7, 71, 94),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 ArrowNextSymbol(),
@@ -144,17 +162,35 @@ class Test1ScreenState extends State<Test1Screen>
               color: const Color.fromARGB(255, 188, 252, 245),
               child: Stack(
                 children: [
-                  Center(
+                  Container(
+                    padding: EdgeInsets.all(16.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Aquí va el dibujo de la prueba',
+                          '¡Recuerda!',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
+                        SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Text(
+                            'Una respiración consta de dos partes, inspiración y espiración. '
+                            'La respiración comenzará cuando se empieza a coger aire, y no habrá terminado '
+                            'hasta que se vuelva a inspirar. No se deben realizar pausas entre ambas fases ni entre respiraciones.'
+                            'La respiración debe ser cómoda y relajada, no debe aparecer fatiga.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: const Color.fromARGB(255, 7, 71, 94),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
                         Image.asset(
                           'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
                           height: 250,
@@ -164,6 +200,7 @@ class Test1ScreenState extends State<Test1Screen>
                       ],
                     ),
                   ),
+
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                 ],
@@ -246,12 +283,13 @@ class Test1ScreenState extends State<Test1Screen>
                             ),
                           ],
                         ),
-                        SizedBox(height: 40),
+                        SizedBox(height: 80),
                         LabelTestResultText(),
                         SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: TextField(
+                            controller: resultFieldController,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               labelText: 'Número de respiraciones',
@@ -266,16 +304,24 @@ class Test1ScreenState extends State<Test1Screen>
                               ),
                               iconColor: const Color.fromARGB(255, 7, 71, 94),
                             ),
-                            // Cambiar para que no salga el mensaje cada vez que se escriba
                             onChanged: (value) {
-                              if (validateTestResult(value)) {
-                                test_result = int.parse(value);
+                              resultValue =
+                                  value; // solo almacena el valor temporal
+                            },
+                            onEditingComplete: () {
+                              if (validateTestResult(resultValue)) {
+                                test_result = int.parse(resultValue);
                               } else {
                                 test_result = 0;
+                                // Aquí puedes mostrar un mensaje de error si quieres
                               }
+                              FocusScope.of(
+                                context,
+                              ).unfocus(); // cierra el teclado
                             },
                           ),
                         ),
+
                         SizedBox(height: 40),
                         BtnNext(
                           animation_controller: animation_controller,
@@ -312,6 +358,22 @@ class BtnNext extends StatelessWidget {
       onPressed: () {
         if (animation_controller.value == 0.0 && test_result > 0) {
           Navigator.pop(context, test_result);
+        } else if (animation_controller.value != 0.0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Debe esperar a que se complete el tiempo antes de continuar.',
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('El número de respiraciones debe ser mayor de 0.'),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       style: ElevatedButton.styleFrom(
@@ -398,7 +460,7 @@ class ArrowPreviousSymbol extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 8,
+      left: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
       child: Icon(
         Icons.arrow_back_ios,
@@ -414,7 +476,7 @@ class ArrowNextSymbol extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: 8,
+      right: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
       child: Icon(
         Icons.arrow_forward_ios,
@@ -431,7 +493,11 @@ class InstructionsTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Instrucciones:',
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromARGB(255, 7, 71, 94),
+      ),
     );
   }
 }
@@ -443,7 +509,11 @@ class TestTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       'Registro de respiraciones en reposo',
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromARGB(255, 7, 71, 94),
+      ),
     );
   }
 }

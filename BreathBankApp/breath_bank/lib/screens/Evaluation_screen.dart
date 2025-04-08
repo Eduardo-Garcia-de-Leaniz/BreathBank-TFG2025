@@ -258,7 +258,8 @@ class TextEvaluationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares.',
+      'A continuación se presentan 3 pruebas muy sencillas para valorar tus capacidades pulmonares. '
+      'Se recomienda realizar las pruebas en orden',
       style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 7, 71, 94)),
     );
   }
@@ -297,12 +298,6 @@ class AppBar_Evaluation extends StatelessWidget {
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
     );
   }
 }
