@@ -71,6 +71,8 @@ flutter:
     - assets/texts/instructions_test1.txt
     - assets/texts/description_test2.txt
     - assets/texts/instructions_test2.txt
+    - assets/texts/description_test3.txt
+    - assets/texts/instructions_test3.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
