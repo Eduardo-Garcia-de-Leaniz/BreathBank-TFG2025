@@ -285,11 +285,16 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   void initState() {
     super.initState();
     _initAnimation();
-    //_controller.forward();
   }
 
   void _initAnimation() {
-    _controller = AnimationController(vsync: this, duration: _currentDuration);
+    // Inicia con una duración inicial de 3 segundos (para inhalar + exhalar)
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 4), // Inicia con 3 segundos
+    )..addListener(() {
+      setState(() {});
+    });
 
     _scaleAnimation = Tween<double>(
       begin: 0.85,
@@ -297,16 +302,18 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed ||
-          status == AnimationStatus.dismissed) {
-        _isInhaling = !_isInhaling;
-        if (_isInhaling) {
-          _breathCount++;
-          _currentDuration = Duration(seconds: 4 + _breathCount);
-          _controller.duration = _currentDuration;
-        }
-        _isInhaling ? _controller.forward() : _controller.reverse();
-        setState(() {});
+      if (status == AnimationStatus.completed) {
+        _isInhaling = true;
+        _breathCount++;
+
+        double newDuration = 4.0 + ((_breathCount - 1) * 0.2);
+        _currentDuration = Duration(seconds: newDuration.toInt());
+        _controller.duration = _currentDuration;
+
+        _controller.forward();
+      } else if (status == AnimationStatus.dismissed) {
+        _isInhaling = false;
+        _controller.reverse();
       }
     });
   }
@@ -324,10 +331,13 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   }
 
   void reset() {
+    _controller.stop();
+    _controller.reset();
     _breathCount = 1;
     _currentDuration = Duration(seconds: 4);
     _controller.duration = _currentDuration;
     _isInhaling = true;
+    setState(() {});
   }
 
   int getCurrentBreathCount() => _breathCount;
@@ -378,6 +388,11 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
         ),
         const SizedBox(height: 8),
         Text("Respiración $_breathCount", style: TextStyle(fontSize: 18)),
+        Text(
+          //"${_currentDuration.inSeconds} segundos",
+          "${_controller.duration?.inSeconds ?? 0} segundos",
+          style: TextStyle(fontSize: 16, color: Colors.black54),
+        ),
       ],
     );
   }
@@ -510,7 +525,7 @@ class AppBar_Test3 extends StatelessWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       title: const Text(
-        'Tiempo empleado en realizar 3 respiraciones',
+        'Prueba de respiraciones guiada',
         style: TextStyle(
           color: Color.fromARGB(255, 255, 255, 255),
           fontSize: 20,
