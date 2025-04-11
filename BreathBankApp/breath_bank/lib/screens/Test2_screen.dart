@@ -226,12 +226,12 @@ class Test2ScreenState extends State<Test2Screen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: 40),
                         ClockWidget(
                           elapsedSeconds: elapsedSeconds,
                           isRunning: isRunning,
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: 40),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -283,7 +283,7 @@ class Test2ScreenState extends State<Test2Screen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 70),
+                        SizedBox(height: 50),
                         LabelTestResultText(),
                         SizedBox(height: 10),
                         Padding(
@@ -376,7 +376,7 @@ class LabelTestResultText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        'Tiempo en realizar las 3 respiraciones:',
+        'Tiempo en realizar las 3 respiraciones: Introduce el número y cierre el teclado antes de pulsar en siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,

@@ -16,6 +16,7 @@ class Test3ScreenState extends State<Test3Screen> {
   final String userId = authenticationService.value.currentUser!.uid;
   final TextEditingController resultFieldController = TextEditingController();
 
+  String resultValue = '';
   String descripcion = "Cargando...";
   String instrucciones = "Cargando...";
   int test_result = 0;
@@ -55,7 +56,9 @@ class Test3ScreenState extends State<Test3Screen> {
       _breathingKey.currentState?.pause();
       final last = _breathingKey.currentState?.getCurrentBreathCount() ?? 0;
       resultFieldController.text = last.toString();
-      test_result = last;
+      resultValue = resultFieldController.text;
+      test_result = int.tryParse(resultValue) ?? 0;
+      ;
     }
   }
 
@@ -148,7 +151,10 @@ class Test3ScreenState extends State<Test3Screen> {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          'Una respiración consta de dos partes, inspiración y espiración...',
+                          'Una respiración consta de dos partes, inspiración y espiración. '
+                          'La respiración comenzará cuando se empieza a coger aire, y no habrá terminado '
+                          'hasta que se vuelva a inspirar. No se deben realizar pausas entre ambas fases ni entre respiraciones. '
+                          'La respiración debe ser cómoda y relajada, no debe aparecer fatiga.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -191,9 +197,9 @@ class Test3ScreenState extends State<Test3Screen> {
                             color: Color(0xFF07475E),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         BreathingAnimationWidget(key: _breathingKey),
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -231,7 +237,7 @@ class Test3ScreenState extends State<Test3Screen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 50),
                         LabelTestResultText(),
                         SizedBox(height: 10),
                         Padding(
@@ -243,12 +249,20 @@ class Test3ScreenState extends State<Test3Screen> {
                               labelText: 'Número última respiración',
                               hintText: 'Edite el número si lo desea',
                             ),
-                            onChanged:
-                                (value) =>
-                                    test_result = int.tryParse(value) ?? 0,
+                            onChanged: (value) {
+                              resultValue = value;
+                            },
+                            onEditingComplete: () {
+                              if (validateTestResult(resultValue)) {
+                                test_result = int.parse(resultValue);
+                              } else {
+                                test_result = 0;
+                              }
+                              FocusScope.of(context).unfocus();
+                            },
                           ),
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 50),
                         BtnNext(test_result: test_result),
                       ],
                     ),
@@ -279,7 +293,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
 
   bool _isInhaling = true;
   int _breathCount = 1;
-  Duration _currentDuration = Duration(seconds: 4);
+  Duration _currentDuration = Duration(seconds: 3);
 
   @override
   void initState() {
@@ -288,10 +302,9 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   }
 
   void _initAnimation() {
-    // Inicia con una duración inicial de 3 segundos (para inhalar + exhalar)
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 4), // Inicia con 3 segundos
+      duration: Duration(seconds: 3),
     )..addListener(() {
       setState(() {});
     });
@@ -303,17 +316,17 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        _isInhaling = false;
+        _controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
         _isInhaling = true;
         _breathCount++;
 
-        double newDuration = 4.0 + ((_breathCount - 1) * 0.2);
+        double newDuration = 3.0 + ((_breathCount - 1) * 0.1);
         _currentDuration = Duration(seconds: newDuration.toInt());
         _controller.duration = _currentDuration;
 
         _controller.forward();
-      } else if (status == AnimationStatus.dismissed) {
-        _isInhaling = false;
-        _controller.reverse();
       }
     });
   }
@@ -334,10 +347,11 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
     _controller.stop();
     _controller.reset();
     _breathCount = 1;
-    _currentDuration = Duration(seconds: 4);
+    _currentDuration = Duration(seconds: 3);
     _controller.duration = _currentDuration;
     _isInhaling = true;
     setState(() {});
+    _controller.stop();
   }
 
   int getCurrentBreathCount() => _breathCount;
@@ -438,7 +452,7 @@ class LabelTestResultText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        'Última respiración completa:',
+        'Última respiración completa: Introduce el número y cierre el teclado antes de pulsar en siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -463,7 +477,9 @@ class BtnNext extends StatelessWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Debes indicar el tiempo para continuar.'),
+              content: Text(
+                'Valor incorrecto. Asegúrate de indicar el número de la última respiración completada.',
+              ),
               backgroundColor: Colors.red,
             ),
           );

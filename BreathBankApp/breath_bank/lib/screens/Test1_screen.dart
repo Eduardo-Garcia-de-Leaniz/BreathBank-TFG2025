@@ -283,7 +283,7 @@ class Test1ScreenState extends State<Test1Screen>
                             ),
                           ],
                         ),
-                        SizedBox(height: 80),
+                        SizedBox(height: 50),
                         LabelTestResultText(),
                         SizedBox(height: 20),
                         Padding(
@@ -400,7 +400,7 @@ class LabelTestResultText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        'Anota el número de respiraciones que has realizado:',
+        'Anota el número de respiraciones que has realizado: Introduce el número y cierre el teclado antes de pulsar en siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
