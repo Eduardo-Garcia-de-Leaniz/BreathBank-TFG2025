@@ -13,6 +13,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
   int result_test1 = 0;
   int result_test2 = 0;
   int result_test3 = 0;
+  int nivelInversorFinal = 0;
 
   // Variables para almacenar el estado de las pruebas
   Map<String, bool> testCompleted = {
@@ -21,7 +22,117 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     'test3': false,
   };
 
-  // Marca como completada una prueba y verifica si todas las pruebas están completas
+  int getNivelInversorFinal() {
+    int nivelPrueba1 = calcularResultadoPrueba1(result_test1);
+    int nivelPrueba2 = calcularResultadoPrueba2(result_test2);
+    int nivelPrueba3 = calcularResultadoPrueba3(result_test3);
+
+    nivelInversorFinal = calcularNivelDeInversor(
+      resultadoPrueba1: nivelPrueba1,
+      resultadoPrueba2: nivelPrueba2,
+      resultadoPrueba3: nivelPrueba3,
+    );
+
+    return nivelInversorFinal;
+  }
+
+  int calcularNivelDeInversor({
+    required int resultadoPrueba1,
+    required int resultadoPrueba2,
+    required int resultadoPrueba3,
+  }) {
+    double nivel =
+        (resultadoPrueba1 * 10 +
+            resultadoPrueba2 * 30 +
+            resultadoPrueba3 * 60) /
+        100;
+    return nivel.round();
+  }
+
+  int calcularResultadoPrueba1(int result_test1) {
+    if (result_test1 <= 3) {
+      return 11;
+    } else if (result_test1 == 4) {
+      return 10;
+    } else if (result_test1 == 5) {
+      return 9;
+    } else if (result_test1 == 6) {
+      return 8;
+    } else if (result_test1 == 7) {
+      return 7;
+    } else if (result_test1 == 8) {
+      return 6;
+    } else if (result_test1 == 9) {
+      return 5;
+    } else if (result_test1 == 10) {
+      return 4;
+    } else if (result_test1 == 11) {
+      return 3;
+    } else if (result_test1 == 12) {
+      return 2;
+    } else if (result_test1 == 13) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  int calcularResultadoPrueba2(int result_test2) {
+    if (result_test2 >= 301) {
+      return 11;
+    } else if (result_test2 >= 271) {
+      return 10;
+    } else if (result_test2 >= 241) {
+      return 9;
+    } else if (result_test2 >= 211) {
+      return 8;
+    } else if (result_test2 >= 181) {
+      return 7;
+    } else if (result_test2 >= 151) {
+      return 6;
+    } else if (result_test2 >= 121) {
+      return 5;
+    } else if (result_test2 >= 91) {
+      return 4;
+    } else if (result_test2 >= 61) {
+      return 3;
+    } else if (result_test2 >= 41) {
+      return 2;
+    } else if (result_test2 >= 21) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  int calcularResultadoPrueba3(int result_test3) {
+    if (result_test3 <= 7) {
+      return 0;
+    } else if (result_test3 <= 14) {
+      return 1;
+    } else if (result_test3 <= 21) {
+      return 2;
+    } else if (result_test3 <= 28) {
+      return 3;
+    } else if (result_test3 <= 35) {
+      return 4;
+    } else if (result_test3 <= 42) {
+      return 5;
+    } else if (result_test3 <= 49) {
+      return 6;
+    } else if (result_test3 <= 56) {
+      return 7;
+    } else if (result_test3 <= 63) {
+      return 8;
+    } else if (result_test3 <= 70) {
+      return 9;
+    } else if (result_test3 <= 77) {
+      return 10;
+    } else {
+      return 11;
+    }
+  }
+
   void completeTest(String testKey) {
     setState(() {
       testCompleted[testKey] = true;
@@ -47,7 +158,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false, // Evita que el usuario vuelva atrás
+      onWillPop: () async => false,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
@@ -182,6 +293,14 @@ class BtnNext extends StatelessWidget {
           onPressed:
               testCompleted.values.every((e) => e)
                   ? () {
+                    final nivelInversorFinal =
+                        EvaluationScreenState().getNivelInversorFinal();
+                    // Aquí puedes usar el nivelInversorFinal como desees
+                    print(
+                      'Nivel de inversor final: $nivelInversorFinal',
+                    ); // Depuración
+                    // Falta guardar en DB la evaluación del usuario
+                    // Navegar a la pantalla de resultados
                     Navigator.of(context).pushNamed('/evaluation/result');
                   }
                   : null,
