@@ -13,90 +13,110 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: AppBar_Dashboard(),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FutureBuilder<String?>(
-                future: obtenerNombreUsuario(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text(
-                      'Cargando...',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text(
-                      'Error al cargar el nombre',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  } else {
-                    return Text(
-                      'Bienvenido a tu Dashboard, ${snapshot.data ?? 'Usuario'}!',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: AppBar_Dashboard(),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        selectedItemColor: const Color.fromARGB(255, 188, 252, 245),
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        unselectedItemColor: Colors.white, // Set unselected items to white
-        currentIndex: 0, // Index of the selected item (Dashboard)
-        onTap: (index) {
-          if (index == 0) {
-            // Already on Dashboard, do nothing
-          } else if (index == 1) {
-            Navigator.pushNamed(
-              context,
-              '/investments',
-            ); // Navigate to Investments
-          } else if (index == 2) {
-            Navigator.pushNamed(
-              context,
-              '/information',
-            ); // Navigate to Information
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: FutureBuilder<String?>(
+                  future: obtenerNombreUsuario(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text(
+                        'Cargando...',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        'Error al cargar el nombre',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        'Bienvenido a tu Dashboard, ${snapshot.data ?? 'Usuario'}!',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer_outlined),
-            label: 'Inversiones',
+        ),
+        bottomNavigationBar: SizedBox(
+          height: 70,
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            showUnselectedLabels: true,
+            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+            selectedItemColor: const Color.fromARGB(255, 188, 252, 245),
+            selectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+            unselectedLabelStyle: TextStyle(fontSize: 12),
+            unselectedItemColor: Colors.white,
+            currentIndex: 1,
+            onTap: (index) {
+              switch (index) {
+                case 0:
+                  Navigator.pushNamed(context, '/evaluation');
+                  break;
+                case 1:
+                  break;
+                case 2:
+                  Navigator.pushNamed(context, '/investments');
+                  break;
+                case 3:
+                  Navigator.pushNamed(context, '/information');
+                  break;
+              }
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.assignment, size: 30),
+                label: 'Evaluaciones',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard, size: 30),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.show_chart, size: 30),
+                label: 'Progreso',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.info, size: 30),
+                label: 'Información',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'Información'),
-        ],
-      ),
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/evaluation');
-        },
-        child: Icon(Icons.arrow_forward),
+        ),
+
+        backgroundColor: const Color.fromARGB(255, 188, 252, 245),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/evaluation');
+          },
+          child: Icon(Icons.arrow_forward),
+        ),
       ),
     );
   }
@@ -109,6 +129,7 @@ class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
       title: Text(
         'Dashboard',
