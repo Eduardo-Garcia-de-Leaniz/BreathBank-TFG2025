@@ -1,3 +1,4 @@
+import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class EvaluationScreen extends StatefulWidget {
 
 class EvaluationScreenState extends State<EvaluationScreen> {
   Database_service db = Database_service();
+  String userId = authenticationService.value.currentUser!.uid;
   int result_test1 = 0;
   int result_test2 = 0;
   int result_test3 = 0;
@@ -27,13 +29,13 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     int nivelPrueba2 = calcularResultadoPrueba2(result_test2);
     int nivelPrueba3 = calcularResultadoPrueba3(result_test3);
 
-    nivelInversorFinal = calcularNivelDeInversor(
+    int nivel_InversorFinal = calcularNivelDeInversor(
       resultadoPrueba1: nivelPrueba1,
       resultadoPrueba2: nivelPrueba2,
       resultadoPrueba3: nivelPrueba3,
     );
 
-    return nivelInversorFinal;
+    return nivel_InversorFinal;
   }
 
   int calcularNivelDeInversor({
@@ -148,11 +150,29 @@ class EvaluationScreenState extends State<EvaluationScreen> {
   void allTestsDoneMessage() {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('¡Felicidades! Has completado todas las pruebas 🎉'),
+        content: Text(
+          '¡Felicidades! Has completado todas las pruebas. Pulsa en siguiente para ver tus resultados.',
+        ),
         backgroundColor: Colors.green,
         duration: Duration(seconds: 3),
       ),
     );
+  }
+
+  bool guardarNuevaEvaluacion() {
+    try {
+      db.addNuevaEvaluacion(
+        userId: userId,
+        fechaEvaluacion: DateTime.now(),
+        nivelInversorFinal: nivelInversorFinal,
+        resultadoPrueba1: result_test1,
+        resultadoPrueba2: result_test2,
+        resultadoPrueba3: result_test3,
+      );
+    } catch (e) {
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -210,7 +230,60 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              BtnNext(testCompleted: testCompleted),
+              //BtnNext(testCompleted: testCompleted),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed:
+                        testCompleted.values.every((e) => e)
+                            ? () async {
+                              nivelInversorFinal = getNivelInversorFinal();
+                              if (await guardarNuevaEvaluacion()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'La evaluación se ha guardado correctamente.',
+                                    ),
+                                    backgroundColor: Colors.green,
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
+                                Navigator.of(context).pushNamed(
+                                  '/evaluation/result',
+                                  arguments: {
+                                    'nivelInversorFinal': nivelInversorFinal,
+                                    'result_test1': result_test1,
+                                    'result_test2': result_test2,
+                                    'result_test3': result_test3,
+                                  },
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Error al guardar la evaluación.',
+                                    ),
+                                    backgroundColor: Colors.red,
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
+                              }
+                            }
+                            : null,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16.0,
+                        horizontal: 32.0,
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                      foregroundColor: Colors.white,
+                    ),
+                    child: const Text('Continuar'),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -274,47 +347,6 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class BtnNext extends StatelessWidget {
-  const BtnNext({super.key, required this.testCompleted});
-
-  final Map<String, bool> testCompleted;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed:
-              testCompleted.values.every((e) => e)
-                  ? () {
-                    final nivelInversorFinal =
-                        EvaluationScreenState().getNivelInversorFinal();
-                    // Aquí puedes usar el nivelInversorFinal como desees
-                    print(
-                      'Nivel de inversor final: $nivelInversorFinal',
-                    ); // Depuración
-                    // Falta guardar en DB la evaluación del usuario
-                    // Navegar a la pantalla de resultados
-                    Navigator.of(context).pushNamed('/evaluation/result');
-                  }
-                  : null,
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
-              horizontal: 32.0,
-            ),
-            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-            foregroundColor: Colors.white,
-          ),
-          child: const Text('Continuar'),
-        ),
-      ),
     );
   }
 }

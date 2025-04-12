@@ -149,9 +149,9 @@ class Database_service {
     required String userId,
     required DateTime fechaEvaluacion,
     required int nivelInversorFinal,
-    required double resultadoPrueba1,
-    required double resultadoPrueba2,
-    required double resultadoPrueba3,
+    required int resultadoPrueba1,
+    required int resultadoPrueba2,
+    required int resultadoPrueba3,
   }) async {
     final String evaluacionId =
         '${userId}_${fechaEvaluacion.toIso8601String()}'; // Revisar Id de la evaluación
