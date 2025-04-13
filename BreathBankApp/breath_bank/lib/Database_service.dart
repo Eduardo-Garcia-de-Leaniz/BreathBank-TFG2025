@@ -66,10 +66,58 @@ class Database_service {
     );
 
     if (snapshot != null && snapshot.data() != null) {
-      print(snapshot.data()!['Nombre'] as String); // Depuración
       return snapshot.data()!['Nombre'] as String;
     }
     return null;
+  }
+
+  Future<Map<String, dynamic>?> getUsuarioStats({
+    required String userId,
+  }) async {
+    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
+      collectionPath: 'Usuarios',
+      docId: userId,
+    );
+
+    if (snapshot != null && snapshot.data() != null) {
+      final data = snapshot.data()!;
+      print(data['NivelInversor']);
+      print(data['NúmeroEvaluacionesRealizadas']);
+      print(data['NúmeroInversionesRealizadas']);
+      print(data['Saldo']);
+
+      return {
+        'nivelInversor': data['NivelInversor']?.toString(),
+        'numeroEvaluaciones': data['NúmeroEvaluacionesRealizadas'],
+        'numeroInversiones': data['NúmeroInversionesRealizadas'],
+        'saldo': data['Saldo']?.toString(),
+      };
+    }
+    return null;
+  }
+
+  Future<List<Map<String, dynamic>>> getUltimasEvaluaciones({
+    required String userId,
+  }) async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await db
+            .collection('Evaluaciones')
+            .where('IdUsuario', isEqualTo: userId)
+            .get();
+
+    return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> getUltimasInversiones({
+    required String userId,
+  }) async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot =
+        await db
+            .collection('Inversiones')
+            .where('IdUsuario', isEqualTo: userId)
+            .get();
+
+    return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
   Future<void> updateFechaUltimoAcceso({
@@ -83,19 +131,30 @@ class Database_service {
     );
   }
 
-  Future<void> updateEvaluacionesRealizadas({
+  Future<void> updateEvaluacionesRealizadasYNivelInversor({
     required String userId,
-    required int numeroEvaluaciones,
     required DateTime fechaUltimaEvaluacion,
+    required int nivelInversor,
   }) async {
-    await update(
+    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
       collectionPath: 'Usuarios',
       docId: userId,
-      data: {
-        'NúmeroEvaluacionesRealizadas': numeroEvaluaciones,
-        'FechaÚltimaEvaluación': fechaUltimaEvaluacion,
-      },
     );
+
+    if (snapshot != null && snapshot.data() != null) {
+      final int numeroEvaluacionesActual =
+          snapshot.data()!['NúmeroEvaluacionesRealizadas'] ?? 0;
+
+      await update(
+        collectionPath: 'Usuarios',
+        docId: userId,
+        data: {
+          'NúmeroEvaluacionesRealizadas': numeroEvaluacionesActual + 1,
+          'FechaÚltimaEvaluación': fechaUltimaEvaluacion,
+          'NivelInversor': nivelInversor,
+        },
+      );
+    }
   }
 
   Future<void> updateInversionesYSaldo({

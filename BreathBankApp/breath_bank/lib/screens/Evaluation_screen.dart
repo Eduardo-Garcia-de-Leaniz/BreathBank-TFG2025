@@ -175,6 +175,19 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     return true;
   }
 
+  bool actualizarDatos() {
+    try {
+      db.updateEvaluacionesRealizadasYNivelInversor(
+        userId: userId,
+        fechaUltimaEvaluacion: DateTime.now(),
+        nivelInversor: nivelInversorFinal,
+      );
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -241,6 +254,18 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                             ? () async {
                               nivelInversorFinal = getNivelInversorFinal();
                               if (await guardarNuevaEvaluacion()) {
+                                if (await actualizarDatos()) {
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Error al actualizar los datos.',
+                                      ),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 3),
+                                    ),
+                                  );
+                                }
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
