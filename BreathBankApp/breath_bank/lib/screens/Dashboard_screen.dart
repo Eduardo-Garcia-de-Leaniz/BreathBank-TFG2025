@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/Database_service.dart';
@@ -125,6 +126,16 @@ class DashboardScreen extends StatelessWidget {
 class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(60);
+  Authentication_service authenticationService = Authentication_service();
+
+  Future<bool> logout() async {
+    try {
+      await authenticationService.signOut();
+    } on FirebaseAuthException catch (e) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +166,74 @@ class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
         ),
         IconButton(
           icon: Icon(Icons.logout, color: Colors.white),
-          onPressed: () {
-            // Add logout functionality here
-            Navigator.pushNamed(context, '/login'); // Navigate to login
+          onPressed: () async {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                  title: Text(
+                    'Cerrar sesión',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  content: Text(
+                    '¿Estás seguro de que deseas cerrar sesión?',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  actions: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(
+                          255,
+                          188,
+                          252,
+                          245,
+                        ),
+                      ),
+                      child: Text(
+                        'Cerrar sesión',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 7, 71, 94),
+                        ),
+                      ),
+                      onPressed: () async {
+                        Navigator.of(context).pop();
+                        if (await logout()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sesión cerrada correctamente'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/',
+                            (Route<dynamic> route) => false,
+                          );
+                          Navigator.pushNamed(context, '/');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Error al cerrar sesión'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    TextButton(
+                      child: Text(
+                        'Cancelar',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           },
         ),
       ],
