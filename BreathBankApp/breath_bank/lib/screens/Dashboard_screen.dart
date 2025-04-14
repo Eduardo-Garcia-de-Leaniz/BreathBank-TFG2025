@@ -309,7 +309,8 @@ class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
         ),
         IconButton(
           icon: Icon(Icons.account_circle, color: Colors.white),
-          onPressed: () => Navigator.pushNamed(context, '/profile'),
+          onPressed:
+              () => Navigator.pushNamed(context, '/dashboard/accountsettings'),
         ),
         IconButton(
           icon: Icon(Icons.logout, color: Colors.white),

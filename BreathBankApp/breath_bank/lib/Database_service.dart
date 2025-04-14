@@ -71,6 +71,24 @@ class Database_service {
     return null;
   }
 
+  Future<Map<String, String>?> getNombreYApellidosUsuario({
+    required String userId,
+  }) async {
+    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
+      collectionPath: 'Usuarios',
+      docId: userId,
+    );
+
+    if (snapshot != null && snapshot.data() != null) {
+      final data = snapshot.data()!;
+      return {
+        'Nombre': data['Nombre'] as String,
+        'Apellidos': data['Apellidos'] as String,
+      };
+    }
+    return null;
+  }
+
   Future<Map<String, dynamic>?> getUsuarioStats({
     required String userId,
   }) async {
@@ -81,10 +99,6 @@ class Database_service {
 
     if (snapshot != null && snapshot.data() != null) {
       final data = snapshot.data()!;
-      print(data['NivelInversor']);
-      print(data['NúmeroEvaluacionesRealizadas']);
-      print(data['NúmeroInversionesRealizadas']);
-      print(data['Saldo']);
 
       return {
         'nivelInversor': data['NivelInversor']?.toString(),

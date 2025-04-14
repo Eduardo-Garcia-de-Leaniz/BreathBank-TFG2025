@@ -6,6 +6,8 @@ import 'package:breath_bank/screens/Test2_screen.dart';
 import 'package:breath_bank/screens/Test3_screen.dart';
 import 'package:breath_bank/screens/login_screen.dart';
 import 'package:breath_bank/screens/EvaluationResult_screen.dart';
+import 'package:breath_bank/screens/AccountSettings_screen.dart';
+import 'package:breath_bank/screens/AccountSettingsResetPassword_screen.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -54,6 +56,9 @@ class MyApp extends StatelessWidget {
         '/evaluation/test2': (context) => Test2Screen(),
         '/evaluation/test3': (context) => Test3Screen(),
         '/evaluation/result': (context) => EvaluationresultScreen(),
+        '/dashboard/accountsettings': (context) => AccountSettingsScreen(),
+        '/dashboard/accontsettings/resetpassword':
+            (context) => AccountSettingsResetPasswordScreen(),
       },
     );
   }

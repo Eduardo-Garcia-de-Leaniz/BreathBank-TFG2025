@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
 
+// Falta añadir recuperar/restablecer contraseña
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
