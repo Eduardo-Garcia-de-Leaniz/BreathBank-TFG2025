@@ -154,11 +154,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         userId = FirebaseAuth.instance.currentUser!.uid;
                         try {
                           await bd.deleteUserData(userId: userId);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Historial borrado correctamente'),
-                            ),
-                          );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -166,6 +161,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             ),
                           );
                         }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Historial borrado correctamente'),
+                          ),
+                        );
                       }
                     },
                   ),

@@ -299,13 +299,23 @@ class Database_service {
   }
 
   Future<void> deleteUserData({required String userId}) async {
-    // Delete all evaluations associated with the user
+    // Delete all evaluations and their subcollections associated with the user
     final QuerySnapshot<Map<String, dynamic>> evaluacionesSnapshot =
         await db
             .collection('Evaluaciones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
     for (final doc in evaluacionesSnapshot.docs) {
+      // Delete the subcollection 'PruebasEvaluacion' for each evaluation
+      final CollectionReference<Map<String, dynamic>> pruebasEvaluacionRef = db
+          .collection('Evaluaciones/${doc.id}/PruebasEvaluación');
+      final QuerySnapshot<Map<String, dynamic>> pruebasSnapshot =
+          await pruebasEvaluacionRef.get();
+      for (final pruebaDoc in pruebasSnapshot.docs) {
+        await pruebasEvaluacionRef.doc(pruebaDoc.id).delete();
+      }
+
+      // Delete the evaluation document
       await db.collection('Evaluaciones').doc(doc.id).delete();
     }
 
