@@ -1,7 +1,6 @@
 import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class AccountSettingsResetPasswordScreen extends StatefulWidget {
@@ -25,7 +24,6 @@ class _AccountSettingsResetPasswordScreenState
 
   bool _obscureCurrent = true;
   bool _obscureNew = true;
-  bool _obscureConfirm = true;
 
   bool areFieldsNotEmpty() {
     return emailController.text.isNotEmpty &&

@@ -1,3 +1,4 @@
+import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -106,11 +107,79 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     iconColor: Colors.white,
                     titleColor: Colors.white,
                     arrow_color: Colors.white,
+                    onTap: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (context) => AlertDialog(
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                7,
+                                71,
+                                94,
+                              ),
+                              title: Text(
+                                'Cerrar sesión',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              content: Text(
+                                '¿Estás seguro de que deseas cerrar sesión?',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              actions: [
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: const Color.fromARGB(
+                                      255,
+                                      188,
+                                      252,
+                                      245,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Cerrar sesión',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 7, 71, 94),
+                                    ),
+                                  ),
+                                  onPressed:
+                                      () => Navigator.of(context).pop(true),
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    'Cancelar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed:
+                                      () => Navigator.of(context).pop(false),
+                                ),
+                              ],
+                            ),
+                      );
 
-                    onTap: () {
-                      // TODO: Implementar logout
+                      if (confirmed == true) {
+                        final authenticationService = Authentication_service();
+                        try {
+                          await authenticationService.signOut();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sesión cerrada correctamente'),
+                            ),
+                          );
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/',
+                            (route) => false,
+                          );
+                        } on FirebaseAuthException {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error al cerrar sesión')),
+                          );
+                        }
+                      }
                     },
                   ),
+
                   buildOptionTile(
                     icon: Icons.delete_forever,
                     title: 'Eliminar cuenta',
