@@ -76,7 +76,11 @@ class DashboardScreen extends StatelessWidget {
               SizedBox(height: 30),
               _buildSectionHeader(
                 title: 'Últimas Evaluaciones',
-                onTap: () => Navigator.pushNamed(context, '/progress'),
+                onTap:
+                    () => Navigator.pushNamed(
+                      context,
+                      '/dashboard/evaluationmenu',
+                    ),
               ),
               _buildListPreviewEvaluaciones(
                 itemsFuture: db.getUltimasEvaluaciones(userId: userId),
@@ -111,7 +115,7 @@ class DashboardScreen extends StatelessWidget {
             onTap: (index) {
               switch (index) {
                 case 0:
-                  Navigator.pushNamed(context, '/evaluation');
+                  Navigator.pushNamed(context, '/dashboard/evaluationmenu');
                   break;
                 case 1:
                   break;
@@ -159,9 +163,14 @@ class DashboardScreen extends StatelessWidget {
     required Color numberColor,
     required Color textColor,
   }) {
+    int maxValue = title == 'Nivel de Inversor' ? 11 : 100;
+
     return FutureBuilder<String?>(
       future: futureValue,
       builder: (context, snapshot) {
+        final valueString = snapshot.data;
+        final value = int.tryParse(valueString ?? '');
+
         return Card(
           color: const Color.fromARGB(255, 7, 71, 94),
           shape: RoundedRectangleBorder(
@@ -171,19 +180,68 @@ class DashboardScreen extends StatelessWidget {
             padding: EdgeInsets.all(16),
             width: 160,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   title,
                   style: TextStyle(fontSize: 15, color: Colors.white),
                 ),
-                Text(
-                  snapshot.data ?? 'Cargando...',
-                  style: TextStyle(
-                    fontSize: 60,
-                    fontWeight: FontWeight.bold,
-                    color: numberColor,
+                if (value != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        value.toString(),
+                        style: TextStyle(
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          color: numberColor,
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Column(
+                        children: [
+                          LinearProgressIndicator(
+                            value: value / maxValue,
+                            backgroundColor: Colors.white24,
+                            color: numberColor,
+                            minHeight: 8,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '0',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: numberColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                maxValue.toString(),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: numberColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      'Cargando...',
+                      style: TextStyle(color: textColor),
+                    ),
                   ),
-                ),
               ],
             ),
           ),

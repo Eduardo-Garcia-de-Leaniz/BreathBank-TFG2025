@@ -1,5 +1,6 @@
 import 'package:breath_bank/screens/AppSettings_screen.dart';
 import 'package:breath_bank/screens/Dashboard_screen.dart';
+import 'package:breath_bank/screens/EvaluationMenu_screen.dart';
 import 'package:breath_bank/screens/Evaluation_screen.dart';
 import 'package:breath_bank/screens/Register_screen.dart';
 import 'package:breath_bank/screens/Test1_screen.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         '/dashboard/accountsettings/consultdata':
             (context) => AccountSettingsModifyDataScreen(),
         '/dashboard/appsettings': (context) => AppSettingsScreen(),
+        '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
       },
     );
   }
