@@ -294,4 +294,53 @@ class Database_service {
       data: {'ResultadoPrueba3': resultadoPrueba3},
     );
   }
+
+  Future<void> deleteUserData({required String userId}) async {
+    // Delete all evaluations associated with the user
+    final QuerySnapshot<Map<String, dynamic>> evaluacionesSnapshot =
+        await db
+            .collection('Evaluaciones')
+            .where('IdUsuario', isEqualTo: userId)
+            .get();
+    for (final doc in evaluacionesSnapshot.docs) {
+      await db.collection('Evaluaciones').doc(doc.id).delete();
+    }
+
+    // Delete all investments associated with the user
+    final QuerySnapshot<Map<String, dynamic>> inversionesSnapshot =
+        await db
+            .collection('Inversiones')
+            .where('IdUsuario', isEqualTo: userId)
+            .get();
+    for (final doc in inversionesSnapshot.docs) {
+      await db.collection('Inversiones').doc(doc.id).delete();
+    }
+
+    // Update the user document to retain only specific fields
+    final DocumentSnapshot<Map<String, dynamic>>? userSnapshot = await read(
+      collectionPath: 'Usuarios',
+      docId: userId,
+    );
+
+    if (userSnapshot != null && userSnapshot.data() != null) {
+      final data = userSnapshot.data()!;
+      await update(
+        collectionPath: 'Usuarios',
+        docId: userId,
+        data: {
+          'Nombre': data['Nombre'],
+          'Apellidos': data['Apellidos'],
+          'FechaCreación': data['FechaCreación'],
+          'FechaÚltimoAcceso': data['FechaÚltimoAcceso'],
+
+          'NivelInversor': 0,
+          'NúmeroEvaluacionesRealizadas': 0,
+          'NúmeroInversionesRealizadas': 0,
+          'FechaÚltimaEvaluación': null,
+          'FechaUltimaInversión': null,
+          'Saldo': 0,
+        },
+      );
+    }
+  }
 }

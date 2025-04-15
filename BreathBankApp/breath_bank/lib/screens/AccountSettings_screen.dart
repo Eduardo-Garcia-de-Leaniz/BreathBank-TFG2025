@@ -12,7 +12,7 @@ class AccountSettingsScreen extends StatefulWidget {
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   final Database_service db = Database_service();
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
 
   String nombre = 'Cargando...';
   String apellidos = 'Cargando...';
@@ -96,10 +96,77 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   buildOptionTile(
                     icon: Icons.history,
                     title: 'Borrar historial',
-                    onTap: () {
-                      // TODO: Navegar a detalles del usuario
+                    onTap: () async {
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder:
+                            (context) => AlertDialog(
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                7,
+                                71,
+                                94,
+                              ),
+                              title: Text(
+                                'Borrar historial',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              content: Text(
+                                '¿Estás seguro de que deseas borrar tu historial de inversiones y evaluaciones? Esta acción no se puede deshacer. Tu nivel de inversor se restablecerá a 0.',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              actions: [
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: const Color.fromARGB(
+                                      255,
+                                      188,
+                                      252,
+                                      245,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Borrar',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 7, 71, 94),
+                                    ),
+                                  ),
+                                  onPressed:
+                                      () => Navigator.of(context).pop(true),
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    'Cancelar',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed:
+                                      () => Navigator.of(context).pop(false),
+                                ),
+                              ],
+                            ),
+                      );
+
+                      if (confirmed == true) {
+                        Database_service bd = Database_service();
+                        userId = FirebaseAuth.instance.currentUser!.uid;
+                        try {
+                          await bd.deleteUserData(userId: userId);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Historial borrado correctamente'),
+                            ),
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Error al borrar el historial'),
+                            ),
+                          );
+                        }
+                      }
                     },
                   ),
+
                   buildOptionTile(
                     icon: Icons.logout,
                     title: 'Cerrar sesión',
