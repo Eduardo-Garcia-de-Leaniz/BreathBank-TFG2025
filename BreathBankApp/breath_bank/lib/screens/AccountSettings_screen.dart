@@ -77,7 +77,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
               child: ListView(
                 children: [
                   buildOptionTile(
-                    icon: Icons.edit,
+                    icon: Icons.info_outline,
                     title: 'Consultar mis datos',
                     onTap: () {
                       Navigator.pushNamed(
@@ -257,8 +257,188 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     iconColor: Colors.white,
                     titleColor: Colors.white,
                     arrow_color: Colors.white,
-                    onTap: () {
-                      // TODO: Confirmar y eliminar cuenta
+                    onTap: () async {
+                      final auth = FirebaseAuth.instance;
+                      final db = Database_service();
+                      final user = auth.currentUser;
+                      final authenticationService = Authentication_service();
+
+                      final passwordController = TextEditingController();
+                      String? errorMessage;
+
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return StatefulBuilder(
+                            builder:
+                                (context, setState) => AlertDialog(
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    7,
+                                    71,
+                                    94,
+                                  ),
+                                  title: const Text(
+                                    'Eliminar cuenta',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción eliminará todos tus datos y no se puede deshacer.',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      TextField(
+                                        controller: passwordController,
+                                        obscureText: true,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                        decoration: const InputDecoration(
+                                          labelText: 'Contraseña',
+                                          labelStyle: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      if (errorMessage != null) ...[
+                                        const SizedBox(height: 12),
+                                        Text(
+                                          errorMessage!,
+                                          style: const TextStyle(
+                                            color: Colors.redAccent,
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed:
+                                          () =>
+                                              Navigator.of(
+                                                context,
+                                              ).pop(), // Cerrar
+                                      child: const Text(
+                                        'Cancelar',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                          255,
+                                          188,
+                                          252,
+                                          245,
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'Eliminar',
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 7, 71, 94),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        final password =
+                                            passwordController.text.trim();
+                                        if (password.isEmpty) {
+                                          setState(() {
+                                            errorMessage =
+                                                'Por favor, introduce tu contraseña';
+                                          });
+                                          return;
+                                        }
+
+                                        try {
+                                          // Eliminar datos
+                                          await db.deleteUserAccount(
+                                            userId: user!.uid,
+                                          );
+
+                                          // Eliminar cuenta
+                                          await authenticationService
+                                              .deleteAccount(
+                                                email: user.email!,
+                                                password: password,
+                                              );
+
+                                          Navigator.of(
+                                            context,
+                                          ).pop(); // Cierra el diálogo
+
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Cuenta eliminada correctamente',
+                                              ),
+                                            ),
+                                          );
+
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            '/',
+                                            (route) => false,
+                                          );
+                                        } catch (e) {
+                                          final error = e.toString();
+
+                                          if (error.contains(
+                                            'The supplied auth credential is incorrect',
+                                          )) {
+                                            setState(() {
+                                              errorMessage =
+                                                  'Contraseña incorrecta';
+                                            });
+                                          } else if (error.contains(
+                                            'requires-recent-login',
+                                          )) {
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                  'Por seguridad, vuelve a iniciar sesión antes de eliminar tu cuenta.',
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            Navigator.of(context).pop();
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                  'Error al eliminar la cuenta',
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                          );
+                        },
+                      );
                     },
                   ),
                 ],
