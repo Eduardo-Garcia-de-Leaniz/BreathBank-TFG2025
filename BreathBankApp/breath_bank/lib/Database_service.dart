@@ -92,21 +92,24 @@ class Database_service {
   Future<Map<String, dynamic>?> getUsuarioStats({
     required String userId,
   }) async {
-    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
-      collectionPath: 'Usuarios',
-      docId: userId,
-    );
+    final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
 
     if (snapshot != null && snapshot.data() != null) {
       final data = snapshot.data()!;
 
       return {
-        'nivelInversor': data['NivelInversor']?.toString(),
-        'numeroEvaluaciones': data['NúmeroEvaluacionesRealizadas'],
-        'numeroInversiones': data['NúmeroInversionesRealizadas'],
-        'saldo': data['Saldo']?.toString(),
+        'Nombre': data['Nombre'],
+        'Apellidos': data['Apellidos'],
+        'FechaCreación': data['FechaCreación'],
+        'FechaÚltimaEvaluación': data['FechaÚltimaEvaluación'],
+        'FechaUltimaInversión': data['FechaUltimaInversión'],
+        'NúmeroEvaluacionesRealizadas': data['NúmeroEvaluacionesRealizadas'],
+        'NúmeroInversionesRealizadas': data['NúmeroInversionesRealizadas'],
+        'NivelInversor': data['NivelInversor'],
+        'Saldo': data['Saldo'],
       };
     }
+
     return null;
   }
 

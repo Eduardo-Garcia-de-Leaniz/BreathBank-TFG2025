@@ -15,12 +15,14 @@ class DashboardScreen extends StatelessWidget {
 
   Future<String?> obtenerNivelInversor() async {
     final stats = await db.getUsuarioStats(userId: userId);
-    return stats?['nivelInversor'] as String?;
+    final nivel = stats?['NivelInversor'];
+    return nivel?.toString();
   }
 
   Future<String?> obtenerSaldo() async {
     final stats = await db.getUsuarioStats(userId: userId);
-    return stats?['saldo'] as String?;
+    final saldo = stats?['Saldo'];
+    return saldo?.toString();
   }
 
   String formatFecha(Timestamp timestamp) {

@@ -78,9 +78,12 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 children: [
                   buildOptionTile(
                     icon: Icons.edit,
-                    title: 'Modificar mis datos',
+                    title: 'Consultar mis datos',
                     onTap: () {
-                      // TODO: Navegar a detalles del usuario
+                      Navigator.pushNamed(
+                        context,
+                        '/dashboard/accountsettings/consultdata',
+                      );
                     },
                   ),
                   buildOptionTile(
