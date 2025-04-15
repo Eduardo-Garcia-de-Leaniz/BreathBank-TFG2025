@@ -1,3 +1,4 @@
+import 'package:breath_bank/screens/AppSettings_screen.dart';
 import 'package:breath_bank/screens/Dashboard_screen.dart';
 import 'package:breath_bank/screens/Evaluation_screen.dart';
 import 'package:breath_bank/screens/Register_screen.dart';
@@ -8,7 +9,7 @@ import 'package:breath_bank/screens/login_screen.dart';
 import 'package:breath_bank/screens/EvaluationResult_screen.dart';
 import 'package:breath_bank/screens/AccountSettings_screen.dart';
 import 'package:breath_bank/screens/AccountSettingsResetPassword_screen.dart';
-import 'package:breath_bank/screens/AccountSettingsModifyData_screen.dart';
+import 'package:breath_bank/screens/AccountSettingsConsultData_screen.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
             (context) => AccountSettingsResetPasswordScreen(),
         '/dashboard/accountsettings/consultdata':
             (context) => AccountSettingsModifyDataScreen(),
+        '/dashboard/appsettings': (context) => AppSettingsScreen(),
       },
     );
   }

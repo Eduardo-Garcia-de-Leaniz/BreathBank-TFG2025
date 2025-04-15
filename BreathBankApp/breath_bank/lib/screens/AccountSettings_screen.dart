@@ -77,7 +77,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
               child: ListView(
                 children: [
                   buildOptionTile(
-                    icon: Icons.info_outline,
+                    icon: Icons.edit_note,
                     title: 'Consultar mis datos',
                     onTap: () {
                       Navigator.pushNamed(

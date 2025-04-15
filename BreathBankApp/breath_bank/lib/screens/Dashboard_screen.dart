@@ -59,15 +59,17 @@ class DashboardScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildInfoCard(
+                  buildInfoCard(
                     title: 'Nivel de Inversor',
                     futureValue: obtenerNivelInversor(),
-                    highlight: true,
+                    numberColor: Color.fromARGB(255, 223, 190, 0),
+                    textColor: Color.fromARGB(255, 243, 221, 96),
                   ),
-                  _buildInfoCard(
+                  buildInfoCard(
                     title: 'Saldo',
                     futureValue: obtenerSaldo(),
-                    highlight: true,
+                    numberColor: Colors.green[400] ?? Colors.green,
+                    textColor: Colors.green[200] ?? Colors.green,
                   ),
                 ],
               ),
@@ -131,7 +133,7 @@ class DashboardScreen extends StatelessWidget {
                 label: 'Dashboard',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.add_box, size: 30),
+                icon: Icon(Icons.more_time, size: 30),
                 label: 'Inversiones',
               ),
               BottomNavigationBarItem(
@@ -151,16 +153,17 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard({
+  Widget buildInfoCard({
     required String title,
     required Future<String?> futureValue,
-    bool highlight = false,
+    required Color numberColor,
+    required Color textColor,
   }) {
     return FutureBuilder<String?>(
       future: futureValue,
       builder: (context, snapshot) {
         return Card(
-          color: highlight ? Colors.teal[100] : Colors.white,
+          color: const Color.fromARGB(255, 7, 71, 94),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -169,22 +172,16 @@ class DashboardScreen extends StatelessWidget {
             width: 160,
             child: Column(
               children: [
-                SizedBox(height: 10),
                 Text(
                   title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.teal[800],
-                  ),
+                  style: TextStyle(fontSize: 15, color: Colors.white),
                 ),
-                SizedBox(height: 10),
                 Text(
                   snapshot.data ?? 'Cargando...',
                   style: TextStyle(
-                    fontSize: 30, // Aumentar tamaño para resaltar el número
+                    fontSize: 60,
                     fontWeight: FontWeight.bold,
-                    color: Colors.teal[900], // Cambiar color para resaltar más
+                    color: numberColor,
                   ),
                 ),
               ],
@@ -307,7 +304,8 @@ class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: Icon(Icons.settings, color: Colors.white),
-          onPressed: () => Navigator.pushNamed(context, '/settings'),
+          onPressed:
+              () => Navigator.pushNamed(context, '/dashboard/appsettings'),
         ),
         IconButton(
           icon: Icon(Icons.account_circle, color: Colors.white),
@@ -315,7 +313,7 @@ class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
               () => Navigator.pushNamed(context, '/dashboard/accountsettings'),
         ),
         IconButton(
-          icon: Icon(Icons.logout, color: Colors.white),
+          icon: Icon(Icons.logout, color: Colors.red),
           onPressed: () async {
             final confirmed = await showDialog<bool>(
               context: context,
