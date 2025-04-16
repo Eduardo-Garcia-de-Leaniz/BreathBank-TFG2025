@@ -1,3 +1,4 @@
+import 'package:breath_bank/screens/Dashboard_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/Database_service.dart';
@@ -99,6 +100,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
               ],
             ),
           ),
+          NavigationMenu(currentIndex: 0),
         ],
       ),
     );
@@ -229,7 +231,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                 : 'N/A';
         final mejorP1 =
             prueba1.isNotEmpty
-                ? prueba1.reduce((a, b) => a > b ? a : b)
+                ? prueba1.reduce((a, b) => a < b ? a : b)
                 : 'N/A';
         final mejorP2 =
             prueba2.isNotEmpty

@@ -122,11 +122,21 @@ class Database_service {
             .where('IdUsuario', isEqualTo: userId)
             .get();
 
-    return snapshot.docs.map((doc) {
-      final data = doc.data();
-      data['id'] = doc.id;
-      return data;
-    }).toList();
+    final evaluaciones =
+        snapshot.docs.map((doc) {
+          final data = doc.data();
+          data['id'] = doc.id;
+          return data;
+        }).toList();
+
+    // Ordenar manualmente por el campo 'fecha' de forma descendente
+    evaluaciones.sort((a, b) {
+      final fechaA = a['Fecha'] as Timestamp?;
+      final fechaB = b['Fecha'] as Timestamp?;
+      return fechaA!.compareTo(fechaB!);
+    });
+
+    return evaluaciones;
   }
 
   Future<Map<String, dynamic>?> getResultadosPruebas({

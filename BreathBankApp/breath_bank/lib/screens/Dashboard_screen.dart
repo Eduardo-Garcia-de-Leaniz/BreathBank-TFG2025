@@ -74,7 +74,7 @@ class DashboardScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 30),
-              _buildSectionHeader(
+              buildSectionHeader(
                 title: 'Últimas Evaluaciones',
                 onTap:
                     () => Navigator.pushNamed(
@@ -87,9 +87,13 @@ class DashboardScreen extends StatelessWidget {
                 icon: Icons.assignment,
               ),
               SizedBox(height: 20),
-              _buildSectionHeader(
+              buildSectionHeader(
                 title: 'Últimas Inversiones',
-                onTap: () => Navigator.pushNamed(context, '/investments'),
+                onTap:
+                    () => Navigator.pushNamed(
+                      context,
+                      '/dashboard/investmentmenu',
+                    ),
               ),
               _buildListPreview(
                 itemsFuture: db.getUltimasInversiones(userId: userId),
@@ -100,58 +104,36 @@ class DashboardScreen extends StatelessWidget {
         ),
         bottomNavigationBar: SizedBox(
           height: 70,
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            showUnselectedLabels: true,
-            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-            selectedItemColor: const Color.fromARGB(255, 188, 252, 245),
-            selectedLabelStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-            unselectedLabelStyle: TextStyle(fontSize: 12),
-            unselectedItemColor: Colors.white,
-            currentIndex: 1,
-            onTap: (index) {
-              switch (index) {
-                case 0:
-                  Navigator.pushNamed(context, '/dashboard/evaluationmenu');
-                  break;
-                case 1:
-                  break;
-                case 2:
-                  Navigator.pushNamed(context, '/investments');
-                  break;
-                case 3:
-                  Navigator.pushNamed(context, '/progress');
-                  break;
-              }
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.assignment, size: 30),
-                label: 'Evaluaciones',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard, size: 30),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.more_time, size: 30),
-                label: 'Inversiones',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.show_chart, size: 30),
-                label: 'Progreso',
-              ),
-            ],
-          ),
+          child: NavigationMenu(currentIndex: 1),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/evaluation');
-          },
-          child: Icon(Icons.arrow_forward),
+
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              bottom: 5,
+              right: 1,
+              child: FloatingActionButton(
+                heroTag: 'fabEvaluacion',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/evaluation');
+                },
+                child: Icon(Icons.assignment),
+                tooltip: 'Nueva evaluación',
+              ),
+            ),
+            Positioned(
+              bottom: 75, // Altura ajustada para no solaparse con el otro botón
+              right: 1,
+              child: FloatingActionButton(
+                heroTag: 'fabInversion',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/investment');
+                },
+                child: Icon(Icons.more_time),
+                tooltip: 'Nueva inversión',
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -250,7 +232,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader({
+  Widget buildSectionHeader({
     required String title,
     required VoidCallback onTap,
   }) {
@@ -328,6 +310,53 @@ class DashboardScreen extends StatelessWidget {
               }).toList(),
         );
       },
+    );
+  }
+}
+
+class NavigationMenu extends StatelessWidget {
+  final int currentIndex;
+
+  const NavigationMenu({super.key, required this.currentIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      showUnselectedLabels: true,
+      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+      selectedItemColor: const Color.fromARGB(255, 188, 252, 245),
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+      unselectedLabelStyle: TextStyle(fontSize: 12),
+      unselectedItemColor: Colors.white,
+      currentIndex: currentIndex,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.pushNamed(context, '/dashboard/evaluationmenu');
+            break;
+          case 1:
+            Navigator.pushNamed(context, '/dashboard');
+            break;
+          case 2:
+            Navigator.pushNamed(context, '/dashboard/investmentmenu');
+            break;
+        }
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.assignment, size: 30),
+          label: 'Evaluaciones',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.dashboard, size: 30),
+          label: 'Dashboard',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.more_time, size: 30),
+          label: 'Inversiones',
+        ),
+      ],
     );
   }
 }
