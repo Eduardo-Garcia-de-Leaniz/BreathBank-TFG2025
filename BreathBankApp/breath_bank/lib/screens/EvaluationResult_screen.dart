@@ -6,7 +6,7 @@ class EvaluationresultScreen extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final int nivelInversorFinal = args['nivelInversorFinal'];
+    final int inversorLevel = args['nivelInversorFinal'];
     final int resultTest1 = args['result_test1'];
     final int resultTest2 = args['result_test2'];
     final int resultTest3 = args['result_test3'];
@@ -16,7 +16,7 @@ class EvaluationresultScreen extends StatelessWidget {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBar_EvaluationResults(),
+          child: AppBarEvaluationResults(),
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -57,7 +57,7 @@ class EvaluationresultScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      nivelInversorFinal.toString(),
+                      inversorLevel.toString(),
                       style: const TextStyle(
                         fontSize: 60,
                         fontWeight: FontWeight.bold,
@@ -159,8 +159,8 @@ class ResultItem extends StatelessWidget {
   }
 }
 
-class AppBar_EvaluationResults extends StatelessWidget {
-  const AppBar_EvaluationResults({super.key});
+class AppBarEvaluationResults extends StatelessWidget {
+  const AppBarEvaluationResults({super.key});
 
   @override
   Widget build(BuildContext context) {

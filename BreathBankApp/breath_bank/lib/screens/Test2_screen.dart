@@ -12,15 +12,11 @@ class Test2Screen extends StatefulWidget {
 class Test2ScreenState extends State<Test2Screen> {
   Database_service db = Database_service();
   String userId = authenticationService.value.currentUser!.uid;
-
   final TextEditingController resultFieldController = TextEditingController();
   String resultValue = '';
-
-  String descripcion = "Cargando...";
-  String instrucciones = "Cargando...";
-
-  int test_result = 0;
-
+  String description = "Cargando...";
+  String instructions = "Cargando...";
+  int testResult = 0;
   int elapsedSeconds = 0;
   Timer? timer;
   bool isRunning = false;
@@ -46,8 +42,8 @@ class Test2ScreenState extends State<Test2Screen> {
     );
 
     setState(() {
-      descripcion = desc;
-      instrucciones = instr;
+      description = desc;
+      instructions = instr;
     });
   }
 
@@ -70,7 +66,7 @@ class Test2ScreenState extends State<Test2Screen> {
       timer = null;
       resultFieldController.text = elapsedSeconds.toString();
       resultValue = resultFieldController.text;
-      test_result = int.tryParse(resultValue) ?? 0;
+      testResult = int.tryParse(resultValue) ?? 0;
     });
   }
 
@@ -82,12 +78,12 @@ class Test2ScreenState extends State<Test2Screen> {
       elapsedSeconds = 0;
       resultFieldController.clear();
       resultValue = '';
-      test_result = 0;
+      testResult = 0;
     });
   }
 
-  bool validateTestResult(String test_result) {
-    if (test_result.isEmpty || !RegExp(r'^\d+$').hasMatch(test_result)) {
+  bool validateTestResult(String testResult) {
+    if (testResult.isEmpty || !RegExp(r'^\d+$').hasMatch(testResult)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Por favor, ingrese solo números.'),
@@ -107,7 +103,7 @@ class Test2ScreenState extends State<Test2Screen> {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBar_Test1(),
+          child: AppBarTest2(),
         ),
         resizeToAvoidBottomInset: true,
         body: PageView(
@@ -127,7 +123,7 @@ class Test2ScreenState extends State<Test2Screen> {
                         TestTitleText(),
                         SizedBox(height: 25),
                         Text(
-                          descripcion,
+                          description,
                           style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 7, 71, 94),
@@ -137,7 +133,7 @@ class Test2ScreenState extends State<Test2Screen> {
                         InstructionsTitleText(),
                         SizedBox(height: 8),
                         Text(
-                          instrucciones,
+                          instructions,
                           style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 7, 71, 94),
@@ -216,17 +212,10 @@ class Test2ScreenState extends State<Test2Screen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(10.0),
-                          child: Text(
-                            'Tiempo empleado en realizar 3 respiraciones',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 7, 71, 94),
-                            ),
-                          ),
+                          padding: EdgeInsets.all(16),
+                          child: TestTitleText(),
                         ),
-                        SizedBox(height: 40),
+                        SizedBox(height: 30),
                         ClockWidget(
                           elapsedSeconds: elapsedSeconds,
                           isRunning: isRunning,
@@ -308,16 +297,16 @@ class Test2ScreenState extends State<Test2Screen> {
                             },
                             onEditingComplete: () {
                               if (validateTestResult(resultValue)) {
-                                test_result = int.parse(resultValue);
+                                testResult = int.parse(resultValue);
                               } else {
-                                test_result = 0;
+                                testResult = 0;
                               }
                               FocusScope.of(context).unfocus();
                             },
                           ),
                         ),
                         SizedBox(height: 40),
-                        BtnNext(test_result: test_result),
+                        BtnNext(test_result: testResult),
                       ],
                     ),
                   ),
@@ -376,7 +365,7 @@ class LabelTestResultText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        'Tiempo en realizar las 3 respiraciones: Introduce el número y cierre el teclado antes de pulsar en siguiente',
+        'Tiempo en realizar las 3 respiraciones: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -477,8 +466,8 @@ class TestTitleText extends StatelessWidget {
   }
 }
 
-class AppBar_Test1 extends StatelessWidget {
-  const AppBar_Test1({super.key});
+class AppBarTest2 extends StatelessWidget {
+  const AppBarTest2({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -247,15 +247,16 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                     .toStringAsFixed(1)
                 : 'N/A';
 
-        final primerNivel = niveles.isNotEmpty ? niveles.first : null;
+        final penultimoNivel =
+            niveles.length > 1 ? niveles[niveles.length - 2] : null;
         final ultimoNivel = niveles.isNotEmpty ? niveles.last : null;
         final cambioNivel =
-            (primerNivel != null && ultimoNivel != null)
-                ? (ultimoNivel - primerNivel)
+            (penultimoNivel != null && ultimoNivel != null)
+                ? (ultimoNivel - penultimoNivel)
                 : null;
         final cambioNivelTexto =
             cambioNivel != null
-                ? (cambioNivel >= 0 ? '+$cambioNivel' : '$cambioNivel')
+                ? (cambioNivel >= 0 ? '+ $cambioNivel' : '$cambioNivel')
                 : 'N/A';
 
         return FutureBuilder<List<Map<String, dynamic>>>(
@@ -322,7 +323,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                     Colors.purple,
                   ),
                   _buildStatCard(
-                    'Cambio de nivel',
+                    'Variación último nivel',
                     cambioNivelTexto,
                     Icons.trending_up,
                     Colors.deepOrange,

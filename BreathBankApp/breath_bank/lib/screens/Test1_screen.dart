@@ -13,17 +13,13 @@ class Test1ScreenState extends State<Test1Screen>
     with SingleTickerProviderStateMixin {
   Database_service db = Database_service();
   String userId = authenticationService.value.currentUser!.uid;
-
   final TextEditingController resultFieldController = TextEditingController();
   String resultValue = '';
-
-  String descripcion = "Cargando...";
-  String instrucciones = "Cargando...";
-
-  int test_result = 0;
-
-  late AnimationController animation_controller;
-  int test_time = 60;
+  String description = "Cargando...";
+  String instructions = "Cargando...";
+  int testResult = 0;
+  late AnimationController animationController;
+  int testDuration = 60;
   bool isRunning = false;
 
   @override
@@ -31,16 +27,16 @@ class Test1ScreenState extends State<Test1Screen>
     super.initState();
     chargeDescriptionAndInstructions();
 
-    animation_controller = AnimationController(
+    animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: test_time),
+      duration: Duration(seconds: testDuration),
     );
 
-    animation_controller.addListener(() {
+    animationController.addListener(() {
       setState(() {});
     });
 
-    animation_controller.addStatusListener((status) {
+    animationController.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
         setState(() {
           isRunning = false;
@@ -51,7 +47,7 @@ class Test1ScreenState extends State<Test1Screen>
 
   @override
   void dispose() {
-    animation_controller.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -64,8 +60,8 @@ class Test1ScreenState extends State<Test1Screen>
     );
 
     setState(() {
-      descripcion = desc;
-      instrucciones = instr;
+      description = desc;
+      instructions = instr;
     });
   }
 
@@ -73,21 +69,20 @@ class Test1ScreenState extends State<Test1Screen>
     setState(() {
       isRunning = true;
     });
-    animation_controller.reverse(
-      from:
-          animation_controller.value == 0.0 ? 1.0 : animation_controller.value,
+    animationController.reverse(
+      from: animationController.value == 0.0 ? 1.0 : animationController.value,
     );
   }
 
   void pauseClock() {
-    animation_controller.stop();
+    animationController.stop();
     setState(() {
       isRunning = false;
     });
   }
 
   void resetClock() {
-    animation_controller.reset();
+    animationController.reset();
     setState(() {
       isRunning = false;
     });
@@ -110,11 +105,11 @@ class Test1ScreenState extends State<Test1Screen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false, // Evita que el usuario vuelva atrás
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBar_Test1(),
+          child: AppBarTest1(),
         ),
         resizeToAvoidBottomInset: true,
         body: PageView(
@@ -134,7 +129,7 @@ class Test1ScreenState extends State<Test1Screen>
                         TestTitleText(),
                         SizedBox(height: 25),
                         Text(
-                          descripcion,
+                          description,
                           style: TextStyle(
                             fontSize: 16,
                             color: const Color.fromARGB(255, 7, 71, 94),
@@ -144,7 +139,7 @@ class Test1ScreenState extends State<Test1Screen>
                         InstructionsTitleText(),
                         SizedBox(height: 8),
                         Text(
-                          instrucciones,
+                          instructions,
                           style: TextStyle(
                             fontSize: 16,
                             color: const Color.fromARGB(255, 7, 71, 94),
@@ -221,16 +216,9 @@ class Test1ScreenState extends State<Test1Screen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          'Respiraciones en reposo',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(255, 7, 71, 94),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        ClockWidget(animation_controller: animation_controller),
+                        TestTitleText(),
+                        SizedBox(height: 10),
+                        ClockWidget(animationController: animationController),
                         SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -248,7 +236,7 @@ class Test1ScreenState extends State<Test1Screen>
                                 ),
                                 isRunning
                                     ? 'Pausar'
-                                    : (animation_controller.value == 0.0
+                                    : (animationController.value == 0.0
                                         ? 'Comenzar'
                                         : 'Reanudar'),
                               ),
@@ -305,27 +293,23 @@ class Test1ScreenState extends State<Test1Screen>
                               iconColor: const Color.fromARGB(255, 7, 71, 94),
                             ),
                             onChanged: (value) {
-                              resultValue =
-                                  value; // solo almacena el valor temporal
+                              resultValue = value;
                             },
                             onEditingComplete: () {
                               if (validateTestResult(resultValue)) {
-                                test_result = int.parse(resultValue);
+                                testResult = int.parse(resultValue);
                               } else {
-                                test_result = 0;
-                                // Aquí puedes mostrar un mensaje de error si quieres
+                                testResult = 0;
                               }
-                              FocusScope.of(
-                                context,
-                              ).unfocus(); // cierra el teclado
+                              FocusScope.of(context).unfocus();
                             },
                           ),
                         ),
 
                         SizedBox(height: 40),
                         BtnNext(
-                          animation_controller: animation_controller,
-                          test_result: test_result,
+                          animation_controller: animationController,
+                          test_result: testResult,
                         ),
                       ],
                     ),
@@ -400,7 +384,7 @@ class LabelTestResultText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        'Anota el número de respiraciones que has realizado: Introduce el número y cierre el teclado antes de pulsar en siguiente',
+        'Anota el número de respiraciones que has realizado: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -412,9 +396,9 @@ class LabelTestResultText extends StatelessWidget {
 }
 
 class ClockWidget extends StatelessWidget {
-  const ClockWidget({super.key, required this.animation_controller});
+  const ClockWidget({super.key, required this.animationController});
 
-  final AnimationController animation_controller;
+  final AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
@@ -425,17 +409,17 @@ class ClockWidget extends StatelessWidget {
           width: 200,
           height: 200,
           child: AnimatedBuilder(
-            animation: animation_controller,
+            animation: animationController,
             builder: (context, child) {
               final seconds =
-                  (animation_controller.duration!.inSeconds *
-                          animation_controller.value)
+                  (animationController.duration!.inSeconds *
+                          animationController.value)
                       .round();
               return Stack(
                 alignment: Alignment.center,
                 children: [
                   CircularProgressIndicator(
-                    value: animation_controller.value,
+                    value: animationController.value,
                     strokeWidth: 100,
                     backgroundColor: Colors.grey[300],
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
@@ -508,7 +492,7 @@ class TestTitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Registro de respiraciones en reposo',
+      'Respiraciones en reposo',
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -518,8 +502,8 @@ class TestTitleText extends StatelessWidget {
   }
 }
 
-class AppBar_Test1 extends StatelessWidget {
-  const AppBar_Test1({super.key});
+class AppBarTest1 extends StatelessWidget {
+  const AppBarTest1({super.key});
 
   @override
   Widget build(BuildContext context) {

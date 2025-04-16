@@ -12,10 +12,10 @@ class EvaluationScreen extends StatefulWidget {
 class EvaluationScreenState extends State<EvaluationScreen> {
   Database_service db = Database_service();
   String userId = authenticationService.value.currentUser!.uid;
-  int result_test1 = 0;
-  int result_test2 = 0;
-  int result_test3 = 0;
-  int nivelInversorFinal = 0;
+  int resultTest1 = 0;
+  int resultTest2 = 0;
+  int resultTest3 = 0;
+  int inversorLevel = 0;
 
   // Variables para almacenar el estado de las pruebas
   Map<String, bool> testCompleted = {
@@ -24,34 +24,31 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     'test3': false,
   };
 
-  int getNivelInversorFinal() {
-    int nivelPrueba1 = calcularResultadoPrueba1(result_test1);
-    int nivelPrueba2 = calcularResultadoPrueba2(result_test2);
-    int nivelPrueba3 = calcularResultadoPrueba3(result_test3);
+  int getInversorLevel() {
+    int test1Level = calculateTest1Result(resultTest1);
+    int test2Level = calculateTest2Result(resultTest2);
+    int test3Level = calculateTest3Result(resultTest3);
 
-    int nivel_InversorFinal = calcularNivelDeInversor(
-      resultadoPrueba1: nivelPrueba1,
-      resultadoPrueba2: nivelPrueba2,
-      resultadoPrueba3: nivelPrueba3,
+    int inversor_level = calculateInversorLevel(
+      test1Result: test1Level,
+      test2Result: test2Level,
+      test3Result: test3Level,
     );
 
-    return nivel_InversorFinal;
+    return inversor_level;
   }
 
-  int calcularNivelDeInversor({
-    required int resultadoPrueba1,
-    required int resultadoPrueba2,
-    required int resultadoPrueba3,
+  int calculateInversorLevel({
+    required int test1Result,
+    required int test2Result,
+    required int test3Result,
   }) {
-    double nivel =
-        (resultadoPrueba1 * 10 +
-            resultadoPrueba2 * 30 +
-            resultadoPrueba3 * 60) /
-        100;
-    return nivel.round();
+    double level =
+        (test1Result * 10 + test2Result * 30 + test3Result * 60) / 100;
+    return level.round();
   }
 
-  int calcularResultadoPrueba1(int result_test1) {
+  int calculateTest1Result(int result_test1) {
     if (result_test1 <= 3) {
       return 11;
     } else if (result_test1 == 4) {
@@ -79,7 +76,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     }
   }
 
-  int calcularResultadoPrueba2(int result_test2) {
+  int calculateTest2Result(int result_test2) {
     if (result_test2 >= 301) {
       return 11;
     } else if (result_test2 >= 271) {
@@ -107,7 +104,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     }
   }
 
-  int calcularResultadoPrueba3(int result_test3) {
+  int calculateTest3Result(int result_test3) {
     if (result_test3 <= 7) {
       return 0;
     } else if (result_test3 <= 14) {
@@ -151,7 +148,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          '¡Felicidades! Has completado todas las pruebas. Pulsa en siguiente para ver tus resultados.',
+          '¡Felicidades! Has completado todas las pruebas. Pulsa en Continuar para ver tus resultados.',
         ),
         backgroundColor: Colors.green,
         duration: Duration(seconds: 3),
@@ -159,14 +156,14 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     );
   }
 
-  bool guardarNuevaEvaluacion() {
+  bool saveNewEvaluation() {
     try {
       db.addNuevaEvaluacion(
         userId: userId,
-        nivelInversorFinal: nivelInversorFinal,
-        resultadoPrueba1: result_test1,
-        resultadoPrueba2: result_test2,
-        resultadoPrueba3: result_test3,
+        nivelInversorFinal: inversorLevel,
+        resultadoPrueba1: resultTest1,
+        resultadoPrueba2: resultTest2,
+        resultadoPrueba3: resultTest3,
         fechaEvaluacion: DateTime.now(),
       );
     } catch (e) {
@@ -175,12 +172,12 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     return true;
   }
 
-  bool actualizarDatos() {
+  bool updateUserData() {
     try {
       db.updateEvaluacionesRealizadasYNivelInversor(
         userId: userId,
         fechaUltimaEvaluacion: DateTime.now(),
-        nivelInversor: nivelInversorFinal,
+        nivelInversor: inversorLevel,
       );
     } catch (e) {
       return false;
@@ -243,7 +240,6 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              //BtnNext(testCompleted: testCompleted),
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
@@ -252,9 +248,9 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                     onPressed:
                         testCompleted.values.every((e) => e)
                             ? () async {
-                              nivelInversorFinal = getNivelInversorFinal();
-                              if (await guardarNuevaEvaluacion()) {
-                                if (await actualizarDatos()) {
+                              inversorLevel = getInversorLevel();
+                              if (await saveNewEvaluation()) {
+                                if (await updateUserData()) {
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
@@ -278,10 +274,10 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                                 Navigator.of(context).pushNamed(
                                   '/evaluation/result',
                                   arguments: {
-                                    'nivelInversorFinal': nivelInversorFinal,
-                                    'result_test1': result_test1,
-                                    'result_test2': result_test2,
-                                    'result_test3': result_test3,
+                                    'nivelInversorFinal': inversorLevel,
+                                    'result_test1': resultTest1,
+                                    'result_test2': resultTest2,
+                                    'result_test3': resultTest3,
                                   },
                                 );
                               } else {
@@ -339,18 +335,18 @@ class EvaluationScreenState extends State<EvaluationScreen> {
               testCompleted[testKey]!
                   ? null
                   : () async {
-                    final resultado = await Navigator.pushNamed(context, route);
-                    if (resultado is int) {
+                    final result = await Navigator.pushNamed(context, route);
+                    if (result is int) {
                       setState(() {
                         switch (testKey) {
                           case 'test1':
-                            result_test1 = resultado;
+                            resultTest1 = result;
                             break;
                           case 'test2':
-                            result_test2 = resultado;
+                            resultTest2 = result;
                             break;
                           case 'test3':
-                            result_test3 = resultado;
+                            resultTest3 = result;
                             break;
                         }
                       });

@@ -15,15 +15,13 @@ class Test3ScreenState extends State<Test3Screen> {
   final Database_service db = Database_service();
   final String userId = authenticationService.value.currentUser!.uid;
   final TextEditingController resultFieldController = TextEditingController();
-
   String resultValue = '';
-  String descripcion = "Cargando...";
-  String instrucciones = "Cargando...";
-  int test_result = 0;
+  String description = "Cargando...";
+  String instructions = "Cargando...";
+  int testResult = 0;
   int numBreaths = 0;
   bool isRunning = false;
-
-  final GlobalKey<BreathingAnimationWidgetState> _breathingKey = GlobalKey();
+  final GlobalKey<BreathingAnimationWidgetState> breathingKey = GlobalKey();
 
   @override
   void initState() {
@@ -40,8 +38,8 @@ class Test3ScreenState extends State<Test3Screen> {
     );
 
     setState(() {
-      descripcion = desc;
-      instrucciones = instr;
+      description = desc;
+      instructions = instr;
     });
   }
 
@@ -51,13 +49,13 @@ class Test3ScreenState extends State<Test3Screen> {
     });
 
     if (isRunning) {
-      _breathingKey.currentState?.resume();
+      breathingKey.currentState?.resume();
     } else {
-      _breathingKey.currentState?.pause();
-      final last = _breathingKey.currentState?.getCurrentBreathCount() ?? 0;
+      breathingKey.currentState?.pause();
+      final last = breathingKey.currentState?.getCurrentBreathCount() ?? 0;
       resultFieldController.text = last.toString();
       resultValue = resultFieldController.text;
-      test_result = int.tryParse(resultValue) ?? 0;
+      testResult = int.tryParse(resultValue) ?? 0;
       ;
     }
   }
@@ -66,14 +64,14 @@ class Test3ScreenState extends State<Test3Screen> {
     setState(() {
       isRunning = false;
       numBreaths = 0;
-      test_result = 0;
+      testResult = 0;
       resultFieldController.clear();
     });
-    _breathingKey.currentState?.reset();
+    breathingKey.currentState?.reset();
   }
 
-  bool validateTestResult(String test_result) {
-    if (test_result.isEmpty || !RegExp(r'^\d+$').hasMatch(test_result)) {
+  bool validateTestResult(String testResult) {
+    if (testResult.isEmpty || !RegExp(r'^\d+$').hasMatch(testResult)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Por favor, ingrese solo números.'),
@@ -93,7 +91,7 @@ class Test3ScreenState extends State<Test3Screen> {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBar_Test3(),
+          child: AppBarTest3(),
         ),
         body: PageView(
           children: [
@@ -109,7 +107,7 @@ class Test3ScreenState extends State<Test3Screen> {
                       TestTitleText(),
                       SizedBox(height: 25),
                       Text(
-                        descripcion,
+                        description,
                         style: TextStyle(
                           fontSize: 16,
                           color: Color(0xFF07475E),
@@ -119,7 +117,7 @@ class Test3ScreenState extends State<Test3Screen> {
                       InstructionsTitleText(),
                       SizedBox(height: 8),
                       Text(
-                        instrucciones,
+                        instructions,
                         style: TextStyle(
                           fontSize: 16,
                           color: Color(0xFF07475E),
@@ -189,16 +187,9 @@ class Test3ScreenState extends State<Test3Screen> {
                     ),
                     child: Column(
                       children: [
-                        Text(
-                          'Prueba de respiraciones guiada',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF07475E),
-                          ),
-                        ),
+                        TestTitleText(),
                         SizedBox(height: 30),
-                        BreathingAnimationWidget(key: _breathingKey),
+                        BreathingAnimationWidget(key: breathingKey),
                         SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -254,16 +245,16 @@ class Test3ScreenState extends State<Test3Screen> {
                             },
                             onEditingComplete: () {
                               if (validateTestResult(resultValue)) {
-                                test_result = int.parse(resultValue);
+                                testResult = int.parse(resultValue);
                               } else {
-                                test_result = 0;
+                                testResult = 0;
                               }
                               FocusScope.of(context).unfocus();
                             },
                           ),
                         ),
                         SizedBox(height: 50),
-                        BtnNext(test_result: test_result),
+                        BtnNext(test_result: testResult),
                       ],
                     ),
                   ),
@@ -452,7 +443,7 @@ class LabelTestResultText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
-        'Última respiración completa: Introduce el número y cierre el teclado antes de pulsar en siguiente',
+        'Última respiración completa: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
@@ -533,8 +524,8 @@ class TestTitleText extends StatelessWidget {
   }
 }
 
-class AppBar_Test3 extends StatelessWidget {
-  const AppBar_Test3({super.key});
+class AppBarTest3 extends StatelessWidget {
+  const AppBarTest3({super.key});
 
   @override
   Widget build(BuildContext context) {
