@@ -163,11 +163,11 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     try {
       db.addNuevaEvaluacion(
         userId: userId,
-        fechaEvaluacion: DateTime.now(),
         nivelInversorFinal: nivelInversorFinal,
         resultadoPrueba1: result_test1,
         resultadoPrueba2: result_test2,
         resultadoPrueba3: result_test3,
+        fechaEvaluacion: DateTime.now(),
       );
     } catch (e) {
       return false;

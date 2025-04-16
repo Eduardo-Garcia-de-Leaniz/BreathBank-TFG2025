@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:breath_bank/Authentication_service.dart';
 
 class EvaluationMenuScreen extends StatefulWidget {
   const EvaluationMenuScreen({Key? key}) : super(key: key);
@@ -20,12 +19,53 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   String formatFecha(Timestamp timestamp) {
     final date = timestamp.toDate();
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
+  }
+
+  Future<List<Map<String, dynamic>>> fetchDatosEstadisticos() async {
+    List<Map<String, dynamic>> datos = [];
+
+    final evaluaciones = await db.getUltimasEvaluaciones(userId: userId);
+
+    for (var evaluacion in evaluaciones) {
+      final evaluacionId = evaluacion['id'];
+      final nivelInversor = evaluacion['NivelInversorFinal'];
+
+      final resultados = await db.getResultadosPruebas(
+        userId: userId,
+        evaluacionId: evaluacionId,
+      );
+
+      if (resultados != null && resultados.isNotEmpty) {
+        // Recolectamos los resultados exactamente igual que en historial
+        final prueba1 =
+            resultados.containsKey('ResultadoPrueba1')
+                ? resultados['ResultadoPrueba1']
+                : null;
+        final prueba2 =
+            resultados.containsKey('ResultadoPrueba2')
+                ? resultados['ResultadoPrueba2']
+                : null;
+        final prueba3 =
+            resultados.containsKey('ResultadoPrueba3')
+                ? resultados['ResultadoPrueba3']
+                : null;
+
+        datos.add({
+          'nivel': nivelInversor,
+          'prueba1': prueba1,
+          'prueba2': prueba2,
+          'prueba3': prueba3,
+        });
+      }
+    }
+
+    return datos;
   }
 
   @override
@@ -42,7 +82,11 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
               labelColor: const Color.fromARGB(255, 188, 252, 245),
               unselectedLabelColor: Colors.white,
               indicatorColor: const Color.fromARGB(255, 188, 252, 245),
-              tabs: const [Tab(text: 'Historial'), Tab(text: 'Información')],
+              tabs: const [
+                Tab(text: 'Historial'),
+                Tab(text: 'Estadísticas'),
+                Tab(text: 'Información'),
+              ],
             ),
           ),
           Expanded(
@@ -50,6 +94,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
               controller: _tabController,
               children: [
                 _buildHistorialEvaluaciones(),
+                _buildEstadisticas(),
                 _buildInformacionGeneral(),
               ],
             ),
@@ -70,53 +115,86 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
         }
 
         final evaluaciones = snapshot.data!;
+
         return ListView.builder(
           padding: EdgeInsets.all(16),
           itemCount: evaluaciones.length,
           itemBuilder: (context, index) {
             final evaluacion = evaluaciones[index];
-            final fecha =
-                evaluacion['Fecha'] != null
-                    ? formatFecha(evaluacion['Fecha'] as Timestamp)
-                    : 'Sin fecha';
+            final evaluacionId = evaluacion['id'];
+            final timestamp = evaluacion['Fecha'] as Timestamp?;
+            final fechaEvaluacion = timestamp?.toDate();
+            final fechaTexto =
+                timestamp != null ? formatFecha(timestamp) : 'Sin fecha';
             final nivelFinal = evaluacion['NivelInversorFinal'] ?? 'N/A';
-            final resultados = evaluacion['resultado'] as Map<String, dynamic>?;
 
             return ExpansionTile(
               leading: Icon(Icons.assignment, color: Colors.teal),
-              title: Text('Evaluación ${index + 1} ($fecha)'),
+              title: Text('Evaluación ${index + 1} ($fechaTexto)'),
               childrenPadding: EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
               ),
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.star, color: Colors.amber),
                     SizedBox(width: 8),
                     Text(
-                      'Nivel de inversor final: $nivelFinal',
+                      'Nivel de inversor: $nivelFinal',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
-                Text(
-                  'Resultados de pruebas:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                SizedBox(height: 20),
+                Center(
+                  child: Text(
+                    'Resultados de pruebas:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
-                if (resultados != null)
-                  ...resultados.entries.map((entry) {
-                    return ListTile(
-                      dense: true,
-                      title: Text(entry.key),
-                      trailing: Text(entry.value.toString()),
-                    );
-                  }).toList()
-                else
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text('Sin resultados disponibles.'),
+                SizedBox(height: 10),
+                if (fechaEvaluacion != null)
+                  FutureBuilder<Map<String, dynamic>?>(
+                    future: db.getResultadosPruebas(
+                      userId: userId,
+                      evaluacionId: evaluacionId,
+                    ),
+                    builder: (context, resultadoSnapshot) {
+                      if (resultadoSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      final resultados = resultadoSnapshot.data;
+
+                      if (resultados == null || resultados.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text('Sin resultados disponibles.'),
+                        );
+                      }
+
+                      return Column(
+                        children:
+                            resultados.entries.map((entry) {
+                              return ListTile(
+                                leading: Text(
+                                  ' Resultado Prueba ${resultados.keys.toList().indexOf(entry.key) + 1}',
+                                ),
+                                dense: true,
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [Text(entry.value.toString())],
+                                ),
+                              );
+                            }).toList(),
+                      );
+                    },
                   ),
               ],
             );
@@ -126,15 +204,190 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
     );
   }
 
+  Widget _buildEstadisticas() {
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: fetchDatosEstadisticos(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No hay datos estadísticos disponibles.'));
+        }
+
+        final datos = snapshot.data!;
+        final niveles = datos.map((d) => d['nivel']).whereType<int>().toList();
+        final prueba1 =
+            datos.map((d) => d['prueba1']).whereType<num>().toList();
+        final prueba2 =
+            datos.map((d) => d['prueba2']).whereType<num>().toList();
+        final prueba3 =
+            datos.map((d) => d['prueba3']).whereType<num>().toList();
+
+        final mejorNivel =
+            niveles.isNotEmpty
+                ? niveles.reduce((a, b) => a > b ? a : b)
+                : 'N/A';
+        final mejorP1 =
+            prueba1.isNotEmpty
+                ? prueba1.reduce((a, b) => a > b ? a : b)
+                : 'N/A';
+        final mejorP2 =
+            prueba2.isNotEmpty
+                ? prueba2.reduce((a, b) => a > b ? a : b)
+                : 'N/A';
+        final mejorP3 =
+            prueba3.isNotEmpty
+                ? prueba3.reduce((a, b) => a > b ? a : b)
+                : 'N/A';
+        final promedioNivel =
+            niveles.isNotEmpty
+                ? (niveles.reduce((a, b) => a + b) / niveles.length)
+                    .toStringAsFixed(1)
+                : 'N/A';
+
+        final primerNivel = niveles.isNotEmpty ? niveles.first : null;
+        final ultimoNivel = niveles.isNotEmpty ? niveles.last : null;
+        final cambioNivel =
+            (primerNivel != null && ultimoNivel != null)
+                ? (ultimoNivel - primerNivel)
+                : null;
+        final cambioNivelTexto =
+            cambioNivel != null
+                ? (cambioNivel >= 0 ? '+$cambioNivel' : '$cambioNivel')
+                : 'N/A';
+
+        return FutureBuilder<List<Map<String, dynamic>>>(
+          future: db.getUltimasEvaluaciones(userId: userId),
+          builder: (context, snapshotFechas) {
+            String fechaUltima = 'N/A';
+            if (snapshotFechas.hasData && snapshotFechas.data!.isNotEmpty) {
+              final timestamp =
+                  snapshotFechas.data!.last['Fecha'] as Timestamp?;
+              if (timestamp != null) {
+                fechaUltima = formatFecha(timestamp);
+              }
+            }
+
+            return Padding(
+              padding: EdgeInsets.all(12),
+              child: GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 1.4,
+                children: [
+                  _buildStatCard(
+                    'Mejor nivel inversor',
+                    mejorNivel.toString(),
+                    Icons.emoji_events,
+                    Colors.orange,
+                  ),
+                  _buildStatCard(
+                    'Total de evaluaciones',
+                    datos.length.toString(),
+                    Icons.analytics,
+                    Colors.teal,
+                  ),
+                  _buildStatCard(
+                    'Mejor Resultado Prueba 1',
+                    mejorP1.toString(),
+                    Icons.looks_one_sharp,
+                    Colors.green,
+                  ),
+                  _buildStatCard(
+                    'Última evaluación',
+                    fechaUltima,
+                    Icons.calendar_today,
+                    Colors.brown,
+                  ),
+                  _buildStatCard(
+                    'Mejor Resultado Prueba 2',
+                    mejorP2.toString(),
+                    Icons.looks_two_sharp,
+                    Colors.blue,
+                  ),
+                  _buildStatCard(
+                    'Promedio de nivel',
+                    promedioNivel,
+                    Icons.leaderboard,
+                    Colors.indigo,
+                  ),
+                  _buildStatCard(
+                    'Mejor Resultado Prueba 3',
+                    mejorP3.toString(),
+                    Icons.looks_3_sharp,
+                    Colors.purple,
+                  ),
+                  _buildStatCard(
+                    'Cambio de nivel',
+                    cambioNivelTexto,
+                    Icons.trending_up,
+                    Colors.deepOrange,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildStatCard(
+    String title,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          colors: [color.withOpacity(0.25), color.withOpacity(0.1)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.15),
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 30),
+            SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 6),
+            Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildInformacionGeneral() {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16),
       child: Text(
-        'Aquí encontrarás información general sobre las evaluaciones, cómo se realizan, '
-        'qué aspectos se miden y cómo interpretar los resultados.\n\n'
-        'Las evaluaciones son una herramienta útil para seguir tu progreso y entender '
-        'tu nivel actual. Recuerda realizarlas con regularidad para obtener mejores '
-        'resultados y recomendaciones personalizadas.',
+        'Añadir texto informativo aquí.',
         style: TextStyle(fontSize: 16),
       ),
     );

@@ -116,13 +116,39 @@ class Database_service {
   Future<List<Map<String, dynamic>>> getUltimasEvaluaciones({
     required String userId,
   }) async {
-    final QuerySnapshot<Map<String, dynamic>> snapshot =
+    final snapshot =
         await db
             .collection('Evaluaciones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
 
-    return snapshot.docs.map((doc) => doc.data()).toList();
+    return snapshot.docs.map((doc) {
+      final data = doc.data();
+      data['id'] = doc.id;
+      return data;
+    }).toList();
+  }
+
+  Future<Map<String, dynamic>?> getResultadosPruebas({
+    required String userId,
+    required String evaluacionId,
+  }) async {
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection('Evaluaciones/$evaluacionId/PruebasEvaluación')
+            .doc('Resultados')
+            .get();
+
+    if (snapshot.exists && snapshot.data() != null) {
+      final data = snapshot.data()!;
+      return {
+        'ResultadoPrueba1': data['ResultadoPrueba1'],
+        'ResultadoPrueba2': data['ResultadoPrueba2'],
+        'ResultadoPrueba3': data['ResultadoPrueba3'],
+      };
+    }
+
+    return snapshot.exists ? snapshot.data() : null;
   }
 
   Future<List<Map<String, dynamic>>> getUltimasInversiones({
@@ -211,7 +237,7 @@ class Database_service {
   }) async {
     await create(
       collectionPath: 'Inversiones',
-      docId: '${userId}_${fechaInversion.toIso8601String()}',
+      docId: '${userId}_${fechaInversion.toString()}',
       data: {
         'IdUsuario': userId,
         'FechaInversión': fechaInversion,
@@ -229,8 +255,8 @@ class Database_service {
     required int resultadoPrueba2,
     required int resultadoPrueba3,
   }) async {
-    final String evaluacionId =
-        '${userId}_${fechaEvaluacion.toIso8601String()}'; // Revisar Id de la evaluación
+    final evaluacionId =
+        FirebaseFirestore.instance.collection('Evaluaciones').doc().id;
 
     await create(
       collectionPath: 'Evaluaciones',
@@ -239,6 +265,7 @@ class Database_service {
         'IdUsuario': userId,
         'Fecha': fechaEvaluacion,
         'NivelInversorFinal': nivelInversorFinal,
+        'EvaluacionId': evaluacionId,
       },
     );
 
@@ -253,60 +280,28 @@ class Database_service {
     );
   }
 
-  Future<void> updateResultadoPrueba1({
-    required String userId,
-    required DateTime fechaEvaluacion,
-    required double resultadoPrueba1,
-  }) async {
-    final String evaluacionId =
-        '${userId}_${fechaEvaluacion.toIso8601String()}';
+  Future<String?> getUltimaEvaluacionIdDelUsuario(String userId) async {
+    final snapshot =
+        await db
+            .collection('Evaluaciones')
+            .where('IdUsuario', isEqualTo: userId)
+            .orderBy('Fecha', descending: true)
+            .limit(1)
+            .get();
 
-    await update(
-      collectionPath: 'Evaluaciones/$evaluacionId/PruebasEvaluación',
-      docId: 'Resultados',
-      data: {'ResultadoPrueba1': resultadoPrueba1},
-    );
-  }
-
-  Future<void> updateResultadoPrueba2({
-    required String userId,
-    required DateTime fechaEvaluacion,
-    required double resultadoPrueba2,
-  }) async {
-    final String evaluacionId =
-        '${userId}_${fechaEvaluacion.toIso8601String()}';
-
-    await update(
-      collectionPath: 'Evaluaciones/$evaluacionId/PruebasEvaluación',
-      docId: 'Resultados',
-      data: {'ResultadoPrueba2': resultadoPrueba2},
-    );
-  }
-
-  Future<void> updateResultadoPrueba3({
-    required String userId,
-    required DateTime fechaEvaluacion,
-    required double resultadoPrueba3,
-  }) async {
-    final String evaluacionId =
-        '${userId}_${fechaEvaluacion.toIso8601String()}';
-
-    await update(
-      collectionPath: 'Evaluaciones/$evaluacionId/PruebasEvaluación',
-      docId: 'Resultados',
-      data: {'ResultadoPrueba3': resultadoPrueba3},
-    );
+    if (snapshot.docs.isNotEmpty) {
+      return snapshot.docs.first.id;
+    }
+    return null;
   }
 
   Future<void> deleteUserData({required String userId}) async {
-    // Delete all evaluations and their subcollections associated with the user
     final QuerySnapshot<Map<String, dynamic>> evaluacionesSnapshot =
         await db
             .collection('Evaluaciones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
     for (final doc in evaluacionesSnapshot.docs) {
-      // Delete the subcollection 'PruebasEvaluacion' for each evaluation
       final CollectionReference<Map<String, dynamic>> pruebasEvaluacionRef = db
           .collection('Evaluaciones/${doc.id}/PruebasEvaluación');
       final QuerySnapshot<Map<String, dynamic>> pruebasSnapshot =
@@ -315,11 +310,9 @@ class Database_service {
         await pruebasEvaluacionRef.doc(pruebaDoc.id).delete();
       }
 
-      // Delete the evaluation document
       await db.collection('Evaluaciones').doc(doc.id).delete();
     }
 
-    // Delete all investments associated with the user
     final QuerySnapshot<Map<String, dynamic>> inversionesSnapshot =
         await db
             .collection('Inversiones')
@@ -329,7 +322,6 @@ class Database_service {
       await db.collection('Inversiones').doc(doc.id).delete();
     }
 
-    // Update the user document to retain only specific fields
     final DocumentSnapshot<Map<String, dynamic>>? userSnapshot = await read(
       collectionPath: 'Usuarios',
       docId: userId,
@@ -358,14 +350,12 @@ class Database_service {
   }
 
   Future<void> deleteUserAccount({required String userId}) async {
-    // Delete all evaluations and their subcollections associated with the user
     final QuerySnapshot<Map<String, dynamic>> evaluacionesSnapshot =
         await db
             .collection('Evaluaciones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
     for (final doc in evaluacionesSnapshot.docs) {
-      // Delete the subcollection 'PruebasEvaluacion' for each evaluation
       final CollectionReference<Map<String, dynamic>> pruebasEvaluacionRef = db
           .collection('Evaluaciones/${doc.id}/PruebasEvaluación');
       final QuerySnapshot<Map<String, dynamic>> pruebasSnapshot =
@@ -374,11 +364,9 @@ class Database_service {
         await pruebasEvaluacionRef.doc(pruebaDoc.id).delete();
       }
 
-      // Delete the evaluation document
       await db.collection('Evaluaciones').doc(doc.id).delete();
     }
 
-    // Delete all investments associated with the user
     final QuerySnapshot<Map<String, dynamic>> inversionesSnapshot =
         await db
             .collection('Inversiones')
@@ -388,7 +376,6 @@ class Database_service {
       await db.collection('Inversiones').doc(doc.id).delete();
     }
 
-    // Delete the user document
     await db.collection('Usuarios').doc(userId).delete();
   }
 }

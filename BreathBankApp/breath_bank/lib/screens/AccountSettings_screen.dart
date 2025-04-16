@@ -134,8 +134,9 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                       color: Color.fromARGB(255, 7, 71, 94),
                                     ),
                                   ),
-                                  onPressed:
-                                      () => Navigator.of(context).pop(true),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true);
+                                  },
                                 ),
                                 TextButton(
                                   child: Text(
@@ -154,6 +155,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         userId = FirebaseAuth.instance.currentUser!.uid;
                         try {
                           await bd.deleteUserData(userId: userId);
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/dashboard',
+                            (route) => false,
+                          );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

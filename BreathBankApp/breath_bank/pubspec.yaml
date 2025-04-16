@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^5.5.1
   # firebase_database: ^11.0.4
   cloud_firestore: ^5.6.5
+  #fl_chart: ^0.71.0
 
   
 
