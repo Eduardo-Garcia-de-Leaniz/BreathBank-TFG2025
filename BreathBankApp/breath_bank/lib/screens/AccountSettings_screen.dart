@@ -485,6 +485,8 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
 
 class AppBar_AccountSettings extends StatelessWidget
     implements PreferredSizeWidget {
+  const AppBar_AccountSettings({super.key});
+
   @override
   Size get preferredSize => Size.fromHeight(60);
 

@@ -9,6 +9,8 @@ class DashboardScreen extends StatelessWidget {
   final Authentication_service authenticationService = Authentication_service();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
+  DashboardScreen({super.key});
+
   Future<String?> obtenerNombreUsuario() async {
     return await db.getNombreUsuario(userId: userId);
   }

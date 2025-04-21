@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Test2Screen extends StatefulWidget {
+  const Test2Screen({super.key});
+
   @override
   Test2ScreenState createState() => Test2ScreenState();
 }

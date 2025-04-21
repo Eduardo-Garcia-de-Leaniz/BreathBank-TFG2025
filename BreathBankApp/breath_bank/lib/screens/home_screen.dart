@@ -40,7 +40,7 @@ class SubtitleHomeScreen extends StatelessWidget {
         fontSize: 25,
         fontWeight: FontWeight.bold,
         fontFamily: 'Arial',
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -83,7 +83,7 @@ class TitleHomeScreen extends StatelessWidget {
             const Text(
               'BreathBank',
               style: TextStyle(
-                color: const Color.fromARGB(255, 7, 71, 94),
+                color: Color.fromARGB(255, 7, 71, 94),
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Arial',

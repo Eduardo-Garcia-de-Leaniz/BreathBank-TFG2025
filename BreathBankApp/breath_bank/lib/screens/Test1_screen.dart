@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Test1Screen extends StatefulWidget {
+  const Test1Screen({super.key});
+
   @override
   Test1ScreenState createState() => Test1ScreenState();
 }
@@ -88,8 +90,8 @@ class Test1ScreenState extends State<Test1Screen>
     });
   }
 
-  bool validateTestResult(String test_result) {
-    if (test_result.isEmpty || !RegExp(r'^\d+$').hasMatch(test_result)) {
+  bool validateTestResult(String testResult) {
+    if (testResult.isEmpty || !RegExp(r'^\d+$').hasMatch(testResult)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Por favor, ingrese solo números.'),

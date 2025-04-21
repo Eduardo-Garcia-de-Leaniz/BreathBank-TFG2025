@@ -7,6 +7,8 @@ import 'package:flutter/services.dart' show rootBundle;
 
 // Pantalla principal
 class Test3Screen extends StatefulWidget {
+  const Test3Screen({super.key});
+
   @override
   Test3ScreenState createState() => Test3ScreenState();
 }
@@ -56,7 +58,6 @@ class Test3ScreenState extends State<Test3Screen> {
       resultFieldController.text = last.toString();
       resultValue = resultFieldController.text;
       testResult = int.tryParse(resultValue) ?? 0;
-      ;
     }
   }
 
@@ -270,7 +271,7 @@ class Test3ScreenState extends State<Test3Screen> {
 }
 
 class BreathingAnimationWidget extends StatefulWidget {
-  const BreathingAnimationWidget({Key? key}) : super(key: key);
+  const BreathingAnimationWidget({super.key});
 
   @override
   BreathingAnimationWidgetState createState() =>

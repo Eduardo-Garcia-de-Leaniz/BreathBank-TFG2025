@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AccountSettingsResetPasswordScreen extends StatefulWidget {
-  const AccountSettingsResetPasswordScreen({Key? key}) : super(key: key);
+  const AccountSettingsResetPasswordScreen({super.key});
 
   @override
   State<AccountSettingsResetPasswordScreen> createState() =>
@@ -137,7 +137,7 @@ class _AccountSettingsResetPasswordScreenState
                 "Por seguridad, ingresa tu contraseña actual y elige una nueva.",
                 style: TextStyle(
                   fontSize: 16,
-                  color: const Color.fromARGB(255, 7, 71, 94),
+                  color: Color.fromARGB(255, 7, 71, 94),
                 ),
               ),
               const SizedBox(height: 20),
@@ -204,6 +204,8 @@ class _AccountSettingsResetPasswordScreenState
 
 class AppBar_ResetPassword extends StatelessWidget
     implements PreferredSizeWidget {
+  const AppBar_ResetPassword({super.key});
+
   @override
   Size get preferredSize => Size.fromHeight(60);
 

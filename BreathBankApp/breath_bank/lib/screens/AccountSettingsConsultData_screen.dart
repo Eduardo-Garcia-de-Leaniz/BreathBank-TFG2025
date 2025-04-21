@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AccountSettingsModifyDataScreen extends StatefulWidget {
-  const AccountSettingsModifyDataScreen({Key? key}) : super(key: key);
+  const AccountSettingsModifyDataScreen({super.key});
 
   @override
   State<AccountSettingsModifyDataScreen> createState() =>
@@ -292,6 +292,8 @@ class _AccountSettingsModifyDataScreenState
 }
 
 class AppBarModifyData extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarModifyData({super.key});
+
   @override
   Size get preferredSize => const Size.fromHeight(60);
 

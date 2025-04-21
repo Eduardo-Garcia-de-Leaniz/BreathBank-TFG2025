@@ -119,6 +119,8 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
 
 class AppBar_AppSettings extends StatelessWidget
     implements PreferredSizeWidget {
+  const AppBar_AppSettings({super.key});
+
   @override
   Size get preferredSize => Size.fromHeight(60);
 

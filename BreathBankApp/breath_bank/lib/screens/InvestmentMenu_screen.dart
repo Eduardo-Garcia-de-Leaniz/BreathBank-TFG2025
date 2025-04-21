@@ -5,7 +5,7 @@ import 'package:breath_bank/Database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class InvestmentMenuScreen extends StatefulWidget {
-  const InvestmentMenuScreen({Key? key}) : super(key: key);
+  const InvestmentMenuScreen({super.key});
 
   @override
   State<InvestmentMenuScreen> createState() => _InvestmentMenuScreenState();
@@ -228,6 +228,8 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
 
 class AppBar_InvestmentMenu extends StatelessWidget
     implements PreferredSizeWidget {
+  const AppBar_InvestmentMenu({super.key});
+
   @override
   Size get preferredSize => Size.fromHeight(60);
 
