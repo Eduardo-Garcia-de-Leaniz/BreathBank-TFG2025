@@ -57,7 +57,7 @@ class DashboardScreen extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -75,20 +75,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
-              buildSectionHeader(
-                title: 'Últimas Evaluaciones',
-                onTap:
-                    () => Navigator.pushNamed(
-                      context,
-                      '/dashboard/evaluationmenu',
-                    ),
-              ),
-              _buildListPreviewEvaluaciones(
-                itemsFuture: db.getUltimasEvaluaciones(userId: userId),
-                icon: Icons.assignment,
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               buildSectionHeader(
                 title: 'Últimas Inversiones',
                 onTap:
@@ -97,9 +84,22 @@ class DashboardScreen extends StatelessWidget {
                       '/dashboard/investmentmenu',
                     ),
               ),
-              _buildListPreview(
+              buildListPreviewInversiones(
                 itemsFuture: db.getUltimasInversiones(userId: userId),
                 icon: Icons.trending_up,
+              ),
+              SizedBox(height: 20),
+              buildSectionHeader(
+                title: 'Últimas Evaluaciones',
+                onTap:
+                    () => Navigator.pushNamed(
+                      context,
+                      '/dashboard/evaluationmenu',
+                    ),
+              ),
+              buildListPreviewEvaluaciones(
+                itemsFuture: db.getUltimasEvaluaciones(userId: userId),
+                icon: Icons.assignment,
               ),
             ],
           ),
@@ -161,14 +161,15 @@ class DashboardScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            padding: EdgeInsets.all(16),
-            width: 160,
+            padding: EdgeInsets.all(10),
+            height: 130,
+            width: 150,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 15, color: Colors.white),
+                  style: TextStyle(fontSize: 13, color: Colors.white),
                 ),
                 if (value != null)
                   Column(
@@ -182,17 +183,15 @@ class DashboardScreen extends StatelessWidget {
                           color: numberColor,
                         ),
                       ),
-                      SizedBox(height: 6),
                       Column(
                         children: [
                           LinearProgressIndicator(
                             value: value / maxValue,
                             backgroundColor: Colors.white24,
                             color: numberColor,
-                            minHeight: 8,
+                            minHeight: 5,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          SizedBox(height: 4),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -207,7 +206,7 @@ class DashboardScreen extends StatelessWidget {
                               Text(
                                 maxValue.toString(),
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   color: numberColor,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -245,12 +244,24 @@ class DashboardScreen extends StatelessWidget {
           title,
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        IconButton(icon: Icon(Icons.arrow_forward), onPressed: onTap),
+        TextButton(
+          onPressed: onTap,
+          child: Text(
+            title == 'Últimas Evaluaciones'
+                ? 'Ver evaluaciones'
+                : 'Ver inversiones',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.teal[800],
+            ),
+          ),
+        ),
       ],
     );
   }
 
-  Widget _buildListPreviewEvaluaciones({
+  Widget buildListPreviewEvaluaciones({
     required Future<List<Map<String, dynamic>>> itemsFuture,
     required IconData icon,
   }) {
@@ -265,28 +276,24 @@ class DashboardScreen extends StatelessWidget {
           return Text('No hay evaluaciones disponibles.');
         }
 
-        return Column(
-          children:
-              snapshot.data!.map((item) {
-                //final nivelUsuario = item['NivelInversorFinal'] ?? 'Sin nivel';
-                final fechaEvaluacion =
-                    item['Fecha'] != null
-                        ? formatFecha(item['Fecha'] as Timestamp)
-                        : 'Sin fecha';
-
-                return ListTile(
-                  leading: Icon(icon, color: Colors.teal),
-                  title: Text(
-                    'Evaluación ${snapshot.data!.indexOf(item) + 1} ($fechaEvaluacion)',
-                  ),
-                );
-              }).toList(),
+        return ExpandableListPreview(
+          items: snapshot.data!,
+          icon: icon,
+          isEvaluacion: true,
+          getTitle: (item) {
+            final index = snapshot.data!.indexOf(item) + 1;
+            final fecha =
+                item['Fecha'] != null
+                    ? formatFecha(item['Fecha'] as Timestamp)
+                    : 'Sin fecha';
+            return 'Evaluación $index ($fecha)';
+          },
         );
       },
     );
   }
 
-  Widget _buildListPreview({
+  Widget buildListPreviewInversiones({
     required Future<List<Map<String, dynamic>>> itemsFuture,
     required IconData icon,
   }) {
@@ -301,17 +308,72 @@ class DashboardScreen extends StatelessWidget {
           return Text('No hay datos disponibles.');
         }
 
-        return Column(
-          children:
-              snapshot.data!.map((item) {
-                return ListTile(
-                  leading: Icon(icon, color: Colors.teal),
-                  title: Text(item['titulo'] ?? 'Sin título'),
-                  subtitle: Text('Resultado: ${item['resultado']}'),
-                );
-              }).toList(),
+        return ExpandableListPreview(
+          items: snapshot.data!,
+          icon: icon,
+          isEvaluacion: false,
+          getTitle: (item) => item['titulo'] ?? 'Sin título',
+          getSubtitle: (item) => 'Resultado: ${item['resultado']}',
         );
       },
+    );
+  }
+}
+
+class ExpandableListPreview extends StatefulWidget {
+  final List<Map<String, dynamic>> items;
+  final IconData icon;
+  final bool isEvaluacion;
+  final String Function(Map<String, dynamic>) getTitle;
+  final String? Function(Map<String, dynamic>)? getSubtitle;
+
+  const ExpandableListPreview({
+    super.key,
+    required this.items,
+    required this.icon,
+    required this.isEvaluacion,
+    required this.getTitle,
+    this.getSubtitle,
+  });
+
+  @override
+  State<ExpandableListPreview> createState() => _ExpandableListPreviewState();
+}
+
+class _ExpandableListPreviewState extends State<ExpandableListPreview> {
+  bool expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final itemsToShow = expanded ? widget.items : widget.items.take(3).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ...itemsToShow.map(
+          (item) => ListTile(
+            leading: Icon(widget.icon, color: Colors.teal),
+            title: Text(widget.getTitle(item)),
+            subtitle:
+                widget.getSubtitle != null
+                    ? Text(widget.getSubtitle!(item) ?? '')
+                    : null,
+          ),
+        ),
+        if (widget.items.length > 3)
+          TextButton.icon(
+            onPressed: () => setState(() => expanded = !expanded),
+            icon: Icon(expanded ? Icons.expand_less : Icons.expand_more),
+            label: Text(
+              expanded ? 'Ver menos' : 'Ver más',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Colors.teal[800],
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
