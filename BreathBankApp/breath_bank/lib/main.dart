@@ -3,6 +3,7 @@ import 'package:breath_bank/screens/Dashboard_screen.dart';
 import 'package:breath_bank/screens/EvaluationMenu_screen.dart';
 import 'package:breath_bank/screens/Evaluation_screen.dart';
 import 'package:breath_bank/screens/InvestmentMenu_screen.dart';
+import 'package:breath_bank/screens/NewInvestmentMenu_screen.dart';
 import 'package:breath_bank/screens/Register_screen.dart';
 import 'package:breath_bank/screens/Test1_screen.dart';
 import 'package:breath_bank/screens/Test2_screen.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
         '/dashboard/appsettings': (context) => AppSettingsScreen(),
         '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
         '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
+        '/dashboard/newinvestmentmenu': (context) => NewInvestmentMenuScreen(),
       },
     );
   }

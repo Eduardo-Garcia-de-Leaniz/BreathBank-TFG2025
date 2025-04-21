@@ -128,9 +128,10 @@ class DashboardScreen extends StatelessWidget {
               right: 1,
               child: FloatingActionButton(
                 heroTag: 'fabInversion',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/investment');
+                onPressed: () async {
+                  Navigator.pushNamed(context, '/dashboard/newinvestmentmenu');
                 },
+
                 child: Icon(Icons.more_time),
                 tooltip: 'Nueva inversión',
               ),
