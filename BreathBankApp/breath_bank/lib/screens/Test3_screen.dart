@@ -245,17 +245,52 @@ class Test3ScreenState extends State<Test3Screen> {
                               resultValue = value;
                             },
                             onEditingComplete: () {
-                              if (validateTestResult(resultValue)) {
-                                testResult = int.parse(resultValue);
-                              } else {
-                                testResult = 0;
-                              }
                               FocusScope.of(context).unfocus();
                             },
                           ),
                         ),
                         SizedBox(height: 50),
-                        BtnNext(test_result: testResult),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (validateTestResult(resultValue)) {
+                              testResult = int.parse(resultValue);
+                            } else {
+                              testResult = 0;
+                            }
+                            if (testResult > 0) {
+                              Navigator.pop(context, testResult);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Valor incorrecto. Asegúrate de indicar el número de la última respiración completada.',
+                                  ),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              7,
+                              71,
+                              94,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: Text(
+                            'Siguiente',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -449,44 +484,6 @@ class LabelTestResultText extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.bold,
           color: const Color.fromARGB(255, 7, 71, 94),
-        ),
-      ),
-    );
-  }
-}
-
-class BtnNext extends StatelessWidget {
-  const BtnNext({super.key, required this.test_result});
-
-  final int test_result;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        if (test_result > 0) {
-          Navigator.pop(context, test_result);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Valor incorrecto. Asegúrate de indicar el número de la última respiración completada.',
-              ),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      ),
-      child: Text(
-        'Siguiente',
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
         ),
       ),
     );

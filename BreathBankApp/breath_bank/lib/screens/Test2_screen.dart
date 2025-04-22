@@ -308,7 +308,47 @@ class Test2ScreenState extends State<Test2Screen> {
                           ),
                         ),
                         SizedBox(height: 40),
-                        BtnNext(test_result: testResult),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (validateTestResult(resultValue)) {
+                              testResult = int.parse(resultValue);
+                            } else {
+                              testResult = 0;
+                            }
+                            if (testResult > 0) {
+                              Navigator.pop(context, testResult);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Debes indicar el tiempo para continuar.',
+                                  ),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              7,
+                              71,
+                              94,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: Text(
+                            'Siguiente',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -317,42 +357,6 @@ class Test2ScreenState extends State<Test2Screen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class BtnNext extends StatelessWidget {
-  const BtnNext({super.key, required this.test_result});
-
-  final int test_result;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        if (test_result > 0) {
-          Navigator.pop(context, test_result);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Debes indicar el tiempo para continuar.'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      ),
-      child: Text(
-        'Siguiente',
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
         ),
       ),
     );
