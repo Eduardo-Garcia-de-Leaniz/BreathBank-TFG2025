@@ -313,6 +313,10 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                             _selectedOption.isNotEmpty
                                 ? () {
                                   // Acción al comenzar inversión
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/dashboard/newinvestmentmenu/manual',
+                                  );
                                 }
                                 : null,
                         style: ElevatedButton.styleFrom(

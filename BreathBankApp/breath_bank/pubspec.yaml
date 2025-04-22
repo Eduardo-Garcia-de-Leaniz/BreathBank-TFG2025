@@ -40,6 +40,9 @@ dependencies:
   # firebase_database: ^11.0.4
   cloud_firestore: ^5.6.5
   #fl_chart: ^0.71.0
+  #flutter_sound: ^9.0.0  
+  #vibration: ^1.7.4
+  #flutter_local_notifications: ^12.0.0     
 
   
 
@@ -74,6 +77,8 @@ flutter:
     - assets/texts/instructions_test2.txt
     - assets/texts/description_test3.txt
     - assets/texts/instructions_test3.txt
+    - assets/sounds/beep1.wav
+    - assets/sounds/beep2.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
