@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^5.5.1
   # firebase_database: ^11.0.4
   cloud_firestore: ^5.6.5
+  firebase_messaging: 
+  shared_preferences: 
   #fl_chart: ^0.71.0
   #flutter_sound: ^9.0.0  
   #vibration: ^1.7.4

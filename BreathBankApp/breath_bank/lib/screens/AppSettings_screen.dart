@@ -42,7 +42,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        '/app/settings/notifications',
+                        '/dashboard/appsettings/notifications',
                       );
                     },
                   ),
