@@ -8,6 +8,16 @@ ValueNotifier<Authentication_service> authenticationService = ValueNotifier(
 class Authentication_service {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
+  // 👇 Nuevo: Notificador del usuario actual
+  final ValueNotifier<User?> userNotifier = ValueNotifier(null);
+
+  Authentication_service() {
+    // Escuchar cambios de login y actualizar el notifier
+    firebaseAuth.authStateChanges().listen((user) {
+      userNotifier.value = user;
+    });
+  }
+
   User? get currentUser => firebaseAuth.currentUser;
 
   Stream<User?> get authStateChanges => firebaseAuth.authStateChanges();
@@ -16,24 +26,29 @@ class Authentication_service {
     required String email,
     required String password,
   }) async {
-    return await firebaseAuth.signInWithEmailAndPassword(
+    final result = await firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    userNotifier.value = result.user; // 🔄 actualizar notifier
+    return result;
   }
 
   Future<UserCredential> createAccount({
     required String email,
     required String password,
   }) async {
-    return await firebaseAuth.createUserWithEmailAndPassword(
+    final result = await firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    userNotifier.value = result.user;
+    return result;
   }
 
   Future<void> signOut() async {
     await firebaseAuth.signOut();
+    userNotifier.value = null;
   }
 
   Future<void> resetPassword({required String email}) async {
@@ -55,6 +70,7 @@ class Authentication_service {
     await currentUser!.reauthenticateWithCredential(credential);
     await currentUser!.delete();
     await firebaseAuth.signOut();
+    userNotifier.value = null;
   }
 
   Future<void> resetPasswordFromCurrentPassword({

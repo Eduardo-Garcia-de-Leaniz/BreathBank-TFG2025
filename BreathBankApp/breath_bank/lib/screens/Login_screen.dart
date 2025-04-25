@@ -4,24 +4,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:breath_bank/Database_service.dart';
 import 'package:flutter/material.dart';
 
-// Falta añadir recuperar/restablecer contraseña
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  final bool desdeNotificacion;
 
+  const LoginScreen({super.key, required this.desdeNotificacion});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
         child: AppBar_Login(),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ImageLogo(imageWidth: 150, imageHeight: 150),
-            ClickableTextLoginRegister(),
-            LoginForm(),
+            const ImageLogo(imageWidth: 150, imageHeight: 150),
+            const ClickableTextLoginRegister(),
+            LoginForm(desdeNotificacion: widget.desdeNotificacion),
           ],
         ),
       ),
@@ -31,7 +37,9 @@ class LoginScreen extends StatelessWidget {
 }
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  final bool desdeNotificacion;
+
+  const LoginForm({super.key, this.desdeNotificacion = false});
 
   @override
   LoginFormState createState() => LoginFormState();
@@ -67,8 +75,6 @@ class LoginFormState extends State<LoginForm> {
     return true;
   }
 
-  // Principio SOLID: Open/Closed Principle
-  // Se crea un método para añadir futuras validaciones solo en este punto, y no en todo el código
   bool validateInputs() {
     if (emailController.text.isEmpty) {
       setState(() {
@@ -101,20 +107,18 @@ class LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFieldEmail(emailController: emailController),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextFieldPassword(passwordController: passwordController),
           const SizedBox(height: 10),
           ErrorMessageWidget(errorMessage: errorMessage),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
                 onPressed: () async {
-                  if (!validateInputs()) {
-                    return;
-                  }
+                  if (!validateInputs()) return;
                   await signIn();
                   if (errorMessage.isEmpty) {
                     setState(() {
@@ -139,15 +143,22 @@ class LoginFormState extends State<LoginForm> {
                         content: Text(
                           'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
                         ),
-                        duration: Duration(seconds: 2),
+                        duration: const Duration(seconds: 2),
                         backgroundColor: Colors.green,
                       ),
                     );
-                    Navigator.pop(context);
-                    Navigator.pushReplacementNamed(context, "/dashboard");
+
+                    if (widget.desdeNotificacion) {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        "/dashboard/appsettings/notifications",
+                      );
+                    } else {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, "/dashboard");
+                    }
                   }
                 },
-
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40,
@@ -174,15 +185,15 @@ class LoginFormState extends State<LoginForm> {
 }
 
 class ErrorMessageWidget extends StatelessWidget {
-  const ErrorMessageWidget({super.key, required this.errorMessage});
-
   final String errorMessage;
+
+  const ErrorMessageWidget({super.key, required this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       errorMessage,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontFamily: 'Arial',
         color: Colors.redAccent,
@@ -192,16 +203,16 @@ class ErrorMessageWidget extends StatelessWidget {
 }
 
 class TextFieldPassword extends StatelessWidget {
-  const TextFieldPassword({super.key, required this.passwordController});
-
   final TextEditingController passwordController;
+
+  const TextFieldPassword({super.key, required this.passwordController});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Contraseña',
           style: TextStyle(
             fontSize: 18,
@@ -212,12 +223,12 @@ class TextFieldPassword extends StatelessWidget {
         ),
         Row(
           children: [
-            Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
-            SizedBox(width: 10),
+            const Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
+            const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Ingrese su contraseña',
                   hintStyle: TextStyle(
                     color: Color.fromARGB(255, 7, 71, 94),
@@ -225,7 +236,7 @@ class TextFieldPassword extends StatelessWidget {
                     fontFamily: 'Arial',
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Arial',
                   fontSize: 16,
                   color: Color.fromARGB(255, 7, 71, 94),
@@ -241,16 +252,16 @@ class TextFieldPassword extends StatelessWidget {
 }
 
 class TextFieldEmail extends StatelessWidget {
-  const TextFieldEmail({super.key, required this.emailController});
-
   final TextEditingController emailController;
+
+  const TextFieldEmail({super.key, required this.emailController});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Correo Electrónico',
           style: TextStyle(
             fontSize: 18,
@@ -261,12 +272,12 @@ class TextFieldEmail extends StatelessWidget {
         ),
         Row(
           children: [
-            Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
-            SizedBox(width: 10),
+            const Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
+            const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Ingrese su correo electrónico',
                   hintStyle: TextStyle(
                     color: Color.fromARGB(255, 7, 71, 94),
@@ -274,7 +285,7 @@ class TextFieldEmail extends StatelessWidget {
                     fontFamily: 'Arial',
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Arial',
                   fontSize: 16,
                   color: Color.fromARGB(255, 7, 71, 94),
@@ -296,32 +307,26 @@ class ClickableTextLoginRegister extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          child: const Text(
-            'Iniciar Sesión',
-            style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Arial',
-              color: Color.fromARGB(255, 150, 150, 150),
-            ),
+        const Text(
+          'Iniciar Sesión',
+          style: TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Arial',
+            color: Color.fromARGB(255, 150, 150, 150),
           ),
         ),
         GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, '/register');
           },
-          child: Container(
-            alignment: Alignment.centerRight,
-            child: const Text(
-              'Registrarse',
-              style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Arial',
-                color: Color.fromARGB(255, 7, 71, 94),
-              ),
+          child: const Text(
+            'Registrarse',
+            style: TextStyle(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Arial',
+              color: Color.fromARGB(255, 7, 71, 94),
             ),
           ),
         ),
@@ -363,7 +368,7 @@ class AppBar_Login extends StatelessWidget {
       title: const Text(
         'Inicio de Sesión',
         style: TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: Colors.white,
           fontSize: 25,
           fontWeight: FontWeight.bold,
           fontFamily: 'Arial',

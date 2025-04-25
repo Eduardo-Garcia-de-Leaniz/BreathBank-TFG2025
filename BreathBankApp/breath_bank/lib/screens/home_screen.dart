@@ -108,7 +108,11 @@ class BtnLogin extends StatelessWidget {
       margin: const EdgeInsets.only(top: 60),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/login');
+          Navigator.pushNamed(
+            context,
+            '/login',
+            arguments: {'desdeNotificacion': false},
+          );
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
