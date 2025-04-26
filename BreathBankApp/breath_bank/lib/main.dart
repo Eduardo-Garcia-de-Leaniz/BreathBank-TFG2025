@@ -77,6 +77,17 @@ class _MyAppState extends State<MyApp> {
 
           if (user == null) {
             // Si no está logueado, redirigir al login
+            // Aquí puedes mostrar un diálogo o una notificación local
+            // para informar al usuario que debe iniciar sesión
+            // Por ejemplo, puedes usar un SnackBar o un diálogo de alerta
+            ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Por favor, inicia sesión para acceder al contenido de la notifiación.',
+                ),
+                duration: Duration(seconds: 3),
+              ),
+            );
             _navigateToLogin();
           } else {
             // Si está logueado, navegar a la ruta correspondiente
@@ -116,7 +127,6 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => HomeScreen(),
         '/login': (context) {
           final args =
               ModalRoute.of(context)?.settings.arguments
@@ -155,19 +165,28 @@ class _MyAppState extends State<MyApp> {
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.data == null) {
-                  return HomeScreen(); // Si no está logueado, muestra LoginScreen
+                  // Verificar si viene desde una notificación
+                  final args =
+                      ModalRoute.of(context)?.settings.arguments
+                          as Map<String, dynamic>?;
+                  final desdeNotificacion = args?['desdeNotificacion'] ?? false;
+
+                  if (desdeNotificacion) {
+                    print(
+                      'No hay usuario logueado. Redirigiendo a LoginScreen desde notificación...',
+                    );
+                    return LoginScreen(desdeNotificacion: true);
+                  } else {
+                    print(
+                      'No hay usuario logueado. Redirigiendo a HomeScreen...',
+                    );
+                    return HomeScreen();
+                  }
                 } else {
                   return DashboardScreen(); // Si está logueado, muestra DashboardScreen
                 }
               },
             ),
-        '/login': (context) {
-          final args =
-              ModalRoute.of(context)?.settings.arguments
-                  as Map<String, dynamic>?;
-          final desdeNotificacion = args?['desdeNotificacion'] ?? false;
-          return LoginScreen(desdeNotificacion: desdeNotificacion);
-        },
         // Otras rutas...
       },
     );
