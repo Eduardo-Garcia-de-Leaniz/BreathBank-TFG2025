@@ -312,13 +312,20 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         onPressed:
                             _selectedOption.isNotEmpty
                                 ? () {
-                                  // Acción al comenzar inversión
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/dashboard/newinvestmentmenu/manual',
-                                  );
+                                  if (_selectedOption == 'manual') {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/dashboard/newinvestmentmenu/manual',
+                                    );
+                                  } else if (_selectedOption == 'guiada') {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/dashboard/newinvestmentmenu/guided',
+                                    );
+                                  }
                                 }
                                 : null,
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF004B8D),
                           padding: const EdgeInsets.symmetric(vertical: 16),
