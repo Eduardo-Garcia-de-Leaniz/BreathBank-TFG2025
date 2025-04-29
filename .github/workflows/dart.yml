@@ -21,13 +21,19 @@ jobs:
         with:
           flutter-version: '3.19.0'
 
+      - name: Move to project directory
+        run: cd BreathBankApp/breath_bank
+
       - name: Install dependencies
         run: flutter pub get
+        working-directory: BreathBankApp/breath_bank
 
       - name: Analyze and build
         run: flutter build apk --debug
+        working-directory: BreathBankApp/breath_bank
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        working-directory: BreathBankApp/breath_bank
