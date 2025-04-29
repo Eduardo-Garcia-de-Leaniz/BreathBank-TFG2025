@@ -1,26 +1,26 @@
-import 'package:breath_bank/screens/GuidedInvestment_screen.dart';
+import 'package:breath_bank/screens/guided_investment_screen.dart';
 import 'package:breath_bank/screens/login_screen.dart';
 import 'package:breath_bank/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/providers/push_notifications_provider.dart';
-import 'package:breath_bank/screens/Dashboard_screen.dart';
-import 'package:breath_bank/screens/AppSettings_screen.dart';
-import 'package:breath_bank/screens/EvaluationMenu_screen.dart';
-import 'package:breath_bank/screens/Evaluation_screen.dart';
-import 'package:breath_bank/screens/InvestmentMenu_screen.dart';
-import 'package:breath_bank/screens/ManualInvestment_screen.dart';
-import 'package:breath_bank/screens/NewInvestmentMenu_screen.dart';
-import 'package:breath_bank/screens/Notifications_screen.dart';
-import 'package:breath_bank/screens/Register_screen.dart';
-import 'package:breath_bank/screens/Test1_screen.dart';
-import 'package:breath_bank/screens/Test2_screen.dart';
-import 'package:breath_bank/screens/Test3_screen.dart';
-import 'package:breath_bank/screens/EvaluationResult_screen.dart';
-import 'package:breath_bank/screens/AccountSettings_screen.dart';
-import 'package:breath_bank/screens/AccountSettingsResetPassword_screen.dart';
-import 'package:breath_bank/screens/AccountSettingsConsultData_screen.dart';
+import 'package:breath_bank/screens/dashboard_screen.dart';
+import 'package:breath_bank/screens/app_settings_screen.dart';
+import 'package:breath_bank/screens/evaluation_menu_screen.dart';
+import 'package:breath_bank/screens/evaluation_screen.dart';
+import 'package:breath_bank/screens/investment_menu_screen.dart';
+import 'package:breath_bank/screens/manual_investment_screen.dart';
+import 'package:breath_bank/screens/new_investment_menu_screen.dart';
+import 'package:breath_bank/screens/notifications_screen.dart';
+import 'package:breath_bank/screens/register_screen.dart';
+import 'package:breath_bank/screens/test1_screen.dart';
+import 'package:breath_bank/screens/test2_screen.dart';
+import 'package:breath_bank/screens/test3_screen.dart';
+import 'package:breath_bank/screens/evaluation_result_screen.dart';
+import 'package:breath_bank/screens/account_settings_screen.dart';
+import 'package:breath_bank/screens/account_settings_reset_password_screen.dart';
+import 'package:breath_bank/screens/account_settings_consult_data_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -183,7 +183,6 @@ class _MyAppState extends State<MyApp> {
                     return HomeScreen();
                   }
                 } else {
-                  
                   return DashboardScreen(); // Si está logueado, muestra DashboardScreen
                 }
               },
