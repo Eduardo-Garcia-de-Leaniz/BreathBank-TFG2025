@@ -312,15 +312,23 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         onPressed:
                             _selectedOption.isNotEmpty
                                 ? () {
+                                  final listonInversion =
+                                      _sliderValue
+                                          .toInt(); // << Guardas el valor actual del slider
+
                                   if (_selectedOption == 'manual') {
                                     Navigator.pushNamed(
                                       context,
                                       '/dashboard/newinvestmentmenu/manual',
+                                      arguments:
+                                          listonInversion, // << lo pasas como argumento
                                     );
                                   } else if (_selectedOption == 'guiada') {
                                     Navigator.pushNamed(
                                       context,
                                       '/dashboard/newinvestmentmenu/guided',
+                                      arguments:
+                                          listonInversion, // << lo pasas como argumento
                                     );
                                   }
                                 }

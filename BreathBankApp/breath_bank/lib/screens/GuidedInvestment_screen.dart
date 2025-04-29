@@ -100,6 +100,9 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int listonInversion =
+        ModalRoute.of(context)!.settings.arguments as int;
+
     int remainingTime = totalTime - elapsedTime;
     int breathsRemaining = totalBreaths - breathsDone;
 
