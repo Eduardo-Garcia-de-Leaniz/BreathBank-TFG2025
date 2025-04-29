@@ -84,6 +84,9 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int listonInversion =
+        ModalRoute.of(context)!.settings.arguments as int;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: const AppBar_ManualInvestment(),
