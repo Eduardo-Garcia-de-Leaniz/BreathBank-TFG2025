@@ -1,6 +1,6 @@
 import 'package:breath_bank/Authentication_service.dart';
-import 'package:breath_bank/screens/Dashboard_screen.dart';
-import 'package:breath_bank/screens/Loading_screen.dart';
+import 'package:breath_bank/screens/dashboard_screen.dart';
+import 'package:breath_bank/screens/loading_screen.dart';
 import 'package:breath_bank/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
