@@ -5,7 +5,7 @@ import 'package:breath_bank/Database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EvaluationMenuScreen extends StatefulWidget {
-  const EvaluationMenuScreen({Key? key}) : super(key: key);
+  const EvaluationMenuScreen({super.key});
 
   @override
   State<EvaluationMenuScreen> createState() => _EvaluationMenuScreenState();
@@ -13,7 +13,7 @@ class EvaluationMenuScreen extends StatefulWidget {
 
 class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
     with SingleTickerProviderStateMixin {
-  final Database_service db = Database_service();
+  final DatabaseService db = DatabaseService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
   late TabController _tabController;
 
@@ -72,7 +72,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar_EvaluationMenu(),
+      appBar: AppBarEvaluationMenu(),
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       body: Column(
         children: [
@@ -347,12 +347,14 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
+          // ignore: deprecated_member_use
           colors: [color.withOpacity(0.25), color.withOpacity(0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: color.withOpacity(0.15),
             blurRadius: 8,
             offset: Offset(0, 4),
@@ -397,8 +399,10 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
   }
 }
 
-class AppBar_EvaluationMenu extends StatelessWidget
+class AppBarEvaluationMenu extends StatelessWidget
     implements PreferredSizeWidget {
+  const AppBarEvaluationMenu({super.key});
+
   @override
   Size get preferredSize => Size.fromHeight(60);
 

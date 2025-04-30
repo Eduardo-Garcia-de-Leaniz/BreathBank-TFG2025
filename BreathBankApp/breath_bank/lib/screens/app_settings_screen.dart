@@ -11,7 +11,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar_AppSettings(),
+      appBar: AppBarAppSettings(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -100,7 +100,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     Color backgroundColor = defaultBackgroundColor,
     Color iconColor = Colors.white,
     Color titleColor = Colors.white,
-    Color arrow_color = Colors.white,
+    Color arrowColor = Colors.white,
   }) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -110,16 +110,15 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       child: ListTile(
         leading: Icon(icon, color: iconColor),
         title: Text(title, style: TextStyle(color: titleColor)),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: arrow_color),
+        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: arrowColor),
         onTap: onTap,
       ),
     );
   }
 }
 
-class AppBar_AppSettings extends StatelessWidget
-    implements PreferredSizeWidget {
-  const AppBar_AppSettings({super.key});
+class AppBarAppSettings extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarAppSettings({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(60);

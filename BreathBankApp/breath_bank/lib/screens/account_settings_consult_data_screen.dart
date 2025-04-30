@@ -17,8 +17,8 @@ class _AccountSettingsModifyDataScreenState
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
 
-  final Database_service db = Database_service();
-  final Authentication_service authenticationService = Authentication_service();
+  final DatabaseService db = DatabaseService();
+  final AuthenticationService authenticationService = AuthenticationService();
 
   // Simulación de datos estáticos (deberías reemplazar por datos reales de tu base de datos)
   final String userId = FirebaseAuth.instance.currentUser!.uid;

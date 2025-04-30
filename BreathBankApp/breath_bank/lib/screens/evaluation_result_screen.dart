@@ -13,6 +13,7 @@ class EvaluationresultScreen extends StatelessWidget {
     final int resultTest2 = args['result_test2'];
     final int resultTest3 = args['result_test3'];
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

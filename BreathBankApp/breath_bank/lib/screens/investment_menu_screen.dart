@@ -13,7 +13,7 @@ class InvestmentMenuScreen extends StatefulWidget {
 
 class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
     with SingleTickerProviderStateMixin {
-  final Database_service db = Database_service();
+  final DatabaseService db = DatabaseService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
   late TabController _tabController;
 
@@ -46,7 +46,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar_InvestmentMenu(),
+      appBar: AppBarInvestmentMenu(),
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       body: Column(
         children: [
@@ -97,7 +97,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
           itemCount: inversiones.length,
           itemBuilder: (context, index) {
             final inversion = inversiones[index];
-            final inversionId = inversion['inversionId'];
+            //final inversionId = inversion['inversionId'];
             final montoInvertido = inversion['montoInvertido'];
 
             return ExpansionTile(
@@ -176,12 +176,14 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
+          // ignore: deprecated_member_use
           colors: [color.withOpacity(0.25), color.withOpacity(0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: color.withOpacity(0.15),
             blurRadius: 8,
             offset: Offset(0, 4),
@@ -226,9 +228,9 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
   }
 }
 
-class AppBar_InvestmentMenu extends StatelessWidget
+class AppBarInvestmentMenu extends StatelessWidget
     implements PreferredSizeWidget {
-  const AppBar_InvestmentMenu({super.key});
+  const AppBarInvestmentMenu({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(60);

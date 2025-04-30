@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
-        child: AppBar_Register(),
+        child: AppBarRegister(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -37,7 +37,7 @@ class RegisterForm extends StatefulWidget {
 }
 
 class RegisterFormState extends State<RegisterForm> {
-  Database_service db = Database_service();
+  DatabaseService db = DatabaseService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -144,7 +144,7 @@ class RegisterFormState extends State<RegisterForm> {
                     setState(() {
                       errorMessage = '';
                     });
-                    await WindowUserRegister(context);
+                    await windowUserRegister(context);
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -171,7 +171,7 @@ class RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  Future<dynamic> WindowUserRegister(BuildContext context) {
+  Future<dynamic> windowUserRegister(BuildContext context) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -514,8 +514,8 @@ class ImageLogo extends StatelessWidget {
   }
 }
 
-class AppBar_Register extends StatelessWidget {
-  const AppBar_Register({super.key});
+class AppBarRegister extends StatelessWidget {
+  const AppBarRegister({super.key});
 
   @override
   Widget build(BuildContext context) {

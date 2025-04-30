@@ -11,7 +11,7 @@ class AccountSettingsScreen extends StatefulWidget {
 }
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
-  final Database_service db = Database_service();
+  final DatabaseService db = DatabaseService();
   String userId = FirebaseAuth.instance.currentUser!.uid;
 
   String nombre = 'Cargando...';
@@ -46,7 +46,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar_AccountSettings(),
+      appBar: AppBarAccountSettings(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -151,7 +151,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       );
 
                       if (confirmed == true) {
-                        Database_service bd = Database_service();
+                        DatabaseService bd = DatabaseService();
                         userId = FirebaseAuth.instance.currentUser!.uid;
                         try {
                           await bd.deleteUserData(userId: userId);
@@ -182,7 +182,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     backgroundColor: Colors.red,
                     iconColor: Colors.white,
                     titleColor: Colors.white,
-                    arrow_color: Colors.white,
+                    arrowColor: Colors.white,
                     onTap: () async {
                       final confirmed = await showDialog<bool>(
                         context: context,
@@ -234,7 +234,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       );
 
                       if (confirmed == true) {
-                        final authenticationService = Authentication_service();
+                        final authenticationService = AuthenticationService();
                         try {
                           await authenticationService.signOut();
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -262,12 +262,12 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     backgroundColor: Colors.red,
                     iconColor: Colors.white,
                     titleColor: Colors.white,
-                    arrow_color: Colors.white,
+                    arrowColor: Colors.white,
                     onTap: () async {
                       final auth = FirebaseAuth.instance;
-                      final db = Database_service();
+                      final db = DatabaseService();
                       final user = auth.currentUser;
-                      final authenticationService = Authentication_service();
+                      final authenticationService = AuthenticationService();
 
                       final passwordController = TextEditingController();
                       String? errorMessage;
@@ -466,7 +466,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     Color backgroundColor = defaultBackgroundColor,
     Color iconColor = Colors.white,
     Color titleColor = Colors.white,
-    Color arrow_color = Colors.white,
+    Color arrowColor = Colors.white,
   }) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -476,16 +476,16 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
       child: ListTile(
         leading: Icon(icon, color: iconColor),
         title: Text(title, style: TextStyle(color: titleColor)),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: arrow_color),
+        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: arrowColor),
         onTap: onTap,
       ),
     );
   }
 }
 
-class AppBar_AccountSettings extends StatelessWidget
+class AppBarAccountSettings extends StatelessWidget
     implements PreferredSizeWidget {
-  const AppBar_AccountSettings({super.key});
+  const AppBarAccountSettings({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(60);

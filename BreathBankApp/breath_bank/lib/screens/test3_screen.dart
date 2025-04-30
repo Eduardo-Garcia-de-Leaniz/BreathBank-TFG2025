@@ -14,7 +14,7 @@ class Test3Screen extends StatefulWidget {
 }
 
 class Test3ScreenState extends State<Test3Screen> {
-  final Database_service db = Database_service();
+  final DatabaseService db = DatabaseService();
   final String userId = authenticationService.value.currentUser!.uid;
   final TextEditingController resultFieldController = TextEditingController();
   String resultValue = '';
@@ -87,6 +87,7 @@ class Test3ScreenState extends State<Test3Screen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -412,6 +413,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
                       color: (_isInhaling
                               ? Colors.tealAccent
                               : const Color.fromARGB(255, 213, 82, 82))
+                          // ignore: deprecated_member_use
                           .withOpacity(0.5),
                       blurRadius: 25,
                       spreadRadius: 8,

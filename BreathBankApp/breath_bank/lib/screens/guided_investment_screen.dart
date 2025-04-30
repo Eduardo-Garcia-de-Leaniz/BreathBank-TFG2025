@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class GuidedInvestmentScreen extends StatefulWidget {
-  const GuidedInvestmentScreen({Key? key}) : super(key: key);
+  const GuidedInvestmentScreen({super.key});
 
   @override
   State<GuidedInvestmentScreen> createState() => _GuidedInvestmentScreenState();
@@ -100,8 +100,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final int listonInversion =
-        ModalRoute.of(context)!.settings.arguments as int;
+    //final int listonInversion = ModalRoute.of(context)!.settings.arguments as int;
 
     int remainingTime = totalTime - elapsedTime;
     int breathsRemaining = totalBreaths - breathsDone;

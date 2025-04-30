@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NewInvestmentMenuScreen extends StatefulWidget {
-  const NewInvestmentMenuScreen({Key? key}) : super(key: key);
+  const NewInvestmentMenuScreen({super.key});
 
   @override
   _NewInvestmentMenuScreenState createState() =>
@@ -11,7 +11,7 @@ class NewInvestmentMenuScreen extends StatefulWidget {
 }
 
 class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
-  final Database_service db = Database_service();
+  final DatabaseService db = DatabaseService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   double _sliderValue = 1;
@@ -157,7 +157,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
-      appBar: AppBar_NewInvestmentMenu(),
+      appBar: AppBarNewInvestmentMenu(),
       body:
           _isLoading
               ? Center(child: CircularProgressIndicator())
@@ -354,9 +354,9 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   }
 }
 
-class AppBar_NewInvestmentMenu extends StatelessWidget
+class AppBarNewInvestmentMenu extends StatelessWidget
     implements PreferredSizeWidget {
-  const AppBar_NewInvestmentMenu({super.key});
+  const AppBarNewInvestmentMenu({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(60);

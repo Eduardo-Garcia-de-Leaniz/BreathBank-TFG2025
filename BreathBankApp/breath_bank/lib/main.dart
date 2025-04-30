@@ -26,9 +26,7 @@ import 'firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(); // ¡Necesario!
-  print(
-    "Mensaje en segundo plano (background): ${message.notification?.title}",
-  );
+  //print("Mensaje en segundo plano (background): ${message.notification?.title}",);
 }
 
 void main() async {

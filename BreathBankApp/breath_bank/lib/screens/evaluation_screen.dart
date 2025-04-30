@@ -10,7 +10,7 @@ class EvaluationScreen extends StatefulWidget {
 }
 
 class EvaluationScreenState extends State<EvaluationScreen> {
-  Database_service db = Database_service();
+  DatabaseService db = DatabaseService();
   String userId = authenticationService.value.currentUser!.uid;
   int resultTest1 = 0;
   int resultTest2 = 0;
@@ -187,13 +187,14 @@ class EvaluationScreenState extends State<EvaluationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBar_Evaluation(),
+          child: AppBarEvaluation(),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -213,21 +214,21 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                     Center(
                       child: Column(
                         children: [
-                          BtnsTest(
+                          btnsTest(
                             context,
                             'Prueba 1',
                             '/evaluation/test1',
                             'test1',
                           ),
                           const SizedBox(height: 40),
-                          BtnsTest(
+                          btnsTest(
                             context,
                             'Prueba 2',
                             '/evaluation/test2',
                             'test2',
                           ),
                           const SizedBox(height: 40),
-                          BtnsTest(
+                          btnsTest(
                             context,
                             'Prueba 3',
                             '/evaluation/test3',
@@ -313,7 +314,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
     );
   }
 
-  Widget BtnsTest(
+  Widget btnsTest(
     BuildContext context,
     String testName,
     String route,
@@ -453,8 +454,8 @@ class TextTitleEvaluationScreen extends StatelessWidget {
   }
 }
 
-class AppBar_Evaluation extends StatelessWidget {
-  const AppBar_Evaluation({super.key});
+class AppBarEvaluation extends StatelessWidget {
+  const AppBarEvaluation({super.key});
 
   @override
   Widget build(BuildContext context) {

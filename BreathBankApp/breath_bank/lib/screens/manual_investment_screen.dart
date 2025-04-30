@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ManualInvestmentScreen extends StatefulWidget {
-  const ManualInvestmentScreen({Key? key}) : super(key: key);
+  const ManualInvestmentScreen({super.key});
 
   @override
   State<ManualInvestmentScreen> createState() => _ManualInvestmentScreenState();
@@ -84,12 +84,11 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final int listonInversion =
-        ModalRoute.of(context)!.settings.arguments as int;
+    //final int listonInversion = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
-      appBar: const AppBar_ManualInvestment(),
+      appBar: const AppBarManualInvestment(),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -111,6 +110,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 4,
                         blurRadius: 10,
@@ -253,9 +253,9 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
   }
 }
 
-class AppBar_ManualInvestment extends StatelessWidget
+class AppBarManualInvestment extends StatelessWidget
     implements PreferredSizeWidget {
-  const AppBar_ManualInvestment({super.key});
+  const AppBarManualInvestment({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(60);

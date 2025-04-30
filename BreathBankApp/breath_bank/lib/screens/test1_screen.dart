@@ -13,7 +13,7 @@ class Test1Screen extends StatefulWidget {
 
 class Test1ScreenState extends State<Test1Screen>
     with SingleTickerProviderStateMixin {
-  Database_service db = Database_service();
+  DatabaseService db = DatabaseService();
   String userId = authenticationService.value.currentUser!.uid;
   final TextEditingController resultFieldController = TextEditingController();
   String resultValue = '';
@@ -106,6 +106,7 @@ class Test1ScreenState extends State<Test1Screen>
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

@@ -5,8 +5,8 @@ import 'package:breath_bank/Authentication_service.dart';
 import 'package:breath_bank/Database_service.dart';
 
 class DashboardScreen extends StatelessWidget {
-  final Database_service db = Database_service();
-  final Authentication_service authenticationService = Authentication_service();
+  final DatabaseService db = DatabaseService();
+  final AuthenticationService authenticationService = AuthenticationService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   DashboardScreen({super.key});
@@ -37,11 +37,12 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: AppBar_Dashboard(),
+        appBar: AppBarDashboard(),
         backgroundColor: const Color.fromARGB(255, 188, 252, 245),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -119,8 +120,8 @@ class DashboardScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/evaluation');
                 },
-                child: Icon(Icons.assignment),
                 tooltip: 'Nueva evaluación',
+                child: Icon(Icons.assignment),
               ),
             ),
             Positioned(
@@ -131,9 +132,8 @@ class DashboardScreen extends StatelessWidget {
                 onPressed: () async {
                   Navigator.pushNamed(context, '/dashboard/newinvestmentmenu');
                 },
-
-                child: Icon(Icons.more_time),
                 tooltip: 'Nueva inversión',
+                child: Icon(Icons.more_time),
               ),
             ),
           ],
@@ -426,10 +426,12 @@ class NavigationMenu extends StatelessWidget {
   }
 }
 
-class AppBar_Dashboard extends StatelessWidget implements PreferredSizeWidget {
+class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(60);
-  final Authentication_service authenticationService = Authentication_service();
+  final AuthenticationService authenticationService = AuthenticationService();
+
+  AppBarDashboard({super.key});
 
   Future<bool> logout() async {
     try {

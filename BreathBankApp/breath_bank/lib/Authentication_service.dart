@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
-ValueNotifier<Authentication_service> authenticationService = ValueNotifier(
-  Authentication_service(),
+ValueNotifier<AuthenticationService> authenticationService = ValueNotifier(
+  AuthenticationService(),
 );
 
-class Authentication_service {
+class AuthenticationService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // 👇 Nuevo: Notificador del usuario actual
   final ValueNotifier<User?> userNotifier = ValueNotifier(null);
 
-  Authentication_service() {
+  AuthenticationService() {
     // Escuchar cambios de login y actualizar el notifier
     firebaseAuth.authStateChanges().listen((user) {
       userNotifier.value = user;

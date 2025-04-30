@@ -18,8 +18,8 @@ class _AccountSettingsResetPasswordScreenState
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
-  Database_service db = Database_service();
-  Authentication_service authenticationService = Authentication_service();
+  DatabaseService db = DatabaseService();
+  AuthenticationService authenticationService = AuthenticationService();
   String currentEmail = FirebaseAuth.instance.currentUser!.email!;
 
   bool _obscureCurrent = true;

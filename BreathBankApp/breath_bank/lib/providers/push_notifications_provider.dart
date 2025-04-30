@@ -1,15 +1,14 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart'; // Necesario para la navegación
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   String argumento = message.data['CLAVE1'] ?? 'no-data';
-  String ruta =
-      message.data['ruta'] ?? '/'; // Ruta por defecto si no se proporciona
+  //String ruta =
+  message.data['ruta'] ?? '/'; // Ruta por defecto si no se proporciona
 
   await _guardarMensaje(argumento);
   // Aquí podrías llamar a un método de navegación global si tu app ya está en ejecución
@@ -31,7 +30,7 @@ class PushNotificationsProvider {
   Future<void> initNotifications(BuildContext context) async {
     await _firebaseMessaging.requestPermission();
 
-    final token = await _firebaseMessaging.getToken();
+    //final token = await _firebaseMessaging.getToken();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       String argumento = message.data['CLAVE1'] ?? 'no-data';

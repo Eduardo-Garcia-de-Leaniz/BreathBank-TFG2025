@@ -12,7 +12,7 @@ class Test2Screen extends StatefulWidget {
 }
 
 class Test2ScreenState extends State<Test2Screen> {
-  Database_service db = Database_service();
+  DatabaseService db = DatabaseService();
   String userId = authenticationService.value.currentUser!.uid;
   final TextEditingController resultFieldController = TextEditingController();
   String resultValue = '';
@@ -100,6 +100,7 @@ class Test2ScreenState extends State<Test2Screen> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
