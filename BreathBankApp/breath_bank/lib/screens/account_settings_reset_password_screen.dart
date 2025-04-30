@@ -1,5 +1,5 @@
-import 'package:breath_bank/Authentication_service.dart';
-import 'package:breath_bank/Database_service.dart';
+import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -126,7 +126,7 @@ class _AccountSettingsResetPasswordScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar_ResetPassword(),
+      appBar: AppBarResetPassword(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -202,9 +202,9 @@ class _AccountSettingsResetPasswordScreenState
   }
 }
 
-class AppBar_ResetPassword extends StatelessWidget
+class AppBarResetPassword extends StatelessWidget
     implements PreferredSizeWidget {
-  const AppBar_ResetPassword({super.key});
+  const AppBarResetPassword({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(60);

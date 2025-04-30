@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:breath_bank/Authentication_service.dart';
-import 'package:breath_bank/Database_service.dart';
+import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 

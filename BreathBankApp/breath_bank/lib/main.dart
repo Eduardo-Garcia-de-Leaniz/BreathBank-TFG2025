@@ -170,14 +170,10 @@ class _MyAppState extends State<MyApp> {
                   final desdeNotificacion = args?['desdeNotificacion'] ?? false;
 
                   if (desdeNotificacion) {
-                    print(
-                      'No hay usuario logueado. Redirigiendo a LoginScreen desde notificación...',
-                    );
+                    //print('No hay usuario logueado. Redirigiendo a LoginScreen desde notificación...',);
                     return LoginScreen(desdeNotificacion: true);
                   } else {
-                    print(
-                      'No hay usuario logueado. Redirigiendo a HomeScreen...',
-                    );
+                    //print('No hay usuario logueado. Redirigiendo a HomeScreen...');
                     return HomeScreen();
                   }
                 } else {

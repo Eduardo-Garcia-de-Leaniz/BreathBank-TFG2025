@@ -1,7 +1,7 @@
-import 'package:breath_bank/Authentication_service.dart';
-import 'package:breath_bank/widgets/widgets_botones/BtnBack.dart';
+import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/widgets/widgets_botones/btnBack.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:breath_bank/Database_service.dart';
+import 'package:breath_bank/database_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: true,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(60),
-        child: AppBar_Login(),
+        child: AppBarLogin(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -359,8 +359,8 @@ class ImageLogo extends StatelessWidget {
   }
 }
 
-class AppBar_Login extends StatelessWidget {
-  const AppBar_Login({super.key});
+class AppBarLogin extends StatelessWidget {
+  const AppBarLogin({super.key});
 
   @override
   Widget build(BuildContext context) {

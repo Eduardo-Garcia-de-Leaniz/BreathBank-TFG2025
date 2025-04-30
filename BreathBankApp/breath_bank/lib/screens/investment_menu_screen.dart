@@ -1,7 +1,7 @@
 import 'package:breath_bank/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:breath_bank/Database_service.dart';
+import 'package:breath_bank/database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class InvestmentMenuScreen extends StatefulWidget {
