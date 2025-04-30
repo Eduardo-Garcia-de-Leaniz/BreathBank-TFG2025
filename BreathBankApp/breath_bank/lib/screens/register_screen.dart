@@ -144,6 +144,7 @@ class RegisterFormState extends State<RegisterForm> {
                     setState(() {
                       errorMessage = '';
                     });
+                    if (!context.mounted) return;
                     await windowUserRegister(context);
                   }
                 },
@@ -253,6 +254,7 @@ class RegisterFormState extends State<RegisterForm> {
                     apellidos: surname,
                     fechaCreacion: DateTime.now(),
                   );
+                  if (!context.mounted) return;
                   Navigator.pop(context);
                   Navigator.pushReplacementNamed(context, "/evaluation");
                   ScaffoldMessenger.of(context).showSnackBar(

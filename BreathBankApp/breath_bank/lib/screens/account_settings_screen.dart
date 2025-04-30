@@ -12,7 +12,7 @@ class AccountSettingsScreen extends StatefulWidget {
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   final DatabaseService db = DatabaseService();
-  String userId = FirebaseAuth.instance.currentUser!.uid;
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   String nombre = 'Cargando...';
   String apellidos = 'Cargando...';
@@ -152,21 +152,23 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
 
                       if (confirmed == true) {
                         DatabaseService bd = DatabaseService();
-                        userId = FirebaseAuth.instance.currentUser!.uid;
                         try {
                           await bd.deleteUserData(userId: userId);
+                          if (!context.mounted) return;
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             '/dashboard',
                             (route) => false,
                           );
                         } catch (e) {
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Error al borrar el historial'),
                             ),
                           );
                         }
+                        if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Historial borrado correctamente'),
@@ -237,17 +239,20 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         final authenticationService = AuthenticationService();
                         try {
                           await authenticationService.signOut();
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Sesión cerrada correctamente'),
                             ),
                           );
+                          if (!context.mounted) return;
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             '/',
                             (route) => false,
                           );
                         } on FirebaseAuthException {
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Error al cerrar sesión')),
                           );
@@ -383,6 +388,8 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                                 password: password,
                                               );
 
+                                          if (!context.mounted) return;
+
                                           Navigator.of(
                                             context,
                                           ).pop(); // Cierra el diálogo
@@ -415,6 +422,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                           } else if (error.contains(
                                             'requires-recent-login',
                                           )) {
+                                            if (!context.mounted) return;
                                             Navigator.of(context).pop();
                                             ScaffoldMessenger.of(
                                               context,
@@ -426,6 +434,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                               ),
                                             );
                                           } else {
+                                            if (!context.mounted) return;
                                             Navigator.of(context).pop();
                                             ScaffoldMessenger.of(
                                               context,

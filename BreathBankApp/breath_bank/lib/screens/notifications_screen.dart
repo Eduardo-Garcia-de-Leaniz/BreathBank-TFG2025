@@ -39,6 +39,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Future<void> _borrarMensajes() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('notificaciones');
+
     setState(() {
       mensajes.clear();
     });

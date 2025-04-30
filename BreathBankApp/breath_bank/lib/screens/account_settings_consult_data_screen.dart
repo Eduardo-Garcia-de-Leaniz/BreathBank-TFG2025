@@ -20,10 +20,10 @@ class _AccountSettingsModifyDataScreenState
   final DatabaseService db = DatabaseService();
   final AuthenticationService authenticationService = AuthenticationService();
 
-  // Simulación de datos estáticos (deberías reemplazar por datos reales de tu base de datos)
   final String userId = FirebaseAuth.instance.currentUser!.uid;
   final String email =
       FirebaseAuth.instance.currentUser?.email ?? "No disponible";
+
   late String name = '';
   late String surname = '';
   late String creationDate = '';
@@ -43,6 +43,8 @@ class _AccountSettingsModifyDataScreenState
   Future<void> cargarDatos() async {
     try {
       final data = await db.getUsuarioStats(userId: userId);
+
+      if (!mounted) return;
 
       setState(() {
         name = data?["Nombre"] ?? "No disponible";
@@ -72,8 +74,7 @@ class _AccountSettingsModifyDataScreenState
         surnameController.text = surname;
       });
     } catch (e) {
-      setState(() {});
-
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Error al cargar los datos: $e"),
@@ -95,28 +96,32 @@ class _AccountSettingsModifyDataScreenState
     return nameController.text != name || surnameController.text != surname;
   }
 
-  void saveChanges() async {
+  Future<void> saveChanges() async {
     try {
       await db.updateNombreYApellidos(
         userId: userId,
         nombre: nameController.text,
         apellidos: surnameController.text,
       );
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Datos actualizados correctamente"),
+          backgroundColor: Colors.green,
+        ),
+      );
     } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Error al actualizar los datos"),
           backgroundColor: Colors.red,
         ),
       );
-      return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Datos actualizados correctamente"),
-        backgroundColor: Colors.green,
-      ),
-    );
   }
 
   Widget buildEditableField({
@@ -157,136 +162,134 @@ class _AccountSettingsModifyDataScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarModifyData(),
+      appBar: const AppBarModifyData(),
+      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       body: Scrollbar(
         trackVisibility: true,
         thumbVisibility: true,
         thickness: 6,
         radius: const Radius.circular(10),
-
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Puedes editar tu nombre y apellidos. El resto de campos no son editables.",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 7, 71, 94),
-                  ),
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Puedes editar tu nombre y apellidos. El resto de campos no son editables.",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color.fromARGB(255, 7, 71, 94),
                 ),
-                const SizedBox(height: 20),
-                buildEditableField(
-                  label: "Nombre",
-                  controller: nameController,
-                  icon: const Icon(Icons.person),
-                ),
-                const SizedBox(height: 16),
-                buildEditableField(
-                  label: "Apellidos",
-                  controller: surnameController,
-                  icon: const Icon(Icons.person_outline),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Email",
-                  value: email,
-                  icon: const Icon(Icons.email),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Fecha de creación",
-                  value: creationDate,
-                  icon: const Icon(Icons.person_add),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Fecha última evaluación",
-                  value: lastEvaluationDate,
-                  icon: const Icon(Icons.calendar_month_outlined),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Fecha última inversión",
-                  value: lastInvestmentDate,
-                  icon: const Icon(Icons.calendar_month_outlined),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Número de evaluaciones",
-                  value: numEvaluations.toString(),
-                  icon: const Icon(Icons.assignment),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Número de inversiones",
-                  value: numInvestments.toString(),
-                  icon: const Icon(Icons.more_time),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Nivel de inversor",
-                  value: investorLevel.toString(),
-                  icon: const Icon(Icons.military_tech),
-                ),
-                const SizedBox(height: 16),
-                buildReadOnlyField(
-                  label: "Saldo",
-                  value: balance.toString(),
-                  icon: const Icon(Icons.account_balance_wallet),
-                ),
-                const SizedBox(height: 30),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (!hasChanges()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("No hay cambios que guardar"),
-                            backgroundColor: Colors.orange,
+              ),
+              const SizedBox(height: 20),
+              buildEditableField(
+                label: "Nombre",
+                controller: nameController,
+                icon: const Icon(Icons.person),
+              ),
+              const SizedBox(height: 16),
+              buildEditableField(
+                label: "Apellidos",
+                controller: surnameController,
+                icon: const Icon(Icons.person_outline),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Email",
+                value: email,
+                icon: const Icon(Icons.email),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Fecha de creación",
+                value: creationDate,
+                icon: const Icon(Icons.person_add),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Fecha última evaluación",
+                value: lastEvaluationDate,
+                icon: const Icon(Icons.calendar_month_outlined),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Fecha última inversión",
+                value: lastInvestmentDate,
+                icon: const Icon(Icons.calendar_month_outlined),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Número de evaluaciones",
+                value: numEvaluations.toString(),
+                icon: const Icon(Icons.assignment),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Número de inversiones",
+                value: numInvestments.toString(),
+                icon: const Icon(Icons.more_time),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Nivel de inversor",
+                value: investorLevel.toString(),
+                icon: const Icon(Icons.military_tech),
+              ),
+              const SizedBox(height: 16),
+              buildReadOnlyField(
+                label: "Saldo",
+                value: balance.toString(),
+                icon: const Icon(Icons.account_balance_wallet),
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (!hasChanges()) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("No hay cambios que guardar"),
+                          backgroundColor: Colors.orange,
+                        ),
+                      );
+                      return;
+                    }
+                    if (nameController.text.isEmpty ||
+                        surnameController.text.isEmpty) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            "Los campos Nombre y/o Apellidos no pueden estar vacíos",
                           ),
-                        );
-                        return;
-                      }
-                      if (nameController.text.isEmpty ||
-                          surnameController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Los campos Nombre y/o Apellidos no pueden estar vacíos",
-                            ),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                        return;
-                      }
-                      saveChanges();
-                      FocusScope.of(context).unfocus();
-                      cargarDatos();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      "Guardar Cambios",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+                    FocusScope.of(context).unfocus();
+                    await saveChanges();
+                    await cargarDatos();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                  child: const Text(
+                    "Guardar Cambios",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
     );
   }
 }

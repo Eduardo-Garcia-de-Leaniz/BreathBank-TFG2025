@@ -512,11 +512,13 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
             );
 
             if (confirmed == true && await logout()) {
+              if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Sesión cerrada correctamente')),
               );
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
             } else if (confirmed == true) {
+              if (!context.mounted) return;
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Error al cerrar sesión')));

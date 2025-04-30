@@ -76,6 +76,9 @@ class _AccountSettingsResetPasswordScreenState
         newPassword: newPasswordController.text,
         email: emailController.text,
       );
+
+      if (!mounted) return; // ✅ importante
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Contraseña actualizada con éxito"),
@@ -83,6 +86,8 @@ class _AccountSettingsResetPasswordScreenState
         ),
       );
     } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Error al actualizar la contraseña"),

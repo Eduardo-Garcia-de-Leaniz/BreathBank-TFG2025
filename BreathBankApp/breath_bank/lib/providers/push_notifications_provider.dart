@@ -41,7 +41,10 @@ class PushNotificationsProvider {
       _mensajesStreamController.sink.add(argumento);
 
       // Navegar a la ruta indicada
-      _navegarA(context, ruta);
+      if (context.mounted) {
+        _navegarA(context, ruta);
+      }
+      //_navegarA(context, ruta);
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -55,7 +58,10 @@ class PushNotificationsProvider {
       _mensajesStreamController.sink.add(argumento);
 
       // Navegar a la ruta indicada
-      _navegarA(context, ruta);
+      if (context.mounted) {
+        _navegarA(context, ruta);
+      }
+      //_navegarA(context, ruta);
     });
 
     RemoteMessage? initialMessage =
@@ -70,7 +76,10 @@ class PushNotificationsProvider {
       _mensajesStreamController.sink.add(argumento);
 
       // Navegar a la ruta indicada
-      _navegarA(context, ruta);
+      if (context.mounted) {
+        _navegarA(context, ruta);
+      }
+      //_navegarA(context, ruta);
     }
   }
 

@@ -138,6 +138,7 @@ class LoginFormState extends State<LoginForm> {
                     final String? nombreUsuario = await db.getNombreUsuario(
                       userId: authenticationService.value.currentUser!.uid,
                     );
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
