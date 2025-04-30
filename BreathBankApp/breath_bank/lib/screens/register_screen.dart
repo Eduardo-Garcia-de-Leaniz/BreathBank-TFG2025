@@ -1,5 +1,5 @@
 import 'package:breath_bank/authentication_service.dart';
-import 'package:breath_bank/widgets/widgets_botones/BtnBack.dart';
+import 'package:breath_bank/widgets/widgets_botones/btnBack.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:breath_bank/database_service.dart';
 import 'package:flutter/material.dart';
