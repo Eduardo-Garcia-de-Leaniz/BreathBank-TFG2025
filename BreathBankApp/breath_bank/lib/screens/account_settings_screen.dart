@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 const String noDisponible = 'No disponible';
+const String cerrarSesion = 'Cerrar sesión';
+const String cargando = 'Cargando...';
 
 class AccountSettingsScreen extends StatefulWidget {
   const AccountSettingsScreen({super.key});
@@ -16,9 +18,9 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   final DatabaseService db = DatabaseService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  String nombre = 'Cargando...';
-  String apellidos = 'Cargando...';
-  String email = 'Cargando...';
+  String nombre = cargando;
+  String apellidos = cargando;
+  String email = cargando;
 
   @override
   void initState() {
@@ -121,7 +123,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                               actions: [
                                 TextButton(
                                   style: TextButton.styleFrom(
-                                    backgroundColor: Color.fromARGB(
+                                    backgroundColor: const Color.fromARGB(
                                       255,
                                       188,
                                       252,
@@ -178,7 +180,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   ),
                   buildOptionTile(
                     icon: Icons.logout,
-                    title: 'Cerrar sesión',
+                    title: cerrarSesion,
                     backgroundColor: Colors.red,
                     iconColor: Colors.white,
                     titleColor: Colors.white,
@@ -195,7 +197,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                 94,
                               ),
                               title: const Text(
-                                'Cerrar sesión',
+                                cerrarSesion,
                                 style: TextStyle(color: Colors.white),
                               ),
                               content: const Text(
@@ -213,7 +215,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'Cerrar sesión',
+                                    cerrarSesion,
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 7, 71, 94),
                                     ),

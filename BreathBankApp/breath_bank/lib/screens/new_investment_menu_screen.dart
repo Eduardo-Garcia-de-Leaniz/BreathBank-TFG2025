@@ -83,7 +83,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             height: 130,
             width: 150,
             child: Column(

@@ -24,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
+      backgroundColor: Color.fromARGB(255, 188, 252, 245),
     );
   }
 }

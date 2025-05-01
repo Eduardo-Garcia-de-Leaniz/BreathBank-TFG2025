@@ -514,12 +514,12 @@ class TestTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Prueba de respiraciones guiada',
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }

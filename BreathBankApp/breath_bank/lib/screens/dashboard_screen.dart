@@ -68,8 +68,8 @@ class DashboardScreen extends StatelessWidget {
                   buildInfoCard(
                     title: 'Nivel de Inversor',
                     futureValue: obtenerNivelInversor(),
-                    numberColor: Color.fromARGB(255, 223, 190, 0),
-                    textColor: Color.fromARGB(255, 243, 221, 96),
+                    numberColor: const Color.fromARGB(255, 223, 190, 0),
+                    textColor: const Color.fromARGB(255, 243, 221, 96),
                   ),
                   buildInfoCard(
                     title: 'Saldo',

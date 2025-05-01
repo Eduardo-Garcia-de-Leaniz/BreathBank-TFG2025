@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+const String noDisponible = "No disponible";
+
 class AccountSettingsModifyDataScreen extends StatefulWidget {
   const AccountSettingsModifyDataScreen({super.key});
 
@@ -21,8 +23,7 @@ class _AccountSettingsModifyDataScreenState
   final AuthenticationService authenticationService = AuthenticationService();
 
   final String userId = FirebaseAuth.instance.currentUser!.uid;
-  final String email =
-      FirebaseAuth.instance.currentUser?.email ?? "No disponible";
+  final String email = FirebaseAuth.instance.currentUser?.email ?? noDisponible;
 
   late String name = '';
   late String surname = '';
@@ -47,23 +48,19 @@ class _AccountSettingsModifyDataScreenState
       if (!mounted) return;
 
       setState(() {
-        name = data?["Nombre"] ?? "No disponible";
-        surname = data?["Apellidos"] ?? "No disponible";
+        name = data?["Nombre"] ?? noDisponible;
+        surname = data?["Apellidos"] ?? noDisponible;
 
         final Timestamp? fechaCreacion = data?["FechaCreación"];
         final Timestamp? fechaEval = data?["FechaÚltimaEvaluación"];
         final Timestamp? fechaInversion = data?["FechaUltimaInversión"];
 
         creationDate =
-            fechaCreacion != null
-                ? formatFecha(fechaCreacion)
-                : "No disponible";
+            fechaCreacion != null ? formatFecha(fechaCreacion) : noDisponible;
         lastEvaluationDate =
-            fechaEval != null ? formatFecha(fechaEval) : "No disponible";
+            fechaEval != null ? formatFecha(fechaEval) : noDisponible;
         lastInvestmentDate =
-            fechaInversion != null
-                ? formatFecha(fechaInversion)
-                : "No disponible";
+            fechaInversion != null ? formatFecha(fechaInversion) : noDisponible;
 
         numEvaluations = data?["NúmeroEvaluacionesRealizadas"] ?? 0;
         numInvestments = data?["NúmeroInversionesRealizadas"] ?? 0;
