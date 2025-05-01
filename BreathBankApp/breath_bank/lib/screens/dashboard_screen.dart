@@ -124,7 +124,7 @@ class DashboardScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/evaluation');
                 },
                 tooltip: 'Nueva evaluación',
-                child: Icon(Icons.assignment),
+                child: const Icon(Icons.assignment),
               ),
             ),
             Positioned(
@@ -273,7 +273,7 @@ class DashboardScreen extends StatelessWidget {
       future: itemsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError ||
             !snapshot.hasData ||
             snapshot.data!.isEmpty) {
@@ -305,7 +305,7 @@ class DashboardScreen extends StatelessWidget {
       future: itemsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError ||
             !snapshot.hasData ||
             snapshot.data!.isEmpty) {
@@ -415,16 +415,16 @@ class NavigationMenu extends StatelessWidget {
         }
       },
       items: [
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.assignment, size: 30),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.assignment, size: 30),
           label: 'Evaluaciones',
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.dashboard, size: 30),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.dashboard, size: 30),
           label: 'Dashboard',
         ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.more_time, size: 30),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.more_time, size: 30),
           label: 'Inversiones',
         ),
       ],

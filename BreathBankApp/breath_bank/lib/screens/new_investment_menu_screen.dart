@@ -91,7 +91,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 13, color: Colors.white),
+                  style: const TextStyle(fontSize: 13, color: Colors.white),
                 ),
                 if (value != null)
                   Column(
@@ -160,7 +160,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
       appBar: const AppBarNewInvestmentMenu(),
       body:
           _isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -186,10 +186,10 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    Text(
+                    const Text(
                       'Listón de Inversión:',
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 7, 71, 94),
+                        color: Color.fromARGB(255, 7, 71, 94),
                         fontSize: 18,
                       ),
                     ),
@@ -199,11 +199,11 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                       children: [
                         Text(
                           _rangoInferior.toString(),
-                          style: TextStyle(color: Color(0xFF004B8D)),
+                          style: const TextStyle(color: Color(0xFF004B8D)),
                         ),
                         Text(
                           _rangoSuperior.toString(),
-                          style: TextStyle(color: Color(0xFF004B8D)),
+                          style: const TextStyle(color: Color(0xFF004B8D)),
                         ),
                       ],
                     ),

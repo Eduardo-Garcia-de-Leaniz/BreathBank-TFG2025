@@ -71,7 +71,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               mensajes.isNotEmpty && user != null
                   ? [
                     IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       onPressed: () {
                         _borrarMensajes().then((_) {
                           if (!context.mounted) return;
@@ -87,21 +87,21 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ),
         body:
             cargando
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : user == null
                 ? Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         'Debes iniciar sesión para ver tus notificaciones.',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
-                        icon: Icon(Icons.login),
-                        label: Text('Ir al login'),
+                        icon: const Icon(Icons.login),
+                        label: const Text('Ir al login'),
                         onPressed: () {
                           Navigator.pushNamed(
                             context,
@@ -116,7 +116,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   ),
                 )
                 : mensajes.isEmpty
-                ? Center(child: Text('No hay notificaciones aún'))
+                ? const Center(child: Text('No hay notificaciones aún'))
                 : ListView.builder(
                   itemCount: mensajes.length,
                   itemBuilder:

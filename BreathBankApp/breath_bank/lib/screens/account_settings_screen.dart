@@ -3,6 +3,8 @@ import 'package:breath_bank/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+const String noDisponible = 'No disponible';
+
 class AccountSettingsScreen extends StatefulWidget {
   const AccountSettingsScreen({super.key});
 
@@ -28,8 +30,8 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     final userDoc = await db.read(collectionPath: 'Usuarios', docId: userId);
     if (userDoc != null) {
       setState(() {
-        nombre = userDoc['Nombre'] ?? 'Sin nombre';
-        apellidos = userDoc['Apellidos'] ?? 'Sin apellidos';
+        nombre = userDoc['Nombre'] ?? noDisponible;
+        apellidos = userDoc['Apellidos'] ?? noDisponible;
       });
     } else {
       setState(() {
@@ -39,7 +41,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     }
 
     setState(() {
-      email = FirebaseAuth.instance.currentUser?.email ?? 'Sin email';
+      email = FirebaseAuth.instance.currentUser?.email ?? noDisponible;
     });
   }
 
@@ -71,8 +73,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
               style: const TextStyle(color: Color.fromARGB(255, 7, 71, 94)),
             ),
             const SizedBox(height: 24),
-
-            // Lista de opciones
             Expanded(
               child: ListView(
                 children: [
@@ -121,7 +121,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                               actions: [
                                 TextButton(
                                   style: TextButton.styleFrom(
-                                    backgroundColor: const Color.fromARGB(
+                                    backgroundColor: Color.fromARGB(
                                       255,
                                       188,
                                       252,
@@ -134,9 +134,8 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                       color: Color.fromARGB(255, 7, 71, 94),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(true);
-                                  },
+                                  onPressed:
+                                      () => Navigator.of(context).pop(true),
                                 ),
                                 TextButton(
                                   child: const Text(
@@ -177,7 +176,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       }
                     },
                   ),
-
                   buildOptionTile(
                     icon: Icons.logout,
                     title: 'Cerrar sesión',
@@ -245,7 +243,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                               content: Text('Sesión cerrada correctamente'),
                             ),
                           );
-                          if (!context.mounted) return;
                           Navigator.pushNamedAndRemoveUntil(
                             context,
                             '/',
@@ -262,7 +259,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       }
                     },
                   ),
-
                   buildOptionTile(
                     icon: Icons.delete_forever,
                     title: 'Eliminar cuenta',
@@ -327,7 +323,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                           ),
                                         ),
                                       ),
-
                                       if (errorMessage != null) ...[
                                         const SizedBox(height: 12),
                                         Text(
@@ -342,10 +337,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                   actions: [
                                     TextButton(
                                       onPressed:
-                                          () =>
-                                              Navigator.of(
-                                                context,
-                                              ).pop(), // Cerrar
+                                          () => Navigator.of(context).pop(),
                                       child: const Text(
                                         'Cancelar',
                                         style: TextStyle(color: Colors.white),
@@ -378,24 +370,16 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                         }
 
                                         try {
-                                          // Eliminar datos
                                           await db.deleteUserAccount(
                                             userId: user!.uid,
                                           );
-
-                                          // Eliminar cuenta
                                           await authenticationService
                                               .deleteAccount(
                                                 email: user.email!,
                                                 password: password,
                                               );
-
                                           if (!context.mounted) return;
-
-                                          Navigator.of(
-                                            context,
-                                          ).pop(); // Cierra el diálogo
-
+                                          Navigator.of(context).pop();
                                           ScaffoldMessenger.of(
                                             context,
                                           ).showSnackBar(
@@ -405,7 +389,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                               ),
                                             ),
                                           );
-
                                           Navigator.pushNamedAndRemoveUntil(
                                             context,
                                             '/',
@@ -413,7 +396,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                           );
                                         } catch (e) {
                                           final error = e.toString();
-
                                           if (error.contains(
                                             'The supplied auth credential is incorrect',
                                           )) {

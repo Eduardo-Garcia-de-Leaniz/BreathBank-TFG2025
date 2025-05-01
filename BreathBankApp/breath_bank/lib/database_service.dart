@@ -1,5 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Constantes para los campos de usuario
+const String kFechaCreacion = 'FechaCreación';
+const String kFechaUltimoAcceso = 'FechaÚltimoAcceso';
+const String kFechaUltimaEvaluacion = 'FechaÚltimaEvaluación';
+const String kFechaUltimaInversion = 'FechaUltimaInversión';
+const String kNivelInversor = 'NivelInversor';
+const String kNumeroEvaluaciones = 'NúmeroEvaluacionesRealizadas';
+const String kNumeroInversiones = 'NúmeroInversionesRealizadas';
+const String kSaldo = 'Saldo';
+const String kNombre = 'Nombre';
+const String kApellidos = 'Apellidos';
+
 class DatabaseService {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -45,28 +57,24 @@ class DatabaseService {
       collectionPath: 'Usuarios',
       docId: userId,
       data: {
-        'Nombre': nombre,
-        'Apellidos': apellidos,
-        'FechaCreación': fechaCreacion,
-        'FechaÚltimoAcceso': fechaCreacion,
-        'FechaÚltimaEvaluación': fechaCreacion,
-        'FechaUltimaInversión': fechaCreacion,
-        'NivelInversor': 0,
-        'NúmeroEvaluacionesRealizadas': 0,
-        'NúmeroInversionesRealizadas': 0,
-        'Saldo': 0,
+        kNombre: nombre,
+        kApellidos: apellidos,
+        kFechaCreacion: fechaCreacion,
+        kFechaUltimoAcceso: fechaCreacion,
+        kFechaUltimaEvaluacion: fechaCreacion,
+        kFechaUltimaInversion: fechaCreacion,
+        kNivelInversor: 0,
+        kNumeroEvaluaciones: 0,
+        kNumeroInversiones: 0,
+        kSaldo: 0,
       },
     );
   }
 
   Future<String?> getNombreUsuario({required String userId}) async {
-    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
-      collectionPath: 'Usuarios',
-      docId: userId,
-    );
-
+    final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (snapshot != null && snapshot.data() != null) {
-      return snapshot.data()!['Nombre'] as String;
+      return snapshot.data()![kNombre] as String;
     }
     return null;
   }
@@ -74,16 +82,12 @@ class DatabaseService {
   Future<Map<String, String>?> getNombreYApellidosUsuario({
     required String userId,
   }) async {
-    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
-      collectionPath: 'Usuarios',
-      docId: userId,
-    );
-
+    final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (snapshot != null && snapshot.data() != null) {
       final data = snapshot.data()!;
       return {
-        'Nombre': data['Nombre'] as String,
-        'Apellidos': data['Apellidos'] as String,
+        kNombre: data[kNombre] as String,
+        kApellidos: data[kApellidos] as String,
       };
     }
     return null;
@@ -93,23 +97,20 @@ class DatabaseService {
     required String userId,
   }) async {
     final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
-
     if (snapshot != null && snapshot.data() != null) {
       final data = snapshot.data()!;
-
       return {
-        'Nombre': data['Nombre'],
-        'Apellidos': data['Apellidos'],
-        'FechaCreación': data['FechaCreación'],
-        'FechaÚltimaEvaluación': data['FechaÚltimaEvaluación'],
-        'FechaUltimaInversión': data['FechaUltimaInversión'],
-        'NúmeroEvaluacionesRealizadas': data['NúmeroEvaluacionesRealizadas'],
-        'NúmeroInversionesRealizadas': data['NúmeroInversionesRealizadas'],
-        'NivelInversor': data['NivelInversor'],
-        'Saldo': data['Saldo'],
+        kNombre: data[kNombre],
+        kApellidos: data[kApellidos],
+        kFechaCreacion: data[kFechaCreacion],
+        kFechaUltimaEvaluacion: data[kFechaUltimaEvaluacion],
+        kFechaUltimaInversion: data[kFechaUltimaInversion],
+        kNumeroEvaluaciones: data[kNumeroEvaluaciones],
+        kNumeroInversiones: data[kNumeroInversiones],
+        kNivelInversor: data[kNivelInversor],
+        kSaldo: data[kSaldo],
       };
     }
-
     return null;
   }
 
@@ -129,7 +130,6 @@ class DatabaseService {
           return data;
         }).toList();
 
-    // Ordenar manualmente por el campo 'fecha' de forma descendente
     evaluaciones.sort((a, b) {
       final fechaA = a['Fecha'] as Timestamp?;
       final fechaB = b['Fecha'] as Timestamp?;
@@ -144,7 +144,7 @@ class DatabaseService {
     required String evaluacionId,
   }) async {
     final snapshot =
-        await FirebaseFirestore.instance
+        await db
             .collection('Evaluaciones/$evaluacionId/PruebasEvaluación')
             .doc('Resultados')
             .get();
@@ -164,7 +164,7 @@ class DatabaseService {
   Future<List<Map<String, dynamic>>> getUltimasInversiones({
     required String userId,
   }) async {
-    final QuerySnapshot<Map<String, dynamic>> snapshot =
+    final snapshot =
         await db
             .collection('Inversiones')
             .where('IdUsuario', isEqualTo: userId)
@@ -180,7 +180,7 @@ class DatabaseService {
     await update(
       collectionPath: 'Usuarios',
       docId: userId,
-      data: {'FechaÚltimoAcceso': fechaUltimoAcceso},
+      data: {kFechaUltimoAcceso: fechaUltimoAcceso},
     );
   }
 
@@ -189,22 +189,18 @@ class DatabaseService {
     required DateTime fechaUltimaEvaluacion,
     required int nivelInversor,
   }) async {
-    final DocumentSnapshot<Map<String, dynamic>>? snapshot = await read(
-      collectionPath: 'Usuarios',
-      docId: userId,
-    );
-
+    final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (snapshot != null && snapshot.data() != null) {
-      final int numeroEvaluacionesActual =
-          snapshot.data()!['NúmeroEvaluacionesRealizadas'] ?? 0;
+      final int evaluacionesActuales =
+          snapshot.data()![kNumeroEvaluaciones] ?? 0;
 
       await update(
         collectionPath: 'Usuarios',
         docId: userId,
         data: {
-          'NúmeroEvaluacionesRealizadas': numeroEvaluacionesActual + 1,
-          'FechaÚltimaEvaluación': fechaUltimaEvaluacion,
-          'NivelInversor': nivelInversor,
+          kNumeroEvaluaciones: evaluacionesActuales + 1,
+          kFechaUltimaEvaluacion: fechaUltimaEvaluacion,
+          kNivelInversor: nivelInversor,
         },
       );
     }
@@ -220,9 +216,9 @@ class DatabaseService {
       collectionPath: 'Usuarios',
       docId: userId,
       data: {
-        'NúmeroInversionesRealizadas': numeroInversiones,
-        'Saldo': saldo,
-        'FechaUltimaInversión': fechaUltimaInversion,
+        kNumeroInversiones: numeroInversiones,
+        kSaldo: saldo,
+        kFechaUltimaInversion: fechaUltimaInversion,
       },
     );
   }
@@ -235,7 +231,7 @@ class DatabaseService {
     await update(
       collectionPath: 'Usuarios',
       docId: userId,
-      data: {'Nombre': nombre, 'Apellidos': apellidos},
+      data: {kNombre: nombre, kApellidos: apellidos},
     );
   }
 
@@ -265,8 +261,7 @@ class DatabaseService {
     required int resultadoPrueba2,
     required int resultadoPrueba3,
   }) async {
-    final evaluacionId =
-        FirebaseFirestore.instance.collection('Evaluaciones').doc().id;
+    final evaluacionId = db.collection('Evaluaciones').doc().id;
 
     await create(
       collectionPath: 'Evaluaciones',
@@ -306,82 +301,79 @@ class DatabaseService {
   }
 
   Future<void> deleteUserData({required String userId}) async {
-    final QuerySnapshot<Map<String, dynamic>> evaluacionesSnapshot =
+    final evaluacionesSnapshot =
         await db
             .collection('Evaluaciones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
-    for (final doc in evaluacionesSnapshot.docs) {
-      final CollectionReference<Map<String, dynamic>> pruebasEvaluacionRef = db
-          .collection('Evaluaciones/${doc.id}/PruebasEvaluación');
-      final QuerySnapshot<Map<String, dynamic>> pruebasSnapshot =
-          await pruebasEvaluacionRef.get();
-      for (final pruebaDoc in pruebasSnapshot.docs) {
-        await pruebasEvaluacionRef.doc(pruebaDoc.id).delete();
-      }
 
+    for (final doc in evaluacionesSnapshot.docs) {
+      final pruebasRef = db.collection(
+        'Evaluaciones/${doc.id}/PruebasEvaluación',
+      );
+      final pruebasSnapshot = await pruebasRef.get();
+      for (final pruebaDoc in pruebasSnapshot.docs) {
+        await pruebasRef.doc(pruebaDoc.id).delete();
+      }
       await db.collection('Evaluaciones').doc(doc.id).delete();
     }
 
-    final QuerySnapshot<Map<String, dynamic>> inversionesSnapshot =
+    final inversionesSnapshot =
         await db
             .collection('Inversiones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
+
     for (final doc in inversionesSnapshot.docs) {
       await db.collection('Inversiones').doc(doc.id).delete();
     }
 
-    final DocumentSnapshot<Map<String, dynamic>>? userSnapshot = await read(
-      collectionPath: 'Usuarios',
-      docId: userId,
-    );
-
+    final userSnapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (userSnapshot != null && userSnapshot.data() != null) {
       final data = userSnapshot.data()!;
       await update(
         collectionPath: 'Usuarios',
         docId: userId,
         data: {
-          'Nombre': data['Nombre'],
-          'Apellidos': data['Apellidos'],
-          'FechaCreación': data['FechaCreación'],
-          'FechaÚltimoAcceso': data['FechaÚltimoAcceso'],
-
-          'NivelInversor': 0,
-          'NúmeroEvaluacionesRealizadas': 0,
-          'NúmeroInversionesRealizadas': 0,
-          'FechaÚltimaEvaluación': null,
-          'FechaUltimaInversión': null,
-          'Saldo': 0,
+          kNombre: data[kNombre],
+          kApellidos: data[kApellidos],
+          kFechaCreacion: data[kFechaCreacion],
+          kFechaUltimoAcceso: data[kFechaUltimoAcceso],
+          kNivelInversor: 0,
+          kNumeroEvaluaciones: 0,
+          kNumeroInversiones: 0,
+          kFechaUltimaEvaluacion: null,
+          kFechaUltimaInversion: null,
+          kSaldo: 0,
         },
       );
     }
   }
 
   Future<void> deleteUserAccount({required String userId}) async {
-    final QuerySnapshot<Map<String, dynamic>> evaluacionesSnapshot =
+    final evaluacionesSnapshot =
         await db
             .collection('Evaluaciones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
-    for (final doc in evaluacionesSnapshot.docs) {
-      final CollectionReference<Map<String, dynamic>> pruebasEvaluacionRef = db
-          .collection('Evaluaciones/${doc.id}/PruebasEvaluación');
-      final QuerySnapshot<Map<String, dynamic>> pruebasSnapshot =
-          await pruebasEvaluacionRef.get();
-      for (final pruebaDoc in pruebasSnapshot.docs) {
-        await pruebasEvaluacionRef.doc(pruebaDoc.id).delete();
-      }
 
+    for (final doc in evaluacionesSnapshot.docs) {
+      final pruebasRef = db.collection(
+        'Evaluaciones/${doc.id}/PruebasEvaluación',
+      );
+      final pruebasSnapshot = await pruebasRef.get();
+      for (final pruebaDoc in pruebasSnapshot.docs) {
+        await pruebasRef.doc(pruebaDoc.id).delete();
+      }
       await db.collection('Evaluaciones').doc(doc.id).delete();
     }
 
-    final QuerySnapshot<Map<String, dynamic>> inversionesSnapshot =
+    final inversionesSnapshot =
         await db
             .collection('Inversiones')
             .where('IdUsuario', isEqualTo: userId)
             .get();
+
     for (final doc in inversionesSnapshot.docs) {
       await db.collection('Inversiones').doc(doc.id).delete();
     }

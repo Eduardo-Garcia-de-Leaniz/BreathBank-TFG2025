@@ -115,7 +115,7 @@ class LoginFormState extends State<LoginForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BtnBack(fontSize: 16, route: '/'),
+              const BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
                 onPressed: () async {
                   if (!validateInputs()) return;
