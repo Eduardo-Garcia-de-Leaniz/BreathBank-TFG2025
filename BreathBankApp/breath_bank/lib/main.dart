@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             // para informar al usuario que debe iniciar sesión
             // Por ejemplo, puedes usar un SnackBar o un diálogo de alerta
             ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text(
                   'Por favor, inicia sesión para acceder al contenido de la notifiación.',
                 ),
@@ -130,28 +130,30 @@ class _MyAppState extends State<MyApp> {
           final desdeNotificacion = args?['desdeNotificacion'] ?? false;
           return LoginScreen(desdeNotificacion: desdeNotificacion);
         },
-        '/register': (context) => RegisterScreen(),
-        '/evaluation': (context) => EvaluationScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/evaluation': (context) => const EvaluationScreen(),
         '/dashboard': (context) => DashboardScreen(),
-        '/evaluation/test1': (context) => Test1Screen(),
-        '/evaluation/test2': (context) => Test2Screen(),
-        '/evaluation/test3': (context) => Test3Screen(),
-        '/evaluation/result': (context) => EvaluationresultScreen(),
-        '/dashboard/accountsettings': (context) => AccountSettingsScreen(),
+        '/evaluation/test1': (context) => const Test1Screen(),
+        '/evaluation/test2': (context) => const Test2Screen(),
+        '/evaluation/test3': (context) => const Test3Screen(),
+        '/evaluation/result': (context) => const EvaluationresultScreen(),
+        '/dashboard/accountsettings':
+            (context) => const AccountSettingsScreen(),
         '/dashboard/accontsettings/resetpassword':
-            (context) => AccountSettingsResetPasswordScreen(),
+            (context) => const AccountSettingsResetPasswordScreen(),
         '/dashboard/accountsettings/consultdata':
-            (context) => AccountSettingsModifyDataScreen(),
-        '/dashboard/appsettings': (context) => AppSettingsScreen(),
-        '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
-        '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
-        '/dashboard/newinvestmentmenu': (context) => NewInvestmentMenuScreen(),
+            (context) => const AccountSettingsModifyDataScreen(),
+        '/dashboard/appsettings': (context) => const AppSettingsScreen(),
+        '/dashboard/evaluationmenu': (context) => const EvaluationMenuScreen(),
+        '/dashboard/investmentmenu': (context) => const InvestmentMenuScreen(),
+        '/dashboard/newinvestmentmenu':
+            (context) => const NewInvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu/manual':
-            (context) => ManualInvestmentScreen(),
+            (context) => const ManualInvestmentScreen(),
         '/dashboard/newinvestmentmenu/guided':
-            (context) => GuidedInvestmentScreen(),
+            (context) => const GuidedInvestmentScreen(),
         '/dashboard/appsettings/notifications':
-            (context) => NotificationsScreen(),
+            (context) => const NotificationsScreen(),
         '/':
             (context) => FutureBuilder<User?>(
               future: FirebaseAuth.instance.currentUser?.reload().then(
@@ -159,7 +161,7 @@ class _MyAppState extends State<MyApp> {
               ),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: const CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.data == null) {
@@ -171,10 +173,10 @@ class _MyAppState extends State<MyApp> {
 
                   if (desdeNotificacion) {
                     //print('No hay usuario logueado. Redirigiendo a LoginScreen desde notificación...',);
-                    return LoginScreen(desdeNotificacion: true);
+                    return const LoginScreen(desdeNotificacion: true);
                   } else {
                     //print('No hay usuario logueado. Redirigiendo a HomeScreen...');
-                    return HomeScreen();
+                    return const HomeScreen();
                   }
                 } else {
                   return DashboardScreen(); // Si está logueado, muestra DashboardScreen

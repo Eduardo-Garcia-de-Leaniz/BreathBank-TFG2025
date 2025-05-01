@@ -36,7 +36,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     });
   }
 
-  Future<void> _borrarMensajes() async {
+  Future<bool> _borrarMensajes() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('notificaciones');
 
@@ -44,9 +44,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       mensajes.clear();
     });
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('Mensajes borrados')));
+    return true;
   }
 
   @override
@@ -74,7 +72,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   ? [
                     IconButton(
                       icon: Icon(Icons.delete),
-                      onPressed: _borrarMensajes,
+                      onPressed: () {
+                        _borrarMensajes().then((_) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Mensajes borrados')),
+                          );
+                        });
+                      },
                       tooltip: 'Borrar mensajes',
                     ),
                   ]

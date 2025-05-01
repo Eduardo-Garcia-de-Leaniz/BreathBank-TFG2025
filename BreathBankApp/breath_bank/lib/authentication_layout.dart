@@ -18,7 +18,7 @@ class AuthenticationLayout extends StatelessWidget {
           builder: (context, snapshot) {
             Widget widget;
             if (snapshot.connectionState == ConnectionState.waiting) {
-              widget = LoadingScreen();
+              widget = const LoadingScreen();
             } else if (snapshot.hasData) {
               widget = DashboardScreen();
             } else {
