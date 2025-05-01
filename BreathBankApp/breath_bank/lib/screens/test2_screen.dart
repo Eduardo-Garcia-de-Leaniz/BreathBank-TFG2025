@@ -104,9 +104,9 @@ class Test2ScreenState extends State<Test2Screen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: PreferredSize(
+        appBar: const PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: const AppBarTest2(),
+          child: AppBarTest2(),
         ),
         resizeToAvoidBottomInset: true,
         body: PageView(
@@ -371,12 +371,12 @@ class LabelTestResultText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
-      child: Text(
+      child: const Text(
         'Tiempo en realizar las 3 respiraciones: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: const Color.fromARGB(255, 7, 71, 94),
+          color: Color.fromARGB(255, 7, 71, 94),
         ),
       ),
     );
@@ -553,10 +553,10 @@ class AnimatedArrowsWidgetState extends State<AnimatedArrowsWidget>
   Widget buildArrow(int index) {
     return FadeTransition(
       opacity: fadeAnimation[index],
-      child: Icon(
+      child: const Icon(
         Icons.arrow_forward_ios,
         size: 50,
-        color: const Color.fromARGB(255, 242, 173, 10),
+        color: Color.fromARGB(255, 242, 173, 10),
       ),
     );
   }

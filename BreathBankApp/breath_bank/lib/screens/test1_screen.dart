@@ -111,7 +111,7 @@ class Test1ScreenState extends State<Test1Screen>
       onWillPop: () async => false,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(60),
           child: const AppBarTest1(),
         ),
         resizeToAvoidBottomInset: true,

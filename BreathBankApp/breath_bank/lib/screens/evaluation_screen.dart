@@ -193,7 +193,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(60),
           child: const AppBarEvaluation(),
         ),
         body: SingleChildScrollView(

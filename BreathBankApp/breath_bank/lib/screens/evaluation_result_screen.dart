@@ -18,7 +18,7 @@ class EvaluationresultScreen extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(60),
           child: const AppBarEvaluationResults(),
         ),
         body: Padding(

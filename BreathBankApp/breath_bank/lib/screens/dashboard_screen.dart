@@ -413,15 +413,15 @@ class NavigationMenu extends StatelessWidget {
       },
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.assignment, size: 30),
+          icon: const Icon(Icons.assignment, size: 30),
           label: 'Evaluaciones',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard, size: 30),
+          icon: const Icon(Icons.dashboard, size: 30),
           label: 'Dashboard',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.more_time, size: 30),
+          icon: const Icon(Icons.more_time, size: 30),
           label: 'Inversiones',
         ),
       ],

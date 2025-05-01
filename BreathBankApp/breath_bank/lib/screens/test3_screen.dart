@@ -89,9 +89,9 @@ class Test3ScreenState extends State<Test3Screen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: PreferredSize(
+        appBar: const PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: const AppBarTest3(),
+          child: AppBarTest3(),
         ),
         body: PageView(
           children: [
