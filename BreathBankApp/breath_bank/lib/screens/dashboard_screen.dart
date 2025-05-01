@@ -136,7 +136,7 @@ class DashboardScreen extends StatelessWidget {
                   Navigator.pushNamed(context, '/dashboard/newinvestmentmenu');
                 },
                 tooltip: 'Nueva inversión',
-                child: Icon(Icons.more_time),
+                child: const Icon(Icons.more_time),
               ),
             ),
           ],
@@ -165,7 +165,7 @@ class DashboardScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             height: 130,
             width: 150,
             child: Column(
@@ -173,7 +173,7 @@ class DashboardScreen extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 13, color: Colors.white),
+                  style: const TextStyle(fontSize: 13, color: Colors.white),
                 ),
                 if (value != null)
                   Column(
@@ -246,7 +246,7 @@ class DashboardScreen extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         TextButton(
           onPressed: onTap,
@@ -431,7 +431,7 @@ class NavigationMenu extends StatelessWidget {
 
 class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
   final AuthenticationService authenticationService = AuthenticationService();
 
   AppBarDashboard({super.key});
@@ -460,17 +460,17 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.settings, color: Colors.white),
+          icon: const Icon(Icons.settings, color: Colors.white),
           onPressed:
               () => Navigator.pushNamed(context, '/dashboard/appsettings'),
         ),
         IconButton(
-          icon: Icon(Icons.account_circle, color: Colors.white),
+          icon: const Icon(Icons.account_circle, color: Colors.white),
           onPressed:
               () => Navigator.pushNamed(context, '/dashboard/accountsettings'),
         ),
         IconButton(
-          icon: Icon(Icons.logout, color: Colors.red),
+          icon: const Icon(Icons.logout, color: Colors.red),
           onPressed: () async {
             final confirmed = await showDialog<bool>(
               context: context,
@@ -479,11 +479,11 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
                     backgroundColor: const Color.fromARGB(255, 7, 71, 94),
                     title: Text(
                       'Cerrar sesión',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     content: Text(
                       '¿Estás seguro de que deseas cerrar sesión?',
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     actions: [
                       TextButton(
@@ -495,7 +495,7 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
                             245,
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Cerrar sesión',
                           style: TextStyle(
                             color: Color.fromARGB(255, 7, 71, 94),
@@ -504,7 +504,7 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                       TextButton(
-                        child: Text(
+                        child: const Text(
                           'Cancelar',
                           style: TextStyle(color: Colors.white),
                         ),

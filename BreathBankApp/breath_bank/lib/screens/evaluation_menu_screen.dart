@@ -100,7 +100,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
               ],
             ),
           ),
-          NavigationMenu(currentIndex: 0),
+          const NavigationMenu(currentIndex: 0),
         ],
       ),
     );
@@ -111,9 +111,9 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
       future: db.getUltimasEvaluaciones(userId: userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: const CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No hay evaluaciones disponibles.'));
+          return Center(child: const Text('No hay evaluaciones disponibles.'));
         }
 
         final evaluaciones = snapshot.data!;
@@ -131,9 +131,9 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
             final nivelFinal = evaluacion['NivelInversorFinal'] ?? 'N/A';
 
             return ExpansionTile(
-              leading: Icon(Icons.assignment, color: Colors.teal),
+              leading: const Icon(Icons.assignment, color: Colors.teal),
               title: Text('Evaluación ${index + 1} ($fechaTexto)'),
-              childrenPadding: EdgeInsets.symmetric(
+              childrenPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
               ),
@@ -141,17 +141,17 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.star, color: Colors.amber),
+                    const Icon(Icons.star, color: Colors.amber),
                     const SizedBox(width: 8),
                     Text(
                       'Nivel de inversor: $nivelFinal',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Center(
-                  child: Text(
+                  child: const Text(
                     'Resultados de pruebas:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -370,7 +370,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
             Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 6),
             Text(
@@ -390,8 +390,8 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
 
   Widget _buildInformacionGeneral() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Text(
+      padding: const EdgeInsets.all(16),
+      child: const Text(
         'Añadir texto informativo aquí.',
         style: TextStyle(fontSize: 16),
       ),
@@ -404,7 +404,7 @@ class AppBarEvaluationMenu extends StatelessWidget
   const AppBarEvaluationMenu({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {

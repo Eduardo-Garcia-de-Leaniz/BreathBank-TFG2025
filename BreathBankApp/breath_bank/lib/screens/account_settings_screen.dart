@@ -110,11 +110,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                 71,
                                 94,
                               ),
-                              title: Text(
+                              title: const Text(
                                 'Borrar historial',
                                 style: TextStyle(color: Colors.white),
                               ),
-                              content: Text(
+                              content: const Text(
                                 '¿Estás seguro de que deseas borrar tu historial de inversiones y evaluaciones? Esta acción no se puede deshacer. Tu nivel de inversor se restablecerá a 0.',
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -128,7 +128,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                       245,
                                     ),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'Borrar',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 7, 71, 94),
@@ -139,7 +139,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                   },
                                 ),
                                 TextButton(
-                                  child: Text(
+                                  child: const Text(
                                     'Cancelar',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -196,11 +196,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                 71,
                                 94,
                               ),
-                              title: Text(
+                              title: const Text(
                                 'Cerrar sesión',
                                 style: TextStyle(color: Colors.white),
                               ),
-                              content: Text(
+                              content: const Text(
                                 '¿Estás seguro de que deseas cerrar sesión?',
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -214,7 +214,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                       245,
                                     ),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'Cerrar sesión',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 7, 71, 94),
@@ -224,7 +224,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                       () => Navigator.of(context).pop(true),
                                 ),
                                 TextButton(
-                                  child: Text(
+                                  child: const Text(
                                     'Cancelar',
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -499,7 +499,7 @@ class AppBarAccountSettings extends StatelessWidget
   const AppBarAccountSettings({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {

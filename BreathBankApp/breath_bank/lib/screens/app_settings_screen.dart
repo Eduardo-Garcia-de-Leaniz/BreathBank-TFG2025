@@ -22,9 +22,9 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               child: Icon(Icons.settings, size: 40, color: Colors.white),
             ),
             const SizedBox(height: 12),
-            Text(
+            const Text(
               'Configuración de la App',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: Color.fromARGB(255, 7, 71, 94),
@@ -121,7 +121,7 @@ class AppBarAppSettings extends StatelessWidget implements PreferredSizeWidget {
   const AppBarAppSettings({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
