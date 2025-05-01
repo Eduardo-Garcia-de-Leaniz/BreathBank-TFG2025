@@ -142,21 +142,21 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.star, color: Colors.amber),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       'Nivel de inversor: $nivelFinal',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(
                   child: Text(
                     'Resultados de pruebas:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 if (fechaEvaluacion != null)
                   FutureBuilder<Map<String, dynamic>?>(
                     future: db.getResultadosPruebas(
@@ -366,13 +366,13 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: color, size: 30),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               title,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(
               value,
               textAlign: TextAlign.center,

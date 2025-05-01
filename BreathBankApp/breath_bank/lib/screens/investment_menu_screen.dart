@@ -111,8 +111,8 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.attach_money, color: Colors.teal),
-                    SizedBox(width: 8),
+                    const Icon(Icons.attach_money, color: Colors.teal),
+                    const SizedBox(width: 8),
                     Text(
                       'Monto invertido: \$${montoInvertido.toString()}',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -195,13 +195,13 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: color, size: 30),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               title,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(
               value,
               textAlign: TextAlign.center,

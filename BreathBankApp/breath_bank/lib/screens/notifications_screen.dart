@@ -98,7 +98,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ElevatedButton.icon(
                         icon: Icon(Icons.login),
                         label: Text('Ir al login'),

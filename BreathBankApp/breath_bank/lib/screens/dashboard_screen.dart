@@ -54,11 +54,14 @@ class DashboardScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   return Text(
                     'Bienvenido, ${snapshot.data ?? 'Usuario'}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   );
                 },
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -76,7 +79,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               buildSectionHeader(
                 title: 'Últimas Inversiones',
                 onTap:
@@ -89,7 +92,7 @@ class DashboardScreen extends StatelessWidget {
                 itemsFuture: db.getUltimasInversiones(userId: userId),
                 icon: Icons.trending_up,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               buildSectionHeader(
                 title: 'Últimas Evaluaciones',
                 onTap:
@@ -105,7 +108,7 @@ class DashboardScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: SizedBox(
+        bottomNavigationBar: const SizedBox(
           height: 70,
           child: NavigationMenu(currentIndex: 1),
         ),

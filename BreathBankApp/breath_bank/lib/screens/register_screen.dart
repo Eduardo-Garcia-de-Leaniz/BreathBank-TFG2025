@@ -118,15 +118,15 @@ class RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           TextFieldEmail(emailController: emailController),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextFieldPassword(passwordController: passwordController),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           TextFieldPasswordRepeat(
             confirmPasswordController: confirmPasswordController,
           ),
           const SizedBox(height: 10),
           ErrorMessageWidget(errorMessage: errorMessage),
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -203,7 +203,7 @@ class RegisterFormState extends State<RegisterForm> {
                   color: Color.fromARGB(255, 7, 71, 94),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
@@ -324,7 +324,7 @@ class TextFieldPasswordRepeat extends StatelessWidget {
         Row(
           children: [
             Icon(Icons.lock_outline, color: Color.fromARGB(255, 7, 71, 94)),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: confirmPasswordController,
@@ -374,7 +374,7 @@ class TextFieldPassword extends StatelessWidget {
         Row(
           children: [
             Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: passwordController,
@@ -423,7 +423,7 @@ class TextFieldEmail extends StatelessWidget {
         Row(
           children: [
             Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: emailController,

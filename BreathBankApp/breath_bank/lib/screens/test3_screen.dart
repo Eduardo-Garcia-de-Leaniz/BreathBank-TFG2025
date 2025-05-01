@@ -105,7 +105,7 @@ class Test3ScreenState extends State<Test3Screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TestTitleText(),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Text(
                         description,
                         style: TextStyle(
@@ -113,9 +113,9 @@ class Test3ScreenState extends State<Test3Screen> {
                           color: Color(0xFF07475E),
                         ),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       InstructionsTitleText(),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         instructions,
                         style: TextStyle(
@@ -147,7 +147,7 @@ class Test3ScreenState extends State<Test3Screen> {
                             color: Color(0xFF07475E),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           'Una respiración consta de dos partes, inspiración y espiración. '
                           'La respiración comenzará cuando se empieza a coger aire, y no habrá terminado '
@@ -159,7 +159,7 @@ class Test3ScreenState extends State<Test3Screen> {
                             color: Color(0xFF07475E),
                           ),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Image.asset(
                           'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
                           height: 250,
@@ -188,9 +188,9 @@ class Test3ScreenState extends State<Test3Screen> {
                     child: Column(
                       children: [
                         TestTitleText(),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         BreathingAnimationWidget(key: breathingKey),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -211,7 +211,7 @@ class Test3ScreenState extends State<Test3Screen> {
                                 backgroundColor: Colors.teal,
                               ),
                             ),
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                             ElevatedButton.icon(
                               icon: Icon(Icons.refresh, color: Colors.white),
                               label: Text(
@@ -228,9 +228,9 @@ class Test3ScreenState extends State<Test3Screen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                         LabelTestResultText(),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: TextField(
@@ -248,7 +248,7 @@ class Test3ScreenState extends State<Test3Screen> {
                             },
                           ),
                         ),
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                         ElevatedButton(
                           onPressed: () {
                             if (validateTestResult(resultValue)) {

@@ -130,7 +130,7 @@ class Test1ScreenState extends State<Test1Screen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TestTitleText(),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Text(
                           description,
                           style: TextStyle(
@@ -138,9 +138,9 @@ class Test1ScreenState extends State<Test1Screen>
                             color: const Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         InstructionsTitleText(),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           instructions,
                           style: TextStyle(
@@ -173,7 +173,7 @@ class Test1ScreenState extends State<Test1Screen>
                             color: const Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
@@ -188,7 +188,7 @@ class Test1ScreenState extends State<Test1Screen>
                             ),
                           ),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Image.asset(
                           'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
                           height: 250,
@@ -220,9 +220,9 @@ class Test1ScreenState extends State<Test1Screen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TestTitleText(),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         ClockWidget(animationController: animationController),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -252,7 +252,7 @@ class Test1ScreenState extends State<Test1Screen>
                                 ),
                               ),
                             ),
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                             ElevatedButton.icon(
                               icon: Icon(Icons.refresh, color: Colors.white),
                               label: Text(
@@ -274,9 +274,9 @@ class Test1ScreenState extends State<Test1Screen>
                             ),
                           ],
                         ),
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                         LabelTestResultText(),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: TextField(
@@ -304,7 +304,7 @@ class Test1ScreenState extends State<Test1Screen>
                           ),
                         ),
 
-                        SizedBox(height: 40),
+                        const SizedBox(height: 40),
                         ElevatedButton(
                           onPressed: () {
                             if (validateTestResult(resultValue)) {
