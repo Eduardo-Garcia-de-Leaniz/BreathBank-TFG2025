@@ -9,11 +9,11 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: const AppBarRegister(),
+        preferredSize: Size.fromHeight(60),
+        child: AppBarRegister(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -130,7 +130,7 @@ class RegisterFormState extends State<RegisterForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BtnBack(fontSize: 16, route: '/'),
+              const BtnBack(fontSize: 16, route: '/'),
               ElevatedButton(
                 onPressed: () async {
                   setState(() {
@@ -180,7 +180,7 @@ class RegisterFormState extends State<RegisterForm> {
         final TextEditingController surnameController = TextEditingController();
 
         return AlertDialog(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             side: BorderSide(color: Color.fromARGB(255, 7, 71, 94), width: 2),
             borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
@@ -262,7 +262,7 @@ class RegisterFormState extends State<RegisterForm> {
                       content: Text(
                         'Usuario registrado correctamente. Bienvenid@ $name',
                       ),
-                      duration: Duration(seconds: 2),
+                      duration: const Duration(seconds: 2),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -290,7 +290,7 @@ class ErrorMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       errorMessage,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontFamily: 'Arial',
         color: Colors.redAccent,
@@ -312,7 +312,7 @@ class TextFieldPasswordRepeat extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Repetir Contraseña',
           style: TextStyle(
             fontSize: 18,
@@ -323,12 +323,15 @@ class TextFieldPasswordRepeat extends StatelessWidget {
         ),
         Row(
           children: [
-            Icon(Icons.lock_outline, color: Color.fromARGB(255, 7, 71, 94)),
+            const Icon(
+              Icons.lock_outline,
+              color: Color.fromARGB(255, 7, 71, 94),
+            ),
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: confirmPasswordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Repite tu contraseña',
                   hintStyle: TextStyle(
                     color: Color.fromARGB(255, 7, 71, 94),
@@ -336,7 +339,7 @@ class TextFieldPasswordRepeat extends StatelessWidget {
                     fontFamily: 'Arial',
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontFamily: 'Arial',
                   color: Color.fromARGB(255, 7, 71, 94),
@@ -361,7 +364,7 @@ class TextFieldPassword extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Contraseña',
           style: TextStyle(
             fontSize: 18,
@@ -373,12 +376,12 @@ class TextFieldPassword extends StatelessWidget {
 
         Row(
           children: [
-            Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
+            const Icon(Icons.lock, color: Color.fromARGB(255, 7, 71, 94)),
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Introduce tu contraseña',
                   hintStyle: TextStyle(
                     color: Color.fromARGB(255, 7, 71, 94),
@@ -386,7 +389,7 @@ class TextFieldPassword extends StatelessWidget {
                     fontFamily: 'Arial',
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontFamily: 'Arial',
                   color: Color.fromARGB(255, 7, 71, 94),
@@ -411,7 +414,7 @@ class TextFieldEmail extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Correo Electrónico',
           style: TextStyle(
             fontSize: 18,
@@ -422,12 +425,12 @@ class TextFieldEmail extends StatelessWidget {
         ),
         Row(
           children: [
-            Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
+            const Icon(Icons.email, color: Color.fromARGB(255, 7, 71, 94)),
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Introduce tu correo electrónico',
                   hintStyle: TextStyle(
                     color: Color.fromARGB(255, 7, 71, 94),
@@ -435,7 +438,7 @@ class TextFieldEmail extends StatelessWidget {
                     fontFamily: 'Arial',
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontFamily: 'Arial',
                   color: Colors.black,

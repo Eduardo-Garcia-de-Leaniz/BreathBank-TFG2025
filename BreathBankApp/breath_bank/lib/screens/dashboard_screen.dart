@@ -277,7 +277,7 @@ class DashboardScreen extends StatelessWidget {
         } else if (snapshot.hasError ||
             !snapshot.hasData ||
             snapshot.data!.isEmpty) {
-          return Text('No hay evaluaciones disponibles.');
+          return const Text('No hay evaluaciones disponibles.');
         }
 
         return ExpandableListPreview(
@@ -309,7 +309,7 @@ class DashboardScreen extends StatelessWidget {
         } else if (snapshot.hasError ||
             !snapshot.hasData ||
             snapshot.data!.isEmpty) {
-          return Text('No hay datos disponibles.');
+          return const Text('No hay datos disponibles.');
         }
 
         return ExpandableListPreview(
@@ -394,8 +394,11 @@ class NavigationMenu extends StatelessWidget {
       showUnselectedLabels: true,
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
       selectedItemColor: const Color.fromARGB(255, 188, 252, 245),
-      selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-      unselectedLabelStyle: TextStyle(fontSize: 12),
+      selectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+      unselectedLabelStyle: const TextStyle(fontSize: 12),
       unselectedItemColor: Colors.white,
       currentIndex: currentIndex,
       onTap: (index) {
@@ -477,13 +480,13 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
               builder:
                   (context) => AlertDialog(
                     backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-                    title: Text(
+                    title: const Text(
                       'Cerrar sesión',
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white),
                     ),
-                    content: Text(
+                    content: const Text(
                       '¿Estás seguro de que deseas cerrar sesión?',
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white),
                     ),
                     actions: [
                       TextButton(

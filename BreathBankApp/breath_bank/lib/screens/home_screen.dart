@@ -10,10 +10,10 @@ class HomeScreen extends StatelessWidget {
         children: [
           Container(
             height: MediaQuery.of(context).padding.top,
-            color: Color.fromARGB(255, 7, 71, 94),
+            color: const Color.fromARGB(255, 7, 71, 94),
           ),
 
-          Column(
+          const Column(
             children: [
               TitleHomeScreen(),
               ImageLogo(imageWidth: 200, imageHeight: 200),
@@ -75,12 +75,12 @@ class TitleHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 60),
+    return const Padding(
+      padding: EdgeInsets.only(top: 60),
       child: Center(
         child: Column(
           children: [
-            const Text(
+            Text(
               'BreathBank',
               style: TextStyle(
                 color: Color.fromARGB(255, 7, 71, 94),

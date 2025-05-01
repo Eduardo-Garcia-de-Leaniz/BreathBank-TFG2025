@@ -74,7 +74,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
               ],
             ),
           ),
-          NavigationMenu(currentIndex: 2),
+          const NavigationMenu(currentIndex: 2),
         ],
       ),
     );
@@ -85,15 +85,15 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
       future: db.getUltimasInversiones(userId: userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No hay inversiones disponibles.'));
+          return const Center(child: Text('No hay inversiones disponibles.'));
         }
 
         final inversiones = snapshot.data!;
 
         return ListView.builder(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           itemCount: inversiones.length,
           itemBuilder: (context, index) {
             final inversion = inversiones[index];
@@ -101,9 +101,9 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
             final montoInvertido = inversion['montoInvertido'];
 
             return ExpansionTile(
-              leading: Icon(Icons.money, color: Colors.green),
+              leading: const Icon(Icons.money, color: Colors.green),
               title: Text('Inversión ${index + 1}'),
-              childrenPadding: EdgeInsets.symmetric(
+              childrenPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
               ),
@@ -115,7 +115,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
                     const SizedBox(width: 8),
                     Text(
                       'Monto invertido: \$${montoInvertido.toString()}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -132,9 +132,11 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
       future: fetchDatosInversiones(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No hay datos estadísticos disponibles.'));
+          return const Center(
+            child: Text('No hay datos estadísticos disponibles.'),
+          );
         }
 
         final datos = snapshot.data!;
@@ -144,7 +146,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
         final totalInversiones = montos.reduce((a, b) => a + b);
 
         return Padding(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           child: GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
@@ -186,7 +188,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
             // ignore: deprecated_member_use
             color: color.withOpacity(0.15),
             blurRadius: 8,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -199,7 +201,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
             Text(
               title,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 6),
             Text(
@@ -218,7 +220,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
   }
 
   Widget _buildInformacionGeneral() {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       padding: EdgeInsets.all(16),
       child: Text(
         'Añadir texto informativo aquí.',
@@ -233,7 +235,7 @@ class AppBarInvestmentMenu extends StatelessWidget
   const AppBarInvestmentMenu({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {

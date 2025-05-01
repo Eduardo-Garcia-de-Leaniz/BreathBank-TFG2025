@@ -137,7 +137,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
       testCompleted[testKey] = true;
 
       if (testCompleted.values.every((e) => e)) {
-        Future.delayed(Duration(milliseconds: 300), () {
+        Future.delayed(const Duration(milliseconds: 300), () {
           allTestsDoneMessage();
         });
       }
@@ -192,9 +192,9 @@ class EvaluationScreenState extends State<EvaluationScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: const AppBarEvaluation(),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: AppBarEvaluation(),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -204,9 +204,9 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextTitleEvaluationScreen(),
+                    const TextTitleEvaluationScreen(),
                     const SizedBox(height: 16),
-                    TextEvaluationScreen(),
+                    const TextEvaluationScreen(),
                     const SizedBox(height: 30),
                     TextProgressionBar(testCompleted: testCompleted),
                     ProgressionBar(testCompleted: testCompleted),

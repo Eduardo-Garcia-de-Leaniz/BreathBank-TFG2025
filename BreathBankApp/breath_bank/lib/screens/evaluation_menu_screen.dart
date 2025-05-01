@@ -111,15 +111,15 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
       future: db.getUltimasEvaluaciones(userId: userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: const CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: const Text('No hay evaluaciones disponibles.'));
+          return const Center(child: Text('No hay evaluaciones disponibles.'));
         }
 
         final evaluaciones = snapshot.data!;
 
         return ListView.builder(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           itemCount: evaluaciones.length,
           itemBuilder: (context, index) {
             final evaluacion = evaluaciones[index];
@@ -150,8 +150,8 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                   ],
                 ),
                 const SizedBox(height: 20),
-                Center(
-                  child: const Text(
+                const Center(
+                  child: Text(
                     'Resultados de pruebas:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -166,8 +166,8 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                     builder: (context, resultadoSnapshot) {
                       if (resultadoSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        return const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -175,8 +175,8 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                       final resultados = resultadoSnapshot.data;
 
                       if (resultados == null || resultados.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 8.0),
                           child: Text('Sin resultados disponibles.'),
                         );
                       }
@@ -211,9 +211,11 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
       future: fetchDatosEstadisticos(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No hay datos estadísticos disponibles.'));
+          return const Center(
+            child: Text('No hay datos estadísticos disponibles.'),
+          );
         }
 
         final datos = snapshot.data!;
@@ -272,7 +274,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
             }
 
             return Padding(
-              padding: EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
               child: GridView.count(
                 crossAxisCount: 2,
                 shrinkWrap: true,
@@ -357,7 +359,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
             // ignore: deprecated_member_use
             color: color.withOpacity(0.15),
             blurRadius: 8,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -389,9 +391,9 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
   }
 
   Widget _buildInformacionGeneral() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: const Text(
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Text(
         'Añadir texto informativo aquí.',
         style: TextStyle(fontSize: 16),
       ),

@@ -17,9 +17,9 @@ class EvaluationresultScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: const AppBarEvaluationResults(),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: AppBarEvaluationResults(),
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -42,7 +42,7 @@ class EvaluationresultScreen extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
-                    BoxShadow(
+                    const BoxShadow(
                       color: Colors.black12,
                       blurRadius: 10,
                       offset: Offset(0, 5),
@@ -141,7 +141,11 @@ class ResultItem extends StatelessWidget {
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
-        leading: Icon(icon, color: Color.fromARGB(255, 7, 71, 94), size: 30),
+        leading: Icon(
+          icon,
+          color: const Color.fromARGB(255, 7, 71, 94),
+          size: 30,
+        ),
         title: Text(
           label,
           style: const TextStyle(

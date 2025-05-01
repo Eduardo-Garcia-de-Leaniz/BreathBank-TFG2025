@@ -110,9 +110,9 @@ class Test1ScreenState extends State<Test1Screen>
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: const AppBarTest1(),
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: AppBarTest1(),
         ),
         resizeToAvoidBottomInset: true,
         body: PageView(
@@ -121,38 +121,38 @@ class Test1ScreenState extends State<Test1Screen>
             Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   color: const Color.fromARGB(255, 188, 252, 245),
                   child: Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TestTitleText(),
+                        const TestTitleText(),
                         const SizedBox(height: 25),
                         Text(
                           description,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
-                            color: const Color.fromARGB(255, 7, 71, 94),
+                            color: Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        InstructionsTitleText(),
+                        const InstructionsTitleText(),
                         const SizedBox(height: 8),
                         Text(
                           instructions,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
-                            color: const Color.fromARGB(255, 7, 71, 94),
+                            color: Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                ArrowNextSymbol(),
+                const ArrowNextSymbol(),
               ],
             ),
             // Segunda página: Imagen de la prueba
@@ -161,21 +161,21 @@ class Test1ScreenState extends State<Test1Screen>
               child: Stack(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           '¡Recuerda!',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(255, 7, 71, 94),
+                            color: Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
                             'Una respiración consta de dos partes, inspiración y espiración. '
                             'La respiración comenzará cuando se empieza a coger aire, y no habrá terminado '
@@ -184,7 +184,7 @@ class Test1ScreenState extends State<Test1Screen>
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 16,
-                              color: const Color.fromARGB(255, 7, 71, 94),
+                              color: Color.fromARGB(255, 7, 71, 94),
                             ),
                           ),
                         ),
@@ -199,8 +199,8 @@ class Test1ScreenState extends State<Test1Screen>
                     ),
                   ),
 
-                  ArrowPreviousSymbol(),
-                  ArrowNextSymbol(),
+                  const ArrowPreviousSymbol(),
+                  const ArrowNextSymbol(),
                 ],
               ),
             ),
@@ -219,7 +219,7 @@ class Test1ScreenState extends State<Test1Screen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        TestTitleText(),
+                        const TestTitleText(),
                         const SizedBox(height: 10),
                         ClockWidget(animationController: animationController),
                         const SizedBox(height: 20),
@@ -232,7 +232,7 @@ class Test1ScreenState extends State<Test1Screen>
                                 isRunning ? Icons.pause : Icons.play_arrow,
                               ),
                               label: Text(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -246,7 +246,7 @@ class Test1ScreenState extends State<Test1Screen>
                               onPressed: isRunning ? pauseClock : startClock,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.teal,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 12,
                                 ),
@@ -254,8 +254,11 @@ class Test1ScreenState extends State<Test1Screen>
                             ),
                             const SizedBox(width: 16),
                             ElevatedButton.icon(
-                              icon: Icon(Icons.refresh, color: Colors.white),
-                              label: Text(
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
                                 'Reiniciar',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -266,7 +269,7 @@ class Test1ScreenState extends State<Test1Screen>
                               onPressed: resetClock,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.redAccent,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 12,
                                 ),
@@ -275,25 +278,25 @@ class Test1ScreenState extends State<Test1Screen>
                           ],
                         ),
                         const SizedBox(height: 50),
-                        LabelTestResultText(),
+                        const LabelTestResultText(),
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: TextField(
                             controller: resultFieldController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Número de respiraciones',
                               labelStyle: TextStyle(
-                                color: const Color.fromARGB(255, 7, 71, 94),
+                                color: Color.fromARGB(255, 7, 71, 94),
                                 fontSize: 16,
                               ),
                               hintText: 'Ingrese el número de respiraciones',
                               hintStyle: TextStyle(
-                                color: const Color.fromARGB(255, 7, 71, 94),
+                                color: Color.fromARGB(255, 7, 71, 94),
                                 fontSize: 16,
                               ),
-                              iconColor: const Color.fromARGB(255, 7, 71, 94),
+                              iconColor: Color.fromARGB(255, 7, 71, 94),
                             ),
                             onChanged: (value) {
                               resultValue = value;
@@ -342,12 +345,12 @@ class Test1ScreenState extends State<Test1Screen>
                               71,
                               94,
                             ),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 20,
                               vertical: 12,
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Siguiente',
                             style: TextStyle(
                               fontSize: 16,
@@ -360,7 +363,7 @@ class Test1ScreenState extends State<Test1Screen>
                     ),
                   ),
 
-                  ArrowPreviousSymbol(),
+                  const ArrowPreviousSymbol(),
                 ],
               ),
             ),
@@ -376,14 +379,14 @@ class LabelTestResultText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
         'Anota el número de respiraciones que has realizado: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: const Color.fromARGB(255, 7, 71, 94),
+          color: Color.fromARGB(255, 7, 71, 94),
         ),
       ),
     );
@@ -417,11 +420,16 @@ class ClockWidget extends StatelessWidget {
                     value: animationController.value,
                     strokeWidth: 100,
                     backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      Colors.teal,
+                    ),
                   ),
                   Text(
                     '$seconds s',
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               );
@@ -441,9 +449,9 @@ class ArrowPreviousSymbol extends StatelessWidget {
     return Positioned(
       left: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: Icon(
+      child: const Icon(
         Icons.arrow_back_ios,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -457,9 +465,9 @@ class ArrowNextSymbol extends StatelessWidget {
     return Positioned(
       right: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: Icon(
+      child: const Icon(
         Icons.arrow_forward_ios,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -470,12 +478,12 @@ class InstructionsTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Instrucciones:',
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }

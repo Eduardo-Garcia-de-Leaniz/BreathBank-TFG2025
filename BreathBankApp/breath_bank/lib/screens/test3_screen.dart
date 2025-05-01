@@ -104,21 +104,21 @@ class Test3ScreenState extends State<Test3Screen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TestTitleText(),
+                      const TestTitleText(),
                       const SizedBox(height: 25),
                       Text(
                         description,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Color(0xFF07475E),
                         ),
                       ),
                       const SizedBox(height: 16),
-                      InstructionsTitleText(),
+                      const InstructionsTitleText(),
                       const SizedBox(height: 8),
                       Text(
                         instructions,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Color(0xFF07475E),
                         ),
@@ -126,7 +126,7 @@ class Test3ScreenState extends State<Test3Screen> {
                     ],
                   ),
                 ),
-                ArrowNextSymbol(),
+                const ArrowNextSymbol(),
               ],
             ),
 
@@ -139,7 +139,7 @@ class Test3ScreenState extends State<Test3Screen> {
                     padding: const EdgeInsets.all(16),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           '¡Recuerda!',
                           style: TextStyle(
                             fontSize: 24,
@@ -148,7 +148,7 @@ class Test3ScreenState extends State<Test3Screen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Text(
+                        const Text(
                           'Una respiración consta de dos partes, inspiración y espiración. '
                           'La respiración comenzará cuando se empieza a coger aire, y no habrá terminado '
                           'hasta que se vuelva a inspirar. No se deben realizar pausas entre ambas fases ni entre respiraciones. '
@@ -167,8 +167,8 @@ class Test3ScreenState extends State<Test3Screen> {
                       ],
                     ),
                   ),
-                  ArrowPreviousSymbol(),
-                  ArrowNextSymbol(),
+                  const ArrowPreviousSymbol(),
+                  const ArrowNextSymbol(),
                 ],
               ),
             ),
@@ -187,7 +187,7 @@ class Test3ScreenState extends State<Test3Screen> {
                     ),
                     child: Column(
                       children: [
-                        TestTitleText(),
+                        const TestTitleText(),
                         const SizedBox(height: 30),
                         BreathingAnimationWidget(key: breathingKey),
                         const SizedBox(height: 30),
@@ -201,7 +201,7 @@ class Test3ScreenState extends State<Test3Screen> {
                               ),
                               label: Text(
                                 isRunning ? 'Pausar' : 'Comenzar',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -213,8 +213,11 @@ class Test3ScreenState extends State<Test3Screen> {
                             ),
                             const SizedBox(width: 16),
                             ElevatedButton.icon(
-                              icon: Icon(Icons.refresh, color: Colors.white),
-                              label: Text(
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
                                 'Reiniciar',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -229,14 +232,14 @@ class Test3ScreenState extends State<Test3Screen> {
                           ],
                         ),
                         const SizedBox(height: 50),
-                        LabelTestResultText(),
+                        const LabelTestResultText(),
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: TextField(
                             controller: resultFieldController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Número última respiración',
                               hintText: 'Edite el número si lo desea',
                             ),
@@ -276,12 +279,12 @@ class Test3ScreenState extends State<Test3Screen> {
                               71,
                               94,
                             ),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 20,
                               vertical: 12,
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Siguiente',
                             style: TextStyle(
                               fontSize: 16,
@@ -293,7 +296,7 @@ class Test3ScreenState extends State<Test3Screen> {
                       ],
                     ),
                   ),
-                  ArrowPreviousSymbol(),
+                  const ArrowPreviousSymbol(),
                 ],
               ),
             ),
@@ -319,7 +322,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
 
   bool _isInhaling = true;
   int _breathCount = 1;
-  Duration _currentDuration = Duration(seconds: 3);
+  Duration _currentDuration = const Duration(seconds: 3);
 
   @override
   void initState() {
@@ -330,7 +333,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   void _initAnimation() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     )..addListener(() {
       setState(() {});
     });
@@ -373,7 +376,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
     _controller.stop();
     _controller.reset();
     _breathCount = 1;
-    _currentDuration = Duration(seconds: 3);
+    _currentDuration = const Duration(seconds: 3);
     _controller.duration = _currentDuration;
     _isInhaling = true;
     setState(() {});
@@ -425,14 +428,14 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
         const SizedBox(height: 16),
         Text(
           _isInhaling ? "Inhalar" : "Exhalar",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        Text("Respiración $_breathCount", style: TextStyle(fontSize: 18)),
+        Text("Respiración $_breathCount", style: const TextStyle(fontSize: 18)),
         Text(
           //"${_currentDuration.inSeconds} segundos",
           "${_controller.duration?.inSeconds ?? 0} segundos",
-          style: TextStyle(fontSize: 16, color: Colors.black54),
+          style: const TextStyle(fontSize: 16, color: Colors.black54),
         ),
       ],
     );
@@ -447,9 +450,9 @@ class ArrowNextSymbol extends StatelessWidget {
     return Positioned(
       right: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: Icon(
+      child: const Icon(
         Icons.arrow_forward_ios,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -463,9 +466,9 @@ class ArrowPreviousSymbol extends StatelessWidget {
     return Positioned(
       left: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: Icon(
+      child: const Icon(
         Icons.arrow_back_ios,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -476,14 +479,14 @@ class LabelTestResultText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 40.0),
       child: Text(
         'Última respiración completa: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: const Color.fromARGB(255, 7, 71, 94),
+          color: Color.fromARGB(255, 7, 71, 94),
         ),
       ),
     );
@@ -495,12 +498,12 @@ class InstructionsTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Instrucciones:',
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }

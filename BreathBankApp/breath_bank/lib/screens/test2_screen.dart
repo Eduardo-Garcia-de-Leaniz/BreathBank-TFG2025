@@ -54,7 +54,7 @@ class Test2ScreenState extends State<Test2Screen> {
       isRunning = true;
     });
 
-    timer ??= Timer.periodic(Duration(seconds: 1), (Timer t) {
+    timer ??= Timer.periodic(const Duration(seconds: 1), (Timer t) {
       setState(() {
         elapsedSeconds += 1;
       });
@@ -115,29 +115,29 @@ class Test2ScreenState extends State<Test2Screen> {
             Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   color: const Color.fromARGB(255, 188, 252, 245),
                   child: Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TestTitleText(),
+                        const TestTitleText(),
                         const SizedBox(height: 25),
                         Text(
                           description,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 7, 71, 94),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        InstructionsTitleText(),
+                        const InstructionsTitleText(),
                         const SizedBox(height: 8),
                         Text(
                           instructions,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 7, 71, 94),
                           ),
@@ -146,7 +146,7 @@ class Test2ScreenState extends State<Test2Screen> {
                     ),
                   ),
                 ),
-                ArrowNextSymbol(),
+                const ArrowNextSymbol(),
               ],
             ),
 
@@ -156,11 +156,11 @@ class Test2ScreenState extends State<Test2Screen> {
               child: Stack(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           '¡Recuerda!',
                           style: TextStyle(
                             fontSize: 24,
@@ -169,8 +169,8 @@ class Test2ScreenState extends State<Test2Screen> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
                             'Una respiración consta de dos partes, inspiración y espiración. '
                             'La respiración comenzará cuando se empieza a coger aire, y no habrá terminado '
@@ -193,8 +193,8 @@ class Test2ScreenState extends State<Test2Screen> {
                       ],
                     ),
                   ),
-                  ArrowPreviousSymbol(),
-                  ArrowNextSymbol(),
+                  const ArrowPreviousSymbol(),
+                  const ArrowNextSymbol(),
                 ],
               ),
             ),
@@ -215,8 +215,8 @@ class Test2ScreenState extends State<Test2Screen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16),
-                          child: TestTitleText(),
+                          padding: const EdgeInsets.all(16),
+                          child: const TestTitleText(),
                         ),
                         const SizedBox(height: 30),
                         ClockWidget(
@@ -238,7 +238,7 @@ class Test2ScreenState extends State<Test2Screen> {
                                     : (elapsedSeconds == 0
                                         ? 'Comenzar'
                                         : 'Reanudar'),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -247,7 +247,7 @@ class Test2ScreenState extends State<Test2Screen> {
                               onPressed: isRunning ? pauseClock : startClock,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.teal,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 12,
                                 ),
@@ -255,8 +255,11 @@ class Test2ScreenState extends State<Test2Screen> {
                             ),
                             const SizedBox(width: 16),
                             ElevatedButton.icon(
-                              icon: Icon(Icons.refresh, color: Colors.white),
-                              label: Text(
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
                                 'Reiniciar',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -267,7 +270,7 @@ class Test2ScreenState extends State<Test2Screen> {
                               onPressed: resetClock,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.redAccent,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 12,
                                 ),
@@ -276,14 +279,14 @@ class Test2ScreenState extends State<Test2Screen> {
                           ],
                         ),
                         const SizedBox(height: 50),
-                        LabelTestResultText(),
+                        const LabelTestResultText(),
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 40.0),
                           child: TextField(
                             controller: resultFieldController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Número de segundos',
                               labelStyle: TextStyle(
                                 color: Color.fromARGB(255, 7, 71, 94),
@@ -336,12 +339,12 @@ class Test2ScreenState extends State<Test2Screen> {
                               71,
                               94,
                             ),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 20,
                               vertical: 12,
                             ),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Siguiente',
                             style: TextStyle(
                               fontSize: 16,
@@ -353,7 +356,7 @@ class Test2ScreenState extends State<Test2Screen> {
                       ],
                     ),
                   ),
-                  ArrowPreviousSymbol(),
+                  const ArrowPreviousSymbol(),
                 ],
               ),
             ),
@@ -369,9 +372,9 @@ class LabelTestResultText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
-      child: const Text(
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 40.0),
+      child: Text(
         'Tiempo en realizar las 3 respiraciones: Introduce el número y cierre el teclado antes de pulsar en Siguiente',
         style: TextStyle(
           fontSize: 16,
@@ -417,9 +420,9 @@ class ArrowPreviousSymbol extends StatelessWidget {
     return Positioned(
       left: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: Icon(
+      child: const Icon(
         Icons.arrow_back_ios,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -433,9 +436,9 @@ class ArrowNextSymbol extends StatelessWidget {
     return Positioned(
       right: 5,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: Icon(
+      child: const Icon(
         Icons.arrow_forward_ios,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -446,12 +449,12 @@ class InstructionsTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Instrucciones:',
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
@@ -462,12 +465,12 @@ class TestTitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Tiempo empleado en realizar 3 respiraciones',
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.bold,
-        color: const Color.fromARGB(255, 7, 71, 94),
+        color: Color.fromARGB(255, 7, 71, 94),
       ),
     );
   }
