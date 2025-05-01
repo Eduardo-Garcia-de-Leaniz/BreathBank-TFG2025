@@ -11,7 +11,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarAppSettings(),
+      appBar: const AppBarAppSettings(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -127,7 +127,7 @@ class AppBarAppSettings extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Configuración de la app',
         style: TextStyle(
           color: Colors.white,

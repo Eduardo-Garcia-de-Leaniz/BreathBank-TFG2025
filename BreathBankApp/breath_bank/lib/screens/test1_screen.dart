@@ -93,7 +93,7 @@ class Test1ScreenState extends State<Test1Screen>
   bool validateTestResult(String testResult) {
     if (testResult.isEmpty || !RegExp(r'^\d+$').hasMatch(testResult)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Por favor, ingrese solo números.'),
           backgroundColor: Colors.red,
         ),
@@ -112,7 +112,7 @@ class Test1ScreenState extends State<Test1Screen>
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBarTest1(),
+          child: const AppBarTest1(),
         ),
         resizeToAvoidBottomInset: true,
         body: PageView(
@@ -317,7 +317,7 @@ class Test1ScreenState extends State<Test1Screen>
                               Navigator.pop(context, testResult);
                             } else if (animationController.value != 0.0) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text(
                                     'Debe esperar a que se complete el tiempo antes de continuar.',
                                   ),
@@ -326,7 +326,7 @@ class Test1ScreenState extends State<Test1Screen>
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text(
                                     'El número de respiraciones debe ser mayor de 0.',
                                   ),

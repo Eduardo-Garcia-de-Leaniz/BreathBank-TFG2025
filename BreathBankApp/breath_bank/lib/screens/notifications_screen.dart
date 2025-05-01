@@ -66,7 +66,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Notificaciones'),
+          title: const Text('Notificaciones'),
           actions:
               mensajes.isNotEmpty && user != null
                   ? [
@@ -76,7 +76,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         _borrarMensajes().then((_) {
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Mensajes borrados')),
+                            const SnackBar(content: Text('Mensajes borrados')),
                           );
                         });
                       },

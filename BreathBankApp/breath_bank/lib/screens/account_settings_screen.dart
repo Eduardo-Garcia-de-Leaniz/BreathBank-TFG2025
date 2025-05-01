@@ -46,7 +46,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarAccountSettings(),
+      appBar: const AppBarAccountSettings(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -163,14 +163,14 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         } catch (e) {
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text('Error al borrar el historial'),
                             ),
                           );
                         }
                         if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text('Historial borrado correctamente'),
                           ),
                         );
@@ -241,7 +241,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                           await authenticationService.signOut();
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text('Sesión cerrada correctamente'),
                             ),
                           );
@@ -254,7 +254,9 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         } on FirebaseAuthException {
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Error al cerrar sesión')),
+                            const SnackBar(
+                              content: Text('Error al cerrar sesión'),
+                            ),
                           );
                         }
                       }
@@ -503,7 +505,7 @@ class AppBarAccountSettings extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Configuración de cuenta',
         style: TextStyle(
           color: Colors.white,

@@ -72,7 +72,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarEvaluationMenu(),
+      appBar: const AppBarEvaluationMenu(),
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       body: Column(
         children: [
@@ -410,7 +410,7 @@ class AppBarEvaluationMenu extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Evaluaciones',
         style: TextStyle(
           color: Colors.white,

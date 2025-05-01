@@ -72,7 +72,7 @@ class Test3ScreenState extends State<Test3Screen> {
   bool validateTestResult(String testResult) {
     if (testResult.isEmpty || !RegExp(r'^\d+$').hasMatch(testResult)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Por favor, ingrese solo números.'),
           backgroundColor: Colors.red,
         ),
@@ -91,7 +91,7 @@ class Test3ScreenState extends State<Test3Screen> {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBarTest3(),
+          child: const AppBarTest3(),
         ),
         body: PageView(
           children: [
@@ -260,7 +260,7 @@ class Test3ScreenState extends State<Test3Screen> {
                               Navigator.pop(context, testResult);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                   content: Text(
                                     'Valor incorrecto. Asegúrate de indicar el número de la última respiración completada.',
                                   ),

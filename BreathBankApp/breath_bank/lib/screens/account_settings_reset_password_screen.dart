@@ -131,7 +131,7 @@ class _AccountSettingsResetPasswordScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarResetPassword(),
+      appBar: const AppBarResetPassword(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -212,13 +212,13 @@ class AppBarResetPassword extends StatelessWidget
   const AppBarResetPassword({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Restablecer Contraseña',
         style: TextStyle(
           color: Colors.white,

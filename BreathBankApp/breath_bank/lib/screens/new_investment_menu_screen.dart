@@ -157,7 +157,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
-      appBar: AppBarNewInvestmentMenu(),
+      appBar: const AppBarNewInvestmentMenu(),
       body:
           _isLoading
               ? Center(child: CircularProgressIndicator())
@@ -365,7 +365,7 @@ class AppBarNewInvestmentMenu extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Nueva Inversión',
         style: TextStyle(
           color: Colors.white,

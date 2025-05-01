@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
-        child: AppBarRegister(),
+        child: const AppBarRegister(),
       ),
       body: SingleChildScrollView(
         child: Column(

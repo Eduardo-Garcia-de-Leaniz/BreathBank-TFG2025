@@ -146,7 +146,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
 
   void allTestsDoneMessage() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text(
           '¡Felicidades! Has completado todas las pruebas. Pulsa en Continuar para ver tus resultados.',
         ),
@@ -194,7 +194,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
         resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBarEvaluation(),
+          child: const AppBarEvaluation(),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -254,7 +254,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                                 if (updateUserData()) {
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                       content: Text(
                                         'Error al actualizar los datos.',
                                       ),
@@ -264,7 +264,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                                   );
                                 }
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                     content: Text(
                                       'La evaluación se ha guardado correctamente.',
                                     ),
@@ -283,7 +283,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                     content: Text(
                                       'Error al guardar la evaluación.',
                                     ),

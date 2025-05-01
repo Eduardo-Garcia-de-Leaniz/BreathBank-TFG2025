@@ -46,7 +46,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarInvestmentMenu(),
+      appBar: const AppBarInvestmentMenu(),
       backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       body: Column(
         children: [
@@ -239,7 +239,7 @@ class AppBarInvestmentMenu extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Inversiones',
         style: TextStyle(
           color: Colors.white,

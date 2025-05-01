@@ -19,7 +19,7 @@ class EvaluationresultScreen extends StatelessWidget {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60),
-          child: AppBarEvaluationResults(),
+          child: const AppBarEvaluationResults(),
         ),
         body: Padding(
           padding: const EdgeInsets.all(24.0),

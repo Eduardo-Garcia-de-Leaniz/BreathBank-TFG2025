@@ -45,7 +45,7 @@ class DashboardScreen extends StatelessWidget {
         appBar: AppBarDashboard(),
         backgroundColor: const Color.fromARGB(255, 188, 252, 245),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -450,7 +450,7 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: Text(
+      title: const Text(
         'Dashboard',
         style: TextStyle(
           color: Colors.white,
@@ -517,14 +517,14 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
             if (confirmed == true && await logout()) {
               if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Sesión cerrada correctamente')),
+                const SnackBar(content: Text('Sesión cerrada correctamente')),
               );
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
             } else if (confirmed == true) {
               if (!context.mounted) return;
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('Error al cerrar sesión')));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Error al cerrar sesión')),
+              );
             }
           },
         ),
