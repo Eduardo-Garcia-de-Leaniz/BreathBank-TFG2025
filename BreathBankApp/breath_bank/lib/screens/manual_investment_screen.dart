@@ -15,9 +15,31 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
   int _breathCount = 0;
   bool _isRunning = false;
   bool _hasStarted = false;
+  int _timeLimit = 0; // Será establecido dinámicamente
+  int _targetBreaths = 0;
 
-  final int _timeLimit = 300; // 5 minutos
-  final int _targetBreaths = 20;
+  @override
+  void initState() {
+    super.initState();
+    // Obtenemos los argumentos cuando el widget ya está montado
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      final duracionMinutos = args['duracion'] as int;
+      final listonInversion = args['liston'] as int;
+      setState(() {
+        _timeLimit = duracionMinutos * 60;
+        _targetBreaths = calculateNumBreaths(listonInversion, duracionMinutos);
+      });
+    });
+  }
+
+  int calculateNumBreaths(int listonInversion, int duracionMinutos) {
+    // Aquí puedes implementar la lógica para calcular el número de respiraciones
+    // según el valor de listonInversion y la duración en minutos.
+    // Por ejemplo:
+    return (listonInversion / duracionMinutos).toInt();
+  }
 
   void _startTimer() {
     _timer?.cancel();
@@ -71,9 +93,9 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
     return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
-  double get _timeProgress => _secondsElapsed / _timeLimit;
+  double get _timeProgress =>
+      _timeLimit == 0 ? 0 : _secondsElapsed / _timeLimit;
   double get _breathProgress => _breathCount / _targetBreaths;
-
   int get _remainingSeconds => _timeLimit - _secondsElapsed;
 
   @override
@@ -84,33 +106,32 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final int listonInversion = ModalRoute.of(context)!.settings.arguments as int;
+    if (_timeLimit == 0) {
+      return const Scaffold(
+        backgroundColor: Color.fromARGB(255, 188, 252, 245),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
       appBar: const AppBarManualInvestment(),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            const Text(
-              'Tiempo restante',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-            ),
             const SizedBox(height: 10),
             Stack(
               alignment: Alignment.center,
               children: [
                 Container(
-                  height: 220,
-                  width: 220,
+                  height: 250,
+                  width: 250,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    color: const Color.fromARGB(255, 7, 71, 94),
                     boxShadow: [
                       BoxShadow(
-                        // ignore: deprecated_member_use
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 4,
                         blurRadius: 10,
@@ -119,12 +140,12 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 200,
-                  width: 200,
+                  height: 210,
+                  width: 210,
                   child: CircularProgressIndicator(
                     value: 1 - _timeProgress,
                     strokeWidth: 14,
-                    backgroundColor: Colors.grey[300],
+                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
                     valueColor: AlwaysStoppedAnimation<Color>(
                       _timeProgress == 1 ? Colors.green : Colors.blueAccent,
                     ),
@@ -133,61 +154,35 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    SizedBox(height: 10),
                     Text(
                       _formatTime(_remainingSeconds),
                       style: const TextStyle(
-                        fontSize: 36,
+                        fontSize: 55,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF073C5E),
+                        color: Color.fromARGB(255, 255, 255, 255),
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    const Text(
-                      'Tiempo',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    const SizedBox(height: 12),
                     Text(
                       '$_breathCount / $_targetBreaths',
                       style: const TextStyle(
-                        fontSize: 26,
+                        fontSize: 25,
                         fontWeight: FontWeight.w700,
-                        color: Colors.teal,
+                        color: Color.fromARGB(255, 126, 172, 186),
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    const Text(
+                    Text(
                       'Respiraciones',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Color.fromARGB(255, 126, 172, 186),
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 40),
-            const Text(
-              'Respiraciones completas',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: LinearProgressIndicator(
-                  value: _breathProgress,
-                  minHeight: 20,
-                  backgroundColor: Colors.grey[300],
-                  color: Colors.green,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              '$_breathCount / $_targetBreaths',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const Spacer(),
+            const SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.teal,
@@ -204,7 +199,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                 style: TextStyle(fontSize: 24),
               ),
             ),
-            const SizedBox(height: 30),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -246,8 +241,11 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
         shadowColor: Colors.black26,
         elevation: 6,
       ),
-      icon: Icon(icon, size: 26),
-      label: Text(label, style: const TextStyle(fontSize: 18)),
+      icon: Icon(icon, size: 26, color: Colors.white),
+      label: Text(
+        label,
+        style: const TextStyle(fontSize: 18, color: Colors.white),
+      ),
       onPressed: onPressed,
     );
   }

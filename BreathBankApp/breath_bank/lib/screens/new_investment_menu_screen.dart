@@ -21,9 +21,18 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   int _rangoSuperior = 8;
   bool _isLoading = true;
 
+  final Map<String, int> _duraciones = {
+    'Express (1 minuto)': 1,
+    'Breve (2 minutos)': 2,
+    'Normal (5 minutos)': 5,
+    'Extensa (10 minutos)': 10,
+  };
+  String? _duracionSeleccionada;
+
   @override
   void initState() {
     super.initState();
+    _duracionSeleccionada = 'Breve (2 minutos)';
     _cargarDatos();
   }
 
@@ -168,6 +177,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                 ),
                 child: Column(
                   children: [
+                    // Tarjetas de nivel y saldo
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -185,42 +195,59 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 30),
-                    const Text(
-                      'Listón de Inversión:',
+                    const SizedBox(height: 15),
+
+                    // Título y barra deslizable
+                    Text(
+                      'Listón de Inversión: ${_sliderValue.toInt()}',
                       style: TextStyle(
                         color: Color.fromARGB(255, 7, 71, 94),
-                        fontSize: 18,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          _rangoInferior.toString(),
-                          style: const TextStyle(color: Color(0xFF004B8D)),
+                          '$_rangoInferior',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 7, 71, 94),
+                            fontSize: 12,
+                          ),
                         ),
                         Text(
-                          _rangoSuperior.toString(),
-                          style: const TextStyle(color: Color(0xFF004B8D)),
+                          '$_rangoSuperior',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 7, 71, 94),
+                            fontSize: 12,
+                          ),
                         ),
                       ],
                     ),
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                        activeTrackColor: const Color(0xFF004B8D),
-                        inactiveTrackColor: const Color(0xFFB3CDE0),
+                        activeTrackColor: const Color.fromARGB(255, 7, 71, 94),
+                        inactiveTrackColor: Color.fromARGB(255, 205, 213, 220),
                         trackHeight: 10.0,
-                        thumbColor: const Color(0xFF007ACC),
-                        overlayColor: const Color(0x33007ACC),
+                        thumbColor: const Color.fromARGB(255, 7, 71, 94),
+                        overlayColor: const Color.fromARGB(255, 90, 118, 142),
                         thumbShape: const RoundSliderThumbShape(
                           enabledThumbRadius: 14.0,
                         ),
                         overlayShape: const RoundSliderOverlayShape(
-                          overlayRadius: 24.0,
+                          overlayRadius: 20.0,
                         ),
                         trackShape: const RoundedRectSliderTrackShape(),
+                        valueIndicatorShape:
+                            const PaddleSliderValueIndicatorShape(),
+                        valueIndicatorColor: const Color.fromARGB(
+                          255,
+                          7,
+                          71,
+                          94,
+                        ),
                       ),
                       child: Slider(
                         value: _sliderValue,
@@ -235,17 +262,70 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         },
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        'Has seleccionado ${_sliderValue.toInt()} unidad${_sliderValue.toInt() == 1 ? '' : 'es'}',
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 7, 71, 94),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    const SizedBox(height: 20),
+                    // Desplegable de duración
+                    const Text(
+                      'Duración de Inversión:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(255, 7, 71, 94),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    DropdownButtonFormField<String>(
+                      value: _duracionSeleccionada,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromARGB(
+                          255,
+                          7,
+                          71,
+                          94,
+                        ), // azul oscuro
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        // estilo del texto seleccionado
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                      dropdownColor: const Color.fromARGB(
+                        255,
+                        7,
+                        71,
+                        94,
+                      ), // fondo del menú desplegable
+                      items:
+                          _duraciones.keys.map((label) {
+                            return DropdownMenuItem<String>(
+                              alignment: Alignment.center,
+                              value: label,
+                              child: Text(
+                                label,
+                                style: const TextStyle(
+                                  color: Colors.white, // texto blanco
+                                  fontSize: 16,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _duracionSeleccionada = value;
+                        });
+                      },
+                    ),
+
                     const SizedBox(height: 30),
+
+                    // Botones Manual / Guiada
                     Column(
                       children: [
                         SizedBox(
@@ -259,18 +339,30 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   _selectedOption == 'manual'
-                                      ? const Color(0xFF004B8D)
-                                      : const Color(0xFF7AAFD9),
+                                      ? const Color.fromARGB(255, 7, 71, 94)
+                                      : const Color.fromARGB(
+                                        255,
+                                        145,
+                                        205,
+                                        227,
+                                      ),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Manual',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
+                                color:
+                                    _selectedOption == 'manual'
+                                        ? Colors.white
+                                        : const Color.fromARGB(255, 7, 71, 94),
+                                fontSize: _selectedOption == 'manual' ? 18 : 14,
+                                fontWeight:
+                                    _selectedOption == 'manual'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                               ),
                             ),
                           ),
@@ -287,63 +379,95 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
                                   _selectedOption == 'guiada'
-                                      ? const Color(0xFF004B8D)
-                                      : const Color(0xFF7AAFD9),
+                                      ? const Color.fromARGB(255, 7, 71, 94)
+                                      : const Color.fromARGB(
+                                        255,
+                                        145,
+                                        205,
+                                        227,
+                                      ),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Guiada',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
+                                color:
+                                    _selectedOption == 'guiada'
+                                        ? Colors.white
+                                        : const Color.fromARGB(255, 7, 71, 94),
+                                fontSize: _selectedOption == 'guiada' ? 18 : 14,
+                                fontWeight:
+                                    _selectedOption == 'guiada'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
+
                     const Spacer(),
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed:
-                            _selectedOption.isNotEmpty
+                            _selectedOption.isNotEmpty &&
+                                    _duracionSeleccionada != null
                                 ? () {
-                                  final listonInversion =
-                                      _sliderValue
-                                          .toInt(); // << Guardas el valor actual del slider
+                                  final listonInversion = _sliderValue.toInt();
+                                  final duracionMinutos =
+                                      _duraciones[_duracionSeleccionada]!;
+
+                                  final argumentos = {
+                                    'liston': listonInversion,
+                                    'duracion': duracionMinutos,
+                                  };
 
                                   if (_selectedOption == 'manual') {
                                     Navigator.pushNamed(
                                       context,
                                       '/dashboard/newinvestmentmenu/manual',
-                                      arguments:
-                                          listonInversion, // << lo pasas como argumento
+                                      arguments: argumentos,
                                     );
                                   } else if (_selectedOption == 'guiada') {
                                     Navigator.pushNamed(
                                       context,
                                       '/dashboard/newinvestmentmenu/guided',
-                                      arguments:
-                                          listonInversion, // << lo pasas como argumento
+                                      arguments: argumentos,
                                     );
                                   }
                                 }
                                 : null,
-
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF004B8D),
+                          backgroundColor: const Color.fromARGB(255, 7, 71, 94),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text(
-                          'Comenzar',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Comenzar',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ],
                         ),
                       ),
                     ),

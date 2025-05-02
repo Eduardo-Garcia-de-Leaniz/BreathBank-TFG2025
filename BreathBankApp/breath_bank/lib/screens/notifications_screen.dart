@@ -121,7 +121,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   itemCount: mensajes.length,
                   itemBuilder:
                       (context, index) => ListTile(
-                        leading: Icon(Icons.notifications),
+                        leading: const Icon(Icons.notifications),
                         title: Text(mensajes[index]),
                       ),
                 ),
