@@ -455,7 +455,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'Comenzar',
+                              'Comenzar Inversión',
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.white,

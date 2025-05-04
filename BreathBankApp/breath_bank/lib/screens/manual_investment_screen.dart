@@ -15,30 +15,34 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
   int _breathCount = 0;
   bool _isRunning = false;
   bool _hasStarted = false;
-  int _timeLimit = 0; // Será establecido dinámicamente
+  bool _isTimeUp = false; // Nueva variable para saber si el tiempo ha terminado
+  int _timeLimit = 0;
   int _targetBreaths = 0;
+  double _duracionFase = 0;
 
   @override
   void initState() {
     super.initState();
-    // Obtenemos los argumentos cuando el widget ya está montado
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       final duracionMinutos = args['duracion'] as int;
       final listonInversion = args['liston'] as int;
+
+      final duracionFase = 0.25 * listonInversion + 2.5;
+
       setState(() {
         _timeLimit = duracionMinutos * 60;
         _targetBreaths = calculateNumBreaths(listonInversion, duracionMinutos);
+        _duracionFase = duracionFase;
       });
     });
   }
 
   int calculateNumBreaths(int listonInversion, int duracionMinutos) {
-    // Aquí puedes implementar la lógica para calcular el número de respiraciones
-    // según el valor de listonInversion y la duración en minutos.
-    // Por ejemplo:
-    return (listonInversion / duracionMinutos).toInt();
+    double duracionRespiracionCompleta = 2 * (0.25 * listonInversion + 2.5);
+    int totalSegundos = duracionMinutos * 60;
+    return (totalSegundos / duracionRespiracionCompleta).floor();
   }
 
   void _startTimer() {
@@ -55,11 +59,17 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
     setState(() {
       _isRunning = true;
       _hasStarted = true;
+      _isTimeUp = false;
     });
   }
 
   void _stopTimer() {
     _timer?.cancel();
+    if (_secondsElapsed >= _timeLimit) {
+      setState(() {
+        _isTimeUp = true;
+      });
+    }
     setState(() {
       _isRunning = false;
     });
@@ -73,6 +83,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
       _phaseCounter = 0;
       _isRunning = false;
       _hasStarted = false;
+      _isTimeUp = false;
     });
   }
 
@@ -95,7 +106,6 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
 
   double get _timeProgress =>
       _timeLimit == 0 ? 0 : _secondsElapsed / _timeLimit;
-  double get _breathProgress => _breathCount / _targetBreaths;
   int get _remainingSeconds => _timeLimit - _secondsElapsed;
 
   @override
@@ -154,13 +164,13 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       _formatTime(_remainingSeconds),
                       style: const TextStyle(
                         fontSize: 55,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: Colors.white,
                       ),
                     ),
                     Text(
@@ -171,9 +181,9 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                         color: Color.fromARGB(255, 126, 172, 186),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Respiraciones',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         color: Color.fromARGB(255, 126, 172, 186),
                       ),
@@ -181,6 +191,15 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                   ],
                 ),
               ],
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Duración inhalación/exhalación: ${_duracionFase.toStringAsFixed(1)} segundos',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: Color.fromARGB(255, 90, 122, 138),
+              ),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
@@ -199,6 +218,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                 style: TextStyle(fontSize: 24),
               ),
             ),
+
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -220,7 +240,43 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 30),
+            const Spacer(),
+            if (_isTimeUp) // Mostrar el botón para pasar a la siguiente pantalla
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/investmentResult',
+                      arguments: {
+                        'breath_result': _breathCount,
+                        'breath_target': _targetBreaths,
+                      },
+                    );
+                  },
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Ver Resultado',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                      SizedBox(width: 16),
+                      Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:breath_bank/screens/guided_investment_screen.dart';
+import 'package:breath_bank/screens/investment_result_screen.dart';
 import 'package:breath_bank/screens/login_screen.dart';
 import 'package:breath_bank/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -154,6 +155,8 @@ class _MyAppState extends State<MyApp> {
             (context) => const GuidedInvestmentScreen(),
         '/dashboard/appsettings/notifications':
             (context) => const NotificationsScreen(),
+        '/dashboard/newinvestmentmenu/results':
+            (context) => const InvestmentResultScreen(),
         '/':
             (context) => FutureBuilder<User?>(
               future: FirebaseAuth.instance.currentUser?.reload().then(
