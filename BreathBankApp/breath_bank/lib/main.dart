@@ -156,7 +156,7 @@ class _MyAppState extends State<MyApp> {
         '/dashboard/appsettings/notifications':
             (context) => const NotificationsScreen(),
         '/dashboard/newinvestmentmenu/results':
-            (context) => const InvestmentResultScreen(),
+            (context) => InvestmentResultScreen(),
         '/':
             (context) => FutureBuilder<User?>(
               future: FirebaseAuth.instance.currentUser?.reload().then(

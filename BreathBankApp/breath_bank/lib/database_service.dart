@@ -208,19 +208,24 @@ class DatabaseService {
 
   Future<void> updateInversionesYSaldo({
     required String userId,
-    required int numeroInversiones,
-    required double saldo,
+    required int saldo,
     required DateTime fechaUltimaInversion,
   }) async {
-    await update(
-      collectionPath: 'Usuarios',
-      docId: userId,
-      data: {
-        kNumeroInversiones: numeroInversiones,
-        kSaldo: saldo,
-        kFechaUltimaInversion: fechaUltimaInversion,
-      },
-    );
+    final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
+    if (snapshot != null && snapshot.data() != null) {
+      final int numeroInversionesActuales =
+          (snapshot.data()![kNumeroInversiones] ?? 0) as int;
+      final double saldoActual = (snapshot.data()![kSaldo] ?? 0).toDouble();
+      await update(
+        collectionPath: 'Usuarios',
+        docId: userId,
+        data: {
+          kNumeroInversiones: numeroInversionesActuales + 1,
+          kSaldo: saldoActual + saldo,
+          kFechaUltimaInversion: fechaUltimaInversion,
+        },
+      );
+    }
   }
 
   Future<void> updateNombreYApellidos({
@@ -238,8 +243,10 @@ class DatabaseService {
   Future<void> addNuevaInversion({
     required String userId,
     required DateTime fechaInversion,
-    required double listonInversion,
-    required String resultadoInversion,
+    required int listonInversion,
+    required int resultadoInversion,
+    required int tiempoInversion,
+    required bool superada,
   }) async {
     await create(
       collectionPath: 'Inversiones',
@@ -249,6 +256,8 @@ class DatabaseService {
         'FechaInversión': fechaInversion,
         'ListónInversión': listonInversion,
         'ResultadoInversión': resultadoInversion,
+        'TiempoInversión': tiempoInversion,
+        'Superada': superada,
       },
     );
   }

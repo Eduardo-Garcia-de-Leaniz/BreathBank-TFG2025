@@ -4,12 +4,44 @@ import 'package:flutter/material.dart';
 import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/database_service.dart';
 
-class DashboardScreen extends StatelessWidget {
+String formatFecha(Timestamp timestamp) {
+  final date = timestamp.toDate();
+  final day = date.day.toString().padLeft(2, '0');
+  final month = date.month.toString().padLeft(2, '0');
+  final year = date.year.toString();
+  return '$day/$month/$year';
+}
+
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
   final DatabaseService db = DatabaseService();
+
   final AuthenticationService authenticationService = AuthenticationService();
+
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  DashboardScreen({super.key});
+  String? saldo;
+  String? nivelInversor;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _recargarDatos();
+  }
+
+  Future<void> _recargarDatos() async {
+    final stats = await db.getUsuarioStats(userId: userId);
+    setState(() {
+      saldo = stats?['Saldo']?.toString();
+      nivelInversor = stats?['NivelInversor']?.toString();
+    });
+  }
 
   Future<String?> obtenerNombreUsuario() async {
     return await db.getNombreUsuario(userId: userId);
@@ -25,14 +57,6 @@ class DashboardScreen extends StatelessWidget {
     final stats = await db.getUsuarioStats(userId: userId);
     final saldo = stats?['Saldo'];
     return saldo?.toString();
-  }
-
-  String formatFecha(Timestamp timestamp) {
-    final date = timestamp.toDate();
-    final day = date.day.toString().padLeft(2, '0');
-    final month = date.month.toString().padLeft(2, '0');
-    final year = date.year.toString();
-    return '$day/$month/$year';
   }
 
   @override
@@ -67,13 +91,13 @@ class DashboardScreen extends StatelessWidget {
                 children: [
                   buildInfoCard(
                     title: 'Nivel de Inversor',
-                    futureValue: obtenerNivelInversor(),
+                    value: nivelInversor ?? '0',
                     numberColor: const Color.fromARGB(255, 223, 190, 0),
                     textColor: const Color.fromARGB(255, 243, 221, 96),
                   ),
                   buildInfoCard(
                     title: 'Saldo',
-                    futureValue: obtenerSaldo(),
+                    value: saldo ?? '0',
                     numberColor: Colors.green[400] ?? Colors.green,
                     textColor: Colors.green[200] ?? Colors.green,
                   ),
@@ -147,181 +171,169 @@ class DashboardScreen extends StatelessWidget {
 
   Widget buildInfoCard({
     required String title,
-    required Future<String?> futureValue,
+    required String value,
     required Color numberColor,
     required Color textColor,
   }) {
     int maxValue = title == 'Nivel de Inversor' ? 11 : 100;
+    double valueDouble = double.tryParse(value) ?? 0.0;
 
-    return FutureBuilder<String?>(
-      future: futureValue,
-      builder: (context, snapshot) {
-        final valueString = snapshot.data;
-        final value = int.tryParse(valueString ?? '');
-
-        return Card(
-          color: const Color.fromARGB(255, 7, 71, 94),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            height: 130,
-            width: 150,
-            child: Column(
+    return Card(
+      color: const Color.fromARGB(255, 7, 71, 94),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        height: 130,
+        width: 150,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 13, color: Colors.white),
+            ),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  title,
-                  style: const TextStyle(fontSize: 13, color: Colors.white),
-                ),
-                if (value != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        value.toString(),
-                        style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          color: numberColor,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          LinearProgressIndicator(
-                            value: value / maxValue,
-                            backgroundColor: Colors.white24,
-                            color: numberColor,
-                            minHeight: 5,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '0',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: numberColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                maxValue.toString(),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: numberColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                else
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      'Cargando...',
-                      style: TextStyle(color: textColor),
-                    ),
+                  valueDouble.toStringAsFixed(0),
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: numberColor,
                   ),
+                ),
+                Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: valueDouble / maxValue,
+                      backgroundColor: Colors.white24,
+                      color: numberColor,
+                      minHeight: 5,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '0',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: numberColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          maxValue.toString(),
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: numberColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget buildSectionHeader({
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ],
         ),
-        TextButton(
-          onPressed: onTap,
-          child: Text(
-            title == 'Últimas Evaluaciones'
-                ? 'Ver evaluaciones'
-                : 'Ver inversiones',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.teal[800],
-            ),
+      ),
+    );
+  }
+}
+
+Widget buildSectionHeader({
+  required String title,
+  required VoidCallback onTap,
+}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        title,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      TextButton(
+        onPressed: onTap,
+        child: Text(
+          title == 'Últimas Evaluaciones'
+              ? 'Ver evaluaciones'
+              : 'Ver inversiones',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Colors.teal[800],
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
-  Widget buildListPreviewEvaluaciones({
-    required Future<List<Map<String, dynamic>>> itemsFuture,
-    required IconData icon,
-  }) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-      future: itemsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError ||
-            !snapshot.hasData ||
-            snapshot.data!.isEmpty) {
-          return const Text('No hay evaluaciones disponibles.');
-        }
+Widget buildListPreviewEvaluaciones({
+  required Future<List<Map<String, dynamic>>> itemsFuture,
+  required IconData icon,
+}) {
+  return FutureBuilder<List<Map<String, dynamic>>>(
+    future: itemsFuture,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError ||
+          !snapshot.hasData ||
+          snapshot.data!.isEmpty) {
+        return const Text('No hay evaluaciones disponibles.');
+      }
 
-        return ExpandableListPreview(
-          items: snapshot.data!,
-          icon: icon,
-          isEvaluacion: true,
-          getTitle: (item) {
-            final index = snapshot.data!.indexOf(item) + 1;
-            final fecha =
-                item['Fecha'] != null
-                    ? formatFecha(item['Fecha'] as Timestamp)
-                    : 'Sin fecha';
-            return 'Evaluación $index ($fecha)';
-          },
-        );
-      },
-    );
-  }
+      return ExpandableListPreview(
+        items: snapshot.data!,
+        icon: icon,
+        isEvaluacion: true,
+        getTitle: (item) {
+          final index = snapshot.data!.indexOf(item) + 1;
+          final fecha =
+              item['Fecha'] != null
+                  ? formatFecha(item['Fecha'] as Timestamp)
+                  : 'Sin fecha';
+          return 'Evaluación $index ($fecha)';
+        },
+      );
+    },
+  );
+}
 
-  Widget buildListPreviewInversiones({
-    required Future<List<Map<String, dynamic>>> itemsFuture,
-    required IconData icon,
-  }) {
-    return FutureBuilder<List<Map<String, dynamic>>>(
-      future: itemsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError ||
-            !snapshot.hasData ||
-            snapshot.data!.isEmpty) {
-          return const Text('No hay datos disponibles.');
-        }
+Widget buildListPreviewInversiones({
+  required Future<List<Map<String, dynamic>>> itemsFuture,
+  required IconData icon,
+}) {
+  return FutureBuilder<List<Map<String, dynamic>>>(
+    future: itemsFuture,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (snapshot.hasError ||
+          !snapshot.hasData ||
+          snapshot.data!.isEmpty) {
+        return const Text('No hay inversiones disponibles.');
+      }
 
-        return ExpandableListPreview(
-          items: snapshot.data!,
-          icon: icon,
-          isEvaluacion: false,
-          getTitle: (item) => item['titulo'] ?? 'Sin título',
-          getSubtitle: (item) => 'Resultado: ${item['resultado']}',
-        );
-      },
-    );
-  }
+      return ExpandableListPreview(
+        items: snapshot.data!,
+        icon: icon,
+        isEvaluacion: false,
+        getTitle: (item) {
+          final index = snapshot.data!.indexOf(item) + 1;
+          final fecha =
+              item['FechaInversión'] != null
+                  ? formatFecha(item['FechaInversión'] as Timestamp)
+                  : 'Sin fecha';
+          return 'Inversión $index ($fecha)';
+        },
+      );
+    },
+  );
 }
 
 class ExpandableListPreview extends StatefulWidget {

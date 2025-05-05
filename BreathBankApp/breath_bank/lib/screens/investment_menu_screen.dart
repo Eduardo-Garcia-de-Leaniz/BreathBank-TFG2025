@@ -29,18 +29,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
   }
 
   Future<List<Map<String, dynamic>>> fetchDatosInversiones() async {
-    List<Map<String, dynamic>> datos = [];
-
-    final inversiones = await db.getUltimasInversiones(userId: userId);
-
-    for (var inversion in inversiones) {
-      final inversionId = inversion['id'];
-      final montoInvertido = inversion['MontoInvertido'];
-
-      datos.add({'inversionId': inversionId, 'montoInvertido': montoInvertido});
-    }
-
-    return datos;
+    return await db.getUltimasInversiones(userId: userId);
   }
 
   @override
@@ -82,7 +71,7 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
 
   Widget _buildHistorialInversiones() {
     return FutureBuilder<List<Map<String, dynamic>>>(
-      future: db.getUltimasInversiones(userId: userId),
+      future: fetchDatosInversiones(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -97,33 +86,44 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
           itemCount: inversiones.length,
           itemBuilder: (context, index) {
             final inversion = inversiones[index];
-            //final inversionId = inversion['inversionId'];
-            final montoInvertido = inversion['montoInvertido'];
+            print(inversion);
+
+            final timestamp = inversion['FechaInversión'];
+            final liston = inversion['ListónInversión'];
+            final resultado = inversion['ResultadoInversión'];
+            final superada = inversion['Superada'];
+            final tiempo = inversion['TiempoInversión'];
 
             return ExpansionTile(
-              leading: const Icon(Icons.money, color: Colors.green),
+              leading: const Icon(Icons.more_time, color: Colors.teal),
               title: Text('Inversión ${index + 1}'),
               childrenPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
               ),
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.attach_money, color: Colors.teal),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Monto invertido: \$${montoInvertido.toString()}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+                _infoRow('Fecha', formatFecha(timestamp)),
+                _infoRow('Listón Inversión', liston.toString()),
+                _infoRow('Número de respiraciones', resultado.toString()),
+                _infoRow('¿Superada?', superada ? 'Sí' : 'No'),
+                _infoRow('Tiempo Inversión', '${tiempo} segundos'),
               ],
             );
           },
         );
       },
+    );
+  }
+
+  Widget _infoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Text('$label: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+          Expanded(child: Text(value)),
+        ],
+      ),
     );
   }
 
@@ -140,10 +140,11 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
         }
 
         final datos = snapshot.data!;
-        final montos =
-            datos.map((d) => d['montoInvertido']).whereType<num>().toList();
+        final listones =
+            datos.map((d) => d['ListónInversión']).whereType<num>().toList();
 
-        final totalInversiones = montos.reduce((a, b) => a + b);
+        final totalListon =
+            listones.isNotEmpty ? listones.reduce((a, b) => a + b) : 0;
 
         return Padding(
           padding: const EdgeInsets.all(12),
@@ -155,12 +156,12 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
             childAspectRatio: 1.4,
             children: [
               _buildStatCard(
-                'Total Inversiones',
-                totalInversiones.toString(),
-                Icons.account_balance_wallet,
-                Colors.green,
+                'Total Listón',
+                totalListon.toString(),
+                Icons.bar_chart,
+                Colors.blue,
               ),
-              // Puedes agregar más tarjetas estadísticas aquí
+              // Agrega más estadísticas si lo deseas
             ],
           ),
         );
@@ -178,14 +179,12 @@ class _InvestmentMenuScreenState extends State<InvestmentMenuScreen>
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
-          // ignore: deprecated_member_use
           colors: [color.withOpacity(0.25), color.withOpacity(0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            // ignore: deprecated_member_use
             color: color.withOpacity(0.15),
             blurRadius: 8,
             offset: const Offset(0, 4),
