@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+
+const kPrimaryColor = Color.fromARGB(255, 7, 71, 94);
+const kBackgroundColor = Color.fromARGB(255, 188, 252, 245);
+
+const kButtonTextStyle = TextStyle(
+  fontFamily: 'Arial',
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+);
+
+const kTitleTextStyle = TextStyle(
+  color: kPrimaryColor,
+  fontSize: 40,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Arial',
+  fontStyle: FontStyle.italic,
+);
+
+const kSubtitleTextStyle = TextStyle(
+  fontSize: 25,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Arial',
+  color: kPrimaryColor,
+);

@@ -70,14 +70,14 @@ class InvestmentResultScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              if (breathResult > 0 && breathResult < breathTarget)
+              if (breathResult > 0 && breathResult <= breathTarget)
                 _buildResultMessageBox(
                   icon: Icons.check_circle,
                   message: '¡Has superado con éxito la inversión!',
                   backgroundColor: Colors.green.shade900,
                   textColor: Colors.green.shade100,
                 )
-              else if (breathResult >= breathTarget)
+              else if (breathResult > breathTarget)
                 _buildResultMessageBox(
                   icon: Icons.warning_amber_rounded,
                   message: 'No has superado el objetivo. ¡Sigue practicando!',
@@ -103,7 +103,7 @@ class InvestmentResultScreen extends StatelessWidget {
                     ),
                     _buildResultCard(
                       icon: Icons.done_outline_sharp,
-                      title: 'Respiraciones completadas',
+                      title: 'Respiraciones realizadas',
                       value: '$breathResult',
                     ),
                     _buildResultCard(
@@ -143,10 +143,7 @@ class InvestmentResultScreen extends StatelessWidget {
                     }
                     // Si la actualización del saldo fue exitosa, navega al dashboard
                     if (!context.mounted) return;
-                    Navigator.popUntil(
-                      context,
-                      ModalRoute.withName('/dashboard'),
-                    );
+                    Navigator.pushNamed(context, '/dashboard');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 7, 71, 94),

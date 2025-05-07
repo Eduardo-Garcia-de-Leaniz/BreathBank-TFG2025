@@ -17,6 +17,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   double _sliderValue = 1;
   String _selectedOption = '';
   int _nivelInversor = 0;
+  int _saldo = 0;
   int _rangoInferior = 2;
   int _rangoSuperior = 8;
   bool _isLoading = true;
@@ -39,9 +40,11 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   Future<void> _cargarDatos() async {
     final stats = await db.getUsuarioStats(userId: userId);
     final nivel = stats?['NivelInversor'] ?? 0;
+    final saldo = stats?['Saldo'] ?? 0;
 
     setState(() {
       _nivelInversor = nivel;
+      _saldo = saldo.toInt();
       final rangos = calcularRangos(_nivelInversor);
       _rangoInferior = rangos['rangoInferior']!;
       _rangoSuperior = rangos['rangoSuperior']!;
@@ -62,103 +65,68 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
     return {'rangoInferior': rangoInferior, 'rangoSuperior': rangoSuperior};
   }
 
-  Future<String?> obtenerNivelInversor() async {
-    final stats = await db.getUsuarioStats(userId: userId);
-    return stats?['NivelInversor']?.toString();
-  }
-
-  Future<String?> obtenerSaldo() async {
-    final stats = await db.getUsuarioStats(userId: userId);
-    return stats?['Saldo']?.toString();
-  }
-
   Widget buildInfoCard({
     required String title,
-    required Future<String?> futureValue,
+    required int value,
     required Color numberColor,
     required Color textColor,
   }) {
     int maxValue = title == 'Nivel de Inversor' ? 11 : 100;
 
-    return FutureBuilder<String?>(
-      future: futureValue,
-      builder: (context, snapshot) {
-        final valueString = snapshot.data;
-        final value = int.tryParse(valueString ?? '');
-
-        return Card(
-          color: const Color.fromARGB(255, 7, 71, 94),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            height: 130,
-            width: 150,
-            child: Column(
+    return Card(
+      color: const Color.fromARGB(255, 7, 71, 94),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        height: 130,
+        width: 150,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 13, color: Colors.white),
+            ),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  title,
-                  style: const TextStyle(fontSize: 13, color: Colors.white),
-                ),
-                if (value != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        value.toString(),
-                        style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          color: numberColor,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          LinearProgressIndicator(
-                            value: value / maxValue,
-                            backgroundColor: Colors.white24,
-                            color: numberColor,
-                            minHeight: 5,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '0',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: numberColor,
-                                ),
-                              ),
-                              Text(
-                                maxValue.toString(),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: numberColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                else
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      'Cargando...',
-                      style: TextStyle(color: textColor),
-                    ),
+                  value.toString(),
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: numberColor,
                   ),
+                ),
+                Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: value / maxValue,
+                      backgroundColor: Colors.white24,
+                      color: numberColor,
+                      minHeight: 5,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '0',
+                          style: TextStyle(fontSize: 12, color: numberColor),
+                        ),
+                        Text(
+                          maxValue.toString(),
+                          style: TextStyle(fontSize: 10, color: numberColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -177,19 +145,18 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                 ),
                 child: Column(
                   children: [
-                    // Tarjetas de nivel y saldo
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         buildInfoCard(
                           title: 'Nivel de Inversor',
-                          futureValue: obtenerNivelInversor(),
+                          value: _nivelInversor,
                           numberColor: const Color.fromARGB(255, 223, 190, 0),
                           textColor: const Color.fromARGB(255, 243, 221, 96),
                         ),
                         buildInfoCard(
                           title: 'Saldo',
-                          futureValue: obtenerSaldo(),
+                          value: _saldo,
                           numberColor: Colors.green[400] ?? Colors.green,
                           textColor: Colors.green[200] ?? Colors.green,
                         ),
@@ -197,10 +164,9 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                     ),
                     const SizedBox(height: 15),
 
-                    // Título y barra deslizable
                     Text(
                       'Listón de Inversión: ${_sliderValue.toInt()}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromARGB(255, 7, 71, 94),
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -212,14 +178,14 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                       children: [
                         Text(
                           '$_rangoInferior',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color.fromARGB(255, 7, 71, 94),
                             fontSize: 12,
                           ),
                         ),
                         Text(
                           '$_rangoSuperior',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color.fromARGB(255, 7, 71, 94),
                             fontSize: 12,
                           ),
@@ -229,7 +195,12 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         activeTrackColor: const Color.fromARGB(255, 7, 71, 94),
-                        inactiveTrackColor: Color.fromARGB(255, 205, 213, 220),
+                        inactiveTrackColor: const Color.fromARGB(
+                          255,
+                          205,
+                          213,
+                          220,
+                        ),
                         trackHeight: 10.0,
                         thumbColor: const Color.fromARGB(255, 7, 71, 94),
                         overlayColor: const Color.fromARGB(255, 90, 118, 142),
@@ -263,7 +234,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Desplegable de duración
+
                     const Text(
                       'Duración de Inversión:',
                       style: TextStyle(
@@ -277,12 +248,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                       value: _duracionSeleccionada,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: const Color.fromARGB(
-                          255,
-                          7,
-                          71,
-                          94,
-                        ), // azul oscuro
+                        fillColor: const Color.fromARGB(255, 7, 71, 94),
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 12,
@@ -291,17 +257,8 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      style: const TextStyle(
-                        // estilo del texto seleccionado
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                      dropdownColor: const Color.fromARGB(
-                        255,
-                        7,
-                        71,
-                        94,
-                      ), // fondo del menú desplegable
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      dropdownColor: const Color.fromARGB(255, 7, 71, 94),
                       items:
                           _duraciones.keys.map((label) {
                             return DropdownMenuItem<String>(
@@ -310,7 +267,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                               child: Text(
                                 label,
                                 style: const TextStyle(
-                                  color: Colors.white, // texto blanco
+                                  color: Colors.white,
                                   fontSize: 16,
                                 ),
                               ),
@@ -322,10 +279,8 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         });
                       },
                     ),
-
                     const SizedBox(height: 30),
 
-                    // Botones Manual / Guiada
                     Column(
                       children: [
                         SizedBox(

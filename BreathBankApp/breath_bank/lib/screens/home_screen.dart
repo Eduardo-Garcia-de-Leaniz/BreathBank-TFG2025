@@ -1,4 +1,7 @@
+import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/widgets/image_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:breath_bank/widgets/app_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,66 +9,33 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: Column(
         children: [
           Container(
             height: MediaQuery.of(context).padding.top,
-            color: const Color.fromARGB(255, 7, 71, 94),
+            color: kPrimaryColor,
           ),
-
-          const Column(
-            children: [
-              TitleHomeScreen(),
-              ImageLogo(imageWidth: 200, imageHeight: 200),
-              SubtitleHomeScreen(),
-              BtnLogin(),
-              BtnRegister(),
-            ],
-          ),
+          const Expanded(child: HomeContent()),
         ],
       ),
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
     );
   }
 }
 
-class SubtitleHomeScreen extends StatelessWidget {
-  const SubtitleHomeScreen({super.key});
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      '¡Bienvenido a BreathBank!',
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Arial',
-        color: Color.fromARGB(255, 7, 71, 94),
-      ),
-    );
-  }
-}
-
-class ImageLogo extends StatelessWidget {
-  final double imageWidth;
-  final double imageHeight;
-
-  const ImageLogo({
-    super.key,
-    required this.imageWidth,
-    required this.imageHeight,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(40),
-      child: Image.asset(
-        'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
-        fit: BoxFit.cover,
-        width: imageWidth,
-        height: imageHeight,
-      ),
+    return Column(
+      children: [
+        const TitleHomeScreen(),
+        const ImageLogo(imageWidth: 200, imageHeight: 200),
+        const SubtitleHomeScreen(),
+        const SizedBox(height: 60),
+        const AuthButtons(),
+      ],
     );
   }
 }
@@ -78,86 +48,61 @@ class TitleHomeScreen extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.only(top: 60),
       child: Center(
-        child: Column(
-          children: [
-            Text(
-              'BreathBank',
-              style: TextStyle(
-                color: Color.fromARGB(255, 7, 71, 94),
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Arial',
-                fontStyle: FontStyle.italic,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        child: Text(
+          'BreathBank',
+          style: kTitleTextStyle,
+          textAlign: TextAlign.center,
         ),
       ),
     );
   }
 }
 
-class BtnLogin extends StatelessWidget {
-  const BtnLogin({super.key});
+class SubtitleHomeScreen extends StatelessWidget {
+  const SubtitleHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 60),
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            '/login',
-            arguments: {'desdeNotificacion': false},
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
-          backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        ),
-        child: const Text(
-          'Iniciar Sesión',
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
+    return const Text('¡Bienvenido a BreathBank!', style: kSubtitleTextStyle);
   }
 }
 
-class BtnRegister extends StatelessWidget {
-  const BtnRegister({super.key});
+class AuthButtons extends StatelessWidget {
+  const AuthButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 30),
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/register');
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
-          backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+    final screenWidth = MediaQuery.of(context).size.width;
+    final buttonHeight = screenWidth / 6;
+
+    return Column(
+      children: [
+        AppButton(
+          text: 'Iniciar Sesión',
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              '/login',
+              arguments: {'desdeNotificacion': false},
+            );
+          },
+          width: screenWidth * 0.8,
+          height: buttonHeight,
+          backgroundColor: kPrimaryColor,
+          textStyle: kButtonTextStyle,
         ),
-        child: const Text(
-          'Registrarse',
-          style: TextStyle(
-            fontFamily: 'Arial',
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+        const SizedBox(height: 30),
+        AppButton(
+          text: 'Registrarse',
+          onPressed: () {
+            Navigator.pushNamed(context, '/register');
+          },
+          width: screenWidth * 0.8,
+          height: buttonHeight,
+          backgroundColor: kPrimaryColor,
+          textStyle: kButtonTextStyle,
         ),
-      ),
+      ],
     );
   }
 }
