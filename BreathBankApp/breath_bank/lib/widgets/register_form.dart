@@ -1,0 +1,165 @@
+import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/widgets/app_button.dart';
+import 'package:breath_bank/widgets/snackbar_widget.dart';
+import 'package:breath_bank/widgets/textfield.dart';
+import 'package:flutter/material.dart';
+import '../controllers/register_controller.dart';
+
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({super.key});
+
+  @override
+  State<RegisterForm> createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<RegisterForm> {
+  final controller = RegisterController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  String errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    errorMessage = '';
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> handleRegister() async {
+    setState(() {
+      errorMessage = '';
+    });
+
+    final error = await controller.registerUser(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      confirmPassword: confirmPasswordController.text.trim(),
+      name: nameController.text.trim(),
+    );
+
+    if (error != null) {
+      setState(() {
+        errorMessage = error;
+      });
+      return;
+    }
+
+    await controller.postLoginTasks(
+      authenticationService.value.currentUser!.uid,
+    );
+    final nombreUsuario = await controller.getNombreUsuario(
+      authenticationService.value.currentUser!.uid,
+    );
+
+    if (!context.mounted) return;
+    Navigator.pushReplacementNamed(context, "/evaluation");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Usuario registrado correctamente. Bienvenid@ $nombreUsuario',
+        ),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          TextFieldForm(
+            fontSize: 14,
+            controller: nameController,
+            label: 'Nombre de Usuario',
+            hintText: 'Ingrese su nombre de usuario',
+            icon: Icons.person,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Introduce tu nombre de usuario';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 20),
+          TextFieldForm(
+            fontSize: 14,
+            controller: emailController,
+            label: 'Correo Electrónico',
+            hintText: 'Ingrese su correo electrónico',
+            icon: Icons.email,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Introduce un correo electrónico';
+              } else if (!value.contains('@')) {
+                return 'Correo electrónico inválido';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 20),
+          TextFieldForm(
+            fontSize: 14,
+            controller: passwordController,
+            label: 'Contraseña',
+            hintText: 'Ingrese su contraseña',
+            icon: Icons.lock,
+            obscureText: true,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Introduce una contraseña';
+              } else if (value.length < 6) {
+                return 'La contraseña debe tener al menos 6 caracteres';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 20),
+          TextFieldForm(
+            fontSize: 14,
+            controller: confirmPasswordController,
+            label: 'Repetir Contraseña',
+            hintText: 'Confirme su contraseña',
+            icon: Icons.lock_reset,
+            obscureText: true,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Confirma tu contraseña';
+              } else if (value != passwordController.text) {
+                return 'Las contraseñas no coinciden';
+              }
+              return null;
+            },
+          ),
+
+          if (errorMessage.isNotEmpty) ...[
+            SnackBarWidget(message: errorMessage, backgroundColor: Colors.red),
+          ],
+
+          const SizedBox(height: 80),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: AppButton(
+              text: 'Siguiente',
+              width: MediaQuery.of(context).size.width * 0.8,
+              onPressed: handleRegister,
+              backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

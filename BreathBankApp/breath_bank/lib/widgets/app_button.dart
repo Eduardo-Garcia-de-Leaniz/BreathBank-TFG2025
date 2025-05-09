@@ -1,8 +1,9 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final double width;
   final double height;
   final Color backgroundColor;
@@ -19,7 +20,7 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     this.width = double.infinity,
     this.height = 50,
-    this.backgroundColor = Colors.blue,
+    this.backgroundColor = kPrimaryColor,
     this.textColor = Colors.white,
     this.borderRadius = 12,
     this.textStyle,

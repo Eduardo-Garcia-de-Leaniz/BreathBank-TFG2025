@@ -26,7 +26,6 @@ class _AccountSettingsModifyDataScreenState
   final String email = FirebaseAuth.instance.currentUser?.email ?? noDisponible;
 
   late String name = '';
-  late String surname = '';
   late String creationDate = '';
   late String lastEvaluationDate = '';
   late String lastInvestmentDate = '';
@@ -49,7 +48,6 @@ class _AccountSettingsModifyDataScreenState
 
       setState(() {
         name = data?["Nombre"] ?? noDisponible;
-        surname = data?["Apellidos"] ?? noDisponible;
 
         final Timestamp? fechaCreacion = data?["FechaCreación"];
         final Timestamp? fechaEval = data?["FechaÚltimaEvaluación"];
@@ -68,7 +66,6 @@ class _AccountSettingsModifyDataScreenState
         balance = data?["Saldo"] ?? 0;
 
         nameController.text = name;
-        surnameController.text = surname;
       });
     } catch (e) {
       if (!mounted) return;
@@ -90,7 +87,7 @@ class _AccountSettingsModifyDataScreenState
   }
 
   bool hasChanges() {
-    return nameController.text != name || surnameController.text != surname;
+    return nameController.text != name;
   }
 
   Future<void> saveChanges() async {
@@ -98,7 +95,6 @@ class _AccountSettingsModifyDataScreenState
       await db.updateNombreYApellidos(
         userId: userId,
         nombre: nameController.text,
-        apellidos: surnameController.text,
       );
 
       if (!mounted) return;
@@ -184,12 +180,7 @@ class _AccountSettingsModifyDataScreenState
                 controller: nameController,
                 icon: const Icon(Icons.person),
               ),
-              const SizedBox(height: 16),
-              buildEditableField(
-                label: "Apellidos",
-                controller: surnameController,
-                icon: const Icon(Icons.person_outline),
-              ),
+
               const SizedBox(height: 16),
               buildReadOnlyField(
                 label: "Email",

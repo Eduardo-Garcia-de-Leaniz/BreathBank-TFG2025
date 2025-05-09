@@ -1,33 +1,32 @@
 import 'package:flutter/material.dart';
 
 class ClickableTextLoginRegister extends StatelessWidget {
-  const ClickableTextLoginRegister({super.key});
+  final bool isLogin;
+
+  const ClickableTextLoginRegister({super.key, required this.isLogin});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'Iniciar Sesión',
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Arial',
-            color: Color.fromARGB(255, 150, 150, 150),
-          ),
+        Text(
+          isLogin ? '¿No tienes cuenta? ' : '¿Ya tienes cuenta? ',
+          style: const TextStyle(fontSize: 16, color: Colors.grey),
         ),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/register');
+            Navigator.pushReplacementNamed(
+              context,
+              isLogin ? '/register' : '/login',
+            );
           },
-          child: const Text(
-            'Registrarse',
-            style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Arial',
+          child: Text(
+            isLogin ? 'Regístrate' : 'Inicia sesión',
+            style: const TextStyle(
+              fontSize: 16,
               color: Color.fromARGB(255, 7, 71, 94),
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

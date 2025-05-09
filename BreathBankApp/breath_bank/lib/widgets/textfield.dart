@@ -7,6 +7,7 @@ class TextFieldForm extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final double fontSize;
 
   const TextFieldForm({
     super.key,
@@ -16,6 +17,7 @@ class TextFieldForm extends StatelessWidget {
     required this.icon,
     this.obscureText = false,
     this.validator,
+    this.fontSize = 16, // Valor por defecto
   });
 
   @override
@@ -25,11 +27,11 @@ class TextFieldForm extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 18,
+          style: TextStyle(
+            fontSize: fontSize + 2, // Un poco más grande para el label
             fontWeight: FontWeight.bold,
             fontFamily: 'Arial',
-            color: Color.fromARGB(255, 7, 71, 94),
+            color: const Color.fromARGB(255, 7, 71, 94),
           ),
         ),
         Row(
@@ -42,16 +44,16 @@ class TextFieldForm extends StatelessWidget {
                 obscureText: obscureText,
                 decoration: InputDecoration(
                   hintText: hintText,
-                  hintStyle: const TextStyle(
-                    color: Color.fromARGB(255, 7, 71, 94),
-                    fontSize: 16,
+                  hintStyle: TextStyle(
+                    color: const Color.fromARGB(255, 7, 71, 94),
+                    fontSize: fontSize,
                     fontFamily: 'Arial',
                   ),
                 ),
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Arial',
-                  fontSize: 16,
-                  color: Color.fromARGB(255, 7, 71, 94),
+                  fontSize: fontSize,
+                  color: const Color.fromARGB(255, 7, 71, 94),
                 ),
                 validator: validator,
               ),

@@ -10,7 +10,6 @@ const String kNumeroEvaluaciones = 'NúmeroEvaluacionesRealizadas';
 const String kNumeroInversiones = 'NúmeroInversionesRealizadas';
 const String kSaldo = 'Saldo';
 const String kNombre = 'Nombre';
-const String kApellidos = 'Apellidos';
 
 class DatabaseService {
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -50,7 +49,6 @@ class DatabaseService {
   Future<void> addNewUser({
     required String userId,
     required String nombre,
-    required String apellidos,
     required DateTime fechaCreacion,
   }) async {
     await create(
@@ -58,11 +56,10 @@ class DatabaseService {
       docId: userId,
       data: {
         kNombre: nombre,
-        kApellidos: apellidos,
         kFechaCreacion: fechaCreacion,
         kFechaUltimoAcceso: fechaCreacion,
-        kFechaUltimaEvaluacion: fechaCreacion,
-        kFechaUltimaInversion: fechaCreacion,
+        kFechaUltimaEvaluacion: null,
+        kFechaUltimaInversion: null,
         kNivelInversor: 0,
         kNumeroEvaluaciones: 0,
         kNumeroInversiones: 0,
@@ -79,20 +76,6 @@ class DatabaseService {
     return null;
   }
 
-  Future<Map<String, String>?> getNombreYApellidosUsuario({
-    required String userId,
-  }) async {
-    final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
-    if (snapshot != null && snapshot.data() != null) {
-      final data = snapshot.data()!;
-      return {
-        kNombre: data[kNombre] as String,
-        kApellidos: data[kApellidos] as String,
-      };
-    }
-    return null;
-  }
-
   Future<Map<String, dynamic>?> getUsuarioStats({
     required String userId,
   }) async {
@@ -101,7 +84,6 @@ class DatabaseService {
       final data = snapshot.data()!;
       return {
         kNombre: data[kNombre],
-        kApellidos: data[kApellidos],
         kFechaCreacion: data[kFechaCreacion],
         kFechaUltimaEvaluacion: data[kFechaUltimaEvaluacion],
         kFechaUltimaInversion: data[kFechaUltimaInversion],
@@ -231,12 +213,11 @@ class DatabaseService {
   Future<void> updateNombreYApellidos({
     required String userId,
     required String nombre,
-    required String apellidos,
   }) async {
     await update(
       collectionPath: 'Usuarios',
       docId: userId,
-      data: {kNombre: nombre, kApellidos: apellidos},
+      data: {kNombre: nombre},
     );
   }
 
@@ -345,7 +326,6 @@ class DatabaseService {
         docId: userId,
         data: {
           kNombre: data[kNombre],
-          kApellidos: data[kApellidos],
           kFechaCreacion: data[kFechaCreacion],
           kFechaUltimoAcceso: data[kFechaUltimoAcceso],
           kNivelInversor: 0,

@@ -5,7 +5,6 @@ import 'package:breath_bank/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import '../controllers/login_controller.dart';
 import '../models/user_credentials.dart';
-import '../widgets/widgets_botones/btnBack.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -20,7 +19,7 @@ class _LoginFormState extends State<LoginForm> {
   final controller = LoginController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  String errorMessage = '';
+  String errorMessageLogin = '';
 
   @override
   void dispose() {
@@ -37,13 +36,13 @@ class _LoginFormState extends State<LoginForm> {
 
     final validationError = controller.validate(credentials);
     if (validationError != null) {
-      setState(() => errorMessage = validationError);
+      setState(() => errorMessageLogin = validationError);
       return;
     }
 
     final loginError = await controller.signIn(credentials);
     if (loginError != null) {
-      setState(() => errorMessage = loginError);
+      setState(() => errorMessageLogin = 'Las credenciales son incorrectas');
       return;
     }
 
@@ -113,18 +112,18 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           const SizedBox(height: 10),
-          SnackBarWidget(message: errorMessage, backgroundColor: Colors.red),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const BtnBack(fontSize: 16, route: '/'),
-              AppButton(
-                text: 'Siguiente',
-                onPressed: _handleLogin,
-                backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-              ),
-            ],
+          if (errorMessageLogin.isNotEmpty) ...[
+            SnackBarWidget(
+              message: errorMessageLogin,
+              backgroundColor: Colors.red,
+            ),
+          ],
+          const SizedBox(height: 80),
+          AppButton(
+            text: 'Iniciar Sesión',
+            width: MediaQuery.of(context).size.width * 0.8,
+            onPressed: _handleLogin,
+            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
           ),
         ],
       ),
