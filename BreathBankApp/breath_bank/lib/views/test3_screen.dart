@@ -86,7 +86,11 @@ class Test3ScreenState extends State<Test3Screen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const SizedBox(height: 10),
-        BreathingAnimationWidget(key: breathingKey),
+        BreathingAnimationWidget(
+          key: breathingKey,
+          initialDuration: 3,
+          incrementPerBreath: 0.5,
+        ),
         const SizedBox(height: 30),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

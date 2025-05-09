@@ -18,7 +18,7 @@ import 'package:breath_bank/screens/investment_menu_screen.dart';
 import 'package:breath_bank/screens/manual_investment_screen.dart';
 import 'package:breath_bank/screens/new_investment_menu_screen.dart';
 import 'package:breath_bank/screens/notifications_screen.dart';
-import 'package:breath_bank/screens/evaluation_result_screen.dart';
+import 'package:breath_bank/views/evaluation_result_screen.dart';
 import 'package:breath_bank/screens/account_settings_screen.dart';
 import 'package:breath_bank/screens/account_settings_reset_password_screen.dart';
 import 'package:breath_bank/screens/account_settings_consult_data_screen.dart';
@@ -153,7 +153,7 @@ class _MyAppState extends State<MyApp> {
         '/evaluation/test1': (context) => const Test1Screen(),
         '/evaluation/test2': (context) => const Test2Screen(),
         '/evaluation/test3': (context) => const Test3Screen(),
-        '/evaluation/result': (context) => const EvaluationresultScreen(),
+        '/evaluation/result': (context) => const EvaluationResultScreen(),
         '/dashboard/accountsettings':
             (context) => const AccountSettingsScreen(),
         '/dashboard/accontsettings/resetpassword':

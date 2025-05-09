@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:breath_bank/constants/constants.dart'; // Asegúrate de importar kPrimaryColor
 
 class BreathingAnimationWidget extends StatefulWidget {
-  const BreathingAnimationWidget({super.key});
+  final double initialDuration; // Duración inicial de la primera respiración
+  final double incrementPerBreath; // Incremento por respiración
+
+  const BreathingAnimationWidget({
+    super.key,
+    required this.initialDuration,
+    required this.incrementPerBreath,
+  });
 
   @override
   BreathingAnimationWidgetState createState() =>
@@ -15,12 +22,17 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   late Animation<double> _scaleAnimation;
 
   bool _isInhaling = true;
+  bool _isRunning =
+      false; // Nueva variable para controlar si la animación está activa
   int _breathCount = 1;
-  double _currentDuration = 3.0; // Duración inicial de la inhalación/exhalación
+  late double _currentDuration; // Duración actual de la inhalación/exhalación
 
   @override
   void initState() {
     super.initState();
+    _currentDuration =
+        widget
+            .initialDuration; // Inicializa con la duración inicial pasada por parámetro
     _initAnimation();
   }
 
@@ -38,6 +50,8 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.addStatusListener((status) {
+      if (!_isRunning) return; // No continuar si la animación no está activa
+
       if (status == AnimationStatus.completed) {
         _isInhaling = false;
         _controller.reverse();
@@ -52,14 +66,18 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
 
   void _increaseDuration() {
     _currentDuration +=
-        1.0; // Incrementa 0.5 segundos para inhalar y 0.5 para exhalar
+        widget.incrementPerBreath; // Incrementa según el parámetro pasado
     _controller.duration = Duration(seconds: _currentDuration.toInt());
   }
 
-  void pause() => _controller.stop();
+  void pause() {
+    _isRunning = false; // Detiene la animación
+    _controller.stop();
+  }
 
   void resume() {
-    if (!_controller.isAnimating) {
+    if (!_isRunning) {
+      _isRunning = true; // Activa la animación
       if (_isInhaling) {
         _controller.forward();
       } else {
@@ -69,9 +87,13 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   }
 
   void reset() {
-    _controller.stop(); // Detiene la animación
+    _isRunning = false; // Detiene la animación
+    _controller.stop(); // Detiene el controlador
     _controller.reset(); // Reinicia el controlador
-    _currentDuration = 3.0; // Restablece la duración inicial
+    _currentDuration = widget.initialDuration; // Restablece la duración inicial
+    _controller.duration = Duration(
+      seconds: _currentDuration.toInt(),
+    ); // Actualiza la duración
     _breathCount = 1; // Reinicia el contador de respiraciones
     _isInhaling = true; // Restablece el estado inicial
     setState(() {}); // Actualiza la interfaz

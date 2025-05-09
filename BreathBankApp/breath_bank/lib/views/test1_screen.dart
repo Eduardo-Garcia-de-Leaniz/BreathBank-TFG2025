@@ -108,9 +108,9 @@ class Test1ScreenState extends State<Test1Screen>
               ),
             ),
             Text(
-              '${controller.remainingTime}s',
+              '${controller.remainingTime}',
               style: const TextStyle(
-                fontSize: 40,
+                fontSize: 70,
                 fontWeight: FontWeight.bold,
                 color: kPrimaryColor,
               ),
@@ -162,29 +162,34 @@ class Test1ScreenState extends State<Test1Screen>
             onChanged: (value) {
               resultValue = value;
             },
+            enabled:
+                controller.remainingTime ==
+                0, // Habilita solo si el tiempo es 0
           ),
         ),
         const SizedBox(height: 40),
         AppButton(
           width: MediaQuery.of(context).size.width * 0.6,
-
           text: 'Siguiente',
-          onPressed: () {
-            if (controller.model.validateTestResult(resultValue)) {
-              controller.model.testResult = int.parse(resultValue);
-              Navigator.pop(
-                context,
-                controller.model.testResult,
-              ); // Devuelve el resultado
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Por favor, ingrese un número válido.'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          },
+          onPressed:
+              controller.remainingTime == 0
+                  ? () {
+                    if (controller.model.validateTestResult(resultValue)) {
+                      controller.model.testResult = int.parse(resultValue);
+                      Navigator.pop(
+                        context,
+                        controller.model.testResult,
+                      ); // Devuelve el resultado
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Por favor, ingrese un número válido.'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  }
+                  : null, // Deshabilita el botón si el tiempo no es 0
           backgroundColor: kPrimaryColor,
           height: 50,
           borderRadius: 12,

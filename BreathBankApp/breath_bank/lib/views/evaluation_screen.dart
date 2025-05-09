@@ -42,12 +42,11 @@ class EvaluationScreenState extends State<EvaluationScreen> {
             ),
           ),
           SizedBox(height: separatorHeight * 3),
-          ProgressionBar(model: model),
-          SizedBox(height: separatorHeight),
-
           Text(
             'Has completado ${model.testCompleted.values.where((e) => e).length} de 3 pruebas',
           ),
+          SizedBox(height: separatorHeight),
+          ProgressionBar(model: model),
           SizedBox(height: separatorHeight * 2),
 
           // Botón para la prueba 1
@@ -182,6 +181,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           // Botón para continuar
           AppButton(
             text: 'Continuar',
+            width: MediaQuery.of(context).size.width * 0.8,
             onPressed:
                 controller.allTestsCompleted()
                     ? () {
@@ -219,12 +219,16 @@ class ProgressionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
       children: [
-        LinearProgressIndicator(
-          value: model.testCompleted.values.where((e) => e).length / 3,
-          backgroundColor: Colors.grey[300],
-          color: Colors.blue,
-          minHeight: 30,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: LinearProgressIndicator(
+            value: model.testCompleted.values.where((e) => e).length / 3,
+            backgroundColor: Colors.grey[300],
+            color: Colors.blue,
+            minHeight: 30,
+          ),
         ),
         Positioned.fill(
           child: Center(
