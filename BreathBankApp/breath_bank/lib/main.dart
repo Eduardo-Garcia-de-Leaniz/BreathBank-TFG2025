@@ -1,6 +1,7 @@
 import 'package:breath_bank/screens/guided_investment_screen.dart';
 import 'package:breath_bank/screens/investment_result_screen.dart';
-import 'package:breath_bank/screens/home_screen.dart';
+import 'package:breath_bank/views/dashboard_screen.dart';
+import 'package:breath_bank/views/home_screen.dart';
 import 'package:breath_bank/views/evaluation_screen.dart';
 import 'package:breath_bank/views/login_screen.dart';
 import 'package:breath_bank/views/register_screen.dart';
@@ -11,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/providers/push_notifications_provider.dart';
-import 'package:breath_bank/screens/dashboard_screen.dart';
 import 'package:breath_bank/screens/app_settings_screen.dart';
 import 'package:breath_bank/screens/evaluation_menu_screen.dart';
 import 'package:breath_bank/screens/investment_menu_screen.dart';

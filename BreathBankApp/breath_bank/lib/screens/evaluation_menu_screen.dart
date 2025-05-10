@@ -1,4 +1,4 @@
-import 'package:breath_bank/screens/dashboard_screen.dart';
+import 'package:breath_bank/views/dashboard_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/database_service.dart';
