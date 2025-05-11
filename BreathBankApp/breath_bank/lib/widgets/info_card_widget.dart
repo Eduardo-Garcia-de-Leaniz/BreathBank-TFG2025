@@ -5,6 +5,7 @@ class InfoCard extends StatelessWidget {
   final String value;
   final Color numberColor;
   final Color textColor;
+  final int maxValue;
 
   const InfoCard({
     super.key,
@@ -12,11 +13,11 @@ class InfoCard extends StatelessWidget {
     required this.value,
     required this.numberColor,
     required this.textColor,
+    required this.maxValue,
   });
 
   @override
   Widget build(BuildContext context) {
-    int maxValue = title == 'Nivel de Inversor' ? 11 : 100;
     double valueDouble = double.tryParse(value) ?? 0.0;
 
     return Card(

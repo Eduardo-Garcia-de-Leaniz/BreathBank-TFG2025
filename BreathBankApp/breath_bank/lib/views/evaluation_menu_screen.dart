@@ -1,114 +1,34 @@
-import 'package:breath_bank/views/dashboard_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:breath_bank/database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:breath_bank/controllers/evaluation_menu_controller.dart';
+import 'package:breath_bank/views/menu_template_screen.dart';
 
-class EvaluationMenuScreen extends StatefulWidget {
-  const EvaluationMenuScreen({super.key});
+class EvaluationMenuScreen extends StatelessWidget {
+  final EvaluationMenuController controller = EvaluationMenuController();
 
-  @override
-  State<EvaluationMenuScreen> createState() => _EvaluationMenuScreenState();
-}
-
-class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
-    with SingleTickerProviderStateMixin {
-  final DatabaseService db = DatabaseService();
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  String formatFecha(Timestamp timestamp) {
-    final date = timestamp.toDate();
-    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
-  }
-
-  Future<List<Map<String, dynamic>>> fetchDatosEstadisticos() async {
-    List<Map<String, dynamic>> datos = [];
-
-    final evaluaciones = await db.getUltimasEvaluaciones(userId: userId);
-
-    for (var evaluacion in evaluaciones) {
-      final evaluacionId = evaluacion['id'];
-      final nivelInversor = evaluacion['NivelInversorFinal'];
-
-      final resultados = await db.getResultadosPruebas(
-        userId: userId,
-        evaluacionId: evaluacionId,
-      );
-
-      if (resultados != null && resultados.isNotEmpty) {
-        // Recolectamos los resultados exactamente igual que en historial
-        final prueba1 =
-            resultados.containsKey('ResultadoPrueba1')
-                ? resultados['ResultadoPrueba1']
-                : null;
-        final prueba2 =
-            resultados.containsKey('ResultadoPrueba2')
-                ? resultados['ResultadoPrueba2']
-                : null;
-        final prueba3 =
-            resultados.containsKey('ResultadoPrueba3')
-                ? resultados['ResultadoPrueba3']
-                : null;
-
-        datos.add({
-          'nivel': nivelInversor,
-          'prueba1': prueba1,
-          'prueba2': prueba2,
-          'prueba3': prueba3,
-        });
-      }
-    }
-
-    return datos;
-  }
+  EvaluationMenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarEvaluationMenu(),
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
-      body: Column(
-        children: [
-          Container(
-            color: const Color.fromARGB(255, 7, 71, 94),
-            child: TabBar(
-              controller: _tabController,
-              labelColor: const Color.fromARGB(255, 188, 252, 245),
-              unselectedLabelColor: Colors.white,
-              indicatorColor: const Color.fromARGB(255, 188, 252, 245),
-              tabs: const [
-                Tab(text: 'Historial'),
-                Tab(text: 'Estadísticas'),
-                Tab(text: 'Información'),
-              ],
-            ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                _buildHistorialEvaluaciones(),
-                _buildEstadisticas(),
-                _buildInformacionGeneral(),
-              ],
-            ),
-          ),
-          const NavigationMenu(currentIndex: 0),
-        ],
-      ),
+    return MenuTemplateScreen(
+      title: 'Evaluaciones',
+      currentIndex: 0,
+      tabs: const [
+        Tab(text: 'Historial'),
+        Tab(text: 'Estadísticas'),
+        Tab(text: 'Información'),
+      ],
+      tabViews: [
+        _buildHistorialEvaluaciones(),
+        _buildEstadisticas(),
+        _buildInformacionGeneral(),
+      ],
     );
   }
 
   Widget _buildHistorialEvaluaciones() {
     return FutureBuilder<List<Map<String, dynamic>>>(
-      future: db.getUltimasEvaluaciones(userId: userId),
+      future: controller.fetchEvaluaciones(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -117,18 +37,17 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
         }
 
         final evaluaciones = snapshot.data!;
-
         return ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: evaluaciones.length,
           itemBuilder: (context, index) {
             final evaluacion = evaluaciones[index];
             final evaluacionId = evaluacion['id'];
-            final timestamp = evaluacion['Fecha'] as Timestamp?;
-            final fechaEvaluacion = timestamp?.toDate();
-            final fechaTexto =
-                timestamp != null ? formatFecha(timestamp) : 'Sin fecha';
             final nivelFinal = evaluacion['NivelInversorFinal'] ?? 'N/A';
+            final fechaTexto =
+                evaluacion['Fecha'] != null
+                    ? controller.formatFecha(evaluacion['Fecha'])
+                    : 'Sin fecha';
 
             return ExpansionTile(
               leading: const Icon(Icons.assignment, color: Colors.teal),
@@ -157,47 +76,40 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                   ),
                 ),
                 const SizedBox(height: 10),
-                if (fechaEvaluacion != null)
-                  FutureBuilder<Map<String, dynamic>?>(
-                    future: db.getResultadosPruebas(
-                      userId: userId,
-                      evaluacionId: evaluacionId,
-                    ),
-                    builder: (context, resultadoSnapshot) {
-                      if (resultadoSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      final resultados = resultadoSnapshot.data;
-
-                      if (resultados == null || resultados.isEmpty) {
-                        return const Padding(
-                          padding: EdgeInsets.only(top: 8.0),
-                          child: Text('Sin resultados disponibles.'),
-                        );
-                      }
-
-                      return Column(
-                        children:
-                            resultados.entries.map((entry) {
-                              return ListTile(
-                                leading: Text(
-                                  ' Resultado Prueba ${resultados.keys.toList().indexOf(entry.key) + 1}',
-                                ),
-                                dense: true,
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [Text(entry.value.toString())],
-                                ),
-                              );
-                            }).toList(),
+                FutureBuilder<Map<String, dynamic>?>(
+                  future: controller.fetchResultadosPruebas(evaluacionId),
+                  builder: (context, resultadoSnapshot) {
+                    if (resultadoSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
                       );
-                    },
-                  ),
+                    }
+
+                    final resultados = resultadoSnapshot.data;
+
+                    if (resultados == null || resultados.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 8.0),
+                        child: Text('Sin resultados disponibles.'),
+                      );
+                    }
+
+                    return Column(
+                      children:
+                          resultados.entries.map((entry) {
+                            return ListTile(
+                              leading: Text(
+                                'Prueba ${resultados.keys.toList().indexOf(entry.key) + 1}',
+                              ),
+                              dense: true,
+                              trailing: Text(entry.value.toString()),
+                            );
+                          }).toList(),
+                    );
+                  },
+                ),
               ],
             );
           },
@@ -208,7 +120,7 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
 
   Widget _buildEstadisticas() {
     return FutureBuilder<List<Map<String, dynamic>>>(
-      future: fetchDatosEstadisticos(),
+      future: controller.fetchDatosEstadisticos(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -262,14 +174,14 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
                 : 'N/A';
 
         return FutureBuilder<List<Map<String, dynamic>>>(
-          future: db.getUltimasEvaluaciones(userId: userId),
+          future: controller.fetchEvaluaciones(),
           builder: (context, snapshotFechas) {
             String fechaUltima = 'N/A';
             if (snapshotFechas.hasData && snapshotFechas.data!.isNotEmpty) {
               final timestamp =
                   snapshotFechas.data!.last['Fecha'] as Timestamp?;
               if (timestamp != null) {
-                fechaUltima = formatFecha(timestamp);
+                fechaUltima = controller.formatFecha(timestamp);
               }
             }
 
@@ -391,35 +303,6 @@ class _EvaluationMenuScreenState extends State<EvaluationMenuScreen>
   }
 
   Widget _buildInformacionGeneral() {
-    return const SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Text(
-        'Añadir texto informativo aquí.',
-        style: TextStyle(fontSize: 16),
-      ),
-    );
-  }
-}
-
-class AppBarEvaluationMenu extends StatelessWidget
-    implements PreferredSizeWidget {
-  const AppBarEvaluationMenu({super.key});
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      title: const Text(
-        'Evaluaciones',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 25,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+    return const Center(child: Text('Añadir texto informativo aquí.'));
   }
 }

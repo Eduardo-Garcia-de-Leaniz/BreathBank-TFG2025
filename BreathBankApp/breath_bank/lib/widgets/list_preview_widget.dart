@@ -15,7 +15,7 @@ class ListPreview extends StatefulWidget {
     required this.isEvaluacion,
     required this.getTitle,
     this.getSubtitle,
-    this.maxItemsToShow = 3,
+    required this.maxItemsToShow,
   });
 
   @override

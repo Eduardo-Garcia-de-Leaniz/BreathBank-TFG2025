@@ -1,8 +1,10 @@
 import 'package:breath_bank/screens/guided_investment_screen.dart';
 import 'package:breath_bank/screens/investment_result_screen.dart';
 import 'package:breath_bank/views/dashboard_screen.dart';
+import 'package:breath_bank/views/evaluation_menu_screen.dart';
 import 'package:breath_bank/views/home_screen.dart';
 import 'package:breath_bank/views/evaluation_screen.dart';
+import 'package:breath_bank/views/investment_menu_screen.dart';
 import 'package:breath_bank/views/login_screen.dart';
 import 'package:breath_bank/views/register_screen.dart';
 import 'package:breath_bank/views/test1_screen.dart';
@@ -13,8 +15,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/providers/push_notifications_provider.dart';
 import 'package:breath_bank/screens/app_settings_screen.dart';
-import 'package:breath_bank/screens/evaluation_menu_screen.dart';
-import 'package:breath_bank/screens/investment_menu_screen.dart';
 import 'package:breath_bank/screens/manual_investment_screen.dart';
 import 'package:breath_bank/screens/new_investment_menu_screen.dart';
 import 'package:breath_bank/screens/notifications_screen.dart';
@@ -161,8 +161,8 @@ class _MyAppState extends State<MyApp> {
         '/dashboard/accountsettings/consultdata':
             (context) => const AccountSettingsModifyDataScreen(),
         '/dashboard/appsettings': (context) => const AppSettingsScreen(),
-        '/dashboard/evaluationmenu': (context) => const EvaluationMenuScreen(),
-        '/dashboard/investmentmenu': (context) => const InvestmentMenuScreen(),
+        '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
+        '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu':
             (context) => const NewInvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu/manual':

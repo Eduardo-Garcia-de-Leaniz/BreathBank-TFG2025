@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 class SectionHeader extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final String subtitle;
 
-  const SectionHeader({super.key, required this.title, required this.onTap});
+  const SectionHeader({
+    super.key,
+    required this.title,
+    required this.onTap,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +24,8 @@ class SectionHeader extends StatelessWidget {
         ),
         TextButton(
           onPressed: onTap,
-          child: const Text(
-            'Ver más',
+          child: Text(
+            subtitle,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,

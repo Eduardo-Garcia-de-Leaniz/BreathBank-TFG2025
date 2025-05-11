@@ -4,6 +4,10 @@ class EvaluationModel {
   int resultTest3 = 0;
   int inversorLevel = 0;
 
+  int weightTest1 = 10;
+  int weightTest2 = 30;
+  int weightTest3 = 60;
+
   Map<String, bool> testCompleted = {
     'test1': false,
     'test2': false,
@@ -60,7 +64,11 @@ class EvaluationModel {
     int test2Level = calculateTest2Result(resultTest2);
     int test3Level = calculateTest3Result(resultTest3);
 
-    double level = (test1Level * 10 + test2Level * 30 + test3Level * 60) / 100;
+    double level =
+        (test1Level * weightTest1 +
+            test2Level * weightTest2 +
+            test3Level * weightTest3) /
+        100;
     return level.round();
   }
 }
