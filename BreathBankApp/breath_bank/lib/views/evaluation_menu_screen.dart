@@ -44,14 +44,10 @@ class EvaluationMenuScreen extends StatelessWidget {
             final evaluacion = evaluaciones[index];
             final evaluacionId = evaluacion['id'];
             final nivelFinal = evaluacion['NivelInversorFinal'] ?? 'N/A';
-            final fechaTexto =
-                evaluacion['Fecha'] != null
-                    ? controller.formatFecha(evaluacion['Fecha'])
-                    : 'Sin fecha';
 
             return ExpansionTile(
               leading: const Icon(Icons.assignment, color: Colors.teal),
-              title: Text('Evaluación ${index + 1} ($fechaTexto)'),
+              title: Text('Evaluación ${index + 1}'),
               childrenPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
