@@ -23,6 +23,7 @@ class EvaluationMenuController {
     for (var evaluacion in evaluaciones) {
       final evaluacionId = evaluacion['id'];
       final nivelInversor = evaluacion['NivelInversorFinal'];
+      final fechaEvaluacion = evaluacion['Fecha'] as Timestamp?;
 
       final resultados = await db.getResultadosPruebas(
         userId: userId,
@@ -46,6 +47,7 @@ class EvaluationMenuController {
 
         datos.add({
           'nivel': nivelInversor,
+          'fecha': fechaEvaluacion,
           'prueba1': prueba1,
           'prueba2': prueba2,
           'prueba3': prueba3,

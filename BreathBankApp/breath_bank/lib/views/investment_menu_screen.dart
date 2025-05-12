@@ -1,4 +1,6 @@
+import 'package:breath_bank/models/statistics_model.dart';
 import 'package:breath_bank/widgets/info_row_widget.dart';
+import 'package:breath_bank/widgets/stat_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/controllers/investment_menu_controller.dart';
 import 'package:breath_bank/views/menu_template_screen.dart';
@@ -99,11 +101,10 @@ class InvestmentMenuScreen extends StatelessWidget {
         }
 
         final datos = snapshot.data!;
-        final listones =
-            datos.map((d) => d['ListónInversión']).whereType<num>().toList();
-
-        final totalListon =
-            listones.isNotEmpty ? listones.reduce((a, b) => a + b) : 0;
+        final stats = StatisticsCalculator.calculateInvestmentStatistics(
+          datos,
+          controller.formatFecha,
+        );
 
         return Padding(
           padding: const EdgeInsets.all(12),
@@ -114,7 +115,44 @@ class InvestmentMenuScreen extends StatelessWidget {
             mainAxisSpacing: 12,
             childAspectRatio: 1.4,
             children: [
-              // Agrega más estadísticas si lo deseas
+              StatCardWidget(
+                title: 'Total de inversiones',
+                value: stats['totalInversiones'].toString(),
+                icon: Icons.analytics,
+                color: const Color.fromARGB(255, 0, 150, 136),
+              ),
+              StatCardWidget(
+                title: 'Inversiones superadas',
+                value: '${stats['porcentajeSuperadas']}%',
+                icon: Icons.check_circle,
+                color: const Color.fromARGB(255, 76, 175, 80),
+              ),
+
+              StatCardWidget(
+                title: 'Listón más alto',
+                value: stats['listonMasAlto'].toString(),
+                icon: Icons.stacked_bar_chart,
+                color: const Color.fromARGB(255, 255, 152, 0),
+              ),
+              StatCardWidget(
+                title: 'Duración más elegida',
+                value: '${stats['duracionMasElegida']}"',
+                icon: Icons.timer,
+                color: const Color.fromARGB(255, 63, 81, 181),
+              ),
+
+              StatCardWidget(
+                title: 'Total respiraciones',
+                value: stats['totalRespiraciones'].toString(),
+                icon: Icons.air,
+                color: const Color.fromARGB(255, 12, 81, 15),
+              ),
+              StatCardWidget(
+                title: 'Última inversión',
+                value: stats['fechaUltimaInversion'],
+                icon: Icons.calendar_today,
+                color: const Color.fromARGB(255, 125, 53, 8),
+              ),
             ],
           ),
         );

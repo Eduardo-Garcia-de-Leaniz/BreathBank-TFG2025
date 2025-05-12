@@ -6,12 +6,18 @@ class InvestmentMenuController {
   final DatabaseService db = DatabaseService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
-  Future<List<Map<String, dynamic>>> fetchInversiones() async {
-    return await db.getUltimasInversiones(userId: userId);
-  }
-
   Future<List<Map<String, dynamic>>> fetchDatosInversiones() async {
-    return await db.getUltimasInversiones(userId: userId);
+    final inversiones = await db.getUltimasInversiones(userId: userId);
+
+    return inversiones.map((inversion) {
+      return {
+        'FechaInversión': inversion['FechaInversión'],
+        'ListónInversión': inversion['ListónInversión'],
+        'ResultadoInversión': inversion['ResultadoInversión'],
+        'Superada': inversion['Superada'],
+        'TiempoInversión': inversion['TiempoInversión'],
+      };
+    }).toList();
   }
 
   String formatFecha(Timestamp timestamp) {
