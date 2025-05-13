@@ -153,6 +153,20 @@ class InvestmentMenuScreen extends StatelessWidget {
                 icon: Icons.calendar_today,
                 color: const Color.fromARGB(255, 125, 53, 8),
               ),
+
+              StatCardWidget(
+                title: 'Inversiones manuales',
+                value: stats['inversionesManual'].toString(),
+                icon: Icons.handyman,
+                color: const Color.fromARGB(255, 63, 81, 181),
+              ),
+
+              StatCardWidget(
+                title: 'Inversiones guiadas',
+                value: stats['inversionesAutomaticas'].toString(),
+                icon: Icons.auto_awesome,
+                color: const Color.fromARGB(255, 63, 81, 181),
+              ),
             ],
           ),
         );
@@ -161,6 +175,42 @@ class InvestmentMenuScreen extends StatelessWidget {
   }
 
   Widget _buildInformacionGeneral() {
-    return const Center(child: Text('Añadir texto informativo aquí.'));
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text(
+            'Aquí puedes gestionar tus inversiones.',
+            style: TextStyle(fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Builder(
+            builder: (BuildContext context) {
+              return ElevatedButton(
+                onPressed: () async {
+                  await controller.borrarInversiones(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 24,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  'Borrar inversiones',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

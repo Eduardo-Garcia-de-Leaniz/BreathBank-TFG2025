@@ -74,6 +74,12 @@ class StatisticsCalculator {
 
     final totalInversiones = datos.length;
 
+    final inversionesManual =
+        datos.where((d) => d['TipoInversión'] == 'Manual').length;
+
+    final inversionesGuiadas =
+        datos.where((d) => d['TipoInversión'] == 'Guiada').length;
+
     final duracionMasElegida =
         tiempos.isNotEmpty
             ? tiempos
@@ -110,6 +116,8 @@ class StatisticsCalculator {
       'totalRespiraciones': totalRespiraciones,
       'fechaUltimaInversion': fechaUltimaInversion,
       'porcentajeSuperadas': porcentajeSuperadas,
+      'inversionesManual': inversionesManual,
+      'inversionesGuiadas': inversionesGuiadas,
     };
   }
 

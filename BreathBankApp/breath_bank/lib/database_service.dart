@@ -228,6 +228,7 @@ class DatabaseService {
     required int resultadoInversion,
     required int tiempoInversion,
     required bool superada,
+    required String tipoInversion,
   }) async {
     await create(
       collectionPath: 'Inversiones',
@@ -239,6 +240,7 @@ class DatabaseService {
         'ResultadoInversión': resultadoInversion,
         'TiempoInversión': tiempoInversion,
         'Superada': superada,
+        'TipoInversión': tipoInversion,
       },
     );
   }
@@ -368,5 +370,17 @@ class DatabaseService {
     }
 
     await db.collection('Usuarios').doc(userId).delete();
+  }
+
+  Future<void> deleteInvestments({required String userId}) async {
+    final inversionesSnapshot =
+        await db
+            .collection('Inversiones')
+            .where('IdUsuario', isEqualTo: userId)
+            .get();
+
+    for (final doc in inversionesSnapshot.docs) {
+      await db.collection('Inversiones').doc(doc.id).delete();
+    }
   }
 }

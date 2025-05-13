@@ -1,4 +1,5 @@
 import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,8 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(60);
   final AuthenticationService authenticationService = AuthenticationService();
+  final DatabaseService db = DatabaseService();
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   AppBarDashboard({super.key});
 
@@ -88,10 +91,15 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
             );
 
             if (confirmed == true && await logout()) {
+              db.updateFechaUltimoAcceso(
+                userId: userId,
+                fechaUltimoAcceso: DateTime.now(),
+              );
               if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Sesión cerrada correctamente')),
               );
+
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
             } else if (confirmed == true) {
               if (!context.mounted) return;

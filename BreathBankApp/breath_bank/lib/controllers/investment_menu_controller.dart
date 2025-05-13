@@ -1,6 +1,7 @@
 import 'package:breath_bank/database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class InvestmentMenuController {
   final DatabaseService db = DatabaseService();
@@ -16,6 +17,7 @@ class InvestmentMenuController {
         'ResultadoInversión': inversion['ResultadoInversión'],
         'Superada': inversion['Superada'],
         'TiempoInversión': inversion['TiempoInversión'],
+        'TipoInversión': inversion['TipoInversión'],
       };
     }).toList();
   }
@@ -23,5 +25,18 @@ class InvestmentMenuController {
   String formatFecha(Timestamp timestamp) {
     final date = timestamp.toDate();
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
+  }
+
+  Future<void> borrarInversiones(BuildContext context) async {
+    try {
+      await db.deleteInvestments(userId: userId);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Inversiones borradas con éxito.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error al borrar las inversiones.')),
+      );
+    }
   }
 }
