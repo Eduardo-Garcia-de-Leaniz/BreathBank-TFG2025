@@ -62,6 +62,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
     }
 
     return BaseScreen(
+      canGoBack: false,
       title: 'Inversión Manual',
       padding: const EdgeInsets.all(20),
       child: GestureDetector(

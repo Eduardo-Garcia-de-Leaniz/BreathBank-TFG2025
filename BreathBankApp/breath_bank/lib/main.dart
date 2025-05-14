@@ -1,6 +1,6 @@
-import 'package:breath_bank/screens/guided_investment_screen.dart';
 import 'package:breath_bank/views/dashboard_screen.dart';
 import 'package:breath_bank/views/evaluation_menu_screen.dart';
+import 'package:breath_bank/views/guided_investment_screen.dart';
 import 'package:breath_bank/views/home_screen.dart';
 import 'package:breath_bank/views/evaluation_screen.dart';
 import 'package:breath_bank/views/investment_menu_screen.dart';
