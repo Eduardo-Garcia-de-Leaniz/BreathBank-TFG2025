@@ -42,6 +42,7 @@ dependencies:
   firebase_messaging: 
   shared_preferences: 
   audioplayers: 
+  percent_indicator: ^4.2.2
   #fl_chart: ^0.71.0
   #flutter_sound: ^9.0.0  
   #vibration: ^1.7.4

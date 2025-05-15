@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../controllers/guided_investment_controller.dart';
-import '../models/guided_investment_model.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import '../controllers/investment_test_controller.dart';
+import '../models/investment_test_model.dart';
+import '../widgets/countdown_overlay_widget.dart';
 import 'base_screen.dart';
 
 class GuidedInvestmentScreen extends StatefulWidget {
@@ -11,17 +13,18 @@ class GuidedInvestmentScreen extends StatefulWidget {
 }
 
 class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
-  late GuidedInvestmentController _controller;
+  late InvestmentTestController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = GuidedInvestmentController(GuidedInvestmentModel());
+    final model = InvestmentTestModel();
+    _controller = InvestmentTestController(model);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      _controller.initialize(context, args);
+      _controller.initialize(args, 'Guiada');
       setState(() {});
     });
   }
@@ -34,6 +37,15 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final model = _controller.model;
+
+    if (model.timeLimit == 0) {
+      return const Scaffold(
+        backgroundColor: Color.fromARGB(255, 188, 252, 245),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return BaseScreen(
       canGoBack: false,
       title: 'Inversión Guiada',
@@ -41,38 +53,68 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          /*
           Text(
-            _controller.isInhaling ? 'Inspirar' : 'Espirar',
+            model.phaseCounter % 2 == 0 ? 'Inspirar' : 'Espirar',
             style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
           ),
-          */
           const SizedBox(height: 20),
-          Text('Respiraciones completadas: ${_controller.model.breathCount}'),
-          Text(
-            'Respiraciones restantes: ${_controller.model.targetBreaths - _controller.model.breathCount}',
+          CircularPercentIndicator(
+            radius: 120.0,
+            lineWidth: 15.0,
+            percent: model.secondsElapsed / model.timeLimit,
+            center: Text(
+              '${_controller.remainingSeconds}s',
+              style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
+            progressColor: Colors.teal,
+            backgroundColor: Colors.teal.shade100,
+            circularStrokeCap: CircularStrokeCap.round,
           ),
           const SizedBox(height: 20),
-          Text('Tiempo transcurrido: ${_controller.model.secondsElapsed}s'),
+          Text('Respiraciones completadas: ${model.breathCount}'),
           Text(
-            'Tiempo restante: ${_controller.remainingSeconds > 0 ? _controller.remainingSeconds : 0}s',
+            'Respiraciones restantes: ${model.targetBreaths - model.breathCount}',
           ),
-          const SizedBox(height: 40),
-          if (!_controller.model.isRunning)
+          const SizedBox(height: 30),
+          if (!model.isRunning && !model.hasStarted)
             ElevatedButton(
               onPressed: () {
-                _controller.model.startTimer(
-                  () {
-                    setState(() {});
-                  },
-                  () {
-                    setState(() {});
+                CountdownOverlayWidget.show(
+                  context: context,
+                  initialCountdown: 3,
+                  onCountdownComplete: () {
+                    _controller.startTimer(
+                      () {
+                        setState(() {});
+                      },
+                      () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('¡Tiempo finalizado!'),
+                            backgroundColor: Colors.green,
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                        setState(() {});
+                      },
+                    );
                   },
                 );
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               child: const Text('Comenzar'),
             )
-          else if (_controller.model.hasStarted && !_controller.model.isRunning)
+          else if (model.hasStarted && !model.isRunning)
             ElevatedButton(
               onPressed: () {
                 _controller.startTimer(
@@ -84,6 +126,17 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                   },
                 );
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               child: const Text('Reanudar'),
             )
           else
@@ -92,6 +145,17 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 _controller.stopTimer();
                 setState(() {});
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               child: const Text('Pausar'),
             ),
           const SizedBox(height: 10),
@@ -100,10 +164,18 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
               _controller.resetTimer();
               setState(() {});
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
             child: const Text('Restablecer'),
           ),
           const Spacer(),
-          if (_controller.remainingSeconds == 0)
+          if (model.isTimeUp)
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -112,10 +184,10 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     context,
                     '/dashboard/newinvestmentmenu/results',
                     arguments: {
-                      'breath_result': _controller.model.breathCount,
-                      'breath_target': _controller.model.targetBreaths,
-                      'investment_time': _controller.model.timeLimit,
-                      'liston_inversion': _controller.model.listonInversion,
+                      'breath_result': model.breathCount,
+                      'breath_target': model.targetBreaths,
+                      'investment_time': model.timeLimit,
+                      'liston_inversion': model.listonInversion,
                       'tipo_inversion': 'Guiada',
                     },
                   );

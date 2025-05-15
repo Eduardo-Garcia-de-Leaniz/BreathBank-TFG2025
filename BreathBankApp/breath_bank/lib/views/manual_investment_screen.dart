@@ -1,7 +1,8 @@
+import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
 import 'package:breath_bank/widgets/countdown_widget.dart';
 import 'package:flutter/material.dart';
-import '../controllers/manual_investment_controller.dart';
-import '../models/manual_investment_model.dart';
+import '../controllers/investment_test_controller.dart';
+import '../models/investment_test_model.dart';
 import 'base_screen.dart';
 
 class ManualInvestmentScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class ManualInvestmentScreen extends StatefulWidget {
 
 class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
     with SingleTickerProviderStateMixin {
-  late ManualInvestmentController _controller;
+  late InvestmentTestController _controller;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
@@ -22,8 +23,8 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
   @override
   void initState() {
     super.initState();
-    final model = ManualInvestmentModel();
-    _controller = ManualInvestmentController(model);
+    final model = InvestmentTestModel();
+    _controller = InvestmentTestController(model);
 
     _animationController = AnimationController(
       vsync: this,
@@ -37,7 +38,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      _controller.initialize(context, args);
+      _controller.initialize(args, 'Manual');
       setState(() {});
     });
   }
@@ -165,7 +166,31 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                                   },
                                 );
                               } else {
-                                _showCountdownOverlay();
+                                CountdownOverlayWidget.show(
+                                  context: context,
+                                  initialCountdown: 3,
+                                  onCountdownComplete: () {
+                                    _controller.startTimer(
+                                      () {
+                                        setState(() {});
+                                      },
+                                      () {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              '¡Tiempo finalizado!',
+                                            ),
+                                            backgroundColor: Colors.green,
+                                            duration: Duration(seconds: 3),
+                                          ),
+                                        );
+                                        setState(() {});
+                                      },
+                                    );
+                                  },
+                                );
                               }
                               setState(() {});
                             },
@@ -193,7 +218,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.info,
                   size: 25,
                   color: Color.fromARGB(255, 90, 122, 138),
@@ -227,7 +252,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                       arguments: {
                         'breath_result': model.breathCount,
                         'breath_target': model.targetBreaths,
-                        'investment_time': model.investmentTime,
+                        'investment_time': model.timeLimit,
                         'liston_inversion': model.listonInversion,
                         'tipo_inversion': model.tipoInversion,
                       },
@@ -258,35 +283,6 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
         ),
       ),
     );
-  }
-
-  void _showCountdownOverlay() {
-    final overlay = Overlay.of(context);
-    _countdownOverlayEntry = OverlayEntry(
-      builder:
-          (_) => CountdownOverlay(
-            initialCountdown: 3,
-            onCountdownComplete: () {
-              _countdownOverlayEntry?.remove();
-              _controller.startTimer(
-                () {
-                  setState(() {});
-                },
-                () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('¡Tiempo finalizado!'),
-                      backgroundColor: Colors.green,
-                      duration: Duration(seconds: 3),
-                    ),
-                  );
-                  setState(() {});
-                },
-              );
-            },
-          ),
-    );
-    overlay.insert(_countdownOverlayEntry!);
   }
 
   Widget _buildControlButton({

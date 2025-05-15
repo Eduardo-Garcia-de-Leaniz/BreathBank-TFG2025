@@ -1,23 +1,20 @@
-import 'package:flutter/material.dart';
-import '../models/guided_investment_model.dart';
+import '../models/investment_test_model.dart';
 
-class GuidedInvestmentController {
-  final GuidedInvestmentModel model;
+class InvestmentTestController {
+  final InvestmentTestModel model;
 
-  GuidedInvestmentController(this.model);
+  InvestmentTestController(this.model);
 
-  /// Inicializa los parámetros de la inversión guiada
-  void initialize(BuildContext context, Map<String, dynamic> args) {
+  /// Inicializa los parámetros de la inversión
+  void initialize(Map<String, dynamic> args, String tipoInversion) {
     final duracionMinutos = args['duracion'] as int;
     final listonInversion = args['liston'] as int;
 
-    model.timeLimit = duracionMinutos * 60;
-    model.targetBreaths = model.calculateNumBreaths(
-      listonInversion,
-      duracionMinutos,
+    model.initialize(
+      duracionMinutos: duracionMinutos,
+      listonInversion: listonInversion,
+      tipoInversion: tipoInversion,
     );
-    model.duracionFase = 0.25 * listonInversion + 2.5;
-    model.listonInversion = listonInversion;
   }
 
   /// Inicia el temporizador
@@ -33,6 +30,11 @@ class GuidedInvestmentController {
   /// Reinicia el temporizador
   void resetTimer() {
     model.resetTimer();
+  }
+
+  /// Marca una fase (solo para inversiones manuales)
+  void markPhase() {
+    model.markPhase();
   }
 
   /// Formatea el tiempo en minutos y segundos
