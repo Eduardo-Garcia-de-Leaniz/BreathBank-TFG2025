@@ -15,6 +15,7 @@ class InvestmentResultScreen extends StatelessWidget {
     final breathTarget = args['breath_target'] as int;
     final investmentTime = args['investment_time'] as int;
     final listonInversion = args['liston_inversion'] as int;
+    final tipoInversion = args['tipo_inversion'] as String;
 
     final breathSecondsResult =
         (breathResult == 0)
@@ -94,7 +95,7 @@ class InvestmentResultScreen extends StatelessWidget {
                   resultado: breathResult,
                   tiempo: investmentTime,
                   exito: breathResult <= breathTarget,
-                  tipoInversion: 'Manual',
+                  tipoInversion: tipoInversion,
                 );
               },
               style: ElevatedButton.styleFrom(

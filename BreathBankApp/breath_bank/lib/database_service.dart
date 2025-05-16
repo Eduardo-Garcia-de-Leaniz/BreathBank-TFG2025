@@ -382,5 +382,27 @@ class DatabaseService {
     for (final doc in inversionesSnapshot.docs) {
       await db.collection('Inversiones').doc(doc.id).delete();
     }
+
+    // Reset user's investment-related fields in 'Usuarios' collection
+    final userSnapshot = await read(collectionPath: 'Usuarios', docId: userId);
+    if (userSnapshot != null && userSnapshot.data() != null) {
+      final data = userSnapshot.data()!;
+      await update(
+        collectionPath: 'Usuarios',
+        docId: userId,
+        data: {
+          kNumeroInversiones: 0,
+          kSaldo: 0,
+          kFechaUltimaInversion: null,
+          // Keep other fields unchanged
+          kNombre: data[kNombre],
+          kFechaCreacion: data[kFechaCreacion],
+          kFechaUltimoAcceso: data[kFechaUltimoAcceso],
+          kNivelInversor: data[kNivelInversor],
+          kNumeroEvaluaciones: data[kNumeroEvaluaciones],
+          kFechaUltimaEvaluacion: data[kFechaUltimaEvaluacion],
+        },
+      );
+    }
   }
 }

@@ -84,6 +84,8 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         numberColor: const Color.fromARGB(255, 223, 190, 0),
                         textColor: const Color.fromARGB(255, 243, 221, 96),
                         maxValue: 11,
+                        width: 140,
+                        height: 130,
                       ),
                       InfoCard(
                         title: 'Saldo',
@@ -91,6 +93,8 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         numberColor: Colors.green[400] ?? Colors.green,
                         textColor: Colors.green[200] ?? Colors.green,
                         maxValue: 100,
+                        width: 140,
+                        height: 130,
                       ),
                     ],
                   ),

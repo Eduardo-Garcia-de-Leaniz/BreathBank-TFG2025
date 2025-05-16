@@ -6,6 +6,8 @@ class InfoCard extends StatelessWidget {
   final Color numberColor;
   final Color textColor;
   final int maxValue;
+  final double width;
+  final double height;
 
   const InfoCard({
     super.key,
@@ -14,6 +16,8 @@ class InfoCard extends StatelessWidget {
     required this.numberColor,
     required this.textColor,
     required this.maxValue,
+    required this.width,
+    required this.height,
   });
 
   @override
@@ -25,8 +29,8 @@ class InfoCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         padding: const EdgeInsets.all(10),
-        height: 130,
-        width: 140,
+        height: height,
+        width: width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

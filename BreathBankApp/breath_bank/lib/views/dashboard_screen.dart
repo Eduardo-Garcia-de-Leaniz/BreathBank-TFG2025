@@ -72,6 +72,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     numberColor: yellowColor,
                     textColor: yellowColor,
                     maxValue: 11,
+                    width: 140,
+                    height: 130,
                   ),
                   InfoCard(
                     title: 'Saldo',
@@ -79,6 +81,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     numberColor: greenColor,
                     textColor: greenColor,
                     maxValue: 100,
+                    width: 140,
+                    height: 130,
                   ),
                 ],
               ),

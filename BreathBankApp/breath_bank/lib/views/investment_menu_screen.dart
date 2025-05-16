@@ -40,49 +40,95 @@ class InvestmentMenuScreen extends StatelessWidget {
 
         final inversiones = snapshot.data!;
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: inversiones.length,
-          itemBuilder: (context, index) {
-            final inversion = inversiones[index];
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: inversiones.length,
+                itemBuilder: (context, index) {
+                  final inversion = inversiones[index];
 
-            final timestamp = inversion['FechaInversión'];
-            final liston = inversion['ListónInversión'];
-            final resultado = inversion['ResultadoInversión'];
-            final superada = inversion['Superada'];
-            final tiempo = inversion['TiempoInversión'];
+                  final timestamp = inversion['FechaInversión'];
+                  final liston = inversion['ListónInversión'];
+                  final resultado = inversion['ResultadoInversión'];
+                  final superada = inversion['Superada'];
+                  final tiempo = inversion['TiempoInversión'];
+                  final tipoInversion = inversion['TipoInversión'];
 
-            return ExpansionTile(
-              leading: const Icon(Icons.more_time, color: Colors.teal),
-              title: Text('Inversión ${index + 1}'),
-              childrenPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
+                  return ExpansionTile(
+                    leading: const Icon(Icons.more_time, color: Colors.teal),
+                    title: Text('Inversión ${index + 1}'),
+                    childrenPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    children: [
+                      InfoRowWidget(
+                        label: 'Fecha',
+                        value: controller.formatFecha(timestamp),
+                      ),
+                      InfoRowWidget(
+                        label: 'Tipo de inversión',
+                        value: tipoInversion ?? 'No registrado',
+                      ),
+                      InfoRowWidget(
+                        label: 'Listón Inversión',
+                        value: liston.toString(),
+                      ),
+                      InfoRowWidget(
+                        label: 'Número de respiraciones',
+                        value: resultado.toString(),
+                      ),
+                      InfoRowWidget(
+                        label: '¿Superada?',
+                        value: superada ? 'Sí' : 'No',
+                      ),
+                      InfoRowWidget(
+                        label: 'Tiempo Inversión',
+                        value: '${tiempo} segundos',
+                      ),
+                    ],
+                  );
+                },
               ),
-              children: [
-                InfoRowWidget(
-                  label: 'Fecha',
-                  value: controller.formatFecha(timestamp),
-                ),
-                InfoRowWidget(
-                  label: 'Listón Inversión',
-                  value: liston.toString(),
-                ),
-                InfoRowWidget(
-                  label: 'Número de respiraciones',
-                  value: resultado.toString(),
-                ),
-                InfoRowWidget(
-                  label: '¿Superada?',
-                  value: superada ? 'Sí' : 'No',
-                ),
-                InfoRowWidget(
-                  label: 'Tiempo Inversión',
-                  value: '${tiempo} segundos',
-                ),
-              ],
-            );
-          },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Builder(
+                builder: (BuildContext context) {
+                  return ElevatedButton(
+                    onPressed:
+                        inversiones.isEmpty
+                            ? null
+                            : () async {
+                              await controller.borrarInversiones(context);
+                              if (!context.mounted) return;
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/dashboard',
+                                (route) => false,
+                              );
+                            },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 24,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Borrar inversiones',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         );
       },
     );
@@ -163,7 +209,7 @@ class InvestmentMenuScreen extends StatelessWidget {
 
               StatCardWidget(
                 title: 'Inversiones guiadas',
-                value: stats['inversionesAutomaticas'].toString(),
+                value: stats['inversionesGuiadas'].toString(),
                 icon: Icons.auto_awesome,
                 color: const Color.fromARGB(255, 63, 81, 181),
               ),
@@ -186,29 +232,6 @@ class InvestmentMenuScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
-          Builder(
-            builder: (BuildContext context) {
-              return ElevatedButton(
-                onPressed: () async {
-                  await controller.borrarInversiones(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 24,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(
-                  'Borrar inversiones',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              );
-            },
-          ),
         ],
       ),
     );
