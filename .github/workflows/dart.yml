@@ -19,12 +19,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.3'
-
-      - name: Fix lcov path separators
-        run: |
-        cd BreathBankApp/breath_bank
-        sed -i 's|\\|/|g' coverage/lcov.info    
+          flutter-version: '3.29.3'    
 
       - name: Install dependencies
         run: |
@@ -35,10 +30,16 @@ jobs:
         run: |
           cd BreathBankApp/breath_bank
           flutter test --coverage
-
+      
+      - name: Fix lcov path separators
+        run: |
+          cd BreathBankApp/breath_bank
+          sed -i 's|\\|/|g' coverage/lcov.info
+      
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: BreathBankApp/breath_bank
+
