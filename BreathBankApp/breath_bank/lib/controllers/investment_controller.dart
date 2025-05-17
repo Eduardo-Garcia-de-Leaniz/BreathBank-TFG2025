@@ -40,11 +40,14 @@ class InvestmentController {
       tipoInversion: tipoInversion,
     )) {
       if (await actualizarSaldo(resultado)) {
+        if (!context.mounted) return;
         Navigator.pushNamed(context, '/dashboard');
       } else {
+        if (!context.mounted) return;
         _showErrorSnackbar(context, 'Error al actualizar el saldo.');
       }
     } else {
+      if (!context.mounted) return;
       _showErrorSnackbar(context, 'Error al guardar la inversión.');
     }
   }

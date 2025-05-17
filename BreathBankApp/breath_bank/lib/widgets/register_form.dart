@@ -62,16 +62,23 @@ class _RegisterFormState extends State<RegisterForm> {
       authenticationService.value.currentUser!.uid,
     );
 
-    if (!context.mounted) return;
+    if (!mounted) return;
+
     Navigator.pushReplacementNamed(context, "/evaluation");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Usuario registrado correctamente. Bienvenid@ $nombreUsuario',
-        ),
-        backgroundColor: Colors.green,
-      ),
-    );
+
+    // Usa un Future.microtask para mostrar el SnackBar después de la navegación
+    Future.microtask(() {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Usuario registrado correctamente. Bienvenid@ $nombreUsuario',
+            ),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    });
   }
 
   @override

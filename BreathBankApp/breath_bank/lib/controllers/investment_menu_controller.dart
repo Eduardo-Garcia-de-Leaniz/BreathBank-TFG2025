@@ -30,10 +30,12 @@ class InvestmentMenuController {
   Future<void> borrarInversiones(BuildContext context) async {
     try {
       await db.deleteInvestments(userId: userId);
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Inversiones borradas con éxito.')),
       );
     } catch (e) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Error al borrar las inversiones.')),
       );
