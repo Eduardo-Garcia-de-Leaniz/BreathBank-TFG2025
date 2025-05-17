@@ -82,6 +82,7 @@ class DatabaseService {
     final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (snapshot != null && snapshot.data() != null) {
       final data = snapshot.data()!;
+      print('saldoBD: ${data[kSaldo]}');
       return {
         kNombre: data[kNombre],
         kFechaCreacion: data[kFechaCreacion],
@@ -90,7 +91,10 @@ class DatabaseService {
         kNumeroEvaluaciones: data[kNumeroEvaluaciones],
         kNumeroInversiones: data[kNumeroInversiones],
         kNivelInversor: data[kNivelInversor],
-        kSaldo: data[kSaldo],
+        kSaldo:
+            (data[kSaldo] is int)
+                ? data[kSaldo]
+                : (data[kSaldo] as num).toInt(),
       };
     }
     return null;
@@ -196,8 +200,14 @@ class DatabaseService {
     final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (snapshot != null && snapshot.data() != null) {
       final int numeroInversionesActuales =
-          (snapshot.data()![kNumeroInversiones] ?? 0) as int;
-      final double saldoActual = (snapshot.data()![kSaldo] ?? 0).toDouble();
+          (snapshot.data()![kNumeroInversiones] is int)
+              ? snapshot.data()![kNumeroInversiones]
+              : (snapshot.data()![kNumeroInversiones] as num?)?.toInt() ?? 0;
+
+      final int saldoActual =
+          (snapshot.data()![kSaldo] is int)
+              ? snapshot.data()![kSaldo]
+              : (snapshot.data()![kSaldo] as num?)?.toInt() ?? 0;
       await update(
         collectionPath: 'Usuarios',
         docId: userId,

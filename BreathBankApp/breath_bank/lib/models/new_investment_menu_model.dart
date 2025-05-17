@@ -11,6 +11,7 @@ class NewInvestmentMenuModel {
     final saldo = stats?['Saldo'] ?? 0;
 
     final rangos = _calcularRangos(nivelInversor);
+    print('saldo fetchuerstats: $saldo');
 
     return {
       'nivelInversor': nivelInversor,

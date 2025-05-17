@@ -1,5 +1,7 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/models/statistics_model.dart';
 import 'package:breath_bank/widgets/info_row_widget.dart';
+import 'package:breath_bank/widgets/message_dialog_widget.dart';
 import 'package:breath_bank/widgets/stat_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/controllers/investment_menu_controller.dart';
@@ -102,19 +104,62 @@ class InvestmentMenuScreen extends StatelessWidget {
                         inversiones.isEmpty
                             ? null
                             : () async {
-                              await controller.borrarInversiones(context);
-                              if (!context.mounted) return;
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                '/dashboard',
-                                (route) => false,
+                              await showCustomMessageDialog(
+                                context: context,
+                                title: 'Confirmar borrado',
+                                message:
+                                    '¿Seguro que quieres borrar todas tus inversiones? Esta acción no se puede deshacer.',
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(),
+                                    child: const Text(
+                                      'Cancelar',
+                                      style: TextStyle(color: kBackgroundColor),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red,
+                                    ),
+                                    onPressed: () async {
+                                      Navigator.of(
+                                        context,
+                                      ).pop(); // Cierra el diálogo
+                                      await controller.borrarInversiones(
+                                        context,
+                                      );
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Inversiones borradas correctamente.',
+                                          ),
+                                          backgroundColor: Colors.green,
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/dashboard',
+                                        (route) => false,
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Borrar',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 24,
+                        vertical: 12,
+                        horizontal: 20,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -122,7 +167,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       'Borrar inversiones',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.white),
                     ),
                   );
                 },

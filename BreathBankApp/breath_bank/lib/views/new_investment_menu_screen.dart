@@ -21,7 +21,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   String _selectedOption = '';
   String? _selectedDuration;
   int _nivelInversor = 0;
-  double _saldo = 0.0;
+  int _saldo = 0;
   int _rangoInferior = 2;
   int _rangoSuperior = 8;
 
@@ -34,6 +34,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
 
   Future<void> _loadData() async {
     final stats = await _controller.loadUserStats();
+    print('Stats: $stats');
     setState(() {
       _nivelInversor = stats['nivelInversor'];
       _saldo = stats['saldo'];
