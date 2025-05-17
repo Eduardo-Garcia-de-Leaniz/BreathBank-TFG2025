@@ -26,10 +26,10 @@ jobs:
           cd BreathBankApp/breath_bank
           flutter pub get
 
-      - name: Analyze and build
+      - name: Run tests with coverage
         run: |
           cd BreathBankApp/breath_bank
-          flutter build apk --debug
+          flutter test --coverage
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
