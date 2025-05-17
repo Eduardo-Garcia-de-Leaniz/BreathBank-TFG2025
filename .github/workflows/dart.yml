@@ -21,6 +21,11 @@ jobs:
         with:
           flutter-version: '3.29.3'
 
+      - name: Fix lcov path separators
+  run: |
+    cd BreathBankApp/breath_bank
+    sed -i 's|\\|/|g' coverage/lcov.info    
+
       - name: Install dependencies
         run: |
           cd BreathBankApp/breath_bank
