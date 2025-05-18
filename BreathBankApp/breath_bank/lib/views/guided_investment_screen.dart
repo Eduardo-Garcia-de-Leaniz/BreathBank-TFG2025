@@ -183,7 +183,11 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                       ),
                       padding: EdgeInsets.zero,
                     ),
-                    child: Icon(Icons.pause, size: 40, color: Colors.green),
+                    child: const Icon(
+                      Icons.pause,
+                      size: 40,
+                      color: Colors.green,
+                    ),
                   ),
                 const SizedBox(width: 16),
                 TextButton(
@@ -199,7 +203,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     ),
                     padding: EdgeInsets.zero,
                   ),
-                  child: Icon(Icons.replay, size: 40, color: Colors.red),
+                  child: const Icon(Icons.replay, size: 40, color: Colors.red),
                 ),
               ],
             ),

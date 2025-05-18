@@ -1,5 +1,4 @@
 import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
-import 'package:breath_bank/widgets/countdown_widget.dart';
 import 'package:flutter/material.dart';
 import '../controllers/investment_test_controller.dart';
 import '../models/investment_test_model.dart';
@@ -88,6 +87,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                     color: const Color.fromARGB(255, 7, 71, 94),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.grey.withOpacity(0.3),
                         spreadRadius: 4,
                         blurRadius: 10,

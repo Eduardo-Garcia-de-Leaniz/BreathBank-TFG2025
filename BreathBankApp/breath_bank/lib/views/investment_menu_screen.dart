@@ -266,17 +266,17 @@ class InvestmentMenuScreen extends StatelessWidget {
   }
 
   Widget _buildInformacionGeneral() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             'Aquí puedes gestionar tus inversiones.',
             style: TextStyle(fontSize: 16),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
         ],
       ),
     );

@@ -8,15 +8,15 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
+    return const BaseScreen(
       showAppBar: true,
       title: 'Registro',
       isScrollable: true,
       child: Column(
         children: [
-          const ClickableTextLoginRegister(isLogin: false),
-          const SizedBox(height: 20),
-          const RegisterForm(),
+          ClickableTextLoginRegister(isLogin: false),
+          SizedBox(height: 20),
+          RegisterForm(),
         ],
       ),
     );

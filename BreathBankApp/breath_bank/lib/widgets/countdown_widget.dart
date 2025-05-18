@@ -45,6 +45,7 @@ class _CountdownOverlayState extends State<CountdownOverlay> {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Container(
+        // ignore: deprecated_member_use
         color: Colors.black.withOpacity(0.5),
         alignment: Alignment.center,
         child: ValueListenableBuilder<int>(

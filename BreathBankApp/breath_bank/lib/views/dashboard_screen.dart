@@ -18,7 +18,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final DashboardController _controller = DashboardController();
 
-  final yellowColor = Color.fromARGB(255, 223, 190, 0);
+  final yellowColor = const Color.fromARGB(255, 223, 190, 0);
   final greenColor = Colors.green[400] ?? Colors.green;
 
   String? _saldo;
@@ -211,7 +211,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ],
             ),
-            NavigationMenu(currentIndex: 1),
+            const NavigationMenu(currentIndex: 1),
           ],
         ),
       ),

@@ -20,12 +20,14 @@ class StatCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
+          // ignore: deprecated_member_use
           colors: [color.withOpacity(0.25), color.withOpacity(0.1)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: color.withOpacity(0.15),
             blurRadius: 8,
             offset: const Offset(0, 4),

@@ -178,11 +178,12 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed:
-                          _selectedOption.isNotEmpty &&
-                                  _selectedDuration != null
-                              ? _navigateToInvestment
-                              : null,
+                      onPressed: () {
+                        if (_selectedOption.isNotEmpty &&
+                            _selectedDuration != null) {
+                          _navigateToInvestment();
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 7, 71, 94),
                         padding: const EdgeInsets.symmetric(vertical: 16),

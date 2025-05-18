@@ -30,13 +30,13 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const TitleHomeScreen(),
-        const ImageLogo(imageWidth: 200, imageHeight: 200),
-        const SubtitleHomeScreen(),
-        const SizedBox(height: 60),
-        const AuthButtons(),
+        TitleHomeScreen(),
+        ImageLogo(imageWidth: 200, imageHeight: 200),
+        SubtitleHomeScreen(),
+        SizedBox(height: 60),
+        AuthButtons(),
       ],
     );
   }

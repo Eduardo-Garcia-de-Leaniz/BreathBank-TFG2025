@@ -149,7 +149,7 @@ class _MyAppState extends State<MyApp> {
         },
         '/register': (context) => const RegisterScreen(),
         '/evaluation': (context) => const EvaluationScreen(),
-        '/dashboard': (context) => DashboardScreen(),
+        '/dashboard': (context) => const DashboardScreen(),
         '/evaluation/test1': (context) => const Test1Screen(),
         '/evaluation/test2': (context) => const Test2Screen(),
         '/evaluation/test3': (context) => const Test3Screen(),
@@ -193,7 +193,7 @@ class _MyAppState extends State<MyApp> {
                     return const HomeScreen();
                   }
                 } else {
-                  return DashboardScreen();
+                  return const DashboardScreen();
                 }
               },
             ),
