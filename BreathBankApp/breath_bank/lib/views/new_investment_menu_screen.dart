@@ -34,7 +34,6 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
 
   Future<void> _loadData() async {
     final stats = await _controller.loadUserStats();
-    print('Stats: $stats');
     setState(() {
       _nivelInversor = stats['nivelInversor'];
       _saldo = stats['saldo'];
