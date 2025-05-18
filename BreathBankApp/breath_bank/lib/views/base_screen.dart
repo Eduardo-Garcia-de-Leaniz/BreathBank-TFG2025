@@ -50,6 +50,7 @@ class BaseScreen extends StatelessWidget {
       content = _AnimatedScreen(child: content);
     }
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => canGoBack, // 👈 intercepta botón físico
       child: Scaffold(

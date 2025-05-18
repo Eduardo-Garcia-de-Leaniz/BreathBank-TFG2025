@@ -82,7 +82,6 @@ class DatabaseService {
     final snapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (snapshot != null && snapshot.data() != null) {
       final data = snapshot.data()!;
-      print('saldoBD: ${data[kSaldo]}');
       return {
         kNombre: data[kNombre],
         kFechaCreacion: data[kFechaCreacion],

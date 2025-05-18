@@ -1,3 +1,4 @@
+import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/widgets/snackbar_widget.dart';
@@ -71,7 +72,48 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   Future<void> handleRegister() async {
-    // ...existing code...
+    setState(() {
+      errorMessage = '';
+    });
+
+    final error = await controller.registerUser(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      confirmPassword: confirmPasswordController.text.trim(),
+      name: nameController.text.trim(),
+    );
+
+    if (error != null) {
+      setState(() {
+        errorMessage = error;
+      });
+      return;
+    }
+
+    await controller.postLoginTasks(
+      authenticationService.value.currentUser!.uid,
+    );
+    final nombreUsuario = await controller.getNombreUsuario(
+      authenticationService.value.currentUser!.uid,
+    );
+
+    if (!mounted) return;
+
+    Navigator.pushReplacementNamed(context, "/evaluation");
+
+    // Usa un Future.microtask para mostrar el SnackBar después de la navegación
+    Future.microtask(() {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Usuario registrado correctamente. Bienvenid@ $nombreUsuario',
+            ),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    });
   }
 
   @override

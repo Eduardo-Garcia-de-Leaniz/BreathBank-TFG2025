@@ -88,7 +88,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                       ),
                       InfoRowWidget(
                         label: 'Tiempo Inversión',
-                        value: '${tiempo} segundos',
+                        value: '$tiempo segundos',
                       ),
                     ],
                   );

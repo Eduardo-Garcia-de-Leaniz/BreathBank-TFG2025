@@ -1,4 +1,6 @@
+import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/constants/strings.dart';
+import 'package:breath_bank/models/user_credentials.dart';
 import 'package:breath_bank/widgets/snackbar_widget.dart';
 import 'package:breath_bank/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,50 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Future<void> _handleLogin() async {
-    // ...existing code...
+    final credentials = UserCredentials(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    final validationError = controller.validate(credentials);
+    if (validationError != null) {
+      setState(() => errorMessageLogin = validationError);
+      return;
+    }
+
+    final loginError = await controller.signIn(credentials);
+    if (loginError != null) {
+      setState(() => errorMessageLogin = 'Las credenciales son incorrectas');
+      return;
+    }
+
+    await controller.postLoginTasks(
+      authenticationService.value.currentUser!.uid,
+    );
+    final nombreUsuario = await controller.getNombreUsuario(
+      authenticationService.value.currentUser!.uid,
+    );
+
+    // Verifica si el widget aún está montado antes de usar BuildContext
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
+        ),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+    if (widget.desdeNotificacion) {
+      Navigator.pushReplacementNamed(
+        context,
+        "/dashboard/appsettings/notifications",
+      );
+    } else {
+      Navigator.pushReplacementNamed(context, "/dashboard");
+    }
   }
 
   @override
