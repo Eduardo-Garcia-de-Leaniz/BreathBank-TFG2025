@@ -44,6 +44,10 @@ jobs:
       - name: Print lcov.info contents
         run: |
           cat BreathBankApp/breath_bank/coverage/lcov.info
+
+      - name: List Dart files
+        run: |
+          find BreathBankApp/breath_bank/lib -name '*.dart'
     
       
       - name: SonarQube Scan
