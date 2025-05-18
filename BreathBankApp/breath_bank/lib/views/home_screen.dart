@@ -8,16 +8,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).padding.top,
-            color: kPrimaryColor,
-          ),
-          const Expanded(child: HomeContent()),
-        ],
+    return Container(
+      color: kBackgroundColor,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).padding.top,
+              color: kPrimaryColor,
+            ),
+            const HomeContent(),
+          ],
+        ),
       ),
     );
   }
