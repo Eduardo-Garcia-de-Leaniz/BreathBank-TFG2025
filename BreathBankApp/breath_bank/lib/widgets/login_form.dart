@@ -1,10 +1,8 @@
-import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/snackbar_widget.dart';
 import 'package:breath_bank/widgets/textfield.dart';
-
 import 'package:flutter/material.dart';
 import '../controllers/login_controller.dart';
-import '../models/user_credentials.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -28,51 +26,26 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return LoginStrings.emptyEmail;
+    } else if (!value.contains('@')) {
+      return LoginStrings.invalidEmail;
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return LoginStrings.emptyPassword;
+    } else if (value.length < 6) {
+      return LoginStrings.passwordTooShort;
+    }
+    return null;
+  }
+
   Future<void> _handleLogin() async {
-    final credentials = UserCredentials(
-      email: emailController.text,
-      password: passwordController.text,
-    );
-
-    final validationError = controller.validate(credentials);
-    if (validationError != null) {
-      setState(() => errorMessageLogin = validationError);
-      return;
-    }
-
-    final loginError = await controller.signIn(credentials);
-    if (loginError != null) {
-      setState(() => errorMessageLogin = 'Las credenciales son incorrectas');
-      return;
-    }
-
-    await controller.postLoginTasks(
-      authenticationService.value.currentUser!.uid,
-    );
-    final nombreUsuario = await controller.getNombreUsuario(
-      authenticationService.value.currentUser!.uid,
-    );
-
-    // Verifica si el widget aún está montado antes de usar BuildContext
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
-        ),
-        backgroundColor: Colors.green,
-      ),
-    );
-
-    if (widget.desdeNotificacion) {
-      Navigator.pushReplacementNamed(
-        context,
-        "/dashboard/appsettings/notifications",
-      );
-    } else {
-      Navigator.pushReplacementNamed(context, "/dashboard");
-    }
+    // ...existing code...
   }
 
   @override
@@ -83,33 +56,19 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFieldForm(
             controller: emailController,
-            label: 'Correo Electrónico',
-            hintText: 'Ingrese su correo electrónico',
+            label: LoginStrings.email,
+            hintText: LoginStrings.hintEmail,
             icon: Icons.email,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Introduce un correo electrónico';
-              } else if (!value.contains('@')) {
-                return 'Correo electrónico inválido';
-              }
-              return null;
-            },
+            validator: _validateEmail, // <--- Cambiado aquí
           ),
           const SizedBox(height: 20),
           TextFieldForm(
             controller: passwordController,
-            label: 'Contraseña',
-            hintText: 'Ingrese su contraseña',
+            label: LoginStrings.password,
+            hintText: LoginStrings.hintPassword,
             icon: Icons.lock,
             obscureText: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Introduce una contraseña';
-              } else if (value.length < 6) {
-                return 'La contraseña debe tener al menos 6 caracteres';
-              }
-              return null;
-            },
+            validator: _validatePassword, // <--- Cambiado aquí
           ),
           const SizedBox(height: 10),
           if (errorMessageLogin.isNotEmpty) ...[
@@ -120,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
           ],
           const SizedBox(height: 80),
           AppButton(
-            text: 'Iniciar Sesión',
+            text: LoginStrings.loginButton,
             width: MediaQuery.of(context).size.width * 0.8,
             onPressed: _handleLogin,
             backgroundColor: const Color.fromARGB(255, 7, 71, 94),

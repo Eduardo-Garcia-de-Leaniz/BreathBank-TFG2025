@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:breath_bank/views/home_screen.dart';
@@ -9,12 +10,12 @@ void main() {
     await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
     // Verifica que el título y subtítulo estén presentes
-    expect(find.text('BreathBank'), findsOneWidget);
-    expect(find.text('¡Bienvenido a BreathBank!'), findsOneWidget);
+    expect(find.text(HomeStrings.appTitle), findsOneWidget);
+    expect(find.text(HomeStrings.welcome), findsOneWidget);
 
     // Verifica que los botones estén presentes
-    expect(find.text('Iniciar Sesión'), findsOneWidget);
-    expect(find.text('Registrarse'), findsOneWidget);
+    expect(find.text(HomeStrings.login), findsOneWidget);
+    expect(find.text(HomeStrings.register), findsOneWidget);
   });
 
   testWidgets('HomeScreen navega al pulsar los botones', (
@@ -36,7 +37,7 @@ void main() {
     );
 
     // Pulsa "Iniciar Sesión"
-    await tester.tap(find.text('Iniciar Sesión'));
+    await tester.tap(find.text(HomeStrings.login));
     await tester.pumpAndSettle();
     expect(pushedRoutes.contains('/login'), isTrue);
   });

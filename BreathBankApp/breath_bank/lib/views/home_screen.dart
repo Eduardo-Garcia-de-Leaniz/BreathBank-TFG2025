@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/image_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/widgets/app_button.dart';
@@ -51,7 +52,7 @@ class TitleHomeScreen extends StatelessWidget {
       padding: EdgeInsets.only(top: 60),
       child: Center(
         child: Text(
-          'BreathBank',
+          HomeStrings.appTitle,
           style: kTitleTextStyle,
           textAlign: TextAlign.center,
         ),
@@ -65,7 +66,7 @@ class SubtitleHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('¡Bienvenido a BreathBank!', style: kSubtitleTextStyle);
+    return const Text(HomeStrings.welcome, style: kSubtitleTextStyle);
   }
 }
 
@@ -80,7 +81,7 @@ class AuthButtons extends StatelessWidget {
     return Column(
       children: [
         AppButton(
-          text: 'Iniciar Sesión',
+          text: HomeStrings.login,
           onPressed: () {
             Navigator.pushNamed(
               context,
@@ -95,7 +96,7 @@ class AuthButtons extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         AppButton(
-          text: 'Registrarse',
+          text: HomeStrings.register,
           onPressed: () {
             Navigator.pushNamed(context, '/register');
           },

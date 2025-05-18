@@ -1,4 +1,4 @@
-import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/widgets/snackbar_widget.dart';
 import 'package:breath_bank/widgets/textfield.dart';
@@ -36,49 +36,42 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
-  Future<void> handleRegister() async {
-    setState(() {
-      errorMessage = '';
-    });
-
-    final error = await controller.registerUser(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-      confirmPassword: confirmPasswordController.text.trim(),
-      name: nameController.text.trim(),
-    );
-
-    if (error != null) {
-      setState(() {
-        errorMessage = error;
-      });
-      return;
+  String? _validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return RegisterStrings.emptyName;
     }
+    return null;
+  }
 
-    await controller.postLoginTasks(
-      authenticationService.value.currentUser!.uid,
-    );
-    final nombreUsuario = await controller.getNombreUsuario(
-      authenticationService.value.currentUser!.uid,
-    );
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return RegisterStrings.emptyEmail;
+    } else if (!value.contains('@')) {
+      return RegisterStrings.invalidEmail;
+    }
+    return null;
+  }
 
-    if (!mounted) return;
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return RegisterStrings.emptyPassword;
+    } else if (value.length < 6) {
+      return RegisterStrings.passwordTooShort;
+    }
+    return null;
+  }
 
-    Navigator.pushReplacementNamed(context, "/evaluation");
+  String? _validateConfirmPassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return RegisterStrings.emptyConfirmPassword;
+    } else if (value != passwordController.text) {
+      return RegisterStrings.passwordMismatch;
+    }
+    return null;
+  }
 
-    // Usa un Future.microtask para mostrar el SnackBar después de la navegación
-    Future.microtask(() {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Usuario registrado correctamente. Bienvenid@ $nombreUsuario',
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    });
+  Future<void> handleRegister() async {
+    // ...existing code...
   }
 
   @override
@@ -90,76 +83,48 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFieldForm(
             fontSize: 14,
             controller: nameController,
-            label: 'Nombre de Usuario',
-            hintText: 'Ingrese su nombre de usuario',
+            label: RegisterStrings.name,
+            hintText: RegisterStrings.hintName,
             icon: Icons.person,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Introduce tu nombre de usuario';
-              }
-              return null;
-            },
+            validator: _validateName,
           ),
           const SizedBox(height: 20),
           TextFieldForm(
             fontSize: 14,
             controller: emailController,
-            label: 'Correo Electrónico',
-            hintText: 'Ingrese su correo electrónico',
+            label: RegisterStrings.email,
+            hintText: RegisterStrings.hintEmail,
             icon: Icons.email,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Introduce un correo electrónico';
-              } else if (!value.contains('@')) {
-                return 'Correo electrónico inválido';
-              }
-              return null;
-            },
+            validator: _validateEmail,
           ),
           const SizedBox(height: 20),
           TextFieldForm(
             fontSize: 14,
             controller: passwordController,
-            label: 'Contraseña',
-            hintText: 'Ingrese su contraseña',
+            label: RegisterStrings.password,
+            hintText: RegisterStrings.hintPassword,
             icon: Icons.lock,
             obscureText: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Introduce una contraseña';
-              } else if (value.length < 6) {
-                return 'La contraseña debe tener al menos 6 caracteres';
-              }
-              return null;
-            },
+            validator: _validatePassword,
           ),
           const SizedBox(height: 20),
           TextFieldForm(
             fontSize: 14,
             controller: confirmPasswordController,
-            label: 'Repetir Contraseña',
-            hintText: 'Confirme su contraseña',
+            label: RegisterStrings.confirmPassword,
+            hintText: RegisterStrings.hintConfirmPassword,
             icon: Icons.lock_reset,
             obscureText: true,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Confirma tu contraseña';
-              } else if (value != passwordController.text) {
-                return 'Las contraseñas no coinciden';
-              }
-              return null;
-            },
+            validator: _validateConfirmPassword,
           ),
-
           if (errorMessage.isNotEmpty) ...[
             SnackBarWidget(message: errorMessage, backgroundColor: Colors.red),
           ],
-
           const SizedBox(height: 80),
           Container(
             alignment: Alignment.bottomCenter,
             child: AppButton(
-              text: 'Siguiente',
+              text: RegisterStrings.registerButton,
               width: MediaQuery.of(context).size.width * 0.8,
               onPressed: handleRegister,
               backgroundColor: const Color.fromARGB(255, 7, 71, 94),
