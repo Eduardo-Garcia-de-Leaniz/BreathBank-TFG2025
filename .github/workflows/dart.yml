@@ -35,6 +35,11 @@ jobs:
         run: |
           cd BreathBankApp/breath_bank
           sed -i 's|\\|/|g' coverage/lcov.info
+
+      - name: Print lcov.info contents
+        run: |
+          cat BreathBankApp/breath_bank/coverage/lcov.info
+    
       
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
