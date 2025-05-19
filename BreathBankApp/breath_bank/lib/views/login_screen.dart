@@ -1,4 +1,3 @@
-import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/views/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/widgets/clickable_text_login_register.dart';
@@ -11,7 +10,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: LoginStrings.loginTitle,
+      title: 'Iniciar sesión',
       isScrollable: true,
       withAnimation: true,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 40),

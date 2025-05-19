@@ -1,4 +1,3 @@
-import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:breath_bank/widgets/clickable_text_login_register.dart';
@@ -10,20 +9,18 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         routes: {
-          '/register':
-              (context) =>
-                  const Scaffold(body: Text(RegisterStrings.registerTitle)),
+          '/register': (context) => const Scaffold(body: Text('Registro')),
         },
         home: Scaffold(body: ClickableTextLoginRegister(isLogin: true)),
       ),
     );
 
-    expect(find.text(LoginStrings.dontHaveAccount), findsOneWidget);
-    expect(find.text(LoginStrings.registerButton), findsOneWidget);
+    expect(find.text('¿No tienes una cuenta? '), findsOneWidget);
+    expect(find.text('Registrarse'), findsOneWidget);
 
-    await tester.tap(find.text(LoginStrings.registerButton));
+    await tester.tap(find.text('Registrarse'));
     await tester.pumpAndSettle();
-    expect(find.text(RegisterStrings.registerTitle), findsOneWidget);
+    expect(find.text('Registro'), findsOneWidget);
   });
 
   testWidgets('ClickableTextLoginRegister muestra texto de registro y navega', (
@@ -36,10 +33,10 @@ void main() {
       ),
     );
 
-    expect(find.text(LoginStrings.alreadyHaveAccount), findsOneWidget);
-    expect(find.text(LoginStrings.loginTitle), findsOneWidget);
+    expect(find.text('¿Ya tienes una cuenta? '), findsOneWidget);
+    expect(find.text('Iniciar sesión'), findsOneWidget);
 
-    await tester.tap(find.text(LoginStrings.loginTitle));
+    await tester.tap(find.text('Iniciar sesión'));
     await tester.pumpAndSettle();
     expect(find.text('Login'), findsOneWidget);
   });

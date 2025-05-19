@@ -1,7 +1,5 @@
 import 'package:breath_bank/authentication_service.dart';
-import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/user_credentials.dart';
-import 'package:breath_bank/widgets/snackbar_widget.dart';
 import 'package:breath_bank/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import '../controllers/login_controller.dart';
@@ -30,23 +28,24 @@ class _LoginFormState extends State<LoginForm> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return LoginStrings.emptyEmail;
+      return 'Introduce un correo electrónico';
     } else if (!value.contains('@')) {
-      return LoginStrings.invalidEmail;
+      return 'Correo electrónico inválido';
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return LoginStrings.emptyPassword;
+      return 'Introduce una contraseña';
     } else if (value.length < 6) {
-      return LoginStrings.passwordTooShort;
+      return 'La contraseña es demasiado corta';
     }
     return null;
   }
 
   Future<void> _handleLogin() async {
+    setState(() => errorMessageLogin = '');
     final credentials = UserCredentials(
       email: emailController.text,
       password: passwordController.text,
@@ -55,12 +54,22 @@ class _LoginFormState extends State<LoginForm> {
     final validationError = controller.validate(credentials);
     if (validationError != null) {
       setState(() => errorMessageLogin = validationError);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessageLogin), backgroundColor: Colors.red),
+      );
       return;
     }
 
     final loginError = await controller.signIn(credentials);
     if (loginError != null) {
       setState(() => errorMessageLogin = 'Las credenciales son incorrectas');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Las credenciales son incorrectas'),
+          backgroundColor: Colors.red,
+        ),
+      );
       return;
     }
 
@@ -101,30 +110,25 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFieldForm(
             controller: emailController,
-            label: LoginStrings.email,
-            hintText: LoginStrings.hintEmail,
+            label: 'Correo electrónico',
+            hintText: 'Introduce tu correo electrónico',
             icon: Icons.email,
-            validator: _validateEmail, // <--- Cambiado aquí
+            validator: _validateEmail,
           ),
           const SizedBox(height: 20),
           TextFieldForm(
             controller: passwordController,
-            label: LoginStrings.password,
-            hintText: LoginStrings.hintPassword,
+            label: 'Contraseña',
+            hintText: 'Introduce tu contraseña',
             icon: Icons.lock,
             obscureText: true,
-            validator: _validatePassword, // <--- Cambiado aquí
+            validator: _validatePassword,
           ),
           const SizedBox(height: 10),
-          if (errorMessageLogin.isNotEmpty) ...[
-            SnackBarWidget(
-              message: errorMessageLogin,
-              backgroundColor: Colors.red,
-            ),
-          ],
+
           const SizedBox(height: 80),
           AppButton(
-            text: LoginStrings.loginButton,
+            text: 'Iniciar sesión',
             width: MediaQuery.of(context).size.width * 0.8,
             onPressed: _handleLogin,
             backgroundColor: const Color.fromARGB(255, 7, 71, 94),

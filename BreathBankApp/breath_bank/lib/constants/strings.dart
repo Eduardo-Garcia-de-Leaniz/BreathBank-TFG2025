@@ -1,8 +1,8 @@
 class HomeStrings {
   static const String appTitle = 'BreathBank';
   static const String welcome = '¡Bienvenido a BreathBank!';
-  static const String login = 'Iniciar Sesión';
-  static const String register = 'Registrarse';
+  static const String login = LoginStrings.loginTitle;
+  static const String register = RegisterStrings.registerTitle;
 }
 
 class LoginStrings {
@@ -11,8 +11,8 @@ class LoginStrings {
   static const String email = 'Correo electrónico';
   static const String password = 'Contraseña';
   static const String confirmPassword = 'Confirmar contraseña';
-  static const String loginButton = 'Iniciar sesión';
-  static const String registerButton = 'Registrarse';
+  static const String loginButton = LoginStrings.loginTitle;
+  static const String registerButton = LoginStrings.registerTitle;
   static const String forgotPassword = '¿Olvidaste tu contraseña?';
   static const String alreadyHaveAccount = '¿Ya tienes una cuenta?';
   static const String dontHaveAccount = '¿No tienes una cuenta? ';

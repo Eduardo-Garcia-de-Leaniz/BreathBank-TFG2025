@@ -33,7 +33,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     if (userDoc != null) {
       setState(() {
         nombre = userDoc['Nombre'] ?? noDisponible;
-        apellidos = userDoc['Apellidos'] ?? noDisponible;
       });
     } else {
       setState(() {

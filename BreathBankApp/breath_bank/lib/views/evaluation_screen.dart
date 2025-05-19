@@ -176,7 +176,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
               ),
             ],
           ),
-          SizedBox(height: separatorHeight * 6),
+          SizedBox(height: separatorHeight * 2),
 
           // Botón para continuar
           AppButton(

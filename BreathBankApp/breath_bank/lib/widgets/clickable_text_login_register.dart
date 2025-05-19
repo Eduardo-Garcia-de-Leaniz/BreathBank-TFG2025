@@ -1,4 +1,3 @@
-import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 class ClickableTextLoginRegister extends StatelessWidget {
@@ -12,9 +11,7 @@ class ClickableTextLoginRegister extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          isLogin
-              ? LoginStrings.dontHaveAccount
-              : LoginStrings.alreadyHaveAccount,
+          isLogin ? '¿No tienes una cuenta? ' : '¿Ya tienes una cuenta? ',
           style: const TextStyle(fontSize: 16, color: Colors.grey),
         ),
         GestureDetector(
@@ -25,7 +22,7 @@ class ClickableTextLoginRegister extends StatelessWidget {
             );
           },
           child: Text(
-            isLogin ? LoginStrings.registerTitle : LoginStrings.loginTitle,
+            isLogin ? 'Registrarse' : 'Iniciar sesión',
             style: const TextStyle(
               fontSize: 16,
               color: Color.fromARGB(255, 7, 71, 94),
