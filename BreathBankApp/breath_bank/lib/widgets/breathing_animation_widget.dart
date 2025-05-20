@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:breath_bank/constants/constants.dart'; // Asegúrate de importar kPrimaryColor
+import 'package:breath_bank/constants/constants.dart';
 
 class BreathingAnimationWidget extends StatefulWidget {
-  final double initialDuration; // Duración inicial de la primera respiración
-  final double incrementPerBreath; // Incremento por respiración
+  final double initialDuration;
+  final double incrementPerBreath;
 
   const BreathingAnimationWidget({
     super.key,
@@ -50,7 +50,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.addStatusListener((status) {
-      if (!_isRunning) return; // No continuar si la animación no está activa
+      if (!_isRunning) return;
 
       if (status == AnimationStatus.completed) {
         _isInhaling = false;
@@ -58,26 +58,25 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
       } else if (status == AnimationStatus.dismissed) {
         _isInhaling = true;
         _breathCount++;
-        _increaseDuration(); // Incrementa la duración después de cada ciclo completo
+        _increaseDuration();
         _controller.forward();
       }
     });
   }
 
   void _increaseDuration() {
-    _currentDuration +=
-        widget.incrementPerBreath; // Incrementa según el parámetro pasado
+    _currentDuration += widget.incrementPerBreath;
     _controller.duration = Duration(seconds: _currentDuration.toInt());
   }
 
   void pause() {
-    _isRunning = false; // Detiene la animación
+    _isRunning = false;
     _controller.stop();
   }
 
   void resume() {
     if (!_isRunning) {
-      _isRunning = true; // Activa la animación
+      _isRunning = true;
       if (_isInhaling) {
         _controller.forward();
       } else {

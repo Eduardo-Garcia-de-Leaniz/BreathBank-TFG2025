@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -58,13 +59,14 @@ class BaseScreen extends StatelessWidget {
         appBar:
             showAppBar
                 ? AppBar(
+                  iconTheme: const IconThemeData(color: kBackgroundColor),
                   automaticallyImplyLeading:
                       canGoBack, // 👈 oculta flecha si false
                   title: Text(
                     title ?? '',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Arial',
                     ),

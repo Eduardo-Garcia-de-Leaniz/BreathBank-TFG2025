@@ -33,7 +33,7 @@ class Test3ScreenState extends State<Test3Screen> {
   @override
   Widget build(BuildContext context) {
     return TestScreenTemplate(
-      title: 'Prueba 3',
+      title: '3. Prueba guiada',
       description: _buildDescription(),
       interactiveContent: _buildInteractiveContent(),
     );
@@ -65,16 +65,13 @@ class Test3ScreenState extends State<Test3Screen> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 7, 71, 94),
+              color: kPrimaryColor,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             controller.model.instructions,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color.fromARGB(255, 7, 71, 94),
-            ),
+            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
           ),
         ],
       ),
@@ -101,16 +98,10 @@ class Test3ScreenState extends State<Test3Screen> {
                   controller.startOrPauseBreathing(breathingKey);
                 });
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
               child: Icon(
                 controller.isRunning ? Icons.pause : Icons.play_arrow,
-                color: Colors.white,
+                color: kWhiteColor,
                 size: 30,
               ),
             ),
@@ -121,27 +112,13 @@ class Test3ScreenState extends State<Test3Screen> {
                   controller.resetBreathing(breathingKey);
                 });
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: kRedAccentColor),
               child: const Icon(Icons.stop, color: Colors.white, size: 30),
             ),
           ],
         ),
-        const SizedBox(height: 50),
-        const Text(
-          'Última respiración completa:',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 7, 71, 94),
-          ),
-        ),
-        const SizedBox(height: 10),
+
+        const SizedBox(height: 40),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: TextField(

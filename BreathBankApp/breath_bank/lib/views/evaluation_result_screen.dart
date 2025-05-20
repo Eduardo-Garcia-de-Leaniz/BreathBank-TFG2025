@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'base_screen.dart';
 import '../widgets/app_button.dart';
@@ -21,18 +22,17 @@ class EvaluationResultScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 10),
           const Text(
             '¡Evaluación completada!',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 7, 71, 94),
+              color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           _buildInvestorLevelCard(inversorLevel),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView(
               children: [
@@ -63,7 +63,7 @@ class EvaluationResultScreen extends StatelessWidget {
               Navigator.of(context).pushNamed('/dashboard');
             },
             width: MediaQuery.of(context).size.width * 0.8,
-            backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+            backgroundColor: kPrimaryColor,
           ),
         ],
       ),
@@ -72,9 +72,9 @@ class EvaluationResultScreen extends StatelessWidget {
 
   Widget _buildInvestorLevelCard(int inversorLevel) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: kPrimaryColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           const BoxShadow(
@@ -87,19 +87,15 @@ class EvaluationResultScreen extends StatelessWidget {
       child: Column(
         children: [
           const Text(
-            'Tu nivel de inversor es:',
-            style: TextStyle(
-              fontSize: 18,
-              color: Color.fromARGB(255, 7, 71, 94),
-            ),
+            'Nuevo nivel de inversor',
+            style: TextStyle(fontSize: 16, color: kLevelColor),
           ),
-          const SizedBox(height: 10),
           Text(
             inversorLevel.toString(),
             style: const TextStyle(
               fontSize: 60,
               fontWeight: FontWeight.bold,
-              color: Colors.teal,
+              color: kLevelColor,
             ),
           ),
         ],
@@ -114,27 +110,21 @@ class EvaluationResultScreen extends StatelessWidget {
     required String unit,
   }) {
     return Card(
+      color: kPrimaryColor,
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
-        leading: Icon(
-          icon,
-          color: const Color.fromARGB(255, 7, 71, 94),
-          size: 30,
-        ),
+        leading: Icon(icon, color: kWhiteColor, size: 30),
         title: Text(
           label,
-          style: const TextStyle(
-            fontSize: 18,
-            color: Color.fromARGB(255, 7, 71, 94),
-          ),
+          style: const TextStyle(fontSize: 16, color: kWhiteColor),
         ),
         trailing: Text(
           '$value $unit',
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.teal,
+            color: kLevelColor,
           ),
         ),
       ),

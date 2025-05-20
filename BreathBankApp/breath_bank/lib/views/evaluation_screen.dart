@@ -2,8 +2,8 @@ import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 import '../controllers/evaluation_controller.dart';
 import '../models/evaluation_model.dart';
-import 'base_screen.dart'; // Importamos BaseScreen
-import '../widgets/app_button.dart'; // Importamos AppButton
+import 'base_screen.dart';
+import '../widgets/app_button.dart';
 
 class EvaluationScreen extends StatefulWidget {
   const EvaluationScreen({super.key});
@@ -36,12 +36,12 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           const Text(
             'Evaluación',
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: kPrimaryColor,
             ),
           ),
-          SizedBox(height: separatorHeight * 3),
+          SizedBox(height: separatorHeight),
           Text(
             'Has completado ${model.testCompleted.values.where((e) => e).length} de 3 pruebas',
           ),
@@ -57,8 +57,8 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 Icons.check_circle,
                 color:
                     model.testCompleted['test1'] == true
-                        ? Colors.green
-                        : Colors.grey,
+                        ? kGreenColor
+                        : kDisabledColor,
               ),
               const SizedBox(width: 8),
               AppButton(
@@ -68,22 +68,20 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 onPressed: () async {
                   final result = await Navigator.pushNamed(
                     context,
-                    '/evaluation/test1', // Ruta de la pantalla de prueba
+                    '/evaluation/test1',
                   );
 
                   if (result != null && result is int) {
                     setState(() {
-                      model.resultTest1 =
-                          result; // Guarda el resultado en el modelo
-                      model.testCompleted['test1'] =
-                          true; // Marca la prueba como completada
+                      model.resultTest1 = result;
+                      model.testCompleted['test1'] = true;
                     });
                   }
                 },
                 isDisabled: model.testCompleted['test1'] == true,
                 backgroundColor:
                     model.testCompleted['test1'] == true
-                        ? Colors.grey
+                        ? kDisabledColor
                         : kPrimaryColor,
               ),
             ],
@@ -98,8 +96,8 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 Icons.check_circle,
                 color:
                     model.testCompleted['test2'] == true
-                        ? Colors.green
-                        : Colors.grey,
+                        ? kGreenColor
+                        : kDisabledColor,
               ),
               const SizedBox(width: 8),
               AppButton(
@@ -117,17 +115,15 @@ class EvaluationScreenState extends State<EvaluationScreen> {
 
                           if (result != null && result is int) {
                             setState(() {
-                              model.resultTest2 =
-                                  result; // Guarda el resultado en el modelo
-                              model.testCompleted['test2'] =
-                                  true; // Marca la prueba como completada
+                              model.resultTest2 = result;
+                              model.testCompleted['test2'] = true;
                             });
                           }
                         },
                 isDisabled: model.testCompleted['test2'] == true,
                 backgroundColor:
                     model.testCompleted['test2'] == true
-                        ? Colors.grey
+                        ? kDisabledColor
                         : kPrimaryColor,
               ),
             ],
@@ -142,8 +138,8 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                 Icons.check_circle,
                 color:
                     model.testCompleted['test3'] == true
-                        ? Colors.green
-                        : Colors.grey,
+                        ? kGreenColor
+                        : kDisabledColor,
               ),
               const SizedBox(width: 8),
               AppButton(
@@ -156,22 +152,20 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                         : () async {
                           final result = await Navigator.pushNamed(
                             context,
-                            '/evaluation/test3', // Ruta de la pantalla de prueba 3
+                            '/evaluation/test3',
                           );
 
                           if (result != null && result is int) {
                             setState(() {
-                              model.resultTest3 =
-                                  result; // Guarda el resultado en el modelo
-                              model.testCompleted['test3'] =
-                                  true; // Marca la prueba como completada
+                              model.resultTest3 = result;
+                              model.testCompleted['test3'] = true;
                             });
                           }
                         },
                 isDisabled: model.testCompleted['test3'] == true,
                 backgroundColor:
                     model.testCompleted['test3'] == true
-                        ? Colors.grey
+                        ? kDisabledColor
                         : kPrimaryColor,
               ),
             ],
@@ -203,7 +197,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
                     : null,
             isDisabled: !controller.allTestsCompleted(),
             backgroundColor:
-                controller.allTestsCompleted() ? kPrimaryColor : Colors.grey,
+                controller.allTestsCompleted() ? kPrimaryColor : kDisabledColor,
           ),
         ],
       ),
@@ -226,7 +220,7 @@ class ProgressionBar extends StatelessWidget {
           child: LinearProgressIndicator(
             value: model.testCompleted.values.where((e) => e).length / 3,
             backgroundColor: Colors.grey[300],
-            color: Colors.blue,
+            color: kGreenColor,
             minHeight: 30,
           ),
         ),

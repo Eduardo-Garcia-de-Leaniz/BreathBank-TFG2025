@@ -33,7 +33,7 @@ class Test2ScreenState extends State<Test2Screen> {
   @override
   Widget build(BuildContext context) {
     return TestScreenTemplate(
-      title: 'Prueba 2',
+      title: '2. Tiempo de 3 respiraciones',
       description: _buildDescription(),
       interactiveContent: _buildInteractiveContent(),
     );
@@ -87,8 +87,12 @@ class Test2ScreenState extends State<Test2Screen> {
       children: [
         const SizedBox(height: 10),
         Text(
-          '${controller.elapsedSeconds}s',
-          style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          '${controller.elapsedSeconds}',
+          style: const TextStyle(
+            fontSize: 70,
+            fontWeight: FontWeight.bold,
+            color: kPrimaryColor,
+          ),
         ),
         const SizedBox(height: 20),
         Row(
@@ -99,22 +103,15 @@ class Test2ScreenState extends State<Test2Screen> {
                 setState(() {
                   if (controller.isRunning) {
                     controller.pauseClock((value) {
-                      resultFieldController.text =
-                          value; // Actualiza el TextField
-                      resultValue = value; // Actualiza el valor local
+                      resultFieldController.text = value;
+                      resultValue = value;
                     });
                   } else {
                     controller.startClock(() => setState(() {}));
                   }
                 });
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-              ),
+              style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
               child: Icon(
                 controller.isRunning ? Icons.pause : Icons.play_arrow,
                 color: Colors.white,
@@ -124,14 +121,10 @@ class Test2ScreenState extends State<Test2Screen> {
             const SizedBox(width: 16),
             ElevatedButton(
               onPressed: () {
-                controller.resetClock(() => setState(() {})); // Pasar callback
+                controller.resetClock(() => setState(() {}));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
               ),
               child: const Icon(Icons.stop, color: Colors.white, size: 30),
             ),

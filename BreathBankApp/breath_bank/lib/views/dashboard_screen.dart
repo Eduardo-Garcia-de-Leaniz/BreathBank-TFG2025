@@ -18,8 +18,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final DashboardController _controller = DashboardController();
 
-  final yellowColor = const Color.fromARGB(255, 223, 190, 0);
-  final greenColor = Colors.green[400] ?? Colors.green;
+  final yellowColor = kLevelColor;
+  final greenColor = kGreenColor;
 
   String? _saldo;
   String? _nivelInversor;

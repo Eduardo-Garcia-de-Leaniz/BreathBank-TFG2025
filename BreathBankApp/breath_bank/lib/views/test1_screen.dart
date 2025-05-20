@@ -41,7 +41,7 @@ class Test1ScreenState extends State<Test1Screen>
   @override
   Widget build(BuildContext context) {
     return TestScreenTemplate(
-      title: 'Prueba 1',
+      title: '1. Nº respiraciones en reposo',
       description: _buildDescription(),
       interactiveContent: _buildInteractiveContent(),
     );
@@ -73,16 +73,13 @@ class Test1ScreenState extends State<Test1Screen>
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 7, 71, 94),
+              color: kPrimaryColor,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             controller.model.instructions,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color.fromARGB(255, 7, 71, 94),
-            ),
+            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
           ),
         ],
       ),
@@ -103,16 +100,22 @@ class Test1ScreenState extends State<Test1Screen>
               child: CircularProgressIndicator(
                 value: controller.animationController.value,
                 strokeWidth: 10,
-                backgroundColor: Colors.grey[300],
+                backgroundColor:
+                    controller.remainingTime == 60
+                        ? const Color.fromARGB(255, 7, 71, 94)
+                        : kRedAccentColor,
                 valueColor: const AlwaysStoppedAnimation<Color>(kPrimaryColor),
               ),
             ),
             Text(
               '${controller.remainingTime}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 70,
                 fontWeight: FontWeight.bold,
-                color: kPrimaryColor,
+                color:
+                    controller.remainingTime < 10
+                        ? kRedAccentColor
+                        : kPrimaryColor,
               ),
             ),
           ],
@@ -134,17 +137,15 @@ class Test1ScreenState extends State<Test1Screen>
               style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
               child: Icon(
                 controller.isRunning ? Icons.pause : Icons.play_arrow,
-                color: Colors.white,
+                color: kWhiteColor,
                 size: 30,
               ),
             ),
             const SizedBox(width: 16),
             ElevatedButton(
               onPressed: controller.resetClock,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-              ),
-              child: const Icon(Icons.stop, color: Colors.white, size: 30),
+              style: ElevatedButton.styleFrom(backgroundColor: kRedAccentColor),
+              child: const Icon(Icons.stop, color: kWhiteColor, size: 30),
             ),
           ],
         ),
@@ -162,9 +163,7 @@ class Test1ScreenState extends State<Test1Screen>
             onChanged: (value) {
               resultValue = value;
             },
-            enabled:
-                controller.remainingTime ==
-                0, // Habilita solo si el tiempo es 0
+            enabled: controller.remainingTime == 0,
           ),
         ),
         const SizedBox(height: 40),
@@ -176,27 +175,25 @@ class Test1ScreenState extends State<Test1Screen>
                   ? () {
                     if (controller.model.validateTestResult(resultValue)) {
                       controller.model.testResult = int.parse(resultValue);
-                      Navigator.pop(
-                        context,
-                        controller.model.testResult,
-                      ); // Devuelve el resultado
+                      Navigator.pop(context, controller.model.testResult);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Por favor, ingrese un número válido.'),
-                          backgroundColor: Colors.red,
+                          backgroundColor: kRedAccentColor,
                         ),
                       );
                     }
                   }
                   : null, // Deshabilita el botón si el tiempo no es 0
-          backgroundColor: kPrimaryColor,
+          backgroundColor:
+              controller.remainingTime == 0 ? kPrimaryColor : kDisabledColor,
           height: 50,
           borderRadius: 12,
           textStyle: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: kWhiteColor,
           ),
         ),
       ],
