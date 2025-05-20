@@ -34,7 +34,7 @@ void main() {
 
       // Verifica textos principales
       expect(find.text('¡Evaluación completada!'), findsOneWidget);
-      expect(find.text('Tu nivel de inversor es:'), findsOneWidget);
+      expect(find.text('Tu nivel de inversor es'), findsOneWidget);
       expect(find.text('3'), findsOneWidget);
 
       // Verifica los resultados de las pruebas
