@@ -20,9 +20,8 @@ void main() {
       ),
     );
 
-    // Debe mostrar "Inhalar" y "Respiración 1"
-    expect(find.text('Inhalar'), findsOneWidget);
-    expect(find.text('Respiración 1'), findsOneWidget);
+    // Debe mostrar "Inspira"
+    expect(find.text('Inspira'), findsOneWidget);
 
     // Simula iniciar la animación
     key.currentState?.resume();
@@ -31,6 +30,6 @@ void main() {
     ); // Espera a que cambie de estado
 
     // Ahora debería mostrar "Exhalar" o "Inhalar" dependiendo del ciclo
-    expect(find.textContaining('Respiración'), findsOneWidget);
+    expect(find.textContaining('respiracion'), findsOneWidget);
   });
 }

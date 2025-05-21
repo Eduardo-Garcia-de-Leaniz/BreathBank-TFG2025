@@ -112,7 +112,7 @@ class Test1ScreenState extends State<Test1Screen>
         children: [
           const SizedBox(height: 10),
           Text(
-            'Respiraciones: $breathCount',
+            'Llevas $breathCount respiracion${breathCount == 1 ? '' : 'es'}',
             style: const TextStyle(
               fontSize: 22,
               color: kPrimaryColor,
@@ -121,7 +121,8 @@ class Test1ScreenState extends State<Test1Screen>
           ),
           if (controller.isRunning && controller.remainingTime > 0)
             const Text(
-              'Toca la pantalla para contar cada respiración',
+              'Toca la pantalla para contar cada cambio de inspiración y espiración',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13,
                 color: kPrimaryColor,

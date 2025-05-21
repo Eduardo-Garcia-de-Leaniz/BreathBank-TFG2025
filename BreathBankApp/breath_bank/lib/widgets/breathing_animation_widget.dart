@@ -22,17 +22,14 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   late Animation<double> _scaleAnimation;
 
   bool _isInhaling = true;
-  bool _isRunning =
-      false; // Nueva variable para controlar si la animación está activa
+  bool _isRunning = false;
   int _breathCount = 0;
-  late double _currentDuration; // Duración actual de la inhalación/exhalación
+  late double _currentDuration;
 
   @override
   void initState() {
     super.initState();
-    _currentDuration =
-        widget
-            .initialDuration; // Inicializa con la duración inicial pasada por parámetro
+    _currentDuration = widget.initialDuration;
     _initAnimation();
   }
 
@@ -86,16 +83,14 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   }
 
   void reset() {
-    _isRunning = false; // Detiene la animación
-    _controller.stop(); // Detiene el controlador
-    _controller.reset(); // Reinicia el controlador
-    _currentDuration = widget.initialDuration; // Restablece la duración inicial
-    _controller.duration = Duration(
-      seconds: _currentDuration.toInt(),
-    ); // Actualiza la duración
-    _breathCount = 1; // Reinicia el contador de respiraciones
-    _isInhaling = true; // Restablece el estado inicial
-    setState(() {}); // Actualiza la interfaz
+    _isRunning = false;
+    _controller.stop();
+    _controller.reset();
+    _currentDuration = widget.initialDuration;
+    _controller.duration = Duration(seconds: _currentDuration.toInt());
+    _breathCount = 1;
+    _isInhaling = true;
+    setState(() {});
   }
 
   int getCurrentBreathCount() => _breathCount;
