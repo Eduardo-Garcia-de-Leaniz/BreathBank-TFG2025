@@ -1,3 +1,6 @@
+import 'package:breath_bank/views/accont_settings_consult_data_screen.dart';
+import 'package:breath_bank/views/account_settings_reset_password_screen.dart';
+import 'package:breath_bank/views/account_settings_screen.dart';
 import 'package:breath_bank/views/dashboard_screen.dart';
 import 'package:breath_bank/views/evaluation_menu_screen.dart';
 import 'package:breath_bank/views/guided_investment_screen.dart';
@@ -19,9 +22,6 @@ import 'package:breath_bank/providers/push_notifications_provider.dart';
 import 'package:breath_bank/screens/app_settings_screen.dart';
 import 'package:breath_bank/screens/notifications_screen.dart';
 import 'package:breath_bank/views/evaluation_result_screen.dart';
-import 'package:breath_bank/screens/account_settings_screen.dart';
-import 'package:breath_bank/screens/account_settings_reset_password_screen.dart';
-import 'package:breath_bank/screens/account_settings_consult_data_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -159,7 +159,7 @@ class _MyAppState extends State<MyApp> {
         '/dashboard/accontsettings/resetpassword':
             (context) => const AccountSettingsResetPasswordScreen(),
         '/dashboard/accountsettings/consultdata':
-            (context) => const AccountSettingsModifyDataScreen(),
+            (context) => const AccountSettingsConsultDataScreen(),
         '/dashboard/appsettings': (context) => const AppSettingsScreen(),
         '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
         '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
