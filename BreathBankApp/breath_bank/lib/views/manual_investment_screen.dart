@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import '../controllers/investment_test_controller.dart';
@@ -56,7 +57,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
 
     if (model.timeLimit == 0) {
       return const Scaffold(
-        backgroundColor: Color.fromARGB(255, 188, 252, 245),
+        backgroundColor: kBackgroundColor,
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -80,11 +81,11 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
               children: [
                 // Circle and Progress Indicator
                 Container(
-                  height: 350,
-                  width: 350,
+                  height: 320,
+                  width: 320,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color.fromARGB(255, 7, 71, 94),
+                    color: kPrimaryColor,
                     boxShadow: [
                       BoxShadow(
                         // ignore: deprecated_member_use
@@ -96,12 +97,12 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                   ),
                 ),
                 SizedBox(
-                  height: 300,
-                  width: 300,
+                  height: 280,
+                  width: 280,
                   child: CircularProgressIndicator(
                     value: 1 - _controller.timeProgress,
                     strokeWidth: 14,
-                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                    backgroundColor: kRedAccentColor,
                     valueColor: AlwaysStoppedAnimation<Color>(
                       _controller.timeProgress == 1
                           ? Colors.green
@@ -145,7 +146,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                                 model.isRunning
                                     ? Icons.pause
                                     : Icons.play_arrow,
-                            color: Colors.green,
+                            color: kGreenColor,
                             onPressed: () {
                               if (model.isRunning) {
                                 _controller.stopTimer();
@@ -158,7 +159,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text('¡Tiempo finalizado!'),
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: kGreenColor,
                                         duration: Duration(seconds: 3),
                                       ),
                                     );
@@ -182,7 +183,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                                             content: Text(
                                               '¡Tiempo finalizado!',
                                             ),
-                                            backgroundColor: Colors.green,
+                                            backgroundColor: kGreenColor,
                                             duration: Duration(seconds: 3),
                                           ),
                                         );
@@ -198,7 +199,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                           const SizedBox(width: 30),
                           _buildControlButton(
                             icon: Icons.replay,
-                            color: Colors.red,
+                            color: kRedAccentColor,
                             onPressed:
                                 model.hasStarted
                                     ? () {
@@ -234,13 +235,14 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 30),
-            const Text(
-              textAlign: TextAlign.center,
-              'Una vez haya comenzado el tiempo, toca cualquier parte de la pantalla para marcar inspiración / espiración',
-              style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-            ),
-            const Spacer(),
+            const SizedBox(height: 20),
+            if (!model.isTimeUp)
+              const Text(
+                textAlign: TextAlign.center,
+                'Una vez haya comenzado el tiempo, toca cualquier parte de la pantalla para marcar inspiración / espiración',
+                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+              ),
+            const SizedBox(height: 20),
             if (model.isTimeUp)
               SizedBox(
                 width: double.infinity,
@@ -271,10 +273,10 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                     children: [
                       Text(
                         'Ver Resultado',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 16, color: kWhiteColor),
                       ),
                       SizedBox(width: 16),
-                      Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                      Icon(Icons.arrow_forward, color: kWhiteColor, size: 18),
                     ],
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class InvestmentOptionButton extends StatelessWidget {
@@ -21,9 +22,9 @@ class InvestmentOptionButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor:
               isSelected
-                  ? const Color.fromARGB(255, 7, 71, 94)
+                  ? kPrimaryColor
                   : const Color.fromARGB(255, 145, 205, 227),
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -31,10 +32,7 @@ class InvestmentOptionButton extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            color:
-                isSelected
-                    ? Colors.white
-                    : const Color.fromARGB(255, 7, 71, 94),
+            color: isSelected ? kWhiteColor : kPrimaryColor,
             fontSize: isSelected ? 18 : 14,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),

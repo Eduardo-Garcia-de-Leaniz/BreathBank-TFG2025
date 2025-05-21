@@ -19,7 +19,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   String nombre = cargando;
-  String apellidos = cargando;
   String email = cargando;
 
   @override
@@ -37,7 +36,6 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     } else {
       setState(() {
         nombre = 'Error al cargar';
-        apellidos = 'Error al cargar';
       });
     }
 
@@ -61,7 +59,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
             ),
             const SizedBox(height: 12),
             Text(
-              '$nombre $apellidos',
+              nombre,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,

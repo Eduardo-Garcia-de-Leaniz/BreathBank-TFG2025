@@ -120,27 +120,14 @@ class InvestmentMenuScreen extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.red,
+                                      backgroundColor: kRedAccentColor,
                                     ),
                                     onPressed: () async {
-                                      Navigator.of(
-                                        context,
-                                      ).pop(); // Cierra el diálogo
+                                      Navigator.of(context).pop();
                                       await controller.borrarInversiones(
                                         context,
                                       );
                                       if (!context.mounted) return;
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Inversiones borradas correctamente.',
-                                          ),
-                                          backgroundColor: Colors.green,
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         '/dashboard',
@@ -156,7 +143,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                               );
                             },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: kRedAccentColor,
                       padding: const EdgeInsets.symmetric(
                         vertical: 12,
                         horizontal: 20,
@@ -167,7 +154,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       'Borrar inversiones',
-                      style: TextStyle(fontSize: 15, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: kWhiteColor),
                     ),
                   );
                 },

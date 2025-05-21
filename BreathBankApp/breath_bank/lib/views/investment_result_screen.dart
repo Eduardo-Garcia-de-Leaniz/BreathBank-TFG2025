@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/controllers/investment_controller.dart';
 import 'base_screen.dart';
@@ -25,13 +26,16 @@ class InvestmentResultScreen extends StatelessWidget {
     return BaseScreen(
       title: 'Resultados de Inversión',
       padding: const EdgeInsets.all(16.0),
-      canGoBack: false, // Deshabilita el botón de retroceso
+      canGoBack: false,
       child: Column(
         children: [
-          const SizedBox(height: 16),
           const Text(
             '¡Inversión completada!',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
           ),
           const SizedBox(height: 8),
           if (breathResult > 0 && breathResult <= breathTarget)
@@ -56,7 +60,6 @@ class InvestmentResultScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // RESULTADOS DE LA INVERSIÓN
           Expanded(
             child: ListView(
               children: [
@@ -84,7 +87,6 @@ class InvestmentResultScreen extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -99,7 +101,7 @@ class InvestmentResultScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                backgroundColor: kPrimaryColor,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -111,9 +113,8 @@ class InvestmentResultScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Volver',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(fontSize: 16, color: kWhiteColor),
                   ),
-                  SizedBox(width: 16),
                 ],
               ),
             ),
@@ -129,22 +130,19 @@ class InvestmentResultScreen extends StatelessWidget {
     required String value,
   }) {
     return Card(
-      color: const Color.fromARGB(255, 7, 71, 94),
+      color: kPrimaryColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 3,
       child: ListTile(
-        leading: Icon(icon, color: Colors.white, size: 30),
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 16, color: Colors.white),
-        ),
+        leading: Icon(icon, color: kWhiteColor, size: 30),
+        title: Text(title, style: TextStyle(fontSize: 14, color: kWhiteColor)),
         trailing: Text(
           value,
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: kWhiteColor,
           ),
         ),
       ),
@@ -163,14 +161,6 @@ class InvestmentResultScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            // ignore: deprecated_member_use
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
       ),
       child: Row(
         children: [

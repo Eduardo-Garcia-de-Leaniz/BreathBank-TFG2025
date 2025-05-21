@@ -10,7 +10,7 @@ const kLevelColor = Color.fromARGB(255, 223, 190, 0);
 
 const kButtonTextStyle = TextStyle(
   fontFamily: 'Arial',
-  fontSize: 20,
+  fontSize: 18,
   fontWeight: FontWeight.bold,
   color: Colors.white,
 );

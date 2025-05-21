@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/database_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,12 +33,18 @@ class InvestmentMenuController {
       await db.deleteInvestments(userId: userId);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Inversiones borradas con éxito.')),
+        const SnackBar(
+          content: Text('Inversiones borradas con éxito.'),
+          backgroundColor: kGreenColor,
+        ),
       );
     } catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error al borrar las inversiones.')),
+        const SnackBar(
+          content: Text('Error al borrar las inversiones.'),
+          backgroundColor: kRedAccentColor,
+        ),
       );
     }
   }

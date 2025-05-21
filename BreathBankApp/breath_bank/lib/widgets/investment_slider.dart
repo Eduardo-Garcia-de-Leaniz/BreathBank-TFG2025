@@ -23,11 +23,10 @@ class InvestmentSlider extends StatelessWidget {
           'Listón de Inversión: ${sliderValue.toInt()}',
           style: const TextStyle(
             color: kPrimaryColor,
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

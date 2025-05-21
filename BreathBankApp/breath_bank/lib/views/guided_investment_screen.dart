@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/widgets/info_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -53,10 +54,9 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
               children: [
                 InfoCard(
                   title: 'Resp. completadas',
-
                   value: '${model.breathCount}',
-                  numberColor: Colors.green,
-                  textColor: Colors.green,
+                  numberColor: kGreenColor,
+                  textColor: kGreenColor,
                   maxValue: model.targetBreaths,
                   width: 140,
                   height: 130,
@@ -65,8 +65,8 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 InfoCard(
                   title: 'Resp. restantes',
                   value: '${model.targetBreaths - model.breathCount}',
-                  numberColor: Colors.red,
-                  textColor: Colors.red,
+                  numberColor: kRedAccentColor,
+                  textColor: kRedAccentColor,
                   maxValue: model.targetBreaths,
                   width: 140,
                   height: 130,
@@ -79,7 +79,8 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
               style: TextStyle(
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
-                color: model.phaseCounter % 2 == 0 ? Colors.green : Colors.red,
+                color:
+                    model.phaseCounter % 2 == 0 ? kGreenColor : kRedAccentColor,
               ),
             ),
             const SizedBox(height: 10),
@@ -93,11 +94,13 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                   fontSize: 60,
                   fontWeight: FontWeight.bold,
                   color:
-                      model.phaseCounter % 2 == 0 ? Colors.green : Colors.red,
+                      model.phaseCounter % 2 == 0
+                          ? kGreenColor
+                          : kRedAccentColor,
                 ),
               ),
               progressColor:
-                  model.phaseCounter % 2 == 0 ? Colors.green : Colors.red,
+                  model.phaseCounter % 2 == 0 ? kGreenColor : kRedAccentColor,
               backgroundColor: const Color.fromARGB(42, 0, 0, 0),
               circularStrokeCap: CircularStrokeCap.round,
             ),
@@ -119,7 +122,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('¡Tiempo finalizado!'),
-                                  backgroundColor: Colors.green,
+                                  backgroundColor: kGreenColor,
                                   duration: Duration(seconds: 3),
                                 ),
                               );
@@ -140,7 +143,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     child: Icon(
                       model.isRunning ? Icons.pause : Icons.play_arrow,
                       size: 40,
-                      color: Colors.green,
+                      color: kGreenColor,
                     ),
                   )
                 else if (model.hasStarted && !model.isRunning)
@@ -166,7 +169,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     child: Icon(
                       model.isRunning ? Icons.pause : Icons.play_arrow,
                       size: 40,
-                      color: Colors.green,
+                      color: kGreenColor,
                     ),
                   )
                 else
@@ -186,7 +189,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     child: const Icon(
                       Icons.pause,
                       size: 40,
-                      color: Colors.green,
+                      color: kGreenColor,
                     ),
                   ),
                 const SizedBox(width: 16),
@@ -203,22 +206,38 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     ),
                     padding: EdgeInsets.zero,
                   ),
-                  child: const Icon(Icons.replay, size: 40, color: Colors.red),
+                  child: const Icon(
+                    Icons.replay,
+                    size: 40,
+                    color: kRedAccentColor,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            Text(
-              'Ritmo de la inversión: \n${model.duracionFase.toStringAsFixed(1)} segundos por inhalación/exhalación',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 90, 122, 138),
+            if (!model.isTimeUp)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.info,
+                    size: 25,
+                    color: Color.fromARGB(255, 90, 122, 138),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    'Ritmo de la inversión: \n${model.duracionFase.toStringAsFixed(1)} segundos por inhalación/exhalación',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 90, 122, 138),
+                    ),
+                  ),
+                ],
               ),
-            ),
 
-            const Spacer(),
+            const SizedBox(height: 20),
             if (model.isTimeUp)
               SizedBox(
                 width: double.infinity,
