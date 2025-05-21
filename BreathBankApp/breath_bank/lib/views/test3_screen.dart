@@ -3,6 +3,7 @@ import 'package:breath_bank/controllers/test3_controller.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/views/test_screen_template.dart';
 import 'package:breath_bank/widgets/breathing_animation_widget.dart';
+import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
 import 'package:flutter/material.dart';
 
 class Test3Screen extends StatefulWidget {
@@ -15,6 +16,7 @@ class Test3Screen extends StatefulWidget {
 class Test3ScreenState extends State<Test3Screen> {
   final Test3Controller controller = Test3Controller();
   final GlobalKey<BreathingAnimationWidgetState> breathingKey = GlobalKey();
+  bool showCountdown = false;
 
   @override
   void initState() {
@@ -95,7 +97,24 @@ class Test3ScreenState extends State<Test3Screen> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  controller.startOrPauseBreathing(breathingKey);
+                  if (controller.isRunning) {
+                    controller.startOrPauseBreathing(breathingKey);
+                  } else {
+                    if (!showCountdown) {
+                      CountdownOverlayWidget.show(
+                        context: context,
+                        initialCountdown: 3,
+                        onCountdownComplete: () {
+                          setState(() {
+                            showCountdown = true;
+                            controller.startOrPauseBreathing(breathingKey);
+                          });
+                        },
+                      );
+                    } else {
+                      controller.startOrPauseBreathing(breathingKey);
+                    }
+                  }
                 });
               },
               style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
@@ -110,6 +129,7 @@ class Test3ScreenState extends State<Test3Screen> {
               onPressed: () {
                 setState(() {
                   controller.resetBreathing(breathingKey);
+                  showCountdown = false;
                 });
               },
               style: ElevatedButton.styleFrom(backgroundColor: kRedAccentColor),

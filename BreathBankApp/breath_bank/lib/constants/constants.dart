@@ -13,6 +13,7 @@ const kButtonTextStyle = TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.bold,
   color: Colors.white,
+  decoration: TextDecoration.none,
 );
 
 const kTitleTextStyle = TextStyle(
@@ -21,6 +22,7 @@ const kTitleTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontFamily: 'Arial',
   fontStyle: FontStyle.italic,
+  decoration: TextDecoration.none,
 );
 
 const kSubtitleTextStyle = TextStyle(
@@ -28,4 +30,5 @@ const kSubtitleTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontFamily: 'Arial',
   color: kPrimaryColor,
+  decoration: TextDecoration.none,
 );

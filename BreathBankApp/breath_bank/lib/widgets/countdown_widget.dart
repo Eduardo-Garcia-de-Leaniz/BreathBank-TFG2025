@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class CountdownOverlay extends StatefulWidget {
@@ -46,19 +47,36 @@ class _CountdownOverlayState extends State<CountdownOverlay> {
     return Positioned.fill(
       child: Container(
         // ignore: deprecated_member_use
-        color: Colors.black.withOpacity(0.5),
+        color: kPrimaryColor.withOpacity(0.8),
         alignment: Alignment.center,
-        child: ValueListenableBuilder<int>(
-          valueListenable: textNotifier,
-          builder:
-              (_, value, __) => Text(
-                '$value',
-                style: const TextStyle(
-                  fontSize: 100,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Comienza a inspirar en',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 23,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.none,
               ),
+            ),
+            const SizedBox(height: 24),
+            ValueListenableBuilder<int>(
+              valueListenable: textNotifier,
+              builder:
+                  (_, value, __) => Text(
+                    '$value',
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+            ),
+          ],
         ),
       ),
     );

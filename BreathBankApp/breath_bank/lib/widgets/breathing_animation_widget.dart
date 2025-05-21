@@ -24,7 +24,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
   bool _isInhaling = true;
   bool _isRunning =
       false; // Nueva variable para controlar si la animación está activa
-  int _breathCount = 1;
+  int _breathCount = 0;
   late double _currentDuration; // Duración actual de la inhalación/exhalación
 
   @override
@@ -129,11 +129,14 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
         ),
         const SizedBox(height: 16),
         Text(
-          _isInhaling ? "Inhalar" : "Exhalar",
+          _isInhaling ? "Inspira" : "Expira",
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        Text("Respiración $_breathCount", style: const TextStyle(fontSize: 18)),
+        Text(
+          "Llevas $_breathCount respiracion${_breathCount == 1 ? '' : 'es'}",
+          style: const TextStyle(fontSize: 18),
+        ),
       ],
     );
   }

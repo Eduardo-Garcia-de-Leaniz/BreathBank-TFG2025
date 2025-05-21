@@ -2,6 +2,7 @@ import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/controllers/test2_controller.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/views/test_screen_template.dart';
+import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
 import 'package:flutter/material.dart';
 
 class Test2Screen extends StatefulWidget {
@@ -107,7 +108,18 @@ class Test2ScreenState extends State<Test2Screen> {
                       resultValue = value;
                     });
                   } else {
-                    controller.startClock(() => setState(() {}));
+                    if (controller.elapsedSeconds > 0) {
+                      controller.startClock(() => setState(() {}));
+                    } else {
+                      CountdownOverlayWidget.show(
+                        context: context,
+                        initialCountdown: 3,
+                        onCountdownComplete: () {
+                          controller.startClock(() => setState(() {}));
+                          setState(() {});
+                        },
+                      );
+                    }
                   }
                 });
               },
