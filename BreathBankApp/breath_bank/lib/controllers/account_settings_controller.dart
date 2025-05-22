@@ -1,6 +1,8 @@
 import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 const String noDisponible = 'No disponible';
 
@@ -16,19 +18,52 @@ class AccountSettingsController {
     return {'nombre': nombre, 'email': email};
   }
 
-  Future<void> borrarHistorial() async {
-    await db.deleteUserData(userId: userId);
+  Future<void> borrarHistorial(BuildContext context) async {
+    try {
+      await db.deleteUserData(userId: userId);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Historial borrado con éxito.'),
+          backgroundColor: kGreenColor,
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al borrar el historial.'),
+          backgroundColor: kRedAccentColor,
+        ),
+      );
+    }
   }
 
-  Future<void> cerrarSesion() async {
+  Future<void> cerrarSesion(BuildContext context) async {
     final authenticationService = AuthenticationService();
-    await authenticationService.signOut();
+    try {
+      await authenticationService.signOut();
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sesión cerrada con éxito.'),
+          backgroundColor: kGreenColor,
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al cerrar sesión.'),
+          backgroundColor: kRedAccentColor,
+        ),
+      );
+    }
   }
 
   Future<void> eliminarCuenta({
     required String password,
-    required Function(String?) onError,
-    required Function() onSuccess,
+    required BuildContext context,
   }) async {
     final user = FirebaseAuth.instance.currentUser;
     try {
@@ -37,16 +72,21 @@ class AccountSettingsController {
         email: user.email!,
         password: password,
       );
-      onSuccess();
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sesión cerrada con éxito.'),
+          backgroundColor: kGreenColor,
+        ),
+      );
     } catch (e) {
-      final error = e.toString();
-      if (error.contains('The supplied auth credential is incorrect')) {
-        onError('Contraseña incorrecta');
-      } else if (error.contains('requires-recent-login')) {
-        onError('requires-recent-login');
-      } else {
-        onError('Error al eliminar la cuenta');
-      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error al eliminar la cuenta.'),
+          backgroundColor: kRedAccentColor,
+        ),
+      );
     }
   }
 

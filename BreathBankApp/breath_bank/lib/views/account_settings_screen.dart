@@ -1,4 +1,6 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/controllers/account_settings_controller.dart';
+import 'package:breath_bank/widgets/message_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/views/base_screen.dart';
 
@@ -31,6 +33,17 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
       nombre = data['nombre']!;
       email = data['email']!;
     });
+  }
+
+  void passwordIsEmpty(String password) {
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('La contraseña no puede estar vacía.'),
+          backgroundColor: kRedAccentColor,
+        ),
+      );
+    }
   }
 
   @override
@@ -88,307 +101,153 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   icon: Icons.history,
                   title: 'Borrar historial',
                   onTap: () async {
-                    final confirmed = await showDialog<bool>(
+                    await showCustomMessageDialog(
                       context: context,
-                      builder:
-                          (context) => AlertDialog(
-                            backgroundColor: const Color.fromARGB(
-                              255,
-                              7,
-                              71,
-                              94,
-                            ),
-                            title: const Text(
-                              'Borrar historial',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            content: const Text(
-                              '¿Estás seguro de que deseas borrar tu historial de inversiones y evaluaciones? Esta acción no se puede deshacer. Tu nivel de inversor se restablecerá a 0.',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            actions: [
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(
-                                    255,
-                                    188,
-                                    252,
-                                    245,
-                                  ),
-                                ),
-                                child: const Text(
-                                  'Borrar',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 7, 71, 94),
-                                  ),
-                                ),
-                                onPressed:
-                                    () => Navigator.of(context).pop(true),
-                              ),
-                              TextButton(
-                                child: const Text(
-                                  'Cancelar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed:
-                                    () => Navigator.of(context).pop(false),
-                              ),
-                            ],
+                      title: 'Borrar historial',
+                      message:
+                          '¿Estás seguro de que deseas borrar tu historial de inversiones y evaluaciones? Esta acción no se puede deshacer. Tu nivel de inversor y tu saldo se restablecerán a 0.',
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text(
+                            'Cancelar',
+                            style: TextStyle(color: kBackgroundColor),
                           ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kRedAccentColor,
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            await controller.borrarHistorial(context);
+                            if (!mounted) return;
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/dashboard',
+                              (route) => false,
+                            );
+                          },
+                          child: const Text(
+                            'Borrar',
+                            style: TextStyle(color: kWhiteColor),
+                          ),
+                        ),
+                      ],
                     );
-                    if (confirmed == true) {
-                      try {
-                        await controller.borrarHistorial();
-                        if (!mounted) return;
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/dashboard',
-                          (route) => false,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Historial borrado correctamente'),
-                          ),
-                        );
-                      } catch (_) {
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Error al borrar el historial'),
-                          ),
-                        );
-                      }
-                    }
                   },
                 ),
                 buildOptionTile(
                   icon: Icons.logout,
                   title: cerrarSesion,
-                  backgroundColor: Colors.red,
-                  iconColor: Colors.white,
-                  titleColor: Colors.white,
-                  arrowColor: Colors.white,
+                  backgroundColor: kRedAccentColor,
+                  iconColor: kWhiteColor,
+                  titleColor: kWhiteColor,
+                  arrowColor: kWhiteColor,
                   onTap: () async {
-                    final confirmed = await showDialog<bool>(
+                    await showCustomMessageDialog(
                       context: context,
-                      builder:
-                          (context) => AlertDialog(
-                            backgroundColor: const Color.fromARGB(
-                              255,
-                              7,
-                              71,
-                              94,
-                            ),
-                            title: const Text(
-                              cerrarSesion,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            content: const Text(
-                              '¿Estás seguro de que deseas cerrar sesión?',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            actions: [
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: const Color.fromARGB(
-                                    255,
-                                    188,
-                                    252,
-                                    245,
-                                  ),
-                                ),
-                                child: const Text(
-                                  cerrarSesion,
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 7, 71, 94),
-                                  ),
-                                ),
-                                onPressed:
-                                    () => Navigator.of(context).pop(true),
-                              ),
-                              TextButton(
-                                child: const Text(
-                                  'Cancelar',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                onPressed:
-                                    () => Navigator.of(context).pop(false),
-                              ),
-                            ],
+                      title: 'Cerrar sesión',
+                      message: '¿Estás seguro de que deseas cerrar sesión?',
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text(
+                            'Cancelar',
+                            style: TextStyle(color: kBackgroundColor),
                           ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kRedAccentColor,
+                          ),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                            await controller.cerrarSesion(context);
+                            if (!mounted) return;
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false,
+                            );
+                          },
+                          child: const Text(
+                            'Cerrar sesión',
+                            style: TextStyle(color: kWhiteColor),
+                          ),
+                        ),
+                      ],
                     );
-                    if (confirmed == true) {
-                      try {
-                        await controller.cerrarSesion();
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Sesión cerrada correctamente'),
-                          ),
-                        );
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          '/',
-                          (route) => false,
-                        );
-                      } catch (_) {
-                        if (!mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Error al cerrar sesión'),
-                          ),
-                        );
-                      }
-                    }
                   },
                 ),
                 buildOptionTile(
                   icon: Icons.delete_forever,
                   title: 'Eliminar cuenta',
-                  backgroundColor: Colors.red,
-                  iconColor: Colors.white,
-                  titleColor: Colors.white,
-                  arrowColor: Colors.white,
+                  backgroundColor: kRedAccentColor,
+                  iconColor: kWhiteColor,
+                  titleColor: kWhiteColor,
+                  arrowColor: kWhiteColor,
                   onTap: () async {
                     final passwordController = TextEditingController();
-                    String? errorMessage;
-                    await showDialog(
+                    await showCustomMessageDialog(
                       context: context,
-                      barrierDismissible: false,
-                      builder: (context) {
-                        return StatefulBuilder(
-                          builder:
-                              (context, setState) => AlertDialog(
-                                backgroundColor: const Color.fromARGB(
-                                  255,
-                                  7,
-                                  71,
-                                  94,
-                                ),
-                                title: const Text(
-                                  'Eliminar cuenta',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Text(
-                                      '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción eliminará todos tus datos y no se puede deshacer.',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    TextField(
-                                      controller: passwordController,
-                                      obscureText: true,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                      decoration: const InputDecoration(
-                                        labelText: 'Contraseña',
-                                        labelStyle: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    if (errorMessage != null) ...[
-                                      const SizedBox(height: 12),
-                                      Text(
-                                        errorMessage!,
-                                        style: const TextStyle(
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed:
-                                        () => Navigator.of(context).pop(),
-                                    child: const Text(
-                                      'Cancelar',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: const Color.fromARGB(
-                                        255,
-                                        188,
-                                        252,
-                                        245,
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'Eliminar',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 7, 71, 94),
-                                      ),
-                                    ),
-                                    onPressed: () async {
-                                      final password =
-                                          passwordController.text.trim();
-                                      if (password.isEmpty) {
-                                        setState(() {
-                                          errorMessage =
-                                              'Por favor, introduce tu contraseña';
-                                        });
-                                        return;
-                                      }
-                                      await controller.eliminarCuenta(
-                                        password: password,
-                                        onError: (msg) {
-                                          if (msg == 'requires-recent-login') {
-                                            Navigator.of(context).pop();
-                                            ScaffoldMessenger.of(
-                                              context,
-                                            ).showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                  'Por seguridad, vuelve a iniciar sesión antes de eliminar tu cuenta.',
-                                                ),
-                                              ),
-                                            );
-                                          } else {
-                                            setState(() {
-                                              errorMessage = msg;
-                                            });
-                                          }
-                                        },
-                                        onSuccess: () {
-                                          Navigator.of(context).pop();
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            const SnackBar(
-                                              content: Text(
-                                                'Cuenta eliminada correctamente',
-                                              ),
-                                            ),
-                                          );
-                                          Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            '/',
-                                            (route) => false,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
+                      title: 'Borrar cuenta',
+                      message:
+                          '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer. Tu historial de inversiones y evaluaciones se borrará permanentemente.',
+                      actions: [
+                        TextField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Contraseña',
+                            labelStyle: const TextStyle(color: kPrimaryColor),
+                            border: OutlineInputBorder(),
+                            filled: true,
+                            fillColor: kBackgroundColor,
+                            hintText: 'Ingresa tu contraseña',
+                            hintStyle: const TextStyle(color: kPrimaryColor),
+                          ),
+                          obscureText: true,
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text(
+                                'Cancelar',
+                                style: TextStyle(color: kBackgroundColor),
                               ),
-                        );
-                      },
+                            ),
+                            const SizedBox(width: 8),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: kRedAccentColor,
+                              ),
+                              onPressed: () async {
+                                passwordIsEmpty(passwordController.text);
+
+                                Navigator.of(context).pop();
+                                await controller.eliminarCuenta(
+                                  password: passwordController.text,
+                                  context: context,
+                                );
+                                if (!mounted) return;
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/',
+                                  (route) => false,
+                                );
+                              },
+                              child: const Text(
+                                'Borrar',
+                                style: TextStyle(color: kWhiteColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     );
                   },
                 ),

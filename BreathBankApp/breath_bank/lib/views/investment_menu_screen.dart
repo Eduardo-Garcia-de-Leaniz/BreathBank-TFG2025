@@ -106,7 +106,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                             : () async {
                               await showCustomMessageDialog(
                                 context: context,
-                                title: 'Confirmar borrado',
+                                title: 'Borrar inversiones',
                                 message:
                                     '¿Seguro que quieres borrar todas tus inversiones? Esta acción no se puede deshacer.',
                                 actions: [
