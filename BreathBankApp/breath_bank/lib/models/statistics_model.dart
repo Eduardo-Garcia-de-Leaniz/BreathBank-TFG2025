@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StatisticsCalculator {
-  // Cálculo de estadísticas para evaluaciones
   static Map<String, dynamic> calculateEvaluationStatistics(
     List<Map<String, dynamic>> datos,
   ) {
@@ -36,7 +35,6 @@ class StatisticsCalculator {
     final mejorP3 =
         prueba3.isNotEmpty ? prueba3.reduce((a, b) => a > b ? a : b) : 'N/A';
 
-    // Fecha de la última evaluación
     final fechaUltimaEvaluacion =
         fechas.isNotEmpty
             ? formatFecha(fechas.reduce((a, b) => a.compareTo(b) > 0 ? a : b))
@@ -54,7 +52,6 @@ class StatisticsCalculator {
     };
   }
 
-  // Cálculo de estadísticas para inversiones
   static Map<String, dynamic> calculateInvestmentStatistics(
     List<Map<String, dynamic>> datos,
     String Function(Timestamp) formatFecha,

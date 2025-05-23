@@ -12,6 +12,20 @@ class InvestmentMenuScreen extends StatelessWidget {
 
   InvestmentMenuScreen({super.key});
 
+  bool isLoading(context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return true;
+    }
+    return false;
+  }
+
+  bool isError(snapshot) {
+    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MenuTemplateScreen(
@@ -34,9 +48,9 @@ class InvestmentMenuScreen extends StatelessWidget {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: controller.fetchDatosInversiones(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (isLoading(context, snapshot)) {
           return const Center(child: CircularProgressIndicator());
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        } else if (isError(snapshot)) {
           return const Center(child: Text('No hay inversiones disponibles.'));
         }
 
@@ -72,7 +86,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                       ),
                       InfoRowWidget(
                         label: 'Tipo de inversión',
-                        value: tipoInversion ?? 'No registrado',
+                        value: tipoInversion,
                       ),
                       InfoRowWidget(
                         label: 'Listón Inversión',
@@ -170,9 +184,9 @@ class InvestmentMenuScreen extends StatelessWidget {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: controller.fetchDatosInversiones(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (isLoading(context, snapshot)) {
           return const Center(child: CircularProgressIndicator());
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        } else if (isError(snapshot)) {
           return const Center(
             child: Text('No hay datos estadísticos disponibles.'),
           );
