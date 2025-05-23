@@ -87,8 +87,6 @@ class EvaluationScreenState extends State<EvaluationScreen> {
             ],
           ),
           SizedBox(height: separatorHeight),
-
-          // Botón para la prueba 2
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

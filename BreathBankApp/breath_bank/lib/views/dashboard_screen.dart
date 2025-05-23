@@ -71,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     value: _nivelInversor ?? '0',
                     numberColor: yellowColor,
                     textColor: yellowColor,
-                    maxValue: 11,
+                    maxValue: 10,
                     width: 140,
                     height: 130,
                   ),
