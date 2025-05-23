@@ -122,7 +122,7 @@ class Test1ScreenState extends State<Test1Screen>
             Text(
               'Pulsa cuando termines de ${tapCount % 2 == 0 ? 'inspirar' : 'expirar'}',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 color: kPrimaryColor,
                 fontStyle: FontStyle.italic,

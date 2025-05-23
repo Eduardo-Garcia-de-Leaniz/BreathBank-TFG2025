@@ -136,7 +136,10 @@ class InvestmentResultScreen extends StatelessWidget {
       elevation: 3,
       child: ListTile(
         leading: Icon(icon, color: kWhiteColor, size: 25),
-        title: Text(title, style: TextStyle(fontSize: 14, color: kWhiteColor)),
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 14, color: kWhiteColor),
+        ),
         trailing: Text(
           value,
           style: const TextStyle(

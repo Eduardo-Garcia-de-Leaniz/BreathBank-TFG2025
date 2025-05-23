@@ -65,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
       setState(() => errorMessageLogin = 'Las credenciales son incorrectas');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Las credenciales son incorrectas'),
           backgroundColor: Colors.red,
         ),

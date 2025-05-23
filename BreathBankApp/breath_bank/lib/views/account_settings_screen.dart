@@ -6,6 +6,8 @@ import 'package:breath_bank/views/base_screen.dart';
 
 const String cerrarSesion = 'Cerrar sesión';
 const String cargando = 'Cargando...';
+const String cancelar = 'Cancelar';
+const String borrar = 'Borrar';
 
 class AccountSettingsScreen extends StatefulWidget {
   const AccountSettingsScreen({super.key});
@@ -110,7 +112,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: const Text(
-                            'Cancelar',
+                            cancelar,
                             style: TextStyle(color: kBackgroundColor),
                           ),
                         ),
@@ -123,13 +125,14 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             await controller.borrarHistorial(context);
                             if (!mounted) return;
                             Navigator.pushNamedAndRemoveUntil(
+                              // ignore: use_build_context_synchronously
                               context,
                               '/dashboard',
                               (route) => false,
                             );
                           },
                           child: const Text(
-                            'Borrar',
+                            borrar,
                             style: TextStyle(color: kWhiteColor),
                           ),
                         ),
@@ -147,13 +150,13 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   onTap: () async {
                     await showCustomMessageDialog(
                       context: context,
-                      title: 'Cerrar sesión',
+                      title: cerrarSesion,
                       message: '¿Estás seguro de que deseas cerrar sesión?',
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: const Text(
-                            'Cancelar',
+                            cancelar,
                             style: TextStyle(color: kBackgroundColor),
                           ),
                         ),
@@ -166,6 +169,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             await controller.cerrarSesion(context);
                             if (!mounted) return;
                             Navigator.pushNamedAndRemoveUntil(
+                              // ignore: use_build_context_synchronously
                               context,
                               '/',
                               (route) => false,
@@ -197,14 +201,14 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       actions: [
                         TextField(
                           controller: passwordController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Contraseña',
-                            labelStyle: const TextStyle(color: kPrimaryColor),
+                            labelStyle: TextStyle(color: kPrimaryColor),
                             border: OutlineInputBorder(),
                             filled: true,
                             fillColor: kBackgroundColor,
                             hintText: 'Ingresa tu contraseña',
-                            hintStyle: const TextStyle(color: kPrimaryColor),
+                            hintStyle: TextStyle(color: kPrimaryColor),
                           ),
                           obscureText: true,
                         ),
@@ -216,7 +220,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(),
                               child: const Text(
-                                'Cancelar',
+                                cancelar,
                                 style: TextStyle(color: kBackgroundColor),
                               ),
                             ),
@@ -235,13 +239,14 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                 );
                                 if (!mounted) return;
                                 Navigator.pushNamedAndRemoveUntil(
+                                  // ignore: use_build_context_synchronously
                                   context,
                                   '/',
                                   (route) => false,
                                 );
                               },
                               child: const Text(
-                                'Borrar',
+                                borrar,
                                 style: TextStyle(color: kWhiteColor),
                               ),
                             ),

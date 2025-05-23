@@ -240,7 +240,10 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
               Text(
                 textAlign: TextAlign.center,
                 'Pulsa cuando termines de ${model.phaseCounter % 2 == 0 ? 'inspirar' : 'expirar'}',
-                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             const SizedBox(height: 20),
             if (model.isTimeUp)
