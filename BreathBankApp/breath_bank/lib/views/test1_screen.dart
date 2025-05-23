@@ -96,7 +96,6 @@ class Test1ScreenState extends State<Test1Screen>
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        // Solo cuenta si el temporizador está corriendo
         if (controller.isRunning && controller.remainingTime > 0) {
           tapCount++;
           if (tapCount % 2 == 0) {
@@ -120,8 +119,8 @@ class Test1ScreenState extends State<Test1Screen>
             ),
           ),
           if (controller.isRunning && controller.remainingTime > 0)
-            const Text(
-              'Toca la pantalla para contar cada cambio de inspiración y espiración',
+            Text(
+              'Pulsa cuando termines de ${tapCount % 2 == 0 ? 'inspirar' : 'expirar'}',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 13,

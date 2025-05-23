@@ -186,6 +186,7 @@ class DatabaseService {
           kNumeroEvaluaciones: evaluacionesActuales + 1,
           kFechaUltimaEvaluacion: fechaUltimaEvaluacion,
           kNivelInversor: nivelInversor,
+          kSaldo: 0,
         },
       );
     }

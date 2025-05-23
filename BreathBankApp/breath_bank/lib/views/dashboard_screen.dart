@@ -49,14 +49,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       onWillPop: () async => false, // Deshabilita el botón de retroceso
       child: Scaffold(
         appBar: AppBarDashboard(),
-        backgroundColor: const Color.fromARGB(255, 188, 252, 245),
+        backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Bienvenido, ${_nombreUsuario ?? 'Usuario'}',
+                'Bienvenid@, ${_nombreUsuario ?? '...'}',
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -149,17 +149,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   }
                   return ListPreview(
                     items: snapshot.data!,
-                    icon: Icons.assignment, // o Icons.trending_up
-                    isEvaluacion: true, // o false para inversiones
+                    icon: Icons.assignment,
+                    isEvaluacion: true,
                     getTitle: (item) {
                       final index = snapshot.data!.indexOf(item) + 1;
                       final fecha =
                           item['Fecha'] != null
-                              ? _controller.formatFecha(
-                                item['Fecha'],
-                              ) // o 'FechaInversión'
+                              ? _controller.formatFecha(item['Fecha'])
                               : 'Sin fecha';
-                      return 'Evaluación $index ($fecha)'; // o 'Inversión $index ($fecha)'
+                      return 'Evaluación $index ($fecha)';
                     },
                     maxItemsToShow: 2,
                   );

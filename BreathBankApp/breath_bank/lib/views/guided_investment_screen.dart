@@ -47,8 +47,18 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Text(
+              model.phaseCounter % 2 == 0 ? 'Inspira' : 'Expira',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color:
+                    model.phaseCounter % 2 == 0 ? kGreenColor : kRedAccentColor,
+              ),
+            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -73,25 +83,14 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            Text(
-              model.phaseCounter % 2 == 0 ? 'Inspira' : 'Espira',
-              style: TextStyle(
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
-                color:
-                    model.phaseCounter % 2 == 0 ? kGreenColor : kRedAccentColor,
-              ),
-            ),
-            const SizedBox(height: 10),
             CircularPercentIndicator(
-              radius: 100.0,
-              lineWidth: 15.0,
+              radius: 80.0,
+              lineWidth: 10.0,
               percent: model.secondsElapsed / model.timeLimit,
               center: Text(
                 '${_controller.remainingSeconds}',
                 style: TextStyle(
-                  fontSize: 60,
+                  fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color:
                       model.phaseCounter % 2 == 0
@@ -142,7 +141,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     ),
                     child: Icon(
                       model.isRunning ? Icons.pause : Icons.play_arrow,
-                      size: 40,
+                      size: 30,
                       color: kGreenColor,
                     ),
                   )
@@ -160,7 +159,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.transparent,
-                      minimumSize: const Size(50, 50),
+                      minimumSize: const Size(30, 30),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -168,7 +167,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     ),
                     child: Icon(
                       model.isRunning ? Icons.pause : Icons.play_arrow,
-                      size: 40,
+                      size: 30,
                       color: kGreenColor,
                     ),
                   )
@@ -180,7 +179,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.transparent,
-                      minimumSize: const Size(50, 50),
+                      minimumSize: const Size(30, 30),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -188,7 +187,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     ),
                     child: const Icon(
                       Icons.pause,
-                      size: 40,
+                      size: 30,
                       color: kGreenColor,
                     ),
                   ),
@@ -200,7 +199,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.transparent,
-                    minimumSize: const Size(50, 50),
+                    minimumSize: const Size(30, 30),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -208,13 +207,13 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                   ),
                   child: const Icon(
                     Icons.replay,
-                    size: 40,
+                    size: 30,
                     color: kRedAccentColor,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             if (!model.isTimeUp)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -237,7 +236,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 ],
               ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             if (model.isTimeUp)
               SizedBox(
                 width: double.infinity,
@@ -268,10 +267,10 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     children: [
                       Text(
                         'Ver Resultado',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: kWhiteColor),
                       ),
                       SizedBox(width: 16),
-                      Icon(Icons.arrow_forward, color: Colors.white, size: 20),
+                      Icon(Icons.arrow_forward, color: kWhiteColor, size: 20),
                     ],
                   ),
                 ),

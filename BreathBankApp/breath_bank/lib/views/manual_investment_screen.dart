@@ -236,10 +236,10 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
               ],
             ),
             const SizedBox(height: 20),
-            if (!model.isTimeUp)
-              const Text(
+            if (!model.isTimeUp && model.isRunning)
+              Text(
                 textAlign: TextAlign.center,
-                'Una vez haya comenzado el tiempo, toca cualquier parte de la pantalla para marcar inspiración / espiración',
+                'Pulsa cuando termines de ${model.phaseCounter % 2 == 0 ? 'inspirar' : 'expirar'}',
                 style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
               ),
             const SizedBox(height: 20),

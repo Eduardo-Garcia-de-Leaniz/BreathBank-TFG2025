@@ -135,12 +135,12 @@ class InvestmentResultScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 3,
       child: ListTile(
-        leading: Icon(icon, color: kWhiteColor, size: 30),
+        leading: Icon(icon, color: kWhiteColor, size: 25),
         title: Text(title, style: TextStyle(fontSize: 14, color: kWhiteColor)),
         trailing: Text(
           value,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: kWhiteColor,
           ),
@@ -156,8 +156,8 @@ class InvestmentResultScreen extends StatelessWidget {
     required Color textColor,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
