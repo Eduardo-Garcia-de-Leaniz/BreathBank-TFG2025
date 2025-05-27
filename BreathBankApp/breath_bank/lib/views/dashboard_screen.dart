@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/widgets/appbar_dashboard.dart';
 import 'package:breath_bank/widgets/navigation_menu.dart';
@@ -56,7 +57,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Bienvenid@, ${_nombreUsuario ?? '...'}',
+                Strings.dashboardWelcome.replaceFirst(
+                  '{0}',
+                  _nombreUsuario ?? '...',
+                ),
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -67,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InfoCard(
-                    title: 'Nivel de Inversor',
+                    title: Strings.inversorLevel,
                     value: _nivelInversor ?? '0',
                     numberColor: yellowColor,
                     textColor: yellowColor,
@@ -76,7 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 130,
                   ),
                   InfoCard(
-                    title: 'Saldo',
+                    title: Strings.saldo,
                     value: _saldo ?? '0',
                     numberColor: greenColor,
                     textColor: greenColor,
@@ -88,14 +92,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(height: 10),
               SectionHeader(
-                title: 'Últimas Inversiones',
+                title: Strings.lastInvestments,
 
                 onTap:
                     () => Navigator.pushNamed(
                       context,
                       '/dashboard/investmentmenu',
                     ),
-                subtitle: 'Ver inversiones',
+                subtitle: Strings.seeInvestments,
               ),
               FutureBuilder<List<Map<String, dynamic>>>(
                 future: _controller.fetchUltimasInversiones(),
@@ -107,7 +111,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   } else if (snapshot.hasError ||
                       !snapshot.hasData ||
                       snapshot.data!.isEmpty) {
-                    return const Text('No hay evaluaciones disponibles.');
+                    return const Text(Strings.noData);
                   }
                   return ListPreview(
                     items: snapshot.data ?? [],
@@ -119,7 +123,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           item['FechaInversión'] != null
                               ? _controller.formatFecha(item['FechaInversión'])
                               : 'Sin fecha';
-                      return 'Inversión $index ($fecha)';
+                      return '${Strings.investmentTitle} $index ($fecha)';
                     },
                     maxItemsToShow: 2,
                   );
@@ -127,13 +131,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(height: 20),
               SectionHeader(
-                title: 'Últimas Evaluaciones',
+                title: Strings.lastEvaluations,
                 onTap:
                     () => Navigator.pushNamed(
                       context,
                       '/dashboard/evaluationmenu',
                     ),
-                subtitle: 'Ver evaluaciones',
+                subtitle: Strings.seeEvaluations,
               ),
               FutureBuilder<List<Map<String, dynamic>>>(
                 future: _controller.fetchUltimasEvaluaciones(),
@@ -145,7 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   } else if (snapshot.hasError ||
                       !snapshot.hasData ||
                       snapshot.data!.isEmpty) {
-                    return const Text('No hay evaluaciones disponibles.');
+                    return const Text(Strings.noData);
                   }
                   return ListPreview(
                     items: snapshot.data!,
@@ -157,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           item['Fecha'] != null
                               ? _controller.formatFecha(item['Fecha'])
                               : 'Sin fecha';
-                      return 'Evaluación $index ($fecha)';
+                      return '${Strings.evaluationTitle} $index ($fecha)';
                     },
                     maxItemsToShow: 2,
                   );
@@ -179,7 +183,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       vertical: 8,
                     ),
                     child: AppButton(
-                      text: 'Nueva Evaluación',
+                      text: Strings.newEvaluation,
                       onPressed: () {
                         Navigator.pushNamed(context, '/evaluation');
                       },
@@ -195,7 +199,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       vertical: 5,
                     ),
                     child: AppButton(
-                      text: 'Nueva Inversión',
+                      text: Strings.newInvestment,
                       onPressed: () {
                         Navigator.pushNamed(
                           context,

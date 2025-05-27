@@ -7,10 +7,6 @@ class Test3Controller {
   final TextEditingController resultFieldController = TextEditingController();
   bool isRunning = false;
 
-  Future<void> loadDescriptionAndInstructions() async {
-    await model.loadDescriptionAndInstructions();
-  }
-
   void startOrPauseBreathing(GlobalKey<BreathingAnimationWidgetState> key) {
     isRunning = !isRunning;
 

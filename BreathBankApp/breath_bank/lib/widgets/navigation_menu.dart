@@ -1,3 +1,5 @@
+import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -10,14 +12,14 @@ class NavigationMenu extends StatelessWidget {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       showUnselectedLabels: true,
-      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-      selectedItemColor: const Color.fromARGB(255, 188, 252, 245),
+      backgroundColor: kPrimaryColor,
+      selectedItemColor: kBackgroundColor,
       selectedLabelStyle: const TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 14,
       ),
       unselectedLabelStyle: const TextStyle(fontSize: 12),
-      unselectedItemColor: Colors.white,
+      unselectedItemColor: kWhiteColor,
       currentIndex: currentIndex,
       onTap: (index) {
         switch (index) {
@@ -35,15 +37,15 @@ class NavigationMenu extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.assignment, size: 30),
-          label: 'Evaluaciones',
+          label: Strings.pluralEvaluation,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.dashboard, size: 30),
-          label: 'Dashboard',
+          label: Strings.dashboardTitle,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.more_time, size: 30),
-          label: 'Inversiones',
+          label: Strings.pluralInvestment,
         ),
       ],
     );

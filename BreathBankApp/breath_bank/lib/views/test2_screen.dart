@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/controllers/test2_controller.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/views/test_screen_template.dart';
@@ -20,9 +21,6 @@ class Test2ScreenState extends State<Test2Screen> {
   @override
   void initState() {
     super.initState();
-    controller.loadDescriptionAndInstructions().then((_) {
-      setState(() {});
-    });
   }
 
   @override
@@ -34,13 +32,13 @@ class Test2ScreenState extends State<Test2Screen> {
   @override
   Widget build(BuildContext context) {
     return TestScreenTemplate(
-      title: '2. Tiempo de 3 respiraciones',
-      description: _buildDescription(),
-      interactiveContent: _buildInteractiveContent(),
+      title: Strings.test2Title,
+      description: description(),
+      interactiveContent: interactiveContent(),
     );
   }
 
-  Widget _buildDescription() {
+  Widget description() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       color: kBackgroundColor,
@@ -48,33 +46,39 @@ class Test2ScreenState extends State<Test2Screen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Descripción de la prueba',
+            Strings.description,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           Text(
-            controller.model.description,
-            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
+            Strings.test2Description,
+            style: const TextStyle(fontSize: 15, color: kPrimaryColor),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 15),
           const Text(
-            'Instrucciones:',
+            Strings.instructions,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 7, 71, 94),
+              color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Text(
-            controller.model.instructions,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color.fromARGB(255, 7, 71, 94),
+            Strings.test2Instructions,
+            style: const TextStyle(fontSize: 15, color: kPrimaryColor),
+          ),
+          const SizedBox(height: 15),
+          const Text(
+            Strings.swipeToStart,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
             ),
           ),
         ],
@@ -82,7 +86,7 @@ class Test2ScreenState extends State<Test2Screen> {
     );
   }
 
-  Widget _buildInteractiveContent() {
+  Widget interactiveContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -138,7 +142,7 @@ class Test2ScreenState extends State<Test2Screen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,
               ),
-              child: const Icon(Icons.stop, color: Colors.white, size: 30),
+              child: const Icon(Icons.stop, color: kWhiteColor, size: 30),
             ),
           ],
         ),
@@ -150,8 +154,8 @@ class Test2ScreenState extends State<Test2Screen> {
             controller: resultFieldController,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
-              labelText: 'Número de segundos',
-              hintText: 'Edite el tiempo si lo desea',
+              labelText: Strings.test2Label,
+              hintText: Strings.test2Hint,
             ),
             onChanged: (value) {
               resultValue = value;
@@ -161,7 +165,7 @@ class Test2ScreenState extends State<Test2Screen> {
         const SizedBox(height: 40),
         AppButton(
           width: MediaQuery.of(context).size.width * 0.6,
-          text: 'Siguiente',
+          text: Strings.next,
           onPressed: () {
             if (controller.validateTestResult(resultValue)) {
               controller.model.testResult = int.parse(resultValue);
@@ -169,8 +173,8 @@ class Test2ScreenState extends State<Test2Screen> {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Por favor, ingrese un número válido.'),
-                  backgroundColor: Colors.red,
+                  content: Text(Strings.testError),
+                  backgroundColor: kRedAccentColor,
                 ),
               );
             }
@@ -181,7 +185,7 @@ class Test2ScreenState extends State<Test2Screen> {
           textStyle: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: kWhiteColor,
           ),
         ),
       ],

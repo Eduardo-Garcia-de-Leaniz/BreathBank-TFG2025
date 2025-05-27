@@ -33,6 +33,8 @@ class Strings {
 
   // Evaluation
   static const String evaluationTitle = 'Evaluación';
+  static const String pluralEvaluation = 'Evaluaciones';
+  static const String newEvaluation = 'Nueva evaluación';
   static const String completedTests = 'Has completado {0} de 3 pruebas';
   static const String startTest1 = 'Iniciar Prueba 1';
   static const String startTest2 = 'Iniciar Prueba 2';
@@ -41,8 +43,20 @@ class Strings {
   static const String testResultError = 'Por favor, ingrese un número válido.';
   static const String evaluationResultTitle = 'Resultados de pruebas:';
   static const String noResults = 'Sin resultados disponibles.';
+  static const String evaluationCompleted = '¡Evaluación completada!';
+  static const String test1 = 'Respiraciones en reposo';
+  static const String test2 = 'Tiempo de 3 respiraciones';
+  static const String test3 = 'Nº respiraciones guiadas';
+  static const String breathUnits = 'respiraciones';
+  static const String secondsUnits = 'segundos';
+  static const String newLevel = 'Nuevo nivel de inversor';
+  static const String updateEvaluationData =
+      'Se ha actualizado el nivel de inversor y el saldo se ha restablecido.';
 
   // Investment
+  static const String investmentTitle = 'Inversión';
+  static const String pluralInvestment = 'Inversiones';
+  static const String newInvestment = 'Nueva inversión';
   static const String investmentCompleted = '¡Inversión completada!';
   static const String investmentSuccess =
       '¡Has superado con éxito la inversión!';
@@ -73,6 +87,9 @@ class Strings {
   static const String next = 'Siguiente';
   static const String back = 'Atrás';
   static const String testError = 'Por favor, ingrese un número válido.';
+  static const String noData = 'Sin datos disponibles';
+  static const String seeMore = 'Ver más';
+  static const String seeLess = 'Ver menos';
 
   // Pruebas
   static const String description = 'Descripción de la prueba';
@@ -90,12 +107,58 @@ class Strings {
       '\n'
       '3. Durante la prueba respira normalmente. Cada vez que termines de inspirar, pulsa en la pantalla y comienza a expirar, y viceversa (cada vez que completes una respiración se actualizará el contador).\n'
       '\n'
-      '4. Cuando haya finalizado el tiempo, se registrará el número de respiraciones que has realizado. Si lo deseas puedes editar el resultado.\n'
+      '4. Cuando haya finalizado el tiempo, se registrará el número de respiraciones que has realizado. Si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n'
       '\n'
       '5. Finalmente, pulsa en el botón "Siguiente" para guardar el resultado.';
   static const String breathCountText = 'Llevas {0} {1}';
   static const String breathPhaseText = 'Pulsa cuando termines de {0}';
   static const String test1Label = 'Ingresa el número de respiraciones';
   static const String test1Hint = 'Número de respiraciones';
+
   // Test 2
+  static const String test2Title = 'Tiempo de 3 respiraciones';
+  static const String test2Description =
+      'Se contabilizará el tiempo máximo que tarda el usuario en realizar 3 respiraciones completas.';
+  static const String test2Instructions =
+      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la prueba\n'
+      '\n'
+      '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
+      '\n'
+      '3. Durante la prueba respira lo más lentamente posible, sin hacer pausa entre inspiración y expiración.\n'
+      '\n'
+      '4. Cuando hayas completado 3 respiraciones, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el tiempo que has tardado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n'
+      '\n'
+      '5. Finalmente, pulsa en el botón "Siguiente" para guardar el resultado.';
+
+  static const String test2Label = 'Ingresa el número de segundos';
+  static const String test2Hint = 'Número de segundos';
+
+  // Test 3
+  static const String test3Title = 'Prueba de respiración guiada';
+  static const String test3Description =
+      'Se contabilizará el número de la última respiración que el usuario sea capaz de completar al ritmo marcado por la prueba.';
+  static const String test3Instructions =
+      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la prueba\n'
+      '\n'
+      '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
+      '\n'
+      '3. Durante la prueba respira al ritmo marcado por la animación, sin hacer pausa entre inspiración y expiración.\n'
+      '\n'
+      '4. Cuando no hayas podido realizar la respiración correspondiente de forma completa, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el número de la última respiración que has realizado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n'
+      '\n'
+      '5. Finalmente, pulsa en el botón "Siguiente" para guardar el resultado.';
+
+  static const String test3Label = 'Ingresa el número de la última respiración';
+  static const String test3Hint = 'Número de la última respiración completada';
+
+  // Dashboard
+  static const String buttonToDashboard = 'Ir a mi Dashboard';
+  static const String dashboardTitle = 'Dashboard';
+  static const String dashboardWelcome = 'Bienvenid@, {0}';
+  static const String inversorLevel = 'Nivel de inversor';
+  static const String saldo = 'Saldo';
+  static const String lastInvestments = 'Últimas inversiones';
+  static const String seeInvestments = 'Ver inversiones';
+  static const String lastEvaluations = 'Últimas evaluaciones';
+  static const String seeEvaluations = 'Ver evaluaciones';
 }

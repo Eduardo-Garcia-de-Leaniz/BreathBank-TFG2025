@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 class ListPreview extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ListPreviewState extends State<ListPreview> {
   @override
   Widget build(BuildContext context) {
     if (widget.items.isEmpty) {
-      return const Text('No hay datos disponibles.');
+      return const Text(Strings.noData);
     }
 
     final itemsToShow =
@@ -54,7 +55,7 @@ class _ListPreviewState extends State<ListPreview> {
             onPressed: () => setState(() => expanded = !expanded),
             icon: Icon(expanded ? Icons.expand_less : Icons.expand_more),
             label: Text(
-              expanded ? 'Ver menos' : 'Ver más',
+              expanded ? Strings.seeLess : Strings.seeMore,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,

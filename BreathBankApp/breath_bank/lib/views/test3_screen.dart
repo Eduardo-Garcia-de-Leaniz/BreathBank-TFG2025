@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/controllers/test3_controller.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/views/test_screen_template.dart';
@@ -21,9 +22,6 @@ class Test3ScreenState extends State<Test3Screen> {
   @override
   void initState() {
     super.initState();
-    controller.loadDescriptionAndInstructions().then((_) {
-      setState(() {});
-    });
   }
 
   @override
@@ -35,13 +33,13 @@ class Test3ScreenState extends State<Test3Screen> {
   @override
   Widget build(BuildContext context) {
     return TestScreenTemplate(
-      title: '3. Prueba guiada',
-      description: _buildDescription(),
-      interactiveContent: _buildInteractiveContent(),
+      title: Strings.test3Title,
+      description: description(),
+      interactiveContent: interactiveContent(),
     );
   }
 
-  Widget _buildDescription() {
+  Widget description() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       color: kBackgroundColor,
@@ -49,38 +47,47 @@ class Test3ScreenState extends State<Test3Screen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Prueba de respiraciones guiada',
+            Strings.description,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           Text(
-            controller.model.description,
-            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
+            Strings.test3Description,
+            style: const TextStyle(fontSize: 15, color: kPrimaryColor),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 15),
           const Text(
-            'Instrucciones:',
+            Strings.instructions,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Text(
-            controller.model.instructions,
-            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
+            Strings.test3Instructions,
+            style: const TextStyle(fontSize: 15, color: kPrimaryColor),
+          ),
+          const SizedBox(height: 15),
+          const Text(
+            Strings.swipeToStart,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: kPrimaryColor,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildInteractiveContent() {
+  Widget interactiveContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -133,7 +140,7 @@ class Test3ScreenState extends State<Test3Screen> {
                 });
               },
               style: ElevatedButton.styleFrom(backgroundColor: kRedAccentColor),
-              child: const Icon(Icons.stop, color: Colors.white, size: 30),
+              child: const Icon(Icons.stop, color: kWhiteColor, size: 30),
             ),
           ],
         ),
@@ -145,8 +152,8 @@ class Test3ScreenState extends State<Test3Screen> {
             controller: controller.resultFieldController,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
-              labelText: 'Número última respiración',
-              hintText: 'Edite el número si lo desea',
+              labelText: Strings.test3Label,
+              hintText: Strings.test3Hint,
             ),
             onChanged: (value) {
               controller.model.testResult = int.tryParse(value) ?? 0;
@@ -156,7 +163,7 @@ class Test3ScreenState extends State<Test3Screen> {
         const SizedBox(height: 50),
         AppButton(
           width: MediaQuery.of(context).size.width * 0.6,
-          text: 'Siguiente',
+          text: Strings.next,
           onPressed: () {
             if (controller.validateTestResult(
               controller.resultFieldController.text,
@@ -165,10 +172,8 @@ class Test3ScreenState extends State<Test3Screen> {
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text(
-                    'Valor incorrecto. Asegúrate de indicar el número de la última respiración completada.',
-                  ),
-                  backgroundColor: Colors.red,
+                  content: Text(Strings.testError),
+                  backgroundColor: kRedAccentColor,
                 ),
               );
             }
@@ -179,7 +184,7 @@ class Test3ScreenState extends State<Test3Screen> {
           textStyle: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: kWhiteColor,
           ),
         ),
       ],

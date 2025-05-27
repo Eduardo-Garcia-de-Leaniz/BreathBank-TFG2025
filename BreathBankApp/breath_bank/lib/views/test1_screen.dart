@@ -66,12 +66,12 @@ class Test1ScreenState extends State<Test1Screen>
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           Text(
             Strings.test1Description,
             style: const TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           const Text(
             Strings.instructions,
             style: TextStyle(
@@ -85,7 +85,7 @@ class Test1ScreenState extends State<Test1Screen>
             Strings.test1Instructions,
             style: const TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 10),
           const Text(
             Strings.swipeToStart,
             style: TextStyle(

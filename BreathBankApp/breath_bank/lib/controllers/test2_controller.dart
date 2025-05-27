@@ -6,10 +6,6 @@ class Test2Controller {
   Timer? timer;
   bool isRunning = false;
 
-  Future<void> loadDescriptionAndInstructions() async {
-    await model.loadDescriptionAndInstructions();
-  }
-
   void startClock(void Function() updateUI) {
     if (timer == null) {
       // Solo inicia un nuevo temporizador si no hay uno activo

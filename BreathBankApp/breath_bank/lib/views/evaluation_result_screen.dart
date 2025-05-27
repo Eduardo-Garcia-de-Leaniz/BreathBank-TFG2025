@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'base_screen.dart';
 import '../widgets/app_button.dart';
@@ -17,13 +18,13 @@ class EvaluationResultScreen extends StatelessWidget {
     final int resultTest3 = args['result_test3'];
 
     return BaseScreen(
-      title: 'Resultados Evaluación',
+      title: Strings.evaluationResultTitle,
       canGoBack: false,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            '¡Evaluación completada!',
+            Strings.evaluationCompleted,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -31,35 +32,42 @@ class EvaluationResultScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _buildInvestorLevelCard(inversorLevel),
+          investorLevelCard(inversorLevel),
           const SizedBox(height: 20),
           Expanded(
             child: ListView(
               children: [
-                _buildResultItem(
+                resultItem(
                   icon: Icons.looks_one_rounded,
-                  label: 'Prueba 1',
+                  label: Strings.test1,
                   value: resultTest1,
-                  unit: 'respiraciones',
+                  unit: Strings.breathUnits,
                 ),
-                _buildResultItem(
+                resultItem(
                   icon: Icons.looks_two_rounded,
-                  label: 'Prueba 2',
+                  label: Strings.test2,
                   value: resultTest2,
-                  unit: 'segundos',
+                  unit: Strings.secondsUnits,
                 ),
-                _buildResultItem(
+                resultItem(
                   icon: Icons.looks_3_rounded,
-                  label: 'Prueba 3',
+                  label: Strings.test3,
                   value: resultTest3,
-                  unit: 'respiraciones',
+                  unit: Strings.breathUnits,
                 ),
               ],
             ),
           ),
           AppButton(
-            text: 'Ir a mi Dashboard',
+            text: Strings.buttonToDashboard,
             onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(Strings.updateEvaluationData),
+                  backgroundColor: kGreenColor,
+                  duration: const Duration(seconds: 2),
+                ),
+              );
               Navigator.of(context).pushNamed('/dashboard');
             },
             width: MediaQuery.of(context).size.width * 0.8,
@@ -70,7 +78,7 @@ class EvaluationResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInvestorLevelCard(int inversorLevel) {
+  Widget investorLevelCard(int inversorLevel) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -87,7 +95,7 @@ class EvaluationResultScreen extends StatelessWidget {
       child: Column(
         children: [
           const Text(
-            'Nuevo nivel de inversor',
+            Strings.newLevel,
             style: TextStyle(fontSize: 16, color: kLevelColor),
           ),
           Text(
@@ -103,7 +111,7 @@ class EvaluationResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResultItem({
+  Widget resultItem({
     required IconData icon,
     required String label,
     required int value,
@@ -113,19 +121,36 @@ class EvaluationResultScreen extends StatelessWidget {
       color: kPrimaryColor,
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 10),
-      child: ListTile(
-        leading: Icon(icon, color: kWhiteColor, size: 30),
-        title: Text(
-          label,
-          style: const TextStyle(fontSize: 16, color: kWhiteColor),
-        ),
-        trailing: Text(
-          '$value $unit',
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: kLevelColor,
-          ),
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(icon, color: kWhiteColor, size: 40),
+            const SizedBox(width: 40),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      label,
+                      style: const TextStyle(fontSize: 20, color: kWhiteColor),
+                    ),
+                  ],
+                ),
+                Text(
+                  '$value $unit',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: kLevelColor,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

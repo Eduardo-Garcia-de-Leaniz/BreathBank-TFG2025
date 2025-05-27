@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:breath_bank/views/evaluation_result_screen.dart';
@@ -33,21 +34,21 @@ void main() {
       );
 
       // Verifica textos principales
-      expect(find.text('¡Evaluación completada!'), findsOneWidget);
-      expect(find.text('Nuevo nivel de inversor'), findsOneWidget);
+      expect(find.text(Strings.evaluationCompleted), findsOneWidget);
+      expect(find.text(Strings.newLevel), findsOneWidget);
       expect(find.text('3'), findsOneWidget);
 
       // Verifica los resultados de las pruebas
-      expect(find.text('Prueba 1'), findsOneWidget);
-      expect(find.text('12 respiraciones'), findsOneWidget);
-      expect(find.text('Prueba 2'), findsOneWidget);
-      expect(find.text('34 segundos'), findsOneWidget);
-      expect(find.text('Prueba 3'), findsOneWidget);
-      expect(find.text('5 respiraciones'), findsOneWidget);
+      expect(find.text(Strings.test1), findsOneWidget);
+      expect(find.text('12 ${Strings.breathUnits}'), findsOneWidget);
+      expect(find.text(Strings.test2), findsOneWidget);
+      expect(find.text('34 ${Strings.secondsUnits}'), findsOneWidget);
+      expect(find.text(Strings.test3), findsOneWidget);
+      expect(find.text('5 ${Strings.breathUnits}'), findsOneWidget);
 
       // Verifica el botón y la navegación
-      expect(find.text('Ir a mi Dashboard'), findsOneWidget);
-      await tester.tap(find.text('Ir a mi Dashboard'));
+      expect(find.text(Strings.buttonToDashboard), findsOneWidget);
+      await tester.tap(find.text(Strings.buttonToDashboard));
       await tester.pumpAndSettle();
       expect(find.text('Dashboard'), findsOneWidget);
     },
