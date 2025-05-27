@@ -71,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InfoCard(
-                    title: Strings.inversorLevel,
+                    title: Strings.investorLevel,
                     value: _nivelInversor ?? '0',
                     numberColor: yellowColor,
                     textColor: yellowColor,

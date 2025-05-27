@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/statistics_model.dart';
 import 'package:breath_bank/widgets/info_row_widget.dart';
 import 'package:breath_bank/widgets/message_dialog_widget.dart';
@@ -29,29 +30,25 @@ class InvestmentMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MenuTemplateScreen(
-      title: 'Inversiones',
+      title: Strings.pluralInvestment,
       currentIndex: 2,
       tabs: const [
-        Tab(text: 'Historial'),
-        Tab(text: 'Estadísticas'),
-        Tab(text: 'Información'),
+        Tab(text: Strings.tabHistorial),
+        Tab(text: Strings.tabEstadisticas),
+        Tab(text: Strings.tabInformacion),
       ],
-      tabViews: [
-        _buildHistorialInversiones(),
-        _buildEstadisticas(),
-        _buildInformacionGeneral(),
-      ],
+      tabViews: [historialInversiones(), estadisticas(), informacionGeneral()],
     );
   }
 
-  Widget _buildHistorialInversiones() {
+  Widget historialInversiones() {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: controller.fetchDatosInversiones(),
       builder: (context, snapshot) {
         if (isLoading(context, snapshot)) {
           return const Center(child: CircularProgressIndicator());
         } else if (isError(snapshot)) {
-          return const Center(child: Text('No hay inversiones disponibles.'));
+          return const Center(child: Text(Strings.noData));
         }
 
         final inversiones = snapshot.data!;
@@ -74,34 +71,34 @@ class InvestmentMenuScreen extends StatelessWidget {
 
                   return ExpansionTile(
                     leading: const Icon(Icons.more_time, color: Colors.teal),
-                    title: Text('Inversión ${index + 1}'),
+                    title: Text('${Strings.investmentTitle} ${index + 1}'),
                     childrenPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,
                     ),
                     children: [
                       InfoRowWidget(
-                        label: 'Fecha',
+                        label: Strings.date,
                         value: controller.formatFecha(timestamp),
                       ),
                       InfoRowWidget(
-                        label: 'Tipo de inversión',
+                        label: Strings.investmentType,
                         value: tipoInversion,
                       ),
                       InfoRowWidget(
-                        label: 'Listón Inversión',
+                        label: Strings.investmentBar,
                         value: liston.toString(),
                       ),
                       InfoRowWidget(
-                        label: 'Número de respiraciones',
+                        label: Strings.numBreaths,
                         value: resultado.toString(),
                       ),
                       InfoRowWidget(
-                        label: '¿Superada?',
+                        label: Strings.investmentPassed,
                         value: superada ? 'Sí' : 'No',
                       ),
                       InfoRowWidget(
-                        label: 'Tiempo Inversión',
+                        label: Strings.investmentTime,
                         value: '$tiempo segundos',
                       ),
                     ],
@@ -120,15 +117,14 @@ class InvestmentMenuScreen extends StatelessWidget {
                             : () async {
                               await showCustomMessageDialog(
                                 context: context,
-                                title: 'Borrar inversiones',
-                                message:
-                                    '¿Seguro que quieres borrar todas tus inversiones? Esta acción no se puede deshacer.',
+                                title: Strings.deleteInvestmentsTitle,
+                                message: Strings.deleteInvestmentsMessage,
                                 actions: [
                                   TextButton(
                                     onPressed:
                                         () => Navigator.of(context).pop(),
                                     child: const Text(
-                                      'Cancelar',
+                                      Strings.cancel,
                                       style: TextStyle(color: kBackgroundColor),
                                     ),
                                   ),
@@ -149,7 +145,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                                       );
                                     },
                                     child: const Text(
-                                      'Borrar',
+                                      Strings.delete,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -167,7 +163,7 @@ class InvestmentMenuScreen extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      'Borrar inversiones',
+                      Strings.deleteInvestmentsTitle,
                       style: TextStyle(fontSize: 15, color: kWhiteColor),
                     ),
                   );
@@ -180,16 +176,14 @@ class InvestmentMenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEstadisticas() {
+  Widget estadisticas() {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: controller.fetchDatosInversiones(),
       builder: (context, snapshot) {
         if (isLoading(context, snapshot)) {
           return const Center(child: CircularProgressIndicator());
         } else if (isError(snapshot)) {
-          return const Center(
-            child: Text('No hay datos estadísticos disponibles.'),
-          );
+          return const Center(child: Text(Strings.noData));
         }
 
         final datos = snapshot.data!;
@@ -208,53 +202,53 @@ class InvestmentMenuScreen extends StatelessWidget {
             childAspectRatio: 1.4,
             children: [
               StatCardWidget(
-                title: 'Total de inversiones',
+                title: Strings.totalInvestments,
                 value: stats['totalInversiones'].toString(),
                 icon: Icons.analytics,
                 color: const Color.fromARGB(255, 0, 150, 136),
               ),
               StatCardWidget(
-                title: 'Inversiones superadas',
+                title: Strings.passedInvestments,
                 value: '${stats['porcentajeSuperadas']}%',
                 icon: Icons.check_circle,
                 color: const Color.fromARGB(255, 76, 175, 80),
               ),
 
               StatCardWidget(
-                title: 'Listón más alto',
+                title: Strings.bestBar,
                 value: stats['listonMasAlto'].toString(),
                 icon: Icons.stacked_bar_chart,
                 color: const Color.fromARGB(255, 255, 152, 0),
               ),
               StatCardWidget(
-                title: 'Duración más elegida',
+                title: Strings.mostSelectedDuration,
                 value: '${stats['duracionMasElegida']}"',
                 icon: Icons.timer,
                 color: const Color.fromARGB(255, 63, 81, 181),
               ),
 
               StatCardWidget(
-                title: 'Total respiraciones',
+                title: Strings.totalBreaths,
                 value: stats['totalRespiraciones'].toString(),
                 icon: Icons.air,
                 color: const Color.fromARGB(255, 12, 81, 15),
               ),
               StatCardWidget(
-                title: 'Última inversión',
+                title: Strings.lastInvestmentDate,
                 value: stats['fechaUltimaInversion'],
                 icon: Icons.calendar_today,
                 color: const Color.fromARGB(255, 125, 53, 8),
               ),
 
               StatCardWidget(
-                title: 'Inversiones manuales',
+                title: Strings.manualInvestments,
                 value: stats['inversionesManual'].toString(),
                 icon: Icons.handyman,
                 color: const Color.fromARGB(255, 63, 81, 181),
               ),
 
               StatCardWidget(
-                title: 'Inversiones guiadas',
+                title: Strings.guidedInvestments,
                 value: stats['inversionesGuiadas'].toString(),
                 icon: Icons.auto_awesome,
                 color: const Color.fromARGB(255, 63, 81, 181),
@@ -266,18 +260,17 @@ class InvestmentMenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInformacionGeneral() {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  Widget informacionGeneral() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
-          Text(
-            'Aquí puedes gestionar tus inversiones.',
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 20),
+          Text(Strings.investmentInfoTitle),
+          SizedBox(height: 8),
+          Text(Strings.investmentInfo),
         ],
       ),
     );

@@ -53,6 +53,21 @@ class Strings {
   static const String updateEvaluationData =
       'Se ha actualizado el nivel de inversor y el saldo se ha restablecido.';
 
+  // Evaluation Statistics
+  static const String bestInvestorLevel = 'Mejor nivel inversor';
+  static const String totalEvaluations = 'Total de evaluaciones';
+  static const String averageInvestorLevel = 'Promedio nivel inversor';
+  static const String bestTest1Result = 'Mejor resultado Prueba 1';
+  static const String bestTest2Result = 'Mejor resultado Prueba 2';
+  static const String bestTest3Result = 'Mejor resultado Prueba 3';
+  static const String lastEvaluationDate = 'Última evaluación';
+  static const String levelVariation = 'Variación del nivel';
+
+  // Evaluation Info
+  static const String evaluationInfoTitle =
+      'Información sobre las evaluaciones';
+  static const String evaluationInfo = 'Rellenar info';
+
   // Investment
   static const String investmentTitle = 'Inversión';
   static const String pluralInvestment = 'Inversiones';
@@ -69,6 +84,25 @@ class Strings {
       '¿Seguro que quieres borrar todas tus inversiones? Esta acción no se puede deshacer.';
   static const String cancel = 'Cancelar';
   static const String confirm = 'Confirmar';
+  static const String investmentType = 'Tipo de inversión';
+  static const String investmentBar = 'Listón Inversión';
+  static const String numBreaths = 'Número de respiraciones';
+  static const String investmentTime = 'Tiempo Inversión';
+  static const String investmentPassed = '¿Superada?';
+
+  // Investment Statistics
+  static const String guidedInvestments = 'Inversiones guiadas';
+  static const String totalInvestments = 'Total de inversiones';
+  static const String manualInvestments = 'Inversiones manuales';
+  static const String bestBar = 'Listón más alto';
+  static const String mostSelectedDuration = 'Duración más elegida';
+  static const String totalBreaths = 'Total respiraciones';
+  static const String lastInvestmentDate = 'Última inversión';
+  static const String passedInvestments = 'Inversiones superadas';
+
+  // Investment Info
+  static const String investmentInfoTitle = 'Información sobre las inversiones';
+  static const String investmentInfo = 'Rellenar info';
 
   // Account Settings
   static const String consultDataTitle = 'Consultar Datos';
@@ -90,6 +124,10 @@ class Strings {
   static const String noData = 'Sin datos disponibles';
   static const String seeMore = 'Ver más';
   static const String seeLess = 'Ver menos';
+  static const String tabHistorial = 'Historial';
+  static const String tabEstadisticas = 'Estadísticas';
+  static const String tabInformacion = 'Información';
+  static const String date = 'Fecha';
 
   // Pruebas
   static const String description = 'Descripción de la prueba';
@@ -155,7 +193,7 @@ class Strings {
   static const String buttonToDashboard = 'Ir a mi Dashboard';
   static const String dashboardTitle = 'Dashboard';
   static const String dashboardWelcome = 'Bienvenid@, {0}';
-  static const String inversorLevel = 'Nivel de inversor';
+  static const String investorLevel = 'Nivel de inversor';
   static const String saldo = 'Saldo';
   static const String lastInvestments = 'Últimas inversiones';
   static const String seeInvestments = 'Ver inversiones';

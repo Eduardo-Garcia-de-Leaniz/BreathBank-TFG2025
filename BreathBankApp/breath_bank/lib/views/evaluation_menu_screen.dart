@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/statistics_model.dart';
 import 'package:breath_bank/widgets/stat_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -12,29 +13,25 @@ class EvaluationMenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MenuTemplateScreen(
-      title: 'Evaluaciones',
+      title: Strings.pluralEvaluation,
       currentIndex: 0,
       tabs: const [
-        Tab(text: 'Historial'),
-        Tab(text: 'Estadísticas'),
-        Tab(text: 'Información'),
+        Tab(text: Strings.tabHistorial),
+        Tab(text: Strings.tabEstadisticas),
+        Tab(text: Strings.tabInformacion),
       ],
-      tabViews: [
-        _buildHistorialEvaluaciones(),
-        _buildEstadisticas(),
-        _buildInformacionGeneral(),
-      ],
+      tabViews: [historialEvaluaciones(), estadisticas(), informacionGeneral()],
     );
   }
 
-  Widget _buildHistorialEvaluaciones() {
+  Widget historialEvaluaciones() {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: controller.fetchEvaluaciones(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No hay evaluaciones disponibles.'));
+          return const Center(child: Text(Strings.noData));
         }
 
         final evaluaciones = snapshot.data!;
@@ -48,7 +45,7 @@ class EvaluationMenuScreen extends StatelessWidget {
 
             return ExpansionTile(
               leading: const Icon(Icons.assignment, color: Colors.teal),
-              title: Text('Evaluación ${index + 1}'),
+              title: Text('${Strings.evaluationTitle} ${index + 1}'),
               childrenPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 8,
@@ -60,7 +57,7 @@ class EvaluationMenuScreen extends StatelessWidget {
                     const Icon(Icons.star, color: Colors.amber),
                     const SizedBox(width: 8),
                     Text(
-                      'Nivel de inversor: $nivelFinal',
+                      '${Strings.investorLevel}: $nivelFinal',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -68,7 +65,7 @@ class EvaluationMenuScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    'Resultados de pruebas:',
+                    '${Strings.evaluationResultTitle}:',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -89,7 +86,7 @@ class EvaluationMenuScreen extends StatelessWidget {
                     if (resultados == null || resultados.isEmpty) {
                       return const Padding(
                         padding: EdgeInsets.only(top: 8.0),
-                        child: Text('Sin resultados disponibles.'),
+                        child: Text(Strings.noResults),
                       );
                     }
 
@@ -115,16 +112,14 @@ class EvaluationMenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEstadisticas() {
+  Widget estadisticas() {
     return FutureBuilder<List<Map<String, dynamic>>>(
       future: controller.fetchDatosEstadisticos(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text('No hay datos estadísticos disponibles.'),
-          );
+          return const Center(child: Text(Strings.noData));
         }
 
         final datos = snapshot.data!;
@@ -140,51 +135,51 @@ class EvaluationMenuScreen extends StatelessWidget {
             childAspectRatio: 1.4,
             children: [
               StatCardWidget(
-                title: 'Mejor nivel inversor',
+                title: Strings.bestInvestorLevel,
                 value: stats['mejorNivel'].toString(),
                 icon: Icons.emoji_events,
                 color: const Color.fromARGB(255, 255, 152, 0),
               ),
               StatCardWidget(
-                title: 'Total de evaluaciones',
+                title: Strings.totalEvaluations,
                 value: stats['totalEvaluaciones'].toString(),
                 icon: Icons.analytics,
                 color: const Color.fromARGB(255, 0, 150, 136),
               ),
               StatCardWidget(
-                title: 'Promedio de nivel',
+                title: Strings.averageInvestorLevel,
                 value: stats['promedioNivel'].toString(),
                 icon: Icons.leaderboard,
                 color: const Color.fromARGB(255, 63, 81, 181),
               ),
               StatCardWidget(
-                title: 'Mejor Resultado Prueba 1',
+                title: Strings.bestTest1Result,
                 value: stats['mejorP1'].toString(),
                 icon: Icons.looks_one_sharp,
                 color: const Color.fromARGB(255, 76, 175, 80),
               ),
 
               StatCardWidget(
-                title: 'Última evaluación',
+                title: Strings.lastEvaluationDate,
                 value: stats['fechaUltimaEvaluacion'].toString(),
                 icon: Icons.calendar_today,
                 color: const Color.fromARGB(255, 125, 53, 8),
               ),
 
               StatCardWidget(
-                title: 'Mejor Resultado Prueba 2',
+                title: Strings.bestTest2Result,
                 value: stats['mejorP2'].toString(),
                 icon: Icons.looks_two_sharp,
                 color: const Color.fromARGB(255, 33, 150, 243),
               ),
               StatCardWidget(
-                title: 'Variación del nivel',
+                title: Strings.levelVariation,
                 value: stats['variacionNivel'].toString(),
                 icon: Icons.trending_up,
                 color: const Color.fromARGB(255, 255, 152, 0),
               ),
               StatCardWidget(
-                title: 'Mejor Resultado Prueba 3',
+                title: Strings.bestTest3Result,
                 value: stats['mejorP3'].toString(),
                 icon: Icons.looks_3_sharp,
                 color: const Color.fromARGB(255, 156, 39, 176),
@@ -196,7 +191,19 @@ class EvaluationMenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInformacionGeneral() {
-    return const Center(child: Text('Añadir texto informativo aquí.'));
+  Widget informacionGeneral() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Text(Strings.evaluationInfoTitle),
+          SizedBox(height: 8),
+          Text(Strings.evaluationInfo),
+        ],
+      ),
+    );
   }
 }
