@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import '../controllers/evaluation_controller.dart';
 import '../models/evaluation_model.dart';
@@ -30,11 +31,11 @@ class EvaluationScreenState extends State<EvaluationScreen> {
 
     return BaseScreen(
       canGoBack: false,
-      title: 'Evaluación', // Título del AppBar
+      title: Strings.evaluationTitle,
       child: Column(
         children: [
-          const Text(
-            'Evaluación',
+          Text(
+            Strings.evaluationTitle,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -43,13 +44,15 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           ),
           SizedBox(height: separatorHeight),
           Text(
-            'Has completado ${model.testCompleted.values.where((e) => e).length} de 3 pruebas',
+            Strings.completedTests.replaceFirst(
+              '{0}',
+              model.testCompleted.values.where((e) => e).length.toString(),
+            ),
           ),
           SizedBox(height: separatorHeight),
           ProgressionBar(model: model),
           SizedBox(height: separatorHeight * 2),
 
-          // Botón para la prueba 1
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -64,7 +67,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
               AppButton(
                 width: buttonsWidth,
                 borderRadius: buttonsBorderRadius,
-                text: 'Iniciar Prueba 1',
+                text: Strings.startTest1,
                 onPressed: () async {
                   final result = await Navigator.pushNamed(
                     context,
@@ -87,6 +90,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
             ],
           ),
           SizedBox(height: separatorHeight),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -101,7 +105,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
               AppButton(
                 width: buttonsWidth,
                 borderRadius: buttonsBorderRadius,
-                text: 'Iniciar Prueba 2',
+                text: Strings.startTest2,
                 onPressed:
                     model.testCompleted['test2'] == true
                         ? null
@@ -128,7 +132,6 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           ),
           SizedBox(height: separatorHeight),
 
-          // Botón para la prueba 3
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -143,7 +146,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
               AppButton(
                 width: buttonsWidth,
                 borderRadius: buttonsBorderRadius,
-                text: 'Iniciar Prueba 3',
+                text: Strings.startTest3,
                 onPressed:
                     model.testCompleted['test3'] == true
                         ? null
@@ -170,9 +173,8 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           ),
           SizedBox(height: separatorHeight * 2),
 
-          // Botón para continuar
           AppButton(
-            text: 'Continuar',
+            text: Strings.continueButton,
             width: MediaQuery.of(context).size.width * 0.8,
             onPressed:
                 controller.allTestsCompleted()

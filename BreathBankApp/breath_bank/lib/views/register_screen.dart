@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/views/base_screen.dart';
 import 'package:breath_bank/widgets/clickable_text_login_register.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const BaseScreen(
       showAppBar: true,
-      title: 'Registro',
+      title: Strings.register,
       isScrollable: true,
       child: Column(
         children: [

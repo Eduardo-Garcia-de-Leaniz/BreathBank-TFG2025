@@ -15,7 +15,7 @@ class ImageLogo extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(40),
       child: Image.asset(
-        'assets/images/LogoPrincipal_BreathBank-sin_fondo.png',
+        'assets/images/LogoPrincipalBreathBank.png',
         fit: BoxFit.cover,
         width: imageWidth,
         height: imageHeight,

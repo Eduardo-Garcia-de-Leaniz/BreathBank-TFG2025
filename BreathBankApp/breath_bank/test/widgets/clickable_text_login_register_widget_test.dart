@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:breath_bank/widgets/clickable_text_login_register.dart';
@@ -9,18 +10,19 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         routes: {
-          '/register': (context) => const Scaffold(body: Text('Registro')),
+          '/register':
+              (context) => const Scaffold(body: Text(Strings.register)),
         },
         home: Scaffold(body: ClickableTextLoginRegister(isLogin: true)),
       ),
     );
 
-    expect(find.text('¿No tienes una cuenta? '), findsOneWidget);
-    expect(find.text('Registrarse'), findsOneWidget);
+    expect(find.text(Strings.dontHaveAccount), findsOneWidget);
+    expect(find.text(Strings.register), findsOneWidget);
 
-    await tester.tap(find.text('Registrarse'));
+    await tester.tap(find.text(Strings.register));
     await tester.pumpAndSettle();
-    expect(find.text('Registro'), findsOneWidget);
+    expect(find.text(Strings.register), findsOneWidget);
   });
 
   testWidgets('ClickableTextLoginRegister muestra texto de registro y navega', (
@@ -28,16 +30,18 @@ void main() {
   ) async {
     await tester.pumpWidget(
       MaterialApp(
-        routes: {'/login': (context) => const Scaffold(body: Text('Login'))},
+        routes: {
+          '/login': (context) => const Scaffold(body: Text(Strings.login)),
+        },
         home: Scaffold(body: ClickableTextLoginRegister(isLogin: false)),
       ),
     );
 
-    expect(find.text('¿Ya tienes una cuenta? '), findsOneWidget);
-    expect(find.text('Iniciar sesión'), findsOneWidget);
+    expect(find.text(Strings.alreadyHaveAccount), findsOneWidget);
+    expect(find.text(Strings.login), findsOneWidget);
 
-    await tester.tap(find.text('Iniciar sesión'));
+    await tester.tap(find.text(Strings.login));
     await tester.pumpAndSettle();
-    expect(find.text('Login'), findsOneWidget);
+    expect(find.text(Strings.login), findsOneWidget);
   });
 }

@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/views/base_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,24 +17,18 @@ class TestScreenTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScreen(
       canGoBack: false,
-      title: title, // Título del AppBar
+      title: title,
       child: SingleChildScrollView(
-        // Hace que el contenido sea desplazable
         child: SizedBox(
-          height:
-              MediaQuery.of(
-                context,
-              ).size.height, // Asegura que ocupe toda la pantalla
+          height: MediaQuery.of(context).size.height,
           child: PageView(
             children: [
-              // Primera parte de la prueba: descripción o instrucciones
               Stack(
                 children: [
                   Container(child: description),
                   const ArrowNextSymbol(),
                 ],
               ),
-              // Segunda parte de la prueba: contenido interactivo
               Stack(
                 children: [
                   Container(child: interactiveContent),
@@ -54,12 +49,9 @@ class ArrowPreviousSymbol extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 5,
+      left: 1,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: const Icon(
-        Icons.arrow_back_ios,
-        color: Color.fromARGB(255, 7, 71, 94),
-      ),
+      child: const Icon(Icons.arrow_back_ios, color: kPrimaryColor),
     );
   }
 }
@@ -70,12 +62,9 @@ class ArrowNextSymbol extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      right: 5,
+      right: 1,
       top: MediaQuery.of(context).size.height * 3 / 8,
-      child: const Icon(
-        Icons.arrow_forward_ios,
-        color: Color.fromARGB(255, 7, 71, 94),
-      ),
+      child: const Icon(Icons.arrow_forward_ios, color: kPrimaryColor),
     );
   }
 }

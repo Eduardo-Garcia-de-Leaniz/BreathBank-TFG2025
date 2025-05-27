@@ -1,5 +1,6 @@
 import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/user_credentials.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/widgets/textfield.dart';
@@ -33,34 +34,34 @@ class _RegisterFormState extends State<RegisterForm> {
 
   String? _validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Introduce un nombre de usuario';
+      return Strings.emptyName;
     }
     return null;
   }
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Introduce un correo electrónico';
+      return Strings.emptyEmail;
     } else if (!value.contains('@')) {
-      return 'Correo electrónico inválido';
+      return Strings.invalidEmail;
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Introduce una contraseña';
+      return Strings.emptyPassword;
     } else if (value.length < 6) {
-      return 'La contraseña es demasiado corta';
+      return Strings.passwordTooShort;
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Introduce una contraseña de confirmación';
+      return Strings.emptyConfirmPassword;
     } else if (value != passwordController.text) {
-      return 'Las contraseñas no coinciden';
+      return Strings.passwordMismatch;
     }
     return null;
   }
@@ -79,7 +80,10 @@ class _RegisterFormState extends State<RegisterForm> {
       setState(() => errorMessage = validationError);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(validationError), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(validationError),
+          backgroundColor: kRedAccentColor,
+        ),
       );
       return;
     }
@@ -91,7 +95,10 @@ class _RegisterFormState extends State<RegisterForm> {
       setState(() => errorMessage = registerError);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(registerError), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(registerError),
+          backgroundColor: kRedAccentColor,
+        ),
       );
       return;
     }
@@ -104,13 +111,12 @@ class _RegisterFormState extends State<RegisterForm> {
     );
 
     if (!mounted) return;
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: kGreenColor,
       ),
     );
 
@@ -126,8 +132,8 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFieldForm(
             fontSize: 14,
             controller: nameController,
-            label: 'Nombre de usuario',
-            hintText: 'Introduce tu nombre de usuario',
+            label: Strings.name,
+            hintText: Strings.hintName,
             icon: Icons.person,
             validator: _validateName,
           ),
@@ -135,8 +141,8 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFieldForm(
             fontSize: 14,
             controller: emailController,
-            label: 'Correo electrónico',
-            hintText: 'Introduce tu correo electrónico',
+            label: Strings.email,
+            hintText: Strings.hintEmail,
             icon: Icons.email,
             validator: _validateEmail,
           ),
@@ -144,8 +150,8 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFieldForm(
             fontSize: 14,
             controller: passwordController,
-            label: 'Contraseña',
-            hintText: 'Introduce tu contraseña',
+            label: Strings.password,
+            hintText: Strings.hintPassword,
             icon: Icons.lock,
             obscureText: true,
             validator: _validatePassword,
@@ -154,18 +160,18 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFieldForm(
             fontSize: 14,
             controller: confirmPasswordController,
-            label: 'Confirmar contraseña',
-            hintText: 'Repite tu contraseña',
+            label: Strings.confirmPassword,
+            hintText: Strings.hintConfirmPassword,
             icon: Icons.lock_reset,
             obscureText: true,
             validator: _validateConfirmPassword,
           ),
 
-          const SizedBox(height: 80),
+          const SizedBox(height: 30),
           Container(
             alignment: Alignment.bottomCenter,
             child: AppButton(
-              text: 'Registrarse',
+              text: Strings.register,
               width: MediaQuery.of(context).size.width * 0.8,
               onPressed: handleRegister,
               backgroundColor: kPrimaryColor,

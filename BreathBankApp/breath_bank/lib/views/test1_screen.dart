@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/app_button.dart';
 import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +26,6 @@ class Test1ScreenState extends State<Test1Screen>
   void initState() {
     super.initState();
     controller.init(this);
-    controller.loadDescriptionAndInstructions().then((_) {
-      setState(() {});
-    });
 
     controller.animationController.addListener(() {
       setState(() {});
@@ -47,52 +45,61 @@ class Test1ScreenState extends State<Test1Screen>
   @override
   Widget build(BuildContext context) {
     return TestScreenTemplate(
-      title: '1. Nº respiraciones en reposo',
-      description: _buildDescription(),
-      interactiveContent: _buildInteractiveContent(),
+      title: Strings.test1Title,
+      description: description(),
+      interactiveContent: interactiveContent(),
     );
   }
 
-  Widget _buildDescription() {
+  Widget description() {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 15.0, right: 30.0),
       color: kBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Respiraciones en reposo',
+            Strings.description,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 25),
+          const SizedBox(height: 15),
           Text(
-            controller.model.description,
-            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
+            Strings.test1Description,
+            style: const TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           const Text(
-            'Instrucciones:',
+            Strings.instructions,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 15),
           Text(
-            controller.model.instructions,
-            style: const TextStyle(fontSize: 16, color: kPrimaryColor),
+            Strings.test1Instructions,
+            style: const TextStyle(fontSize: 14, color: kPrimaryColor),
+          ),
+          const SizedBox(height: 15),
+          const Text(
+            Strings.swipeToStart,
+            style: TextStyle(
+              fontSize: 18,
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildInteractiveContent() {
+  Widget interactiveContent() {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -111,16 +118,25 @@ class Test1ScreenState extends State<Test1Screen>
         children: [
           const SizedBox(height: 10),
           Text(
-            'Llevas $breathCount respiracion${breathCount == 1 ? '' : 'es'}',
+            Strings.breathCountText
+                .replaceAll('{0}', breathCount.toString())
+                .replaceAll(
+                  '{1}',
+                  breathCount == 1 ? 'respiración' : 'respiraciones',
+                ),
             style: const TextStyle(
               fontSize: 22,
               color: kPrimaryColor,
               fontWeight: FontWeight.w600,
             ),
           ),
+
           if (controller.isRunning && controller.remainingTime > 0)
             Text(
-              'Pulsa cuando termines de ${tapCount % 2 == 0 ? 'inspirar' : 'expirar'}',
+              Strings.breathPhaseText.replaceAll(
+                '{0}',
+                tapCount % 2 == 0 ? 'inspirar' : 'expirar',
+              ),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 13,
@@ -150,7 +166,7 @@ class Test1ScreenState extends State<Test1Screen>
               Text(
                 '${controller.remainingTime}',
                 style: TextStyle(
-                  fontSize: 70,
+                  fontSize: 80,
                   fontWeight: FontWeight.bold,
                   color:
                       controller.remainingTime < 10
@@ -217,8 +233,8 @@ class Test1ScreenState extends State<Test1Screen>
               controller: resultFieldController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Ingrese el número de respiraciones',
-                hintText: 'Número de respiraciones',
+                labelText: Strings.test1Label,
+                hintText: Strings.test1Hint,
               ),
               onChanged: (value) {
                 resultValue = value;
@@ -229,7 +245,7 @@ class Test1ScreenState extends State<Test1Screen>
           const SizedBox(height: 40),
           AppButton(
             width: MediaQuery.of(context).size.width * 0.6,
-            text: 'Siguiente',
+            text: Strings.next,
             onPressed:
                 controller.remainingTime == 0
                     ? () {
@@ -239,15 +255,13 @@ class Test1ScreenState extends State<Test1Screen>
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text(
-                              'Por favor, ingrese un número válido.',
-                            ),
+                            content: Text(Strings.testError),
                             backgroundColor: kRedAccentColor,
                           ),
                         );
                       }
                     }
-                    : null, // Deshabilita el botón si el tiempo no es 0
+                    : null,
             backgroundColor:
                 controller.remainingTime == 0 ? kPrimaryColor : kDisabledColor,
             height: 50,

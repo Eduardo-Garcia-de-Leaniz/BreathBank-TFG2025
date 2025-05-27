@@ -26,10 +26,6 @@ class Test1Controller {
     });
   }
 
-  Future<void> loadDescriptionAndInstructions() async {
-    await model.loadDescriptionAndInstructions();
-  }
-
   void startClock() {
     isRunning = true;
     animationController.reverse(

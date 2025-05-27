@@ -1,4 +1,6 @@
 import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/user_credentials.dart';
 import 'package:breath_bank/widgets/textfield.dart';
 import 'package:flutter/material.dart';
@@ -28,18 +30,18 @@ class _LoginFormState extends State<LoginForm> {
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Introduce un correo electrónico';
+      return Strings.emptyEmail;
     } else if (!value.contains('@')) {
-      return 'Correo electrónico inválido';
+      return Strings.invalidEmail;
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Introduce una contraseña';
+      return Strings.emptyPassword;
     } else if (value.length < 6) {
-      return 'La contraseña es demasiado corta';
+      return Strings.passwordTooShort;
     }
     return null;
   }
@@ -55,19 +57,22 @@ class _LoginFormState extends State<LoginForm> {
     if (validationError != null) {
       setState(() => errorMessageLogin = validationError);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessageLogin), backgroundColor: Colors.red),
+        SnackBar(
+          content: Text(errorMessageLogin),
+          backgroundColor: kRedAccentColor,
+        ),
       );
       return;
     }
 
     final loginError = await controller.signIn(credentials);
     if (loginError != null) {
-      setState(() => errorMessageLogin = 'Las credenciales son incorrectas');
+      setState(() => errorMessageLogin = Strings.errorLogin);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Las credenciales son incorrectas'),
-          backgroundColor: Colors.red,
+        SnackBar(
+          content: Text(Strings.errorLogin),
+          backgroundColor: kRedAccentColor,
         ),
       );
       return;
@@ -80,15 +85,13 @@ class _LoginFormState extends State<LoginForm> {
       authenticationService.value.currentUser!.uid,
     );
 
-    // Verifica si el widget aún está montado antes de usar BuildContext
     if (!mounted) return;
-
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
           'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: kGreenColor,
       ),
     );
 
@@ -110,25 +113,24 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFieldForm(
             controller: emailController,
-            label: 'Correo electrónico',
-            hintText: 'Introduce tu correo electrónico',
+            label: Strings.email,
+            hintText: Strings.hintEmail,
             icon: Icons.email,
             validator: _validateEmail,
           ),
           const SizedBox(height: 20),
           TextFieldForm(
             controller: passwordController,
-            label: 'Contraseña',
-            hintText: 'Introduce tu contraseña',
+            label: Strings.password,
+            hintText: Strings.hintPassword,
             icon: Icons.lock,
             obscureText: true,
             validator: _validatePassword,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 30),
 
-          const SizedBox(height: 80),
           AppButton(
-            text: 'Iniciar sesión',
+            text: Strings.login,
             width: MediaQuery.of(context).size.width * 0.8,
             onPressed: _handleLogin,
             backgroundColor: const Color.fromARGB(255, 7, 71, 94),
