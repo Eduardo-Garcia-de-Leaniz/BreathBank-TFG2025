@@ -1,5 +1,9 @@
 import 'package:breath_bank/authentication_service.dart';
+import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
+import 'package:breath_bank/controllers/dashboard_controller.dart';
 import 'package:breath_bank/database_service.dart';
+import 'package:breath_bank/widgets/message_dialog_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +13,7 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
   final AuthenticationService authenticationService = AuthenticationService();
   final DatabaseService db = DatabaseService();
   final String userId = FirebaseAuth.instance.currentUser!.uid;
+  final DashboardController controller = DashboardController();
 
   AppBarDashboard({super.key});
 
@@ -46,67 +51,41 @@ class AppBarDashboard extends StatelessWidget implements PreferredSizeWidget {
               () => Navigator.pushNamed(context, '/dashboard/accountsettings'),
         ),
         IconButton(
-          icon: const Icon(Icons.logout, color: Colors.red),
+          icon: const Icon(Icons.logout, color: kRedAccentColor),
           onPressed: () async {
-            final confirmed = await showDialog<bool>(
+            await showCustomMessageDialog(
               context: context,
-              builder:
-                  (context) => AlertDialog(
-                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-                    title: const Text(
-                      'Cerrar sesión',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    content: const Text(
-                      '¿Estás seguro de que deseas cerrar sesión?',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    actions: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(
-                            255,
-                            188,
-                            252,
-                            245,
-                          ),
-                        ),
-                        child: const Text(
-                          'Cerrar sesión',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 7, 71, 94),
-                          ),
-                        ),
-                        onPressed: () => Navigator.of(context).pop(true),
-                      ),
-                      TextButton(
-                        child: const Text(
-                          'Cancelar',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () => Navigator.of(context).pop(false),
-                      ),
-                    ],
+              title: Strings.logout,
+              message: Strings.logoutMessage,
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text(
+                    Strings.cancel,
+                    style: TextStyle(color: kBackgroundColor),
                   ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kRedAccentColor,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    await controller.cerrarSesion(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                      // ignore: use_build_context_synchronously
+                      context,
+                      '/',
+                      (route) => false,
+                    );
+                  },
+                  child: const Text(
+                    Strings.logout,
+                    style: TextStyle(color: kWhiteColor),
+                  ),
+                ),
+              ],
             );
-
-            if (confirmed == true && await logout()) {
-              db.updateFechaUltimoAcceso(
-                userId: userId,
-                fechaUltimoAcceso: DateTime.now(),
-              );
-              if (!context.mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Sesión cerrada correctamente')),
-              );
-
-              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-            } else if (confirmed == true) {
-              if (!context.mounted) return;
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Error al cerrar sesión')),
-              );
-            }
           },
         ),
       ],
