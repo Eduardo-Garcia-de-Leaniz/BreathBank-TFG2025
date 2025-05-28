@@ -1,16 +1,17 @@
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/new_investment_menu_model.dart';
 
 class NewInvestmentMenuController {
-  final NewInvestmentMenuModel _model = NewInvestmentMenuModel();
+  final NewInvestmentMenuModel model = NewInvestmentMenuModel();
 
   Future<Map<String, dynamic>> loadUserStats() async {
-    return await _model.fetchUserStats();
+    return await model.fetchUserStats();
   }
 
   final Map<String, int> durations = {
-    'Express (1 minuto)': 1,
-    'Breve (2 minutos)': 2,
-    'Normal (5 minutos)': 5,
-    'Extensa (10 minutos)': 10,
+    Strings.expressInvestment: 1,
+    Strings.briefInvestment: 2,
+    Strings.normalInvestment: 5,
+    Strings.extensiveInvestment: 10,
   };
 }

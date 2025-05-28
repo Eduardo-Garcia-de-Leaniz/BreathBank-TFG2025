@@ -47,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
     return WillPopScope(
-      onWillPop: () async => false, // Deshabilita el botón de retroceso
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBarDashboard(),
         backgroundColor: kBackgroundColor,

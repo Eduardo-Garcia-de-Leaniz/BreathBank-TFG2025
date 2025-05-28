@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/countdown_overlay_widget.dart';
 import 'package:flutter/material.dart';
 import '../controllers/investment_test_controller.dart';
@@ -14,46 +15,46 @@ class ManualInvestmentScreen extends StatefulWidget {
 
 class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
     with SingleTickerProviderStateMixin {
-  late InvestmentTestController _controller;
-  late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
+  late InvestmentTestController controller;
+  late AnimationController animationController;
+  late Animation<double> scaleAnimation;
 
-  OverlayEntry? _countdownOverlayEntry;
+  OverlayEntry? countdownOverlayEntry;
 
   @override
   void initState() {
     super.initState();
     final model = InvestmentTestModel();
-    _controller = InvestmentTestController(model);
+    controller = InvestmentTestController(model);
 
-    _animationController = AnimationController(
+    animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      _controller.initialize(args, 'Manual');
+      controller.initialize(args, 'Manual');
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    _controller.model.dispose();
-    _animationController.dispose();
-    _countdownOverlayEntry?.remove();
+    controller.model.dispose();
+    animationController.dispose();
+    countdownOverlayEntry?.remove();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = _controller.model;
+    final model = controller.model;
 
     if (model.timeLimit == 0) {
       return const Scaffold(
@@ -64,22 +65,33 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
 
     return BaseScreen(
       canGoBack: false,
-      title: 'Inversión Manual',
+      title: Strings.manualInvestmentTitle,
       padding: const EdgeInsets.all(20),
       child: GestureDetector(
         onTap: () {
-          _controller.markPhase();
-          _animationController.forward(from: 0);
+          controller.markPhase();
+          animationController.forward(from: 0);
           setState(() {});
         },
         behavior: HitTestBehavior.opaque,
         child: Column(
           children: [
-            const SizedBox(height: 10),
+            if (!model.isTimeUp && model.isRunning)
+              Text(
+                textAlign: TextAlign.center,
+                Strings.instructionManualInvestment.replaceFirst(
+                  '{0}',
+                  model.phaseCounter % 2 == 0 ? 'inspirar' : 'expirar',
+                ),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            const SizedBox(height: 15),
             Stack(
               alignment: Alignment.center,
               children: [
-                // Circle and Progress Indicator
                 Container(
                   height: 320,
                   width: 320,
@@ -100,18 +112,18 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                   height: 280,
                   width: 280,
                   child: CircularProgressIndicator(
-                    value: 1 - _controller.timeProgress,
+                    value: 1 - controller.timeProgress,
                     strokeWidth: 14,
                     backgroundColor: kRedAccentColor,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      _controller.timeProgress == 1
+                      controller.timeProgress == 1
                           ? Colors.green
                           : Colors.blueAccent,
                     ),
                   ),
                 ),
                 ScaleTransition(
-                  scale: _scaleAnimation,
+                  scale: scaleAnimation,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -124,24 +136,24 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                         ),
                       ),
                       const Text(
-                        'Respiraciones',
+                        Strings.breaths,
                         style: TextStyle(
                           fontSize: 13,
                           color: Color.fromARGB(255, 126, 172, 186),
                         ),
                       ),
                       Text(
-                        _controller.formatTime(_controller.remainingSeconds),
+                        controller.formatTime(controller.remainingSeconds),
                         style: const TextStyle(
                           fontSize: 80,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: kWhiteColor,
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildControlButton(
+                          controlButton(
                             icon:
                                 model.isRunning
                                     ? Icons.pause
@@ -149,16 +161,16 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                             color: kGreenColor,
                             onPressed: () {
                               if (model.isRunning) {
-                                _controller.stopTimer();
+                                controller.stopTimer();
                               } else if (model.hasStarted) {
-                                _controller.startTimer(
+                                controller.startTimer(
                                   () {
                                     setState(() {});
                                   },
                                   () {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                        content: Text('¡Tiempo finalizado!'),
+                                        content: Text(Strings.finishInvestment),
                                         backgroundColor: kGreenColor,
                                         duration: Duration(seconds: 3),
                                       ),
@@ -171,7 +183,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                                   context: context,
                                   initialCountdown: 3,
                                   onCountdownComplete: () {
-                                    _controller.startTimer(
+                                    controller.startTimer(
                                       () {
                                         setState(() {});
                                       },
@@ -181,7 +193,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                                         ).showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                              '¡Tiempo finalizado!',
+                                              Strings.finishInvestment,
                                             ),
                                             backgroundColor: kGreenColor,
                                             duration: Duration(seconds: 3),
@@ -197,13 +209,13 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                             },
                           ),
                           const SizedBox(width: 30),
-                          _buildControlButton(
+                          controlButton(
                             icon: Icons.replay,
                             color: kRedAccentColor,
                             onPressed:
                                 model.hasStarted
                                     ? () {
-                                      _controller.resetTimer();
+                                      controller.resetTimer();
                                       setState(() {});
                                     }
                                     : null,
@@ -215,7 +227,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -226,7 +238,10 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
                 const SizedBox(width: 15),
                 Text(
-                  'Ritmo máximo para superar la inversión: \n${model.duracionFase.toStringAsFixed(1)} segundos por inhalación/exhalación',
+                  Strings.maxRhythmManualInvestment.replaceFirst(
+                    '{0}',
+                    model.duracionFase.toStringAsFixed(1),
+                  ),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -235,16 +250,6 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            if (!model.isTimeUp && model.isRunning)
-              Text(
-                textAlign: TextAlign.center,
-                'Pulsa cuando termines de ${model.phaseCounter % 2 == 0 ? 'inspirar' : 'expirar'}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
             const SizedBox(height: 20),
             if (model.isTimeUp)
               SizedBox(
@@ -264,7 +269,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                    backgroundColor: kPrimaryColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -275,7 +280,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Ver Resultado',
+                        Strings.seeResult,
                         style: TextStyle(fontSize: 16, color: kWhiteColor),
                       ),
                       SizedBox(width: 16),
@@ -290,7 +295,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
     );
   }
 
-  Widget _buildControlButton({
+  Widget controlButton({
     required IconData icon,
     required Color color,
     required VoidCallback? onPressed,

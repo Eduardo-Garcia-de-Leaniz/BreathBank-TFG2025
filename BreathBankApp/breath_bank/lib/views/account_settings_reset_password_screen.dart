@@ -108,7 +108,7 @@ class _AccountSettingsResetPasswordScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Contraseña actualizada con éxito"),
-          backgroundColor: Colors.green,
+          backgroundColor: kGreenColor,
         ),
       );
     } catch (e) {
@@ -117,7 +117,7 @@ class _AccountSettingsResetPasswordScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Error al actualizar la contraseña"),
-          backgroundColor: Colors.red,
+          backgroundColor: kRedAccentColor,
         ),
       );
     }

@@ -1,13 +1,9 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/controllers/account_settings_controller.dart';
 import 'package:breath_bank/widgets/message_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/views/base_screen.dart';
-
-const String cerrarSesion = 'Cerrar sesión';
-const String cargando = 'Cargando...';
-const String cancelar = 'Cancelar';
-const String borrar = 'Borrar';
 
 class AccountSettingsScreen extends StatefulWidget {
   const AccountSettingsScreen({super.key});
@@ -19,16 +15,16 @@ class AccountSettingsScreen extends StatefulWidget {
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   final AccountSettingsController controller = AccountSettingsController();
 
-  String nombre = cargando;
-  String email = cargando;
+  String nombre = Strings.loading;
+  String email = Strings.loading;
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    loadUserData();
   }
 
-  Future<void> _loadUserData() async {
+  Future<void> loadUserData() async {
     final data = await controller.cargarDatosUsuario();
     if (!mounted) return;
     setState(() {
@@ -41,7 +37,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     if (password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('La contraseña no puede estar vacía.'),
+          content: Text(Strings.emptyPassword),
           backgroundColor: kRedAccentColor,
         ),
       );
@@ -51,15 +47,15 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: 'Configuración de cuenta',
+      title: Strings.accountSettingsTitle,
       isScrollable: false,
       canGoBack: true,
       child: Column(
         children: [
           const CircleAvatar(
             radius: 40,
-            backgroundColor: Color.fromARGB(255, 7, 71, 94),
-            child: Icon(Icons.person, size: 40, color: Colors.white),
+            backgroundColor: kPrimaryColor,
+            child: Icon(Icons.person, size: 40, color: kWhiteColor),
           ),
           const SizedBox(height: 12),
           Text(
@@ -67,21 +63,18 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Color.fromARGB(255, 7, 71, 94),
+              color: kPrimaryColor,
             ),
           ),
           const SizedBox(height: 4),
-          Text(
-            email,
-            style: const TextStyle(color: Color.fromARGB(255, 7, 71, 94)),
-          ),
+          Text(email, style: const TextStyle(color: kPrimaryColor)),
           const SizedBox(height: 24),
           Expanded(
             child: ListView(
               children: [
                 buildOptionTile(
                   icon: Icons.edit_note,
-                  title: 'Consultar mis datos',
+                  title: Strings.consultDataTitle,
                   onTap: () {
                     Navigator.pushNamed(
                       context,
@@ -91,7 +84,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 ),
                 buildOptionTile(
                   icon: Icons.password,
-                  title: 'Cambiar contraseña',
+                  title: Strings.changePasswordTitle,
                   onTap: () {
                     Navigator.pushNamed(
                       context,
@@ -101,18 +94,17 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 ),
                 buildOptionTile(
                   icon: Icons.history,
-                  title: 'Borrar historial',
+                  title: Strings.deleteHistoryTitle,
                   onTap: () async {
                     await showCustomMessageDialog(
                       context: context,
-                      title: 'Borrar historial',
-                      message:
-                          '¿Estás seguro de que deseas borrar tu historial de inversiones y evaluaciones? Esta acción no se puede deshacer. Tu nivel de inversor y tu saldo se restablecerán a 0.',
+                      title: Strings.deleteHistoryTitle,
+                      message: Strings.deleteHistoryMessage,
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: const Text(
-                            cancelar,
+                            Strings.cancel,
                             style: TextStyle(color: kBackgroundColor),
                           ),
                         ),
@@ -132,7 +124,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             );
                           },
                           child: const Text(
-                            borrar,
+                            Strings.delete,
                             style: TextStyle(color: kWhiteColor),
                           ),
                         ),
@@ -142,7 +134,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 ),
                 buildOptionTile(
                   icon: Icons.logout,
-                  title: cerrarSesion,
+                  title: Strings.logout,
                   backgroundColor: kRedAccentColor,
                   iconColor: kWhiteColor,
                   titleColor: kWhiteColor,
@@ -150,13 +142,13 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                   onTap: () async {
                     await showCustomMessageDialog(
                       context: context,
-                      title: cerrarSesion,
-                      message: '¿Estás seguro de que deseas cerrar sesión?',
+                      title: Strings.logout,
+                      message: Strings.logoutMessage,
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: const Text(
-                            cancelar,
+                            Strings.cancel,
                             style: TextStyle(color: kBackgroundColor),
                           ),
                         ),
@@ -176,7 +168,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             );
                           },
                           child: const Text(
-                            'Cerrar sesión',
+                            Strings.logout,
                             style: TextStyle(color: kWhiteColor),
                           ),
                         ),
@@ -186,7 +178,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                 ),
                 buildOptionTile(
                   icon: Icons.delete_forever,
-                  title: 'Eliminar cuenta',
+                  title: Strings.deleteCount,
                   backgroundColor: kRedAccentColor,
                   iconColor: kWhiteColor,
                   titleColor: kWhiteColor,
@@ -195,19 +187,18 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                     final passwordController = TextEditingController();
                     await showCustomMessageDialog(
                       context: context,
-                      title: 'Borrar cuenta',
-                      message:
-                          '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer. Tu historial de inversiones y evaluaciones se borrará permanentemente.',
+                      title: Strings.deleteCount,
+                      message: Strings.deleteCountMessage,
                       actions: [
                         TextField(
                           controller: passwordController,
                           decoration: const InputDecoration(
-                            labelText: 'Contraseña',
+                            labelText: Strings.password,
                             labelStyle: TextStyle(color: kPrimaryColor),
                             border: OutlineInputBorder(),
                             filled: true,
                             fillColor: kBackgroundColor,
-                            hintText: 'Ingresa tu contraseña',
+                            hintText: Strings.hintPassword,
                             hintStyle: TextStyle(color: kPrimaryColor),
                           ),
                           obscureText: true,
@@ -220,7 +211,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(),
                               child: const Text(
-                                cancelar,
+                                Strings.cancel,
                                 style: TextStyle(color: kBackgroundColor),
                               ),
                             ),
@@ -246,7 +237,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                                 );
                               },
                               child: const Text(
-                                borrar,
+                                Strings.delete,
                                 style: TextStyle(color: kWhiteColor),
                               ),
                             ),
@@ -264,13 +255,11 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
     );
   }
 
-  static const Color defaultBackgroundColor = Color.fromARGB(255, 7, 71, 94);
-
   Widget buildOptionTile({
     required IconData icon,
     required String title,
     required VoidCallback onTap,
-    Color backgroundColor = defaultBackgroundColor,
+    Color backgroundColor = kPrimaryColor,
     Color iconColor = Colors.white,
     Color titleColor = Colors.white,
     Color arrowColor = Colors.white,

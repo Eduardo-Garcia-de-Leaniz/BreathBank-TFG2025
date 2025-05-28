@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/info_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -15,35 +16,35 @@ class GuidedInvestmentScreen extends StatefulWidget {
 }
 
 class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
-  late InvestmentTestController _controller;
+  late InvestmentTestController controller;
 
   @override
   void initState() {
     super.initState();
     final model = InvestmentTestModel();
-    _controller = InvestmentTestController(model);
+    controller = InvestmentTestController(model);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      _controller.initialize(args, 'Guiada');
+      controller.initialize(args, 'Guiada');
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    _controller.model.dispose();
+    controller.model.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = _controller.model;
+    final model = controller.model;
 
     return BaseScreen(
       canGoBack: false,
-      title: 'Inversión Guiada',
+      title: Strings.guidedInvestmentTitle,
       padding: const EdgeInsets.all(16.0),
       child: Center(
         child: Column(
@@ -63,7 +64,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InfoCard(
-                  title: 'Resp. completadas',
+                  title: Strings.completedBreaths,
                   value: '${model.breathCount}',
                   numberColor: kGreenColor,
                   textColor: kGreenColor,
@@ -73,7 +74,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 ),
                 const SizedBox(width: 18),
                 InfoCard(
-                  title: 'Resp. restantes',
+                  title: Strings.remainingBreaths,
                   value: '${model.targetBreaths - model.breathCount}',
                   numberColor: kRedAccentColor,
                   textColor: kRedAccentColor,
@@ -88,7 +89,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
               lineWidth: 10.0,
               percent: model.secondsElapsed / model.timeLimit,
               center: Text(
-                '${_controller.remainingSeconds}',
+                '${controller.remainingSeconds}',
                 style: TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
@@ -113,14 +114,14 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                         context: context,
                         initialCountdown: 3,
                         onCountdownComplete: () {
-                          _controller.startTimer(
+                          controller.startTimer(
                             () {
                               setState(() {});
                             },
                             () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('¡Tiempo finalizado!'),
+                                  content: Text(Strings.finishInvestment),
                                   backgroundColor: kGreenColor,
                                   duration: Duration(seconds: 3),
                                 ),
@@ -148,7 +149,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 else if (model.hasStarted && !model.isRunning)
                   TextButton(
                     onPressed: () {
-                      _controller.startTimer(
+                      controller.startTimer(
                         () {
                           setState(() {});
                         },
@@ -174,7 +175,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 else
                   TextButton(
                     onPressed: () {
-                      _controller.stopTimer();
+                      controller.stopTimer();
                       setState(() {});
                     },
                     style: TextButton.styleFrom(
@@ -194,7 +195,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                 const SizedBox(width: 16),
                 TextButton(
                   onPressed: () {
-                    _controller.resetTimer();
+                    controller.resetTimer();
                     setState(() {});
                   },
                   style: TextButton.styleFrom(
@@ -225,7 +226,10 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                   ),
                   const SizedBox(width: 15),
                   Text(
-                    'Ritmo de la inversión: \n${model.duracionFase.toStringAsFixed(1)} segundos por inhalación/exhalación',
+                    Strings.maxRhythmGuidedInvestment.replaceFirst(
+                      '{0}',
+                      model.duracionFase.toStringAsFixed(1),
+                    ),
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 14,
@@ -266,7 +270,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Ver Resultado',
+                        Strings.seeResult,
                         style: TextStyle(fontSize: 18, color: kWhiteColor),
                       ),
                       SizedBox(width: 16),

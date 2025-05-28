@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/controllers/account_settings_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ class _AccountSettingsConsultDataScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Error al cargar los datos: $e"),
-          backgroundColor: Colors.red,
+          backgroundColor: kRedAccentColor,
         ),
       );
     }
@@ -95,7 +96,7 @@ class _AccountSettingsConsultDataScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Datos actualizados correctamente"),
-          backgroundColor: Colors.green,
+          backgroundColor: kGreenColor,
         ),
       );
     } catch (e) {
@@ -104,7 +105,7 @@ class _AccountSettingsConsultDataScreenState
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Error al actualizar los datos"),
-          backgroundColor: Colors.red,
+          backgroundColor: kRedAccentColor,
         ),
       );
     }
@@ -156,10 +157,7 @@ class _AccountSettingsConsultDataScreenState
         children: [
           const Text(
             "Puedes editar tu nombre de usuario y consultar tus datos",
-            style: TextStyle(
-              fontSize: 16,
-              color: Color.fromARGB(255, 7, 71, 94),
-            ),
+            style: TextStyle(fontSize: 16, color: kPrimaryColor),
           ),
           const SizedBox(height: 20),
           buildEditableField(
@@ -245,7 +243,7 @@ class _AccountSettingsConsultDataScreenState
                 await cargarDatos();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                backgroundColor: kPrimaryColor,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

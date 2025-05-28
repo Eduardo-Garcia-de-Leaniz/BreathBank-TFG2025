@@ -89,6 +89,15 @@ class Strings {
   static const String numBreaths = 'Número de respiraciones';
   static const String investmentTime = 'Tiempo Inversión';
   static const String investmentPassed = '¿Superada?';
+  static const String investmentDuration = 'Duración de la inversión';
+  static const String manualInvestment = 'Inversión manual';
+  static const String guidedInvestment = 'Inversión guiada';
+  static const String startInvestment = 'Comenzar inversión';
+  static const String expressInvestment = 'Express (1 minuto)';
+  static const String briefInvestment = 'Breve (2 minutos)';
+  static const String normalInvestment = 'Normal (5 minutos)';
+  static const String extensiveInvestment = 'Extensa (10 minutos)';
+  static const String seeResult = 'Ver Resultado';
 
   // Investment Statistics
   static const String guidedInvestments = 'Inversiones guiadas';
@@ -104,13 +113,44 @@ class Strings {
   static const String investmentInfoTitle = 'Información sobre las inversiones';
   static const String investmentInfo = 'Rellenar info';
 
+  // Manual Investment
+  static const String manualInvestmentTitle = 'Inversión Manual';
+  static const String breaths = 'Respiraciones';
+  static const String finishInvestment = '¡Tiempo finalizado!';
+  static const String instructionManualInvestment =
+      'Pulsa cuando termines de {0}';
+
+  // Guided Investment
+  static const String guidedInvestmentTitle = 'Inversión Guiada';
+  static const String completedBreaths = 'Resp. completadas';
+  static const String remainingBreaths = 'Resp. restantes';
+
+  // Investment Result
+  static const String investmentResultTitle = 'Resultados de Inversión';
+  static const String investmentResultDuration = 'Duración';
+  static const String investmentResultBreaths = 'Respiraciones realizadas';
+  static const String investmentResultTarget = 'Límite de respiraciones';
+  static const String investmentResultSeconds = 'Tiempo por respiración';
+
   // Account Settings
-  static const String consultDataTitle = 'Consultar Datos';
+  static const String accountSettingsTitle = 'Configuración de la cuenta';
+  static const String consultDataTitle = 'Consultar mis datos';
+  static const String changePasswordTitle = 'Cambiar contraseña';
+  static const String deleteHistoryTitle = 'Borrar historial';
+  static const String deleteHistoryMessage =
+      '¿Estás seguro de que deseas borrar tu historial de inversiones y evaluaciones? Esta acción no se puede deshacer. Tu nivel de inversor y tu saldo se restablecerán a 0.';
+  static const String logoutMessage =
+      '¿Estás seguro de que deseas cerrar sesión?';
+  static const String deleteCount = 'Eliminar cuenta';
+  static const String deleteCountMessage =
+      '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer. Tu historial de inversiones y evaluaciones se perderá permanentemente.';
   static const String editName =
       'Puedes editar tu nombre de usuario y consultar tus datos';
   static const String updateSuccess = 'Datos actualizados correctamente';
   static const String updateError = 'Error al actualizar los datos';
   static const String loadDataError = 'Error al cargar los datos: {0}';
+  static const String logout = 'Cerrar sesión';
+  static const String loading = 'Cargando...';
 
   // Others
   static const String yes = 'Sí';
@@ -128,6 +168,10 @@ class Strings {
   static const String tabEstadisticas = 'Estadísticas';
   static const String tabInformacion = 'Información';
   static const String date = 'Fecha';
+  static const String maxRhythmManualInvestment =
+      'Ritmo máximo para superar la inversión: \n{0} segundos por inhalación/exhalación';
+  static const String maxRhythmGuidedInvestment =
+      'Ritmo de la inversión: \n{0} segundos por inhalación/exhalación';
 
   // Pruebas
   static const String description = 'Descripción de la prueba';

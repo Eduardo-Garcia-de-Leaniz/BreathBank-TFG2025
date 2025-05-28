@@ -1,10 +1,11 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/controllers/investment_controller.dart';
 import 'base_screen.dart';
 
 class InvestmentResultScreen extends StatelessWidget {
-  final InvestmentController _controller = InvestmentController();
+  final InvestmentController controller = InvestmentController();
 
   InvestmentResultScreen({super.key});
 
@@ -24,13 +25,13 @@ class InvestmentResultScreen extends StatelessWidget {
             : (investmentTime / breathResult).toInt().toString();
 
     return BaseScreen(
-      title: 'Resultados de Inversión',
+      title: Strings.investmentResultTitle,
       padding: const EdgeInsets.all(16.0),
       canGoBack: false,
       child: Column(
         children: [
           const Text(
-            '¡Inversión completada!',
+            Strings.investmentCompleted,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -39,22 +40,22 @@ class InvestmentResultScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           if (breathResult > 0 && breathResult <= breathTarget)
-            _buildResultMessageBox(
+            resultMessageBox(
               icon: Icons.check_circle,
-              message: '¡Has superado con éxito la inversión!',
+              message: Strings.investmentSuccess,
               backgroundColor: Colors.green.shade900,
               textColor: Colors.green.shade100,
             )
           else if (breathResult > breathTarget)
-            _buildResultMessageBox(
+            resultMessageBox(
               icon: Icons.warning_amber_rounded,
-              message: 'No has superado el objetivo. ¡Sigue practicando!',
+              message: Strings.investmentFail,
               backgroundColor: Colors.red.shade900,
               textColor: Colors.red.shade100,
             ),
           const SizedBox(height: 8),
           const Text(
-            'Aquí están los resultados de tu ejercicio de inversión:',
+            Strings.investmentResults,
             style: TextStyle(fontSize: 16),
             textAlign: TextAlign.center,
           ),
@@ -63,25 +64,25 @@ class InvestmentResultScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                _buildResultCard(
+                resultCard(
                   icon: Icons.timelapse,
-                  title: 'Duración',
-                  value: '$investmentTime segundos',
+                  title: Strings.investmentResultDuration,
+                  value: '$investmentTime"',
                 ),
-                _buildResultCard(
+                resultCard(
                   icon: Icons.done_outline_sharp,
-                  title: 'Respiraciones realizadas',
+                  title: Strings.investmentResultBreaths,
                   value: '$breathResult',
                 ),
-                _buildResultCard(
+                resultCard(
                   icon: Icons.straighten,
-                  title: 'Límite de respiraciones',
+                  title: Strings.investmentResultTarget,
                   value: '$breathTarget',
                 ),
-                _buildResultCard(
+                resultCard(
                   icon: Icons.timer_outlined,
-                  title: 'Tiempo por respiración',
-                  value: '$breathSecondsResult segundos',
+                  title: Strings.investmentResultSeconds,
+                  value: '$breathSecondsResult"',
                 ),
               ],
             ),
@@ -91,7 +92,7 @@ class InvestmentResultScreen extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                _controller.handleGuardarInversion(
+                controller.handleGuardarInversion(
                   context: context,
                   liston: listonInversion,
                   resultado: breathResult,
@@ -112,7 +113,7 @@ class InvestmentResultScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Volver',
+                    Strings.buttonToDashboard,
                     style: TextStyle(fontSize: 16, color: kWhiteColor),
                   ),
                 ],
@@ -124,7 +125,7 @@ class InvestmentResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResultCard({
+  Widget resultCard({
     required IconData icon,
     required String title,
     required String value,
@@ -152,7 +153,7 @@ class InvestmentResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResultMessageBox({
+  Widget resultMessageBox({
     required IconData icon,
     required String message,
     required Color backgroundColor,

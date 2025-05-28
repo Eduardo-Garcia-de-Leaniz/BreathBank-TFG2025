@@ -1,4 +1,5 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/widgets/investment_option_button.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/controllers/new_investment_menu_controller.dart';
@@ -15,49 +16,49 @@ class NewInvestmentMenuScreen extends StatefulWidget {
 }
 
 class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
-  final NewInvestmentMenuController _controller = NewInvestmentMenuController();
+  final NewInvestmentMenuController controller = NewInvestmentMenuController();
 
-  bool _isLoading = true;
-  double _sliderValue = 1;
-  String _selectedOption = '';
-  String? _selectedDuration;
-  int _nivelInversor = 0;
-  int _saldo = 0;
-  int _rangoInferior = 2;
-  int _rangoSuperior = 8;
+  bool isLoading = true;
+  double sliderValue = 1;
+  String selectedOption = '';
+  String? selectedDuration;
+  int nivelInversor = 0;
+  int saldo = 0;
+  int rangoInferior = 2;
+  int rangoSuperior = 8;
 
   @override
   void initState() {
     super.initState();
-    _selectedDuration = _controller.durations.keys.first;
-    _loadData();
+    selectedDuration = controller.durations.keys.first;
+    loadData();
   }
 
-  Future<void> _loadData() async {
-    final stats = await _controller.loadUserStats();
+  Future<void> loadData() async {
+    final stats = await controller.loadUserStats();
     setState(() {
-      _nivelInversor = stats['nivelInversor'];
-      _saldo = stats['saldo'];
-      _rangoInferior = stats['rangoInferior'];
-      _rangoSuperior = stats['rangoSuperior'];
-      _sliderValue = _rangoInferior.toDouble();
-      _isLoading = false;
+      nivelInversor = stats['nivelInversor'];
+      saldo = stats['saldo'];
+      rangoInferior = stats['rangoInferior'];
+      rangoSuperior = stats['rangoSuperior'];
+      sliderValue = rangoInferior.toDouble();
+      isLoading = false;
     });
   }
 
-  void _navigateToInvestment() {
-    final listonInversion = _sliderValue.toInt();
-    final duracionMinutos = _controller.durations[_selectedDuration]!;
+  void navigateToInvestment() {
+    final listonInversion = sliderValue.toInt();
+    final duracionMinutos = controller.durations[selectedDuration]!;
 
     final argumentos = {'liston': listonInversion, 'duracion': duracionMinutos};
 
-    if (_selectedOption == 'manual') {
+    if (selectedOption == 'manual') {
       Navigator.pushNamed(
         context,
         '/dashboard/newinvestmentmenu/manual',
         arguments: argumentos,
       );
-    } else if (_selectedOption == 'guiada') {
+    } else if (selectedOption == 'guiada') {
       Navigator.pushNamed(
         context,
         '/dashboard/newinvestmentmenu/guided',
@@ -69,10 +70,10 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
-      title: 'Nueva Inversión',
+      title: Strings.newInvestment,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child:
-          _isLoading
+          isLoading
               ? const Center(child: CircularProgressIndicator())
               : Column(
                 children: [
@@ -80,8 +81,8 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InfoCard(
-                        title: 'Nivel de Inversor',
-                        value: _nivelInversor.toString(),
+                        title: Strings.investorLevel,
+                        value: nivelInversor.toString(),
                         numberColor: kLevelColor,
                         textColor: kLevelColor,
                         maxValue: 11,
@@ -89,8 +90,8 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         height: 130,
                       ),
                       InfoCard(
-                        title: 'Saldo',
-                        value: _saldo.toString(),
+                        title: Strings.saldo,
+                        value: saldo.toString(),
                         numberColor: kGreenColor,
                         textColor: kGreenColor,
                         maxValue: 100,
@@ -101,18 +102,18 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                   ),
                   const SizedBox(height: 10),
                   InvestmentSlider(
-                    sliderValue: _sliderValue,
-                    rangoInferior: _rangoInferior,
-                    rangoSuperior: _rangoSuperior,
+                    sliderValue: sliderValue,
+                    rangoInferior: rangoInferior,
+                    rangoSuperior: rangoSuperior,
                     onChanged: (value) {
                       setState(() {
-                        _sliderValue = value;
+                        sliderValue = value;
                       });
                     },
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Duración de Inversión:',
+                    Strings.investmentDuration,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
@@ -121,7 +122,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                   ),
                   const SizedBox(height: 10),
                   DropdownButtonFormField<String>(
-                    value: _selectedDuration,
+                    value: selectedDuration,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: kPrimaryColor,
@@ -133,10 +134,10 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    style: const TextStyle(color: kWhiteColor, fontSize: 14),
                     dropdownColor: kPrimaryColor,
                     items:
-                        _controller.durations.keys.map((label) {
+                        controller.durations.keys.map((label) {
                           return DropdownMenuItem<String>(
                             alignment: Alignment.center,
                             value: label,
@@ -151,26 +152,26 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         }).toList(),
                     onChanged: (value) {
                       setState(() {
-                        _selectedDuration = value;
+                        selectedDuration = value;
                       });
                     },
                   ),
                   const SizedBox(height: 15),
                   InvestmentOptionButton(
-                    label: 'Manual',
-                    isSelected: _selectedOption == 'manual',
+                    label: Strings.manualInvestment,
+                    isSelected: selectedOption == 'manual',
                     onPressed: () {
                       setState(() {
-                        _selectedOption = 'manual';
+                        selectedOption = 'manual';
                       });
                     },
                   ),
                   InvestmentOptionButton(
-                    label: 'Guiada',
-                    isSelected: _selectedOption == 'guiada',
+                    label: Strings.guidedInvestment,
+                    isSelected: selectedOption == 'guiada',
                     onPressed: () {
                       setState(() {
-                        _selectedOption = 'guiada';
+                        selectedOption = 'guiada';
                       });
                     },
                   ),
@@ -179,13 +180,13 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_selectedOption.isNotEmpty) {
-                          _navigateToInvestment();
+                        if (selectedOption.isNotEmpty) {
+                          navigateToInvestment();
                         }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            _selectedOption.isNotEmpty
+                            selectedOption.isNotEmpty
                                 ? kPrimaryColor
                                 : kDisabledColor,
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -198,7 +199,7 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'Comenzar Inversión',
+                            Strings.startInvestment,
                             style: TextStyle(fontSize: 16, color: kWhiteColor),
                           ),
                           SizedBox(width: 16),
