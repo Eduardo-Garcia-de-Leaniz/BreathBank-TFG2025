@@ -34,7 +34,7 @@ class EvaluationScreenState extends State<EvaluationScreen> {
       title: Strings.evaluationTitle,
       child: Column(
         children: [
-          Text(
+          const Text(
             Strings.evaluationTitle,
             style: TextStyle(
               fontSize: 24,

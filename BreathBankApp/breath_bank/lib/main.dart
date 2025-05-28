@@ -3,12 +3,14 @@ import 'package:breath_bank/views/account_settings_reset_password_screen.dart';
 import 'package:breath_bank/views/account_settings_screen.dart';
 import 'package:breath_bank/views/dashboard_screen.dart';
 import 'package:breath_bank/views/evaluation_menu_screen.dart';
+import 'package:breath_bank/views/guided_investment_info_screen.dart';
 import 'package:breath_bank/views/guided_investment_screen.dart';
 import 'package:breath_bank/views/home_screen.dart';
 import 'package:breath_bank/views/evaluation_screen.dart';
 import 'package:breath_bank/views/investment_menu_screen.dart';
 import 'package:breath_bank/views/investment_result_screen.dart';
 import 'package:breath_bank/views/login_screen.dart';
+import 'package:breath_bank/views/manual_investment_info_screen.dart';
 import 'package:breath_bank/views/manual_investment_screen.dart';
 import 'package:breath_bank/views/new_investment_menu_screen.dart';
 import 'package:breath_bank/views/register_screen.dart';
@@ -165,6 +167,10 @@ class _MyAppState extends State<MyApp> {
         '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu':
             (context) => const NewInvestmentMenuScreen(),
+        '/dashboard/newinvestmentmenu/manualinfo':
+            (context) => const ManualInvestmentInfoScreen(),
+        '/dashboard/newinvestmentmenu/guidedinfo':
+            (context) => const GuidedInvestmentInfoScreen(),
         '/dashboard/newinvestmentmenu/manual':
             (context) => const ManualInvestmentScreen(),
         '/dashboard/newinvestmentmenu/guided':
@@ -180,7 +186,7 @@ class _MyAppState extends State<MyApp> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return const HomeScreen(); // o LoginScreen si prefieres
+                  return const HomeScreen();
                 } else if (snapshot.data == null) {
                   final args =
                       ModalRoute.of(context)?.settings.arguments
@@ -197,8 +203,6 @@ class _MyAppState extends State<MyApp> {
                 }
               },
             ),
-
-        // Otras rutas...
       },
     );
   }

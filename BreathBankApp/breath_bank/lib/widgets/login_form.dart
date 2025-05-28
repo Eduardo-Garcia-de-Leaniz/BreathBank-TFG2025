@@ -70,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
       setState(() => errorMessageLogin = Strings.errorLogin);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(Strings.errorLogin),
           backgroundColor: kRedAccentColor,
         ),

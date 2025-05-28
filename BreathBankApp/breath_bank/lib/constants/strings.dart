@@ -98,6 +98,10 @@ class Strings {
   static const String normalInvestment = 'Normal (5 minutos)';
   static const String extensiveInvestment = 'Extensa (10 minutos)';
   static const String seeResult = 'Ver Resultado';
+  static const String investmentGuideStepsMessageTitle =
+      '¿Cómo realizar una inversión {0}?';
+  static const String investmentGuideStepsMessage =
+      'Desliza a la derecha para ver el paso a paso';
 
   // Investment Statistics
   static const String guidedInvestments = 'Inversiones guiadas';
@@ -119,6 +123,19 @@ class Strings {
   static const String finishInvestment = '¡Tiempo finalizado!';
   static const String instructionManualInvestment =
       'Pulsa cuando termines de {0}';
+  static const String manualInvestmentInstructions =
+      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la inversión.\n'
+      '\n'
+      '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
+      '\n'
+      '3. Durante la inversión respira al ritmo que tú quieras, sin hacer pausa entre inspiración y expiración.\n'
+      '\n'
+      '4. Cada vez que termines de inspirar o expirar, pulsa en la pantalla para registrar la respiración.\n'
+      '\n'
+      '5. Cuando hayas completado el número de respiraciones deseado, pulsa en el botón "Finalizar inversión".';
+  static const String manualInvestmentInfoTitle =
+      'Información sobre la inversión manual';
+  static const String investmentResume = 'Datos de la inversión:';
 
   // Guided Investment
   static const String guidedInvestmentTitle = 'Inversión Guiada';

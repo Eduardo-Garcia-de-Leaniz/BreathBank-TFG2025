@@ -55,13 +55,13 @@ class _NewInvestmentMenuScreenState extends State<NewInvestmentMenuScreen> {
     if (selectedOption == 'manual') {
       Navigator.pushNamed(
         context,
-        '/dashboard/newinvestmentmenu/manual',
+        '/dashboard/newinvestmentmenu/manualinfo',
         arguments: argumentos,
       );
     } else if (selectedOption == 'guiada') {
       Navigator.pushNamed(
         context,
-        '/dashboard/newinvestmentmenu/guided',
+        '/dashboard/newinvestmentmenu/guidedinfo',
         arguments: argumentos,
       );
     }

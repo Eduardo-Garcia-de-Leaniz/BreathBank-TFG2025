@@ -14,11 +14,10 @@ class InvestmentTestModel {
   int targetBreaths = 0;
   double duracionFase = 0;
   int listonInversion = 0;
-  String tipoInversion = ''; // 'Manual' o 'Guiada'
+  String tipoInversion = '';
 
   Timer? _timer;
 
-  /// Inicializa los parámetros de la inversión
   void initialize({
     required int duracionMinutos,
     required int listonInversion,
@@ -31,7 +30,6 @@ class InvestmentTestModel {
     this.listonInversion = listonInversion;
   }
 
-  /// Inicia el temporizador
   void startTimer(Function onTick, Function onComplete) {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -40,7 +38,8 @@ class InvestmentTestModel {
         onComplete();
       } else {
         secondsElapsed++;
-        if (tipoInversion == 'Guiada' && secondsElapsed % duracionFase.floor() == 0) {
+        if (tipoInversion == 'Guiada' &&
+            secondsElapsed % duracionFase.floor() == 0) {
           _playBeep(phaseCounter % 2 == 0 ? 1 : 2); // Pitido según la fase
           phaseCounter++;
           if (phaseCounter % 2 == 0) {

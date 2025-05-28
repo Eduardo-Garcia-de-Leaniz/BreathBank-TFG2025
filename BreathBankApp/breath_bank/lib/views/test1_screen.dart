@@ -55,10 +55,10 @@ class Test1ScreenState extends State<Test1Screen>
     return Container(
       padding: const EdgeInsets.only(left: 15.0, right: 30.0),
       color: kBackgroundColor,
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             Strings.description,
             style: TextStyle(
               fontSize: 18,
@@ -66,13 +66,13 @@ class Test1ScreenState extends State<Test1Screen>
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Text(
             Strings.test1Description,
-            style: const TextStyle(fontSize: 14, color: kPrimaryColor),
+            style: TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
-          const SizedBox(height: 15),
-          const Text(
+          SizedBox(height: 15),
+          Text(
             Strings.instructions,
             style: TextStyle(
               fontSize: 18,
@@ -80,13 +80,13 @@ class Test1ScreenState extends State<Test1Screen>
               color: kPrimaryColor,
             ),
           ),
-          const SizedBox(height: 15),
+          SizedBox(height: 15),
           Text(
             Strings.test1Instructions,
-            style: const TextStyle(fontSize: 14, color: kPrimaryColor),
+            style: TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
-          const SizedBox(height: 10),
-          const Text(
+          SizedBox(height: 10),
+          Text(
             Strings.swipeToStart,
             style: TextStyle(
               fontSize: 18,

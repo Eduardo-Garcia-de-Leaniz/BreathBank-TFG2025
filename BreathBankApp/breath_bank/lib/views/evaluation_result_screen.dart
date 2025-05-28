@@ -62,10 +62,10 @@ class EvaluationResultScreen extends StatelessWidget {
             text: Strings.buttonToDashboard,
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text(Strings.updateEvaluationData),
                   backgroundColor: kGreenColor,
-                  duration: const Duration(seconds: 2),
+                  duration: Duration(seconds: 2),
                 ),
               );
               Navigator.of(context).pushNamed('/dashboard');
