@@ -9,17 +9,28 @@ import 'package:breath_bank/widgets/app_button.dart';
 
 class LoginForm extends StatefulWidget {
   final bool desdeNotificacion;
-  const LoginForm({super.key, required this.desdeNotificacion});
+  final LoginController? injectedController;
+  const LoginForm({
+    super.key,
+    required this.desdeNotificacion,
+    this.injectedController,
+  });
 
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final controller = LoginController();
+  late final LoginController controller;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String errorMessageLogin = '';
+
+  @override
+  void initState() {
+    super.initState();
+    controller = widget.injectedController ?? LoginController();
+  }
 
   @override
   void dispose() {

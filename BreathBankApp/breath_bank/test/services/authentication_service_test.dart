@@ -15,13 +15,10 @@ void main() {
     mockFirebaseAuth = MockFirebaseAuth();
     mockUser = MockUser();
     mockUserCredential = MockUserCredential();
-    // ✅ Stub del stream authStateChanges (importante antes de instanciar AuthenticationService)
-    when(mockFirebaseAuth.authStateChanges()).thenAnswer(
-      (_) =>
-          Stream<
-            User?
-          >.empty(), // o usa Stream.value(mockUser) si quieres simular un usuario logueado
-    );
+    when(
+      mockFirebaseAuth.authStateChanges(),
+    ).thenAnswer((_) => Stream<User?>.empty());
+
     authService = AuthenticationService(firebaseAuth: mockFirebaseAuth);
   });
 
