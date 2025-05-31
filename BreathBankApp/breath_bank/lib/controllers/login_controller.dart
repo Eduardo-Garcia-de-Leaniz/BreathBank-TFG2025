@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user_credentials.dart';
 
 class LoginController {
-  final DatabaseService db = DatabaseService();
+  final DatabaseService db;
 
+  LoginController({DatabaseService? db}) : db = db ?? DatabaseService();
   Future<String?> signIn(UserCredentials credentials) async {
     try {
       await authenticationService.value.signIn(
