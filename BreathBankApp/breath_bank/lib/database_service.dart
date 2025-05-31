@@ -12,7 +12,10 @@ const String kSaldo = 'Saldo';
 const String kNombre = 'Nombre';
 
 class DatabaseService {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseFirestore db;
+
+  DatabaseService({FirebaseFirestore? firestore})
+    : db = firestore ?? FirebaseFirestore.instance;
 
   Future<void> create({
     required String collectionPath,

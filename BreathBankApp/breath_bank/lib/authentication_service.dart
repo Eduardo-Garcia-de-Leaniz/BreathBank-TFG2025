@@ -6,14 +6,15 @@ ValueNotifier<AuthenticationService> authenticationService = ValueNotifier(
 );
 
 class AuthenticationService {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth;
 
   // 👇 Nuevo: Notificador del usuario actual
   final ValueNotifier<User?> userNotifier = ValueNotifier(null);
 
-  AuthenticationService() {
+  AuthenticationService({FirebaseAuth? firebaseAuth})
+    : firebaseAuth = firebaseAuth ?? FirebaseAuth.instance {
     // Escuchar cambios de login y actualizar el notifier
-    firebaseAuth.authStateChanges().listen((user) {
+    this.firebaseAuth.authStateChanges().listen((user) {
       userNotifier.value = user;
     });
   }

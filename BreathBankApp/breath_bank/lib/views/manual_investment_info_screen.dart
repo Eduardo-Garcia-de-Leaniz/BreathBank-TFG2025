@@ -62,7 +62,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 60),
                         Text(
                           Strings.investmentGuideStepsMessageTitle.replaceFirst(
                             '{0}',
@@ -78,6 +78,43 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                         Text(
                           Strings.investmentGuideStepsMessage,
                           style: TextStyle(fontSize: 16, color: kPrimaryColor),
+                        ),
+                        const SizedBox(height: 60),
+                        Text(
+                          Strings.goToInvestment,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: kPrimaryColor,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/dashboard/newinvestmentmenu/manual',
+                                arguments: args,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kPrimaryColor,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              Strings.startInvestment,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: kWhiteColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

@@ -102,6 +102,9 @@ class Strings {
       '¿Cómo realizar una inversión {0}?';
   static const String investmentGuideStepsMessage =
       'Desliza a la derecha para ver el paso a paso';
+  static const String goToInvestment =
+      'Si ya los conoces, pulsa aquí para ir a la inversión';
+  static const String startInvestmentButton = 'Comenzar inversión';
 
   // Investment Statistics
   static const String guidedInvestments = 'Inversiones guiadas';

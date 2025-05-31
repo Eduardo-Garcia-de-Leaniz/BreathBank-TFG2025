@@ -12,7 +12,7 @@ class LoginController {
         email: credentials.email,
         password: credentials.password,
       );
-      return null; // No error
+      return null;
     } on FirebaseAuthException catch (e) {
       return e.message ?? 'Error desconocido';
     }
