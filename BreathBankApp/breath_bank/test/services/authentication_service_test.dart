@@ -89,8 +89,6 @@ void main() {
   });
 
   test('deleteAccount reautentica y elimina el usuario', () async {
-    final credential = MockAuthCredential();
-
     when(mockFirebaseAuth.currentUser).thenReturn(mockUser);
     when(
       mockUser.reauthenticateWithCredential(any),

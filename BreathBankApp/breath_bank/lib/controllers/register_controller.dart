@@ -4,7 +4,9 @@ import 'package:breath_bank/models/user_credentials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterController {
-  final DatabaseService db = DatabaseService();
+  final DatabaseService db;
+
+  RegisterController({DatabaseService? db}) : db = db ?? DatabaseService();
 
   Future<String?> registerUser({
     required UserCredentialsRegister credentials,

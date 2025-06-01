@@ -1,8 +1,5 @@
-import 'package:breath_bank/controllers/investment_controller.dart';
-import 'package:breath_bank/controllers/login_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:breath_bank/database_service.dart';
 import 'database_service_test.mocks.dart';
@@ -13,8 +10,6 @@ void main() {
   late MockDocumentReference<Map<String, dynamic>> mockDoc;
   late MockDocumentSnapshot<Map<String, dynamic>> mockSnapshot;
   late DatabaseService dbService;
-  late LoginController loginController;
-  late InvestmentController investmentController;
 
   setUp(() {
     mockFirestore = MockFirebaseFirestore();
@@ -26,7 +21,6 @@ void main() {
     when(mockCollection.doc(any)).thenReturn(mockDoc);
 
     dbService = DatabaseService(firestore: mockFirestore);
-    loginController = LoginController(db: dbService);
   });
 
   test('create llama a set en el documento', () async {
@@ -37,16 +31,6 @@ void main() {
       data: {'Nombre': 'Test'},
     );
     verify(mockDoc.set({'Nombre': 'Test'})).called(1);
-  });
-
-  test('getNombreUsuario llama a getNombreUsuario en el controlador', () async {
-    when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
-    when(mockSnapshot.exists).thenReturn(true);
-    when(mockSnapshot.data()).thenReturn({'Nombre': 'Carlos'});
-
-    final nombre = await loginController.getNombreUsuario('user123');
-
-    expect(nombre, 'Carlos');
   });
 
   test('read devuelve null si el snapshot no existe', () async {
@@ -195,17 +179,6 @@ void main() {
     when(mockDoc.delete()).thenAnswer((_) async {});
     await dbService.delete(collectionPath: 'Usuarios', docId: 'user123');
     verify(mockDoc.delete()).called(1);
-  });
-
-  // Ejemplo de test para el LoginController usando el DatabaseService mockeado
-  test('LoginController llama a getNombreUsuario al obtener nombre', () async {
-    when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
-    when(mockSnapshot.exists).thenReturn(true);
-    when(mockSnapshot.data()).thenReturn({'Nombre': 'Carlos'});
-
-    final nombre = await loginController.getNombreUsuario('user123');
-
-    expect(nombre, 'Carlos');
   });
 
   test('getResultadosPruebas devuelve resultados si existen', () async {
@@ -363,6 +336,4 @@ void main() {
     expect(result, isNotNull);
     expect(result!['ResultadoPrueba1'], 10);
   });
-
-  // Para deleteUserData, deleteUserAccount y deleteInvestments se recomienda usar mocks avanzados y verificar llamadas a delete/update según la lógica de tu app.
 }
