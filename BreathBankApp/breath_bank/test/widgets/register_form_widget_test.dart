@@ -1,8 +1,6 @@
 import 'package:breath_bank/constants/strings.dart';
-import 'package:breath_bank/controllers/login_controller.dart';
 import 'package:breath_bank/controllers/register_controller.dart';
 import 'package:breath_bank/widgets/app_button.dart';
-import 'package:breath_bank/widgets/login_form.dart';
 import 'package:breath_bank/widgets/register_form.dart';
 import 'package:breath_bank/widgets/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -4,10 +4,17 @@ import '../models/evaluation_model.dart';
 
 class EvaluationController {
   final EvaluationModel model;
-  final DatabaseService db = DatabaseService();
-  final String userId = authenticationService.value.currentUser!.uid;
+  final DatabaseService db;
+  final AuthenticationService authenticationService;
 
-  EvaluationController(this.model);
+  EvaluationController(
+    this.model, {
+    DatabaseService? db,
+    AuthenticationService? authService,
+  }) : db = db ?? DatabaseService(),
+       authenticationService = authService ?? AuthenticationService();
+
+  late final String userId = authenticationService.currentUser!.uid;
 
   void completeTest(String testKey) {
     model.testCompleted[testKey] = true;
