@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 
 class InvestmentTestModel {
-  final AudioPlayer player = AudioPlayer();
+  final AudioPlayer player;
+  InvestmentTestModel({AudioPlayer? player}) : player = player ?? AudioPlayer();
 
   int secondsElapsed = 0;
   int phaseCounter = 0;

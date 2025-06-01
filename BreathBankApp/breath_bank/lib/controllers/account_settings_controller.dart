@@ -1,20 +1,28 @@
 import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/database_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 const String noDisponible = 'No disponible';
 
 class AccountSettingsController {
-  final DatabaseService db = DatabaseService();
-  final AuthenticationService authenticationService = AuthenticationService();
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
+  final DatabaseService db;
+  final AuthenticationService authenticationService;
+
+  AccountSettingsController({
+    DatabaseService? db,
+    AuthenticationService? authenticationService,
+  }) : db = db ?? DatabaseService(),
+       authenticationService = authenticationService ?? AuthenticationService();
+
+  String get userId => authenticationService.currentUser!.uid;
+  String get userEmail =>
+      authenticationService.currentUser!.email ?? noDisponible;
 
   Future<Map<String, String>> cargarDatosUsuario() async {
     final userDoc = await db.read(collectionPath: 'Usuarios', docId: userId);
     final nombre = userDoc?['Nombre'] ?? noDisponible;
-    final email = FirebaseAuth.instance.currentUser?.email ?? noDisponible;
+    final email = userEmail;
     return {'nombre': nombre, 'email': email};
   }
 
@@ -40,7 +48,6 @@ class AccountSettingsController {
   }
 
   Future<void> cerrarSesion(BuildContext context) async {
-    final authenticationService = AuthenticationService();
     try {
       await authenticationService.signOut();
       if (!context.mounted) return;
@@ -65,11 +72,10 @@ class AccountSettingsController {
     required String password,
     required BuildContext context,
   }) async {
-    final user = FirebaseAuth.instance.currentUser;
     try {
-      await db.deleteUserAccount(userId: user!.uid);
+      await db.deleteUserAccount(userId: userId);
       await AuthenticationService().deleteAccount(
-        email: user.email!,
+        email: userEmail,
         password: password,
       );
       if (!context.mounted) return;

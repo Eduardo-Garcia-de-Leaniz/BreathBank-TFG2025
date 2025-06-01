@@ -490,4 +490,40 @@ void main() {
 
     verify(mockUserDoc.delete()).called(1);
   });
+
+  test('getUsuarioStats devuelve null si el usuario no existe', () async {
+    when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
+    when(mockSnapshot.exists).thenReturn(false);
+
+    final stats = await dbService.getUsuarioStats(userId: 'user123');
+    expect(stats, isNull);
+  });
+
+  test(
+    'getResultadosPruebas devuelve null si el documento no existe',
+    () async {
+      final mockPruebasCollection =
+          MockCollectionReference<Map<String, dynamic>>();
+      final mockResultadosDoc = MockDocumentReference<Map<String, dynamic>>();
+      final mockResultadosSnapshot =
+          MockDocumentSnapshot<Map<String, dynamic>>();
+
+      when(
+        mockFirestore.collection('Evaluaciones/eval123/PruebasEvaluación'),
+      ).thenReturn(mockPruebasCollection);
+      when(
+        mockPruebasCollection.doc('Resultados'),
+      ).thenReturn(mockResultadosDoc);
+      when(
+        mockResultadosDoc.get(),
+      ).thenAnswer((_) async => mockResultadosSnapshot);
+      when(mockResultadosSnapshot.exists).thenReturn(false);
+
+      final result = await dbService.getResultadosPruebas(
+        userId: 'user123',
+        evaluacionId: 'eval123',
+      );
+      expect(result, isNull);
+    },
+  );
 }

@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:breath_bank/views/base_screen.dart';
 
 class AccountSettingsScreen extends StatefulWidget {
-  const AccountSettingsScreen({super.key});
+  final AccountSettingsController? controller;
+  const AccountSettingsScreen({super.key, this.controller});
 
   @override
   State<AccountSettingsScreen> createState() => _AccountSettingsScreenState();
 }
 
 class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
-  final AccountSettingsController controller = AccountSettingsController();
+  late final AccountSettingsController controller;
 
   String nombre = Strings.loading;
   String email = Strings.loading;
@@ -21,6 +22,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   @override
   void initState() {
     super.initState();
+    controller = widget.controller ?? AccountSettingsController();
     loadUserData();
   }
 
