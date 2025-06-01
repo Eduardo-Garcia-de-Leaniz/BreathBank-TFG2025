@@ -307,8 +307,6 @@ void main() {
     },
   );
 
-  // ...existing code...
-
   test('getResultadosPruebas devuelve resultados si existen', () async {
     final mockPruebasCollection =
         MockCollectionReference<Map<String, dynamic>>();
@@ -335,5 +333,161 @@ void main() {
     );
     expect(result, isNotNull);
     expect(result!['ResultadoPrueba1'], 10);
+  });
+
+  test('updateInversionesYSaldo actualiza inversiones y saldo', () async {
+    when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
+    when(mockSnapshot.exists).thenReturn(true);
+    when(mockSnapshot.data()).thenReturn({kNumeroInversiones: 1, kSaldo: 50});
+    when(mockDoc.update(any)).thenAnswer((_) async {});
+
+    await dbService.updateInversionesYSaldo(
+      userId: 'user123',
+      saldo: 20,
+      fechaUltimaInversion: DateTime(2023, 1, 2),
+    );
+
+    verify(
+      mockDoc.update({
+        kNumeroInversiones: 2,
+        kSaldo: 70,
+        kFechaUltimaInversion: DateTime(2023, 1, 2),
+      }),
+    ).called(1);
+  });
+
+  test('deleteUserData resetea los datos del usuario', () async {
+    final mockEvalCollection = MockCollectionReference<Map<String, dynamic>>();
+    final mockEvalDoc = MockDocumentReference<Map<String, dynamic>>();
+    final mockEvalSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+    final mockEvalDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+    final mockPruebasCollection =
+        MockCollectionReference<Map<String, dynamic>>();
+    final mockPruebaDoc = MockDocumentReference<Map<String, dynamic>>();
+    final mockPruebasSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+    final mockPruebaDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+    final mockInvCollection = MockCollectionReference<Map<String, dynamic>>();
+    final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+    final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+
+    // Mock evaluaciones
+    when(
+      mockFirestore.collection('Evaluaciones'),
+    ).thenReturn(mockEvalCollection);
+    when(
+      mockEvalCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+    ).thenReturn(mockEvalCollection);
+    when(mockEvalCollection.get()).thenAnswer((_) async => mockEvalSnapshot);
+    when(mockEvalSnapshot.docs).thenReturn([mockEvalDocSnap]);
+    when(mockEvalDocSnap.id).thenReturn('eval1');
+    when(
+      mockFirestore.collection('Evaluaciones/eval1/PruebasEvaluación'),
+    ).thenReturn(mockPruebasCollection);
+    when(
+      mockPruebasCollection.get(),
+    ).thenAnswer((_) async => mockPruebasSnapshot);
+    when(mockPruebasSnapshot.docs).thenReturn([mockPruebaDocSnap]);
+    when(mockPruebaDocSnap.id).thenReturn('prueba1');
+    when(mockPruebasCollection.doc('prueba1')).thenReturn(mockPruebaDoc);
+    when(mockPruebaDoc.delete()).thenAnswer((_) async {});
+    when(mockEvalCollection.doc('eval1')).thenReturn(mockEvalDoc);
+    when(mockEvalDoc.delete()).thenAnswer((_) async {});
+
+    // Mock inversiones
+    when(mockFirestore.collection('Inversiones')).thenReturn(mockInvCollection);
+    when(
+      mockInvCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+    ).thenReturn(mockInvCollection);
+    when(mockInvCollection.get()).thenAnswer((_) async => mockInvSnapshot);
+    when(mockInvSnapshot.docs).thenReturn([mockInvDocSnap]);
+    when(mockInvDocSnap.id).thenReturn('inv1');
+    when(mockInvCollection.doc('inv1')).thenReturn(mockDoc);
+    when(mockDoc.delete()).thenAnswer((_) async {});
+
+    // Mock usuario
+    when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
+    when(mockSnapshot.exists).thenReturn(true);
+    when(mockSnapshot.data()).thenReturn({
+      kNombre: 'Carlos',
+      kFechaCreacion: DateTime(2023, 1, 1),
+      kFechaUltimoAcceso: DateTime(2023, 1, 1),
+    });
+    when(mockDoc.update(any)).thenAnswer((_) async {});
+
+    await dbService.deleteUserData(userId: 'user123');
+
+    verify(
+      mockDoc.update(
+        argThat(
+          allOf(
+            containsPair(kNumeroEvaluaciones, 0),
+            containsPair(kSaldo, 0),
+            containsPair(kNumeroInversiones, 0),
+            containsPair(kNivelInversor, 0),
+            containsPair(kFechaUltimaEvaluacion, null),
+            containsPair(kFechaUltimaInversion, null),
+          ),
+        ),
+      ),
+    ).called(1);
+  });
+
+  test('deleteUserAccount elimina usuario y sus datos', () async {
+    final mockEvalCollection = MockCollectionReference<Map<String, dynamic>>();
+    final mockEvalDoc = MockDocumentReference<Map<String, dynamic>>();
+    final mockEvalSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+    final mockEvalDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+    final mockPruebasCollection =
+        MockCollectionReference<Map<String, dynamic>>();
+    final mockPruebasSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+    final mockPruebaDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+    final mockPruebaDoc = MockDocumentReference<Map<String, dynamic>>();
+    final mockInvCollection = MockCollectionReference<Map<String, dynamic>>();
+    final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+    final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+    final mockUserDoc = MockDocumentReference<Map<String, dynamic>>();
+
+    // Mock evaluaciones
+    when(
+      mockFirestore.collection('Evaluaciones'),
+    ).thenReturn(mockEvalCollection);
+    when(
+      mockEvalCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+    ).thenReturn(mockEvalCollection);
+    when(mockEvalCollection.get()).thenAnswer((_) async => mockEvalSnapshot);
+    when(mockEvalSnapshot.docs).thenReturn([mockEvalDocSnap]);
+    when(mockEvalDocSnap.id).thenReturn('eval1');
+    when(
+      mockFirestore.collection('Evaluaciones/eval1/PruebasEvaluación'),
+    ).thenReturn(mockPruebasCollection);
+    when(
+      mockPruebasCollection.get(),
+    ).thenAnswer((_) async => mockPruebasSnapshot);
+    when(mockPruebasSnapshot.docs).thenReturn([mockPruebaDocSnap]);
+    when(mockPruebaDocSnap.id).thenReturn('prueba1');
+    when(mockPruebasCollection.doc('prueba1')).thenReturn(mockPruebaDoc);
+    when(mockPruebaDoc.delete()).thenAnswer((_) async {});
+    when(mockEvalCollection.doc('eval1')).thenReturn(mockEvalDoc);
+    when(mockEvalDoc.delete()).thenAnswer((_) async {});
+
+    // Mock inversiones
+    when(mockFirestore.collection('Inversiones')).thenReturn(mockInvCollection);
+    when(
+      mockInvCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+    ).thenReturn(mockInvCollection);
+    when(mockInvCollection.get()).thenAnswer((_) async => mockInvSnapshot);
+    when(mockInvSnapshot.docs).thenReturn([mockInvDocSnap]);
+    when(mockInvDocSnap.id).thenReturn('inv1');
+    when(mockInvCollection.doc('inv1')).thenReturn(mockDoc);
+    when(mockDoc.delete()).thenAnswer((_) async {});
+
+    // Mock usuario
+    when(mockFirestore.collection('Usuarios')).thenReturn(mockCollection);
+    when(mockCollection.doc('user123')).thenReturn(mockUserDoc);
+    when(mockUserDoc.delete()).thenAnswer((_) async {});
+
+    await dbService.deleteUserAccount(userId: 'user123');
+
+    verify(mockUserDoc.delete()).called(1);
   });
 }
