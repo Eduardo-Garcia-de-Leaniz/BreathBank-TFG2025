@@ -8,20 +8,27 @@ import 'package:flutter/material.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({super.key});
+  final RegisterController? injectedController;
+  const RegisterForm({super.key, this.injectedController});
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  final controller = RegisterController();
+  late final RegisterController controller;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final TextEditingController nameController = TextEditingController();
   String errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    controller = widget.injectedController ?? RegisterController();
+  }
 
   @override
   void dispose() {

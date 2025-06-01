@@ -1,4 +1,3 @@
-import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/controllers/login_controller.dart';
 import 'package:breath_bank/widgets/app_button.dart';
@@ -18,19 +17,14 @@ void main() {
   late MockFirebaseFirestore mockFirestore;
   late MockCollectionReference<Map<String, dynamic>> mockCollection;
   late MockDocumentReference<Map<String, dynamic>> mockDoc;
-  late MockDocumentSnapshot<Map<String, dynamic>> mockSnapshot;
   late DatabaseService dbService;
   late MockFirebaseAuth mockFirebaseAuth;
-  late MockUser mockUser;
-  late MockUserCredential mockUserCredential;
-  late AuthenticationService authService;
   late LoginController loginController;
 
   setUp(() {
     mockFirestore = MockFirebaseFirestore();
     mockCollection = MockCollectionReference();
     mockDoc = MockDocumentReference();
-    mockSnapshot = MockDocumentSnapshot();
 
     when(mockFirestore.collection(any)).thenReturn(mockCollection);
     when(mockCollection.doc(any)).thenReturn(mockDoc);
@@ -38,13 +32,10 @@ void main() {
     dbService = DatabaseService(firestore: mockFirestore);
 
     mockFirebaseAuth = MockFirebaseAuth();
-    mockUser = MockUser();
-    mockUserCredential = MockUserCredential();
     when(
       mockFirebaseAuth.authStateChanges(),
     ).thenAnswer((_) => Stream<User?>.empty());
 
-    authService = AuthenticationService(firebaseAuth: mockFirebaseAuth);
     loginController = LoginController(db: dbService);
   });
 
