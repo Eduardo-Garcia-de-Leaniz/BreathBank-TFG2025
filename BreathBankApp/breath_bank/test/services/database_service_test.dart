@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -563,6 +564,91 @@ void main() {
       await dbService.deleteInvestments(userId: 'user123');
 
       verify(mockDoc.delete()).called(1);
+    },
+  );
+
+  test(
+    'getUltimasInversiones devuelve la lista de inversiones del usuario',
+    () async {
+      final mockInvCollection = MockCollectionReference<Map<String, dynamic>>();
+      final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+      final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+
+      // Datos de ejemplo para la inversión
+      final inversionData = {
+        'IdUsuario': 'user123',
+        'FechaInversión': DateTime(2023, 1, 1),
+        'ListónInversión': 10,
+        'ResultadoInversión': 20,
+        'TiempoInversión': 30,
+        'Superada': true,
+        'TipoInversión': 'tipo',
+      };
+
+      when(
+        mockFirestore.collection('Inversiones'),
+      ).thenReturn(mockInvCollection);
+      when(
+        mockInvCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+      ).thenReturn(mockInvCollection);
+      when(mockInvCollection.get()).thenAnswer((_) async => mockInvSnapshot);
+      when(mockInvSnapshot.docs).thenReturn([mockInvDocSnap]);
+      when(mockInvDocSnap.data()).thenReturn(inversionData);
+
+      final result = await dbService.getUltimasInversiones(userId: 'user123');
+
+      expect(result, isA<List<Map<String, dynamic>>>());
+      expect(result.length, 1);
+      expect(result.first['IdUsuario'], 'user123');
+      expect(result.first['Superada'], true);
+    },
+  );
+
+  test(
+    'getUltimasEvaluaciones devuelve la lista de evaluaciones del usuario ordenadas por fecha',
+    () async {
+      final mockEvalCollection =
+          MockCollectionReference<Map<String, dynamic>>();
+      final mockEvalSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+      final mockEvalDocSnap1 =
+          MockQueryDocumentSnapshot<Map<String, dynamic>>();
+      final mockEvalDocSnap2 =
+          MockQueryDocumentSnapshot<Map<String, dynamic>>();
+
+      // Datos de ejemplo para las evaluaciones
+      final evalData1 = {
+        'IdUsuario': 'user123',
+        'Fecha': Timestamp.fromDate(DateTime(2023, 1, 1)),
+        'NivelInversorFinal': 2,
+      };
+      final evalData2 = {
+        'IdUsuario': 'user123',
+        'Fecha': Timestamp.fromDate(DateTime(2023, 2, 1)),
+        'NivelInversorFinal': 3,
+      };
+
+      when(
+        mockFirestore.collection('Evaluaciones'),
+      ).thenReturn(mockEvalCollection);
+      when(
+        mockEvalCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+      ).thenReturn(mockEvalCollection);
+      when(mockEvalCollection.get()).thenAnswer((_) async => mockEvalSnapshot);
+      when(
+        mockEvalSnapshot.docs,
+      ).thenReturn([mockEvalDocSnap2, mockEvalDocSnap1]);
+      when(mockEvalDocSnap1.data()).thenReturn(evalData1);
+      when(mockEvalDocSnap1.id).thenReturn('eval1');
+      when(mockEvalDocSnap2.data()).thenReturn(evalData2);
+      when(mockEvalDocSnap2.id).thenReturn('eval2');
+
+      final result = await dbService.getUltimasEvaluaciones(userId: 'user123');
+
+      expect(result, isA<List<Map<String, dynamic>>>());
+      expect(result.length, 2);
+      expect(result[0]['id'], anyOf('eval1', 'eval2'));
+      expect(result[1]['id'], anyOf('eval1', 'eval2'));
+      expect(result.map((e) => e['IdUsuario']).toSet(), {'user123'});
     },
   );
 }
