@@ -111,4 +111,28 @@ void main() {
       expect(result, null);
     });
   });
+
+  group('RegisterController.getNombreUsuario', () {
+    test('devuelve el nombre si existe', () async {
+      when(
+        mockDoc.get(),
+      ).thenAnswer((_) async => MockDocumentSnapshot<Map<String, dynamic>>());
+      final mockSnapshot = MockDocumentSnapshot<Map<String, dynamic>>();
+      when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
+      when(mockSnapshot.exists).thenReturn(true);
+      when(mockSnapshot.data()).thenReturn({'Nombre': 'Carlos'});
+
+      final nombre = await registerController.getNombreUsuario('user123');
+      expect(nombre, 'Carlos');
+    });
+
+    test('devuelve null si el snapshot no existe', () async {
+      final mockSnapshot = MockDocumentSnapshot<Map<String, dynamic>>();
+      when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
+      when(mockSnapshot.exists).thenReturn(false);
+
+      final nombre = await registerController.getNombreUsuario('user123');
+      expect(nombre, isNull);
+    });
+  });
 }

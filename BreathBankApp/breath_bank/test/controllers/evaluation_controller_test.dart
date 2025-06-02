@@ -1,9 +1,7 @@
 import 'package:breath_bank/authentication_service.dart';
 import 'package:breath_bank/controllers/evaluation_controller.dart';
-import 'package:breath_bank/controllers/register_controller.dart';
 import 'package:breath_bank/database_service.dart';
 import 'package:breath_bank/models/evaluation_model.dart';
-import 'package:breath_bank/models/user_credentials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -34,6 +32,8 @@ void main() {
     mockFirebaseAuth = MockFirebaseAuth();
     mockUser = MockUser();
     mockUserCredential = MockUserCredential();
+    when(mockFirebaseAuth.currentUser).thenReturn(mockUser);
+    when(mockUser.uid).thenReturn('user123');
     when(
       mockFirebaseAuth.authStateChanges(),
     ).thenAnswer((_) => Stream<User?>.empty());
