@@ -526,4 +526,43 @@ void main() {
       expect(result, isNull);
     },
   );
+
+  test(
+    'deleteInvestments elimina inversiones y resetea campos del usuario',
+    () async {
+      final mockInvCollection = MockCollectionReference<Map<String, dynamic>>();
+      final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
+      final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
+
+      // Mock inversiones
+      when(
+        mockFirestore.collection('Inversiones'),
+      ).thenReturn(mockInvCollection);
+      when(
+        mockInvCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
+      ).thenReturn(mockInvCollection);
+      when(mockInvCollection.get()).thenAnswer((_) async => mockInvSnapshot);
+      when(mockInvSnapshot.docs).thenReturn([mockInvDocSnap]);
+      when(mockInvDocSnap.id).thenReturn('inv1');
+      when(mockInvCollection.doc('inv1')).thenReturn(mockDoc);
+      when(mockDoc.delete()).thenAnswer((_) async {});
+
+      // Mock usuario
+      when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
+      when(mockSnapshot.exists).thenReturn(true);
+      when(mockSnapshot.data()).thenReturn({
+        kNombre: 'Carlos',
+        kFechaCreacion: DateTime(2023, 1, 1),
+        kFechaUltimoAcceso: DateTime(2023, 1, 1),
+        kNivelInversor: 2,
+        kNumeroEvaluaciones: 3,
+        kFechaUltimaEvaluacion: DateTime(2023, 1, 2),
+      });
+      when(mockDoc.update(any)).thenAnswer((_) async {});
+
+      await dbService.deleteInvestments(userId: 'user123');
+
+      verify(mockDoc.delete()).called(1);
+    },
+  );
 }
