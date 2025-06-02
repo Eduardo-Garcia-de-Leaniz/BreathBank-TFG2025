@@ -118,4 +118,60 @@ void main() {
       expect(find.text(Strings.emptyPassword), findsOneWidget);
     });
   });
+
+  testWidgets('Muestra error si el email es inválido', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: LoginForm(
+            injectedController: loginController,
+            desdeNotificacion: false,
+          ),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.email),
+      'correoSinArroba.com',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.password),
+      '123456',
+    );
+    await tester.tap(find.byType(AppButton));
+    await tester.pump();
+
+    expect(find.text(Strings.invalidEmail), findsOneWidget);
+  });
+
+  testWidgets('Muestra error si la contraseña no es válida', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: LoginForm(
+            injectedController: loginController,
+            desdeNotificacion: false,
+          ),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.email),
+      'correo@conArroba.com',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.password),
+      '123',
+    );
+    await tester.tap(find.byType(AppButton));
+    await tester.pump();
+
+    expect(find.text(Strings.passwordTooShort), findsOneWidget);
+  });
 }
