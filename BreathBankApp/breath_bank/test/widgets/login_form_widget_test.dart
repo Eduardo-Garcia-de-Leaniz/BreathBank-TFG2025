@@ -167,11 +167,11 @@ void main() {
     );
     await tester.enterText(
       find.widgetWithText(TextFieldForm, Strings.password),
-      '123456',
+      '123',
     );
     await tester.tap(find.byType(AppButton));
     await tester.pump();
 
-    expect(find.text(Strings.invalidEmail), findsOneWidget);
+    expect(find.text(Strings.passwordTooShort), findsOneWidget);
   });
 }
