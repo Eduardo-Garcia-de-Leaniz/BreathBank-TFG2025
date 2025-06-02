@@ -219,4 +219,136 @@ void main() {
 
     expect(find.text(Strings.passwordMismatch), findsOneWidget);
   });
+
+  testWidgets('Muestra error si el nombre está vacío', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: RegisterForm(injectedController: registerController),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.name),
+      '',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.email),
+      'test@mail.com',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.password),
+      '123456',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.confirmPassword),
+      '123456',
+    );
+    await tester.tap(find.byType(AppButton));
+    await tester.pump();
+
+    expect(find.text(Strings.emptyName), findsOneWidget);
+  });
+
+  testWidgets('Muestra error si el email está vacío', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: RegisterForm(injectedController: registerController),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.name),
+      'nombre',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.email),
+      '',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.password),
+      '123456',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.confirmPassword),
+      '123456',
+    );
+    await tester.tap(find.byType(AppButton));
+    await tester.pump();
+
+    expect(find.text(Strings.emptyEmail), findsOneWidget);
+  });
+
+  testWidgets('Muestra error si la contraseña está vacía', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: RegisterForm(injectedController: registerController),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.name),
+      'nombre',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.email),
+      'test@mail.com',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.password),
+      '',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.confirmPassword),
+      '123456',
+    );
+    await tester.tap(find.byType(AppButton));
+    await tester.pump();
+
+    expect(find.text(Strings.emptyPassword), findsOneWidget);
+  });
+
+  testWidgets('Muestra error si la repetición de contraseña está vacía', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: RegisterForm(injectedController: registerController),
+        ),
+      ),
+    );
+
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.name),
+      'nombre',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.email),
+      'test@mail.com',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.password),
+      '123456',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFieldForm, Strings.confirmPassword),
+      '',
+    );
+    await tester.tap(find.byType(AppButton));
+    await tester.pump();
+
+    expect(find.text(Strings.emptyConfirmPassword), findsOneWidget);
+  });
 }
