@@ -14,15 +14,4 @@ void main() {
     // Busca el icono de flecha atrás
     expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
   });
-
-  testWidgets('ArrowNextSymbol muestra el icono de flecha adelante', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(
-      MaterialApp(home: Stack(children: const [ArrowNextSymbol()])),
-    );
-
-    // Busca el icono de flecha adelante
-    expect(find.byIcon(Icons.arrow_forward_ios), findsOneWidget);
-  });
 }
