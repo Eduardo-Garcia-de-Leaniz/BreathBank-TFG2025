@@ -25,6 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String? _saldo;
   String? _nivelInversor;
   String? _nombreUsuario;
+  bool evalDisponible = false;
 
   @override
   void initState() {
@@ -38,6 +39,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     setState(() {
       _saldo = stats?['Saldo']?.toString();
+      if (_saldo != null && double.tryParse(_saldo!)! >= 100) {
+        evalDisponible = true;
+      }
       _nivelInversor = stats?['NivelInversor']?.toString();
       _nombreUsuario = nombre;
     });
@@ -173,6 +177,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Text(
+                evalDisponible
+                    ? Strings.evaluationAvailable
+                    : Strings.evaluationNotAvailable,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: evalDisponible ? yellowColor : kRedAccentColor,
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -183,12 +203,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       vertical: 8,
                     ),
                     child: AppButton(
+                      isDisabled: evalDisponible ? false : true,
                       text: Strings.newEvaluation,
                       onPressed: () {
                         Navigator.pushNamed(context, '/evaluation');
                       },
-                      backgroundColor: kPrimaryColor,
-                      textColor: yellowColor,
+                      backgroundColor:
+                          evalDisponible ? kPrimaryColor : kDisabledColor,
+                      textColor: evalDisponible ? yellowColor : kWhiteColor,
                     ),
                   ),
                 ),

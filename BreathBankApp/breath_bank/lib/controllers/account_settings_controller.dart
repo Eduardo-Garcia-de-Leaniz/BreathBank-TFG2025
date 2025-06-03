@@ -81,7 +81,7 @@ class AccountSettingsController {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Sesión cerrada con éxito.'),
+          content: Text('Su cuenta ha sido eliminada con éxito.'),
           backgroundColor: kGreenColor,
         ),
       );

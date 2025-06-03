@@ -46,7 +46,7 @@ void main() {
       tipoInversion: 'Guiada',
     );
     final breaths = model.calculateNumBreaths(4, 2);
-    expect(breaths, 17); // 2*60/7 = 17.14.floor() = 17
+    expect(breaths, 75);
   });
 
   group('InvestmentTestModel', () {

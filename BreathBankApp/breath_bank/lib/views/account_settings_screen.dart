@@ -193,13 +193,16 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
                       message: Strings.deleteCountMessage,
                       actions: [
                         TextField(
+                          cursorColor: kBackgroundColor,
                           controller: passwordController,
+                          style: const TextStyle(color: kBackgroundColor),
+                          autofocus: true,
                           decoration: const InputDecoration(
                             labelText: Strings.password,
-                            labelStyle: TextStyle(color: kPrimaryColor),
+                            labelStyle: TextStyle(color: kBackgroundColor),
                             border: OutlineInputBorder(),
                             filled: true,
-                            fillColor: kBackgroundColor,
+                            fillColor: kPrimaryColor,
                             hintText: Strings.hintPassword,
                             hintStyle: TextStyle(color: kPrimaryColor),
                           ),

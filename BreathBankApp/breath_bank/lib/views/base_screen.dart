@@ -10,7 +10,7 @@ class BaseScreen extends StatelessWidget {
   final bool centerTitle;
   final bool withAnimation;
   final EdgeInsetsGeometry padding;
-  final bool canGoBack; // 👈 nuevo parámetro
+  final bool canGoBack;
 
   const BaseScreen({
     super.key,
@@ -22,7 +22,7 @@ class BaseScreen extends StatelessWidget {
     this.centerTitle = false,
     this.withAnimation = true,
     this.padding = const EdgeInsets.all(0),
-    this.canGoBack = true, // 👈 valor por defecto
+    this.canGoBack = true,
   });
 
   @override
@@ -53,26 +53,25 @@ class BaseScreen extends StatelessWidget {
 
     // ignore: deprecated_member_use
     return WillPopScope(
-      onWillPop: () async => canGoBack, // 👈 intercepta botón físico
+      onWillPop: () async => canGoBack,
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 188, 252, 245),
         appBar:
             showAppBar
                 ? AppBar(
                   iconTheme: const IconThemeData(color: kBackgroundColor),
-                  automaticallyImplyLeading:
-                      canGoBack, // 👈 oculta flecha si false
+                  automaticallyImplyLeading: canGoBack,
                   title: Text(
                     title ?? '',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: kWhiteColor,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Arial',
                     ),
                   ),
                   centerTitle: centerTitle,
-                  backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+                  backgroundColor: kPrimaryColor,
                   actions: actions,
                   elevation: 0,
                 )

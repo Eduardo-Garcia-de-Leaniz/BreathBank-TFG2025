@@ -85,14 +85,12 @@ class InvestmentTestModel {
     }
   }
 
-  /// Calcula el número de respiraciones objetivo
   int calculateNumBreaths(int listonInversion, int duracionMinutos) {
-    double duracionRespiracionCompleta = 2 * (0.25 * listonInversion + 2.5);
+    double duracionRespiracionCompleta = 2 * (0.20 * listonInversion);
     int totalSegundos = duracionMinutos * 60;
     return (totalSegundos / duracionRespiracionCompleta).floor();
   }
 
-  /// Reproduce los pitidos (solo para inversiones guiadas)
   Future<void> _playBeep(int count) async {
     String beepSound = count == 1 ? 'sounds/beep1.wav' : 'sounds/beep2.wav';
 

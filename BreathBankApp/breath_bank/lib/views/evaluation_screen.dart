@@ -42,12 +42,22 @@ class EvaluationScreenState extends State<EvaluationScreen> {
               color: kPrimaryColor,
             ),
           ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Text(
+              textAlign: TextAlign.center,
+              Strings.evaluationDescription,
+              style: const TextStyle(fontSize: 15, color: kPrimaryColor),
+            ),
+          ),
           SizedBox(height: separatorHeight),
           Text(
             Strings.completedTests.replaceFirst(
               '{0}',
               model.testCompleted.values.where((e) => e).length.toString(),
             ),
+            style: const TextStyle(fontSize: 15, color: kPrimaryColor),
           ),
           SizedBox(height: separatorHeight),
           ProgressionBar(model: model),

@@ -121,13 +121,13 @@ class _RegisterFormState extends State<RegisterForm> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          'Has iniciado sesión correctamente. Bienvenid@ $nombreUsuario',
+          'Te has registrado correctamente. Bienvenid@ $nombreUsuario',
         ),
         backgroundColor: kGreenColor,
       ),
     );
 
-    Navigator.pushReplacementNamed(context, "/evaluation");
+    Navigator.pushReplacementNamed(context, "/privacy");
   }
 
   @override

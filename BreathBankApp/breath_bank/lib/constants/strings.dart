@@ -34,6 +34,8 @@ class Strings {
   // Evaluation
   static const String evaluationTitle = 'Evaluación';
   static const String pluralEvaluation = 'Evaluaciones';
+  static const String evaluationDescription =
+      'Realiza las siguientes pruebas para determinar tu nuevo nivel de inversor.';
   static const String newEvaluation = 'Nueva evaluación';
   static const String completedTests = 'Has completado {0} de 3 pruebas';
   static const String startTest1 = 'Iniciar Prueba 1';
@@ -263,4 +265,7 @@ class Strings {
   static const String seeInvestments = 'Ver inversiones';
   static const String lastEvaluations = 'Últimas evaluaciones';
   static const String seeEvaluations = 'Ver evaluaciones';
+  static const String evaluationNotAvailable =
+      'Debes llegar a 100 respiraciones de saldo para desbloquear la evaluación';
+  static const String evaluationAvailable = '¡Evaluación disponible!';
 }

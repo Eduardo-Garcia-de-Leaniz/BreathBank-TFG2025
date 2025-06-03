@@ -13,6 +13,8 @@ import 'package:breath_bank/views/login_screen.dart';
 import 'package:breath_bank/views/manual_investment_info_screen.dart';
 import 'package:breath_bank/views/manual_investment_screen.dart';
 import 'package:breath_bank/views/new_investment_menu_screen.dart';
+import 'package:breath_bank/views/privacy_screen.dart';
+import 'package:breath_bank/views/privacy_settings_screen.dart';
 import 'package:breath_bank/views/register_screen.dart';
 import 'package:breath_bank/views/test1_screen.dart';
 import 'package:breath_bank/views/test2_screen.dart';
@@ -20,14 +22,13 @@ import 'package:breath_bank/views/test3_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:breath_bank/screens/app_settings_screen.dart';
+import 'package:breath_bank/views/app_settings_screen.dart';
 import 'package:breath_bank/views/evaluation_result_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(); // ¡Necesario!
-  //print("Mensaje en segundo plano (background): ${message.notification?.title}",);
+  await Firebase.initializeApp();
 }
 
 void main() async {
@@ -56,14 +57,12 @@ class _MyAppState extends State<MyApp> {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        await user
-            .reload(); // esto lanza una excepción si el usuario fue borrado
+        await user.reload();
         return FirebaseAuth.instance.currentUser;
       }
       return null;
     } catch (e) {
-      // Si hay un error al hacer reload, probablemente el usuario fue eliminado
-      await FirebaseAuth.instance.signOut(); // limpia el estado local
+      await FirebaseAuth.instance.signOut();
       return null;
     }
   }
@@ -71,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       title: 'BreathBank',
       theme: ThemeData(
@@ -88,6 +88,7 @@ class _MyAppState extends State<MyApp> {
           return LoginScreen(desdeNotificacion: desdeNotificacion);
         },
         '/register': (context) => const RegisterScreen(),
+        '/privacy': (context) => const PrivacyScreen(),
         '/evaluation': (context) => const EvaluationScreen(),
         '/dashboard': (context) => const DashboardScreen(),
         '/evaluation/test1': (context) => const Test1Screen(),
@@ -101,6 +102,8 @@ class _MyAppState extends State<MyApp> {
         '/dashboard/accountsettings/consultdata':
             (context) => const AccountSettingsConsultDataScreen(),
         '/dashboard/appsettings': (context) => const AppSettingsScreen(),
+        '/dashboard/privacysettings':
+            (context) => const PrivacySettingsScreen(),
         '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
         '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu':

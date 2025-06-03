@@ -1,3 +1,4 @@
+import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppSettingsScreen extends StatefulWidget {
@@ -18,8 +19,8 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
           children: [
             const CircleAvatar(
               radius: 40,
-              backgroundColor: Color.fromARGB(255, 7, 71, 94),
-              child: Icon(Icons.settings, size: 40, color: Colors.white),
+              backgroundColor: kPrimaryColor,
+              child: Icon(Icons.settings, size: 40, color: kWhiteColor),
             ),
             const SizedBox(height: 12),
             const Text(
@@ -27,38 +28,44 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Color.fromARGB(255, 7, 71, 94),
+                color: kPrimaryColor,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: const Text(
+                'Notificaciones, Tema de la interfaz e Idioma estarán disponibles pronto.',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: kPrimaryColor,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 16),
 
-            // Lista de opciones de configuración
             Expanded(
               child: ListView(
                 children: [
                   buildOptionTile(
                     icon: Icons.notifications,
                     title: 'Notificaciones',
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/dashboard/appsettings/notifications',
-                      );
-                    },
+                    disabled: true,
+                    onTap: () {},
                   ),
                   buildOptionTile(
                     icon: Icons.palette,
-                    title: 'Tema de la app',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/app/settings/theme');
-                    },
+                    title: 'Tema de la interfaz',
+                    disabled: true,
+                    onTap: () {},
                   ),
                   buildOptionTile(
                     icon: Icons.language,
                     title: 'Idioma',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/app/settings/language');
-                    },
+                    disabled: true,
+                    onTap: () {},
                   ),
                   buildOptionTile(
                     icon: Icons.info_outline,
@@ -71,7 +78,10 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     icon: Icons.privacy_tip,
                     title: 'Privacidad',
                     onTap: () {
-                      Navigator.pushNamed(context, '/app/settings/privacy');
+                      Navigator.pushNamed(
+                        context,
+                        '/dashboard/privacysettings',
+                      );
                     },
                   ),
                   buildOptionTile(
@@ -87,24 +97,23 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
           ],
         ),
       ),
-      backgroundColor: const Color.fromARGB(255, 188, 252, 245),
+      backgroundColor: kBackgroundColor,
     );
   }
-
-  static const Color defaultBackgroundColor = Color.fromARGB(255, 7, 71, 94);
 
   Widget buildOptionTile({
     required IconData icon,
     required String title,
     required VoidCallback onTap,
-    Color backgroundColor = defaultBackgroundColor,
-    Color iconColor = Colors.white,
-    Color titleColor = Colors.white,
-    Color arrowColor = Colors.white,
+    bool disabled = false,
+    Color backgroundColor = kPrimaryColor,
+    Color iconColor = kWhiteColor,
+    Color titleColor = kWhiteColor,
+    Color arrowColor = kWhiteColor,
   }) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      color: backgroundColor,
+      color: disabled ? kDisabledColor : backgroundColor,
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
@@ -126,15 +135,22 @@ class AppBarAppSettings extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color.fromARGB(255, 7, 71, 94),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back, color: kBackgroundColor),
+        onPressed: () => Navigator.of(context).maybePop(),
+      ),
+      backgroundColor: kPrimaryColor,
       title: const Text(
         'Configuración de la app',
         style: TextStyle(
-          color: Colors.white,
+          color: kWhiteColor,
           fontSize: 25,
           fontWeight: FontWeight.bold,
         ),
       ),
+      iconTheme: const IconThemeData(
+        color: kBackgroundColor,
+      ), // For other icons if needed
     );
   }
 }
