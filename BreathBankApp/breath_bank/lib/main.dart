@@ -7,6 +7,7 @@ import 'package:breath_bank/views/guided_investment_info_screen.dart';
 import 'package:breath_bank/views/guided_investment_screen.dart';
 import 'package:breath_bank/views/home_screen.dart';
 import 'package:breath_bank/views/evaluation_screen.dart';
+import 'package:breath_bank/views/info_app_settings_screen.dart';
 import 'package:breath_bank/views/investment_menu_screen.dart';
 import 'package:breath_bank/views/investment_result_screen.dart';
 import 'package:breath_bank/views/login_screen.dart';
@@ -102,8 +103,10 @@ class _MyAppState extends State<MyApp> {
         '/dashboard/accountsettings/consultdata':
             (context) => const AccountSettingsConsultDataScreen(),
         '/dashboard/appsettings': (context) => const AppSettingsScreen(),
-        '/dashboard/privacysettings':
+        '/dashboard/appsettings/privacysettings':
             (context) => const PrivacySettingsScreen(),
+        '/dashboard/appsettings/info':
+            (context) => const InfoAppSettingsScreen(),
         '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
         '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu':

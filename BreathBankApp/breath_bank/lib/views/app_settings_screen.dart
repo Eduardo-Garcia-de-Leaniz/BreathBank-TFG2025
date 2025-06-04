@@ -71,7 +71,10 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     icon: Icons.info_outline,
                     title: 'Acerca de la app',
                     onTap: () {
-                      Navigator.pushNamed(context, '/app/settings/about');
+                      Navigator.pushNamed(
+                        context,
+                        '/dashboard/appsettings/info',
+                      );
                     },
                   ),
                   buildOptionTile(
@@ -80,7 +83,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        '/dashboard/privacysettings',
+                        '/dashboard/appsettings/privacysettings',
                       );
                     },
                   ),
