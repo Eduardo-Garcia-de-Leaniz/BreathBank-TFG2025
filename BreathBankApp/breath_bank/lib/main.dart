@@ -5,11 +5,13 @@ import 'package:breath_bank/views/dashboard_screen.dart';
 import 'package:breath_bank/views/evaluation_menu_screen.dart';
 import 'package:breath_bank/views/guided_investment_info_screen.dart';
 import 'package:breath_bank/views/guided_investment_screen.dart';
+import 'package:breath_bank/views/help_support_settings_screen.dart';
 import 'package:breath_bank/views/home_screen.dart';
 import 'package:breath_bank/views/evaluation_screen.dart';
 import 'package:breath_bank/views/info_app_settings_screen.dart';
 import 'package:breath_bank/views/investment_menu_screen.dart';
 import 'package:breath_bank/views/investment_result_screen.dart';
+import 'package:breath_bank/views/legal_advice_settings_screen.dart';
 import 'package:breath_bank/views/login_screen.dart';
 import 'package:breath_bank/views/manual_investment_info_screen.dart';
 import 'package:breath_bank/views/manual_investment_screen.dart';
@@ -107,6 +109,10 @@ class _MyAppState extends State<MyApp> {
             (context) => const PrivacySettingsScreen(),
         '/dashboard/appsettings/info':
             (context) => const InfoAppSettingsScreen(),
+        '/dashboard/appsettings/legaladvice':
+            (context) => const LegalAdviceSettingsScreen(),
+        '/dashboard/appsettings/helpsupport':
+            (context) => const HelpSupportSettingsScreen(),
         '/dashboard/evaluationmenu': (context) => EvaluationMenuScreen(),
         '/dashboard/investmentmenu': (context) => InvestmentMenuScreen(),
         '/dashboard/newinvestmentmenu':

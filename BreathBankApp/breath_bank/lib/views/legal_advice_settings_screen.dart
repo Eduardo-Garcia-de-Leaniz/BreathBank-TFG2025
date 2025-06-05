@@ -1,22 +1,24 @@
 import 'package:breath_bank/constants/constants.dart';
+import 'package:breath_bank/constants/legal_strings.dart';
 import 'package:breath_bank/constants/privacy_strings.dart';
 import 'package:breath_bank/views/base_screen.dart';
 import 'package:flutter/material.dart';
 
-class PrivacySettingsScreen extends StatefulWidget {
-  const PrivacySettingsScreen({super.key});
+class LegalAdviceSettingsScreen extends StatefulWidget {
+  const LegalAdviceSettingsScreen({super.key});
 
   @override
-  State<PrivacySettingsScreen> createState() => _PrivacySettingsScreenState();
+  State<LegalAdviceSettingsScreen> createState() =>
+      _LegalAdviceSettingsScreenState();
 }
 
-class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
+class _LegalAdviceSettingsScreenState extends State<LegalAdviceSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScreen(
       showAppBar: true,
       canGoBack: true,
-      title: PrivacyStrings.privacyPolicy,
+      title: LegalStrings.screenTitle,
       isScrollable: true,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,14 +29,10 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.privacy_tip_outlined,
-                    size: 30,
-                    color: kPrimaryColor,
-                  ),
+                  const Icon(Icons.gavel, size: 30, color: kPrimaryColor),
                   const SizedBox(width: 8),
                   const Text(
-                    PrivacyStrings.privacyPolicy,
+                    LegalStrings.screenTitle,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -45,67 +43,67 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               ),
               const SizedBox(height: 32),
               Text(
-                PrivacyStrings.introductionTitle,
+                LegalStrings.generalInfoTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
               Text(
-                PrivacyStrings.introductionDescription,
+                LegalStrings.descInfo,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
-                PrivacyStrings.informationWeCollectTitle,
+                LegalStrings.noMedicalAdviceTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
               Text(
-                PrivacyStrings.informationWeCollectDescription,
+                LegalStrings.descNoMedicalAdvice,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
-                PrivacyStrings.useOfInformationTitle,
+                LegalStrings.limitedResponsibilityTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
               Text(
-                PrivacyStrings.howWeUseYourInformationDescription,
+                LegalStrings.descLimitedResponsibility,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
-                PrivacyStrings.dataProtectionTitle,
+                LegalStrings.academicUseAndInvestigationTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
               Text(
-                PrivacyStrings.dataProtectionDescription,
+                LegalStrings.descAcademicUseAndInvestigation,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
-                PrivacyStrings.userRightsTitle,
+                LegalStrings.propertyRightsTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
               Text(
-                PrivacyStrings.userRightsDescription,
+                LegalStrings.descPropertyRights,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
-                PrivacyStrings.changesToPolicyTitle,
+                LegalStrings.changesToPolicyTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
               Text(
-                PrivacyStrings.changesToPolicyDescription,
+                LegalStrings.descChangesToPolicy,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),

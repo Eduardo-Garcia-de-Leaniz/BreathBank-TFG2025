@@ -57,6 +57,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Text(
                 PrivacyStrings.introductionDescription,
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
@@ -67,6 +68,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Text(
                 PrivacyStrings.informationWeCollectDescription,
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
@@ -77,6 +79,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Text(
                 PrivacyStrings.howWeUseYourInformationDescription,
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
@@ -87,6 +90,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Text(
                 PrivacyStrings.dataProtectionDescription,
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
@@ -97,6 +101,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Text(
                 PrivacyStrings.userRightsDescription,
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
@@ -107,6 +112,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Text(
                 PrivacyStrings.changesToPolicyDescription,
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(
@@ -115,6 +121,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                   '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
                 ),
                 style: PrivacyStrings.descriptionStyle,
+                textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
               Text(

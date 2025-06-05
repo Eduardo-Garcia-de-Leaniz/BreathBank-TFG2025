@@ -35,7 +35,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
             Container(
               padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               child: const Text(
-                'Notificaciones, Tema de la interfaz e Idioma estarán disponibles pronto.',
+                'Notificaciones y Personalizar interfaz estarán disponibles pronto.',
                 style: TextStyle(
                   fontSize: 13,
                   color: kPrimaryColor,
@@ -57,13 +57,7 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                   ),
                   buildOptionTile(
                     icon: Icons.palette,
-                    title: 'Tema de la interfaz',
-                    disabled: true,
-                    onTap: () {},
-                  ),
-                  buildOptionTile(
-                    icon: Icons.language,
-                    title: 'Idioma',
+                    title: 'Personalizar interfaz',
                     disabled: true,
                     onTap: () {},
                   ),
@@ -88,10 +82,23 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
                     },
                   ),
                   buildOptionTile(
-                    icon: Icons.help_outline,
+                    icon: Icons.gavel,
+                    title: 'Aviso legal',
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/dashboard/appsettings/legaladvice',
+                      );
+                    },
+                  ),
+                  buildOptionTile(
+                    icon: Icons.help,
                     title: 'Ayuda y soporte',
                     onTap: () {
-                      Navigator.pushNamed(context, '/app/settings/help');
+                      Navigator.pushNamed(
+                        context,
+                        '/dashboard/appsettings/helpsupport',
+                      );
                     },
                   ),
                 ],
