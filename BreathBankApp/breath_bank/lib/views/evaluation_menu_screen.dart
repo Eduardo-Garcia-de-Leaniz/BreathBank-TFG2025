@@ -1,5 +1,6 @@
 import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/statistics_model.dart';
+import 'package:breath_bank/widgets/evaluation_info_widget.dart';
 import 'package:breath_bank/widgets/stat_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/controllers/evaluation_menu_controller.dart';
@@ -65,7 +66,7 @@ class EvaluationMenuScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    '${Strings.evaluationResultTitle}:',
+                    Strings.evaluationResultTitle,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -192,18 +193,6 @@ class EvaluationMenuScreen extends StatelessWidget {
   }
 
   Widget informacionGeneral() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-          Text(Strings.evaluationInfoTitle),
-          SizedBox(height: 8),
-          Text(Strings.evaluationInfo),
-        ],
-      ),
-    );
+    return const EvaluationInfoWidget();
   }
 }

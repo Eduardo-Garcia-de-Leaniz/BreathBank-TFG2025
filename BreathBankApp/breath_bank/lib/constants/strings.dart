@@ -68,7 +68,24 @@ class Strings {
   // Evaluation Info
   static const String evaluationInfoTitle =
       'Información sobre las evaluaciones';
-  static const String evaluationInfo = 'Rellenar info';
+  static const String evaluationInfo =
+      '''Las evaluaciones son una parte fundamental del funcionamiento de BreathBank, ya que permiten medir de forma objetiva el progreso del inversor en su práctica de la respiración consciente. Están diseñadas para valorar las capacidades respiratorias del usuario y determinar su nivel de inversor, lo que a su vez condiciona la duración y dificultad de las futuras inversiones.
+
+Cada evaluación está compuesta por tres pruebas diferentes:
+
+- Prueba 1: Se mide el número de respiraciones que el usuario realiza en reposo durante un minuto. Esta prueba evalúa la capacidad básica de respiración del usuario. Un número menor de respiraciones indica una mayor eficiencia respiratoria, lo que es un indicador positivo de la salud y el bienestar del usuario.
+
+- Prueba 2: Se registra el tiempo que el usuario tarda en realizar tres respiraciones completas. Un tiempo más largo indica una mayor capacidad de relajación y control respiratorio.
+
+- Prueba 3: Se contabiliza el número de respiraciones que el usuario puede completar al ritmo marcado por una guía. Esta prueba evalúa la capacidad del usuario para seguir un ritmo respiratorio específico, lo que es crucial para las inversiones más avanzadas. La duración de las respiraciones va aumentando progresivamente, evaluando así la resistencia y la capacidad del usuario.
+
+Los resultados obtenidos en estas pruebas determinarán si el usuario puede ascender a un nivel superior, permitiéndole acceder a inversiones más exigentes y adaptadas a su evolución.
+
+Las evaluaciones no están siempre disponibles. Para desbloquear una nueva evaluación, el usuario debe alcanzar un saldo de 100 respiraciones. Esto asegura que el usuario ha estado practicando y acumulando experiencia antes de someterse a una nueva evaluación.
+
+Una vez finalizada la evaluación, el saldo de respiraciones se restablece a cero, marcando el inicio de una nueva etapa en el camino del inversor. Así, las evaluaciones no solo sirven como herramienta para medir el rendimiento, sino también como hitos que reflejan el compromiso y la mejora personal a través de la respiración consciente.
+
+Se puede consultar el historial de evaluaciones y estadísticas de las mismas en el menú Evaluaciones.''';
 
   // Investment
   static const String investmentTitle = 'Inversión';
@@ -120,7 +137,20 @@ class Strings {
 
   // Investment Info
   static const String investmentInfoTitle = 'Información sobre las inversiones';
-  static const String investmentInfo = 'Rellenar info';
+  static const String investmentInfo =
+      '''Las inversiones son el eje principal de la práctica dentro de BreathBank. Se trata de ejercicios de respiración consciente que el usuario realiza con el objetivo de mejorar sus capacidades pulmonares y obtener beneficios para su bienestar físico y mental. El término hace referencia a la idea de invertir tiempo y atención en uno mismo, con la expectativa de recoger resultados positivos a medio y largo plazo.
+
+Cada inversión está adaptada al nivel de inversor del usuario, lo que determina la duración y el ritmo de las respiraciones que debe realizar. Además, antes de comenzar una inversión, el usuario puede ajustar su dificultad eligiendo un listón de inversión, que permite alargar aún más los tiempos de inspiración y espiración para seguir desafiando sus límites de forma progresiva y personalizada.
+
+Existen dos formas de realizar inversiones dentro de la aplicación:
+
+- Inversión manual: el usuario realiza las respiraciones a su ritmo, sin seguir una guía visual o sonora. Durante el ejercicio puede pulsar la pantalla cada vez que cambia de fase (inspiración/espiración), lo que permite a la app contar automáticamente el número de respiraciones realizadas al final del tiempo establecido.
+
+- Inversión guiada: el usuario sigue un ritmo marcado por la aplicación, que indica en cada momento si debe inspirar o espirar. Esta modalidad incluye también una guía sonora para facilitar el seguimiento, ayudando al usuario a mantener un flujo respiratorio constante y consciente.
+
+Con cada inversión completada, el usuario acumula respiraciones en su saldo personal, que no solo refleja su compromiso con la práctica, sino que también es necesario para acceder a nuevas evaluaciones y subir de nivel. Así, cada inversión representa un paso más en el camino del inversor hacia un mayor dominio de su respiración y una mejora sostenida de su bienestar.
+
+Se puede consultar el historial de inversiones y estadísticas de las mismas en el menú Inversiones.''';
 
   // Manual Investment
   static const String manualInvestmentTitle = 'Inversión Manual';

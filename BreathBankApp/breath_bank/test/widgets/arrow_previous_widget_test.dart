@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:breath_bank/widgets/arrow_previous_symbol.dart';
-import 'package:breath_bank/widgets/arrow_next_symbol.dart';
 
 void main() {
   testWidgets('ArrowPreviousSymbol muestra el icono de flecha atrás', (

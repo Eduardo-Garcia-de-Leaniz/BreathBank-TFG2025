@@ -2,6 +2,7 @@ import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/constants/strings.dart';
 import 'package:breath_bank/models/statistics_model.dart';
 import 'package:breath_bank/widgets/info_row_widget.dart';
+import 'package:breath_bank/widgets/investment_info_widget.dart';
 import 'package:breath_bank/widgets/message_dialog_widget.dart';
 import 'package:breath_bank/widgets/stat_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -243,15 +244,15 @@ class InvestmentMenuScreen extends StatelessWidget {
               StatCardWidget(
                 title: Strings.manualInvestments,
                 value: stats['inversionesManual'].toString(),
-                icon: Icons.handyman,
-                color: const Color.fromARGB(255, 63, 81, 181),
+                icon: Icons.touch_app,
+                color: const Color.fromARGB(255, 181, 63, 63),
               ),
 
               StatCardWidget(
                 title: Strings.guidedInvestments,
                 value: stats['inversionesGuiadas'].toString(),
-                icon: Icons.auto_awesome,
-                color: const Color.fromARGB(255, 63, 81, 181),
+                icon: Icons.hearing,
+                color: const Color.fromARGB(255, 181, 165, 63),
               ),
             ],
           ),
@@ -261,18 +262,6 @@ class InvestmentMenuScreen extends StatelessWidget {
   }
 
   Widget informacionGeneral() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-          Text(Strings.investmentInfoTitle),
-          SizedBox(height: 8),
-          Text(Strings.investmentInfo),
-        ],
-      ),
-    );
+    return const InvestmentInfoWidget();
   }
 }
