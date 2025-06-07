@@ -10,13 +10,13 @@ class InfoAppSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
+    return const BaseScreen(
       showAppBar: true,
       canGoBack: true,
       title: InfoStrings.screenTitle,
       isScrollable: true,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,13 +24,9 @@ class InfoAppSettingsScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.info_outline,
-                    size: 30,
-                    color: kPrimaryColor,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text(
+                  Icon(Icons.info_outline, size: 30, color: kPrimaryColor),
+                  SizedBox(width: 8),
+                  Text(
                     InfoStrings.screenTitle,
                     style: TextStyle(
                       fontSize: 24,
@@ -41,7 +37,7 @@ class InfoAppSettingsScreen extends StatelessWidget {
                 ],
               ),
               Center(child: ImageLogo(imageWidth: 100, imageHeight: 100)),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 InfoStrings.appDescription,
                 textAlign: TextAlign.justify,

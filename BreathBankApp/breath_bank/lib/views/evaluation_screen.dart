@@ -45,10 +45,10 @@ class EvaluationScreenState extends State<EvaluationScreen> {
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Text(
+            child: const Text(
               textAlign: TextAlign.center,
               Strings.evaluationDescription,
-              style: const TextStyle(fontSize: 15, color: kPrimaryColor),
+              style: TextStyle(fontSize: 15, color: kPrimaryColor),
             ),
           ),
           SizedBox(height: separatorHeight),

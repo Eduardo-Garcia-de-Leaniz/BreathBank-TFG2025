@@ -36,14 +36,14 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  ArrowNextSymbol(),
+                  const ArrowNextSymbol(),
                   Container(
                     padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           Strings.manualInvestmentInfoTitle,
                           style: TextStyle(
                             fontSize: 18,
@@ -52,7 +52,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
+                        const Text(
                           Strings.investmentResume,
                           style: TextStyle(fontSize: 16, color: kPrimaryColor),
                           textAlign: TextAlign.start,
@@ -60,7 +60,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                         const SizedBox(height: 15),
                         Text(
                           '- ${Strings.investmentBar}: $liston',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                         ),
                         Text(
                           '- ${Strings.investmentDuration}: $duracion ${duracion == 1 ? "minuto" : "minutos"}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
@@ -80,19 +80,19 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                             '{0}',
                             'manual',
                           ),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text(
+                        const Text(
                           Strings.investmentGuideStepsMessage,
                           style: TextStyle(fontSize: 16, color: kPrimaryColor),
                         ),
                         const SizedBox(height: 60),
-                        Text(
+                        const Text(
                           Strings.goToInvestment,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -101,7 +101,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -133,7 +133,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Stack(
+              const Stack(
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
@@ -143,7 +143,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Stack(
+              const Stack(
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
@@ -153,7 +153,7 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Stack(
+              const Stack(
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
@@ -165,8 +165,8 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
               ),
               Stack(
                 children: [
-                  ArrowPreviousSymbol(),
-                  ArrowNextSymbol(),
+                  const ArrowPreviousSymbol(),
+                  const ArrowNextSymbol(),
                   FourthPageContent(
                     titlesStyle: titlesStyle,
                     descStyle: descStyle,
@@ -206,7 +206,7 @@ class FourthPageContent extends StatelessWidget {
             style: titlesStyle,
             textAlign: TextAlign.center,
           ),
-          ImageWidget(
+          const ImageWidget(
             imageWidth: 200,
             imageHeight: 250,
             photoString: 'assets/images/reloj_fin_inversion_manual.png',
@@ -216,7 +216,7 @@ class FourthPageContent extends StatelessWidget {
             style: descStyle,
             textAlign: TextAlign.justify,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -268,7 +268,7 @@ class ThirdPageContent extends StatelessWidget {
             style: titlesStyle,
             textAlign: TextAlign.center,
           ),
-          ImageWidget(
+          const ImageWidget(
             imageWidth: 250,
             imageHeight: 250,
             photoString: 'assets/images/reloj_corriendo_inversion_manual.png',
@@ -306,7 +306,7 @@ class SecondPageContent extends StatelessWidget {
             style: titlesStyle,
             textAlign: TextAlign.center,
           ),
-          ImageWidget(
+          const ImageWidget(
             imageWidth: 250,
             imageHeight: 250,
             photoString: 'assets/images/countdown.png',
@@ -344,7 +344,7 @@ class FirstPageContent extends StatelessWidget {
             style: titlesStyle,
             textAlign: TextAlign.center,
           ),
-          ImageWidget(
+          const ImageWidget(
             imageWidth: 250,
             imageHeight: 250,
             photoString: 'assets/images/reloj_inicio_inversion_manual.png',

@@ -26,12 +26,12 @@ class _HelpSupportSettingsScreenState extends State<HelpSupportSettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.help, size: 30, color: kPrimaryColor),
-                  const SizedBox(width: 8),
-                  const Text(
+                  Icon(Icons.help, size: 30, color: kPrimaryColor),
+                  SizedBox(width: 8),
+                  Text(
                     HelpStrings.screenTitle,
                     style: TextStyle(
                       fontSize: 24,
@@ -42,56 +42,56 @@ class _HelpSupportSettingsScreenState extends State<HelpSupportSettingsScreen> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 HelpStrings.generalInfoTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 HelpStrings.descInfo,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 HelpStrings.frequentQuestionsTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 HelpStrings.descFrequentQuestions,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 HelpStrings.contactAndSupportTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 HelpStrings.descContactAndSupport,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 HelpStrings.futureImplementationTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 HelpStrings.descFutureImplementation,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 HelpStrings.greetingsTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 HelpStrings.descGreetings,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,

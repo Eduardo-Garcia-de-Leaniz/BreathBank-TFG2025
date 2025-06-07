@@ -26,12 +26,12 @@ class _LegalAdviceSettingsScreenState extends State<LegalAdviceSettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.gavel, size: 30, color: kPrimaryColor),
-                  const SizedBox(width: 8),
-                  const Text(
+                  Icon(Icons.gavel, size: 30, color: kPrimaryColor),
+                  SizedBox(width: 8),
+                  Text(
                     LegalStrings.screenTitle,
                     style: TextStyle(
                       fontSize: 24,
@@ -42,67 +42,67 @@ class _LegalAdviceSettingsScreenState extends State<LegalAdviceSettingsScreen> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 LegalStrings.generalInfoTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 LegalStrings.descInfo,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 LegalStrings.noMedicalAdviceTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 LegalStrings.descNoMedicalAdvice,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 LegalStrings.limitedResponsibilityTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 LegalStrings.descLimitedResponsibility,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 LegalStrings.academicUseAndInvestigationTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 LegalStrings.descAcademicUseAndInvestigation,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 LegalStrings.propertyRightsTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 LegalStrings.descPropertyRights,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 LegalStrings.changesToPolicyTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 LegalStrings.descChangesToPolicy,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,

@@ -29,16 +29,16 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.privacy_tip_outlined,
                     size: 30,
                     color: kPrimaryColor,
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: 8),
+                  Text(
                     PrivacyStrings.privacyPolicy,
                     style: TextStyle(
                       fontSize: 24,
@@ -49,67 +49,67 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 PrivacyStrings.introductionTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 PrivacyStrings.introductionDescription,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 PrivacyStrings.informationWeCollectTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 PrivacyStrings.informationWeCollectDescription,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 PrivacyStrings.useOfInformationTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 PrivacyStrings.howWeUseYourInformationDescription,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 PrivacyStrings.dataProtectionTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 PrivacyStrings.dataProtectionDescription,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 PrivacyStrings.userRightsTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 PrivacyStrings.userRightsDescription,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 PrivacyStrings.changesToPolicyTitle,
                 style: PrivacyStrings.titleStyle,
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 PrivacyStrings.changesToPolicyDescription,
                 style: PrivacyStrings.descriptionStyle,
                 textAlign: TextAlign.justify,
@@ -124,7 +124,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                 textAlign: TextAlign.justify,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 PrivacyStrings.acceptance,
                 style: PrivacyStrings.descriptionStyle,
               ),
