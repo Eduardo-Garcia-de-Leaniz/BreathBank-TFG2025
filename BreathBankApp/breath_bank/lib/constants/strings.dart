@@ -97,7 +97,7 @@ Se puede consultar el historial de evaluaciones y estadísticas de las mismas en
   static const String investmentFail =
       'No has superado el objetivo. ¡Sigue practicando!';
   static const String investmentResults =
-      'Aquí están los resultados de tu ejercicio de inversión:';
+      'Aquí están los resultados de tu inversión:';
   static const String deleteInvestmentsTitle = 'Borrar inversiones';
   static const String deleteInvestmentsMessage =
       '¿Seguro que quieres borrar todas tus inversiones? Esta acción no se puede deshacer.';
@@ -171,6 +171,38 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String manualInvestmentInfoTitle =
       'Información sobre la inversión manual';
   static const String investmentResume = 'Datos de la inversión:';
+
+  // Steps for Manual Investment
+  static const String beforeStartManualInvestmentTitle =
+      '1. Antes de comenzar la inversión';
+  static const String beforeStartManualInvestmentDesc =
+      '''Lo primero que verá será un reloj como el de la imagen. En él se pueden diferencia 3 partes:
+
+  - En la parte superior se muestran las respiraciones completas que llevas y el número de respiraciones máximas que se pueden hacer para superar la inversión con éxito.
+
+  - En la parte central se muestra el tiempo restante de la inversión.
+
+  - En la parte inferior aparecen dos botones. El verde es el que deberás pulsar para comenzar la inversión. El rojo sirve para restablecer la inversión y comenzar de nuevo.
+
+  Por último, aparece un mensaje indicando el ritmo máximo que puedes llevar por respiración para alcanzar las respiraciones objetivo. 
+  
+  Desliza a la derecha para ver el siguiente paso.''';
+  static const String countdownManualInvestmentTitle =
+      '2. Cuenta atrás para comenzar la inversión';
+  static const String countdownManualInvestmentDesc =
+      '''Una vez que pulses el botón verde, comenzará una cuenta atrás de 3 segundos. Cuando finalice, deberás comenzar la primera inspiración. 
+      
+      Desliza a la derecha para ver el siguiente paso.''';
+  static const String duringManualInvestmentTitle =
+      '3. Durante la inversión manual';
+  static const String duringManualInvestmentDesc =
+      '''Después de la cuenta atrás, el tiempo comenzará a correr. Durante toda la inversión, deberás ir inhalando y exhalando. Para no tener que estar pendiente de las respiraciones que llevas, debes pulsar en cualquier lugar de la pantalla cada vez que termines una inhalación o una exhalación (como se indica en la imagen). De esta forma, el contador de respiraciones se actualizará automáticamente. Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
+      
+      Desliza a la derecha para ver el siguiente paso.''';
+  static const String endManualInvestmentTitle = '4. Fin de la inversión';
+  static const String endManualInvestmentDesc =
+      '''Al finalizar el tiempo de la inversión, saltará un mensaje indicando que el tiempo ha finalizado. Aparecerá entonces un botón para concluir la inversión y ver los resultados de la misma.
+  Hasta aquí el tutorial de la inversión manual. ¡Pulsa aquí para comenzar!''';
 
   // Guided Investment
   static const String guidedInvestmentTitle = 'Inversión Guiada';

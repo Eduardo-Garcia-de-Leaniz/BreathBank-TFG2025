@@ -56,10 +56,10 @@ class InvestmentResultScreen extends StatelessWidget {
           const SizedBox(height: 8),
           const Text(
             Strings.investmentResults,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16, color: kPrimaryColor),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
 
           Expanded(
             child: ListView(

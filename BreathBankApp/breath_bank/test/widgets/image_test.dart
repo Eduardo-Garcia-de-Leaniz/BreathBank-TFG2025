@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:breath_bank/widgets/image.dart';
+
+void main() {
+  testWidgets(
+    'ImageWidget displays asset image with correct dimensions and padding',
+    (WidgetTester tester) async {
+      const testImage = 'assets/images/reloj_inicio_inversion_manual.png';
+      const testWidth = 100.0;
+      const testHeight = 150.0;
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: ImageWidget(
+              photoString: testImage,
+              imageWidth: testWidth,
+              imageHeight: testHeight,
+            ),
+          ),
+        ),
+      );
+
+      // Check for Container with correct padding
+      final containerFinder = find.byType(Container);
+      expect(containerFinder, findsOneWidget);
+      final containerWidget = tester.widget<Container>(containerFinder);
+      expect(containerWidget.padding, const EdgeInsets.all(40));
+
+      // Check for Image.asset with correct properties
+      final imageFinder = find.byType(Image);
+      expect(imageFinder, findsOneWidget);
+      final imageWidget = tester.widget<Image>(imageFinder);
+      expect(imageWidget.width, testWidth);
+      expect(imageWidget.height, testHeight);
+      expect(imageWidget.fit, BoxFit.cover);
+
+      // Check that the image uses the correct asset
+      final imageProvider = imageWidget.image as AssetImage;
+      expect(imageProvider.assetName, testImage);
+    },
+  );
+
+  testWidgets('ImageWidget renders with different image sizes', (
+    WidgetTester tester,
+  ) async {
+    const testImage = 'assets/images/reloj_fin_inversion_manual.png';
+    const testWidth = 50.0;
+    const testHeight = 75.0;
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: ImageWidget(
+            photoString: testImage,
+            imageWidth: testWidth,
+            imageHeight: testHeight,
+          ),
+        ),
+      ),
+    );
+
+    final imageFinder = find.byType(Image);
+    expect(imageFinder, findsOneWidget);
+    final imageWidget = tester.widget<Image>(imageFinder);
+    expect(imageWidget.width, testWidth);
+    expect(imageWidget.height, testHeight);
+
+    final imageProvider = imageWidget.image as AssetImage;
+    expect(imageProvider.assetName, testImage);
+  });
+}
