@@ -1,4 +1,4 @@
-import 'package:breath_bank/views/manual_investment_info_screen.dart';
+import 'package:breath_bank/views/guided_investment_info_screen.dart';
 import 'package:breath_bank/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +13,7 @@ void main() {
             return Navigator(
               onGenerateRoute: (settings) {
                 return MaterialPageRoute(
-                  builder: (context) => ManualInvestmentInfoScreen(),
+                  builder: (context) => GuidedInvestmentInfoScreen(),
                   settings: RouteSettings(arguments: args),
                 );
               },
@@ -33,21 +33,21 @@ void main() {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
-      expect(find.text(Strings.manualInvestmentInfoTitle), findsOneWidget);
+      expect(find.text(Strings.guidedInvestmentInfoTitle), findsOneWidget);
       expect(find.textContaining('Barra 1'), findsOneWidget);
       expect(find.textContaining('5 minutos'), findsOneWidget);
       expect(find.text(Strings.investmentResume), findsOneWidget);
-      expect(find.text(Strings.startInvestment), findsWidgets);
     });
-
-    testWidgets('navigates to manual investment on button tap', (
+    testWidgets('navigates to guided investment on button tap', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
-      final button =
-          find.widgetWithText(ElevatedButton, Strings.startInvestment).first;
+      final button = find.widgetWithText(
+        ElevatedButton,
+        'Comenzar inversión guiada',
+      );
       expect(button, findsOneWidget);
 
       await tester.tap(button, warnIfMissed: false);
@@ -60,7 +60,7 @@ void main() {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
-      final pageView = find.byType(ManualInvestmentInfoScreen);
+      final pageView = find.byType(GuidedInvestmentInfoScreen);
       expect(pageView, findsOneWidget);
 
       await tester.fling(pageView, const Offset(-400, 0), 100);
@@ -71,7 +71,7 @@ void main() {
         findsOneWidget,
       );
       expect(
-        find.text(Strings.beforeStartManualInvestmentDesc),
+        find.text(Strings.beforeStartGuidedInvestmentDesc),
         findsOneWidget,
       );
     });
@@ -80,7 +80,7 @@ void main() {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
-      final pageView = find.byType(ManualInvestmentInfoScreen);
+      final pageView = find.byType(GuidedInvestmentInfoScreen);
 
       await tester.drag(pageView, const Offset(-400, 0));
       await tester.pumpAndSettle();
@@ -95,7 +95,7 @@ void main() {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
-      final pageView = find.byType(ManualInvestmentInfoScreen);
+      final pageView = find.byType(GuidedInvestmentInfoScreen);
 
       for (int i = 0; i < 3; i++) {
         await tester.drag(pageView, const Offset(-400, 0));
@@ -103,7 +103,7 @@ void main() {
       }
 
       expect(find.text(Strings.duringManualInvestmentTitle), findsOneWidget);
-      expect(find.text(Strings.duringManualInvestmentDesc), findsOneWidget);
+      expect(find.text(Strings.duringGuidedInvestmentDesc), findsOneWidget);
     });
 
     testWidgets('shows FourthPageContent and button works', (
@@ -112,7 +112,7 @@ void main() {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
-      final pageView = find.byType(ManualInvestmentInfoScreen);
+      final pageView = find.byType(GuidedInvestmentInfoScreen);
 
       for (int i = 0; i < 4; i++) {
         await tester.drag(pageView, const Offset(-400, 0));
@@ -120,7 +120,7 @@ void main() {
       }
 
       expect(find.text(Strings.endManualInvestmentTitle), findsOneWidget);
-      expect(find.text(Strings.endManualInvestmentDesc), findsOneWidget);
+      expect(find.text(Strings.endGuidedInvestmentDesc), findsOneWidget);
 
       final button = find.widgetWithText(
         ElevatedButton,

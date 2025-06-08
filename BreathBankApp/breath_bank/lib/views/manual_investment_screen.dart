@@ -85,7 +85,35 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
                 style: const TextStyle(
                   fontSize: 16,
+                  color: kPrimaryColor,
                   fontStyle: FontStyle.italic,
+                ),
+              ),
+            if (model.isTimeUp)
+              const Text(
+                Strings.finishInvestmentText,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: kPrimaryColor,
+                ),
+              ),
+            if (!model.isTimeUp && !model.isRunning && model.hasStarted)
+              const Text(
+                Strings.continueInvestmentText,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: kPrimaryColor,
+                ),
+              ),
+            if (!model.isTimeUp && !model.isRunning && !model.hasStarted)
+              const Text(
+                Strings.startInvestmentText,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: kPrimaryColor,
                 ),
               ),
             const SizedBox(height: 15),

@@ -50,15 +50,45 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              model.phaseCounter % 2 == 0 ? 'Inspira' : 'Expira',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color:
-                    model.phaseCounter % 2 == 0 ? kGreenColor : kRedAccentColor,
+            if (model.hasStarted && !model.isTimeUp)
+              Text(
+                model.phaseCounter % 2 == 0 ? 'Inspira' : 'Expira',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color:
+                      model.phaseCounter % 2 == 0
+                          ? kGreenColor
+                          : kRedAccentColor,
+                ),
               ),
-            ),
+            if (model.isTimeUp)
+              const Text(
+                Strings.finishInvestmentText,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: kPrimaryColor,
+                ),
+              ),
+            if (!model.isTimeUp && !model.isRunning && model.hasStarted)
+              const Text(
+                Strings.continueInvestmentText,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: kPrimaryColor,
+                ),
+              ),
+            if (!model.isTimeUp && !model.isRunning && !model.hasStarted)
+              const Text(
+                Strings.startInvestmentText,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                  color: kPrimaryColor,
+                ),
+              ),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

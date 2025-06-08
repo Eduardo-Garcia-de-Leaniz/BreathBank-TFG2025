@@ -193,8 +193,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
       '''Una vez que pulses el botón verde, comenzará una cuenta atrás de 3 segundos. Cuando finalice, deberás comenzar la primera inspiración. 
       
       Desliza a la derecha para ver el siguiente paso.''';
-  static const String duringManualInvestmentTitle =
-      '3. Durante la inversión manual';
+  static const String duringManualInvestmentTitle = '3. Durante la inversión';
   static const String duringManualInvestmentDesc =
       '''Después de la cuenta atrás, el tiempo comenzará a correr. Durante toda la inversión, deberás ir inhalando y exhalando. Para no tener que estar pendiente de las respiraciones que llevas, debes pulsar en cualquier lugar de la pantalla cada vez que termines una inhalación o una exhalación (como se indica en la imagen). De esta forma, el contador de respiraciones se actualizará automáticamente. Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
       
@@ -202,12 +201,48 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String endManualInvestmentTitle = '4. Fin de la inversión';
   static const String endManualInvestmentDesc =
       '''Al finalizar el tiempo de la inversión, saltará un mensaje indicando que el tiempo ha finalizado. Aparecerá entonces un botón para concluir la inversión y ver los resultados de la misma.
+      
   Hasta aquí el tutorial de la inversión manual. ¡Pulsa aquí para comenzar!''';
 
   // Guided Investment
   static const String guidedInvestmentTitle = 'Inversión Guiada';
   static const String completedBreaths = 'Resp. completadas';
   static const String remainingBreaths = 'Resp. restantes';
+  static const String guidedInvestmentInfoTitle =
+      'Información sobre la inversión guiada';
+
+  // Steps for Guided Investment
+  static const String beforeStartGuidedInvestmentDesc =
+      '''Lo primero que verá será una pantalla como la de la imagen. En ella se pueden diferencia varios elementos:
+
+  - En la parte superior se puede ver un texto indicando la acción a realizar, junto con dos contadores que muestran las respiraciones completadas y las restantes.
+
+  - En la parte central se muestra el tiempo restante de la inversión.
+
+  - En la parte inferior aparecen dos botones. El verde es el que deberás pulsar para comenzar la inversión. El rojo sirve para restablecer la inversión y comenzar de nuevo.
+
+  Por último, aparece un mensaje indicando el ritmo máximo que puedes llevar por respiración para alcanzar las respiraciones objetivo. 
+  
+  Desliza a la derecha para ver el siguiente paso.''';
+
+  static const String duringGuidedInvestmentDesc =
+      '''Después de la cuenta atrás, el tiempo comenzará a correr. Durante toda la inversión, deberás ir inhalando y exhalando al ritmo indicado. Lo único que debes hacer es seguir las indicaciones visuales y sonoras. Un pitido indica el fin de la inhalación y comienzo de la expiración, dos pitidos significarán el fin de la expiración (y por lo tanto de la respiración completa) y deberás volver a inspirar. De esta forma, el contador de respiraciones se actualizará automáticamente. Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
+      
+      Desliza a la derecha para ver el siguiente paso.''';
+
+  static const String endGuidedInvestmentDesc =
+      '''Al finalizar el tiempo de la inversión, saltará un mensaje indicando que el tiempo ha finalizado. Aparecerá entonces un botón para concluir la inversión y ver los resultados de la misma.
+
+  Hasta aquí el tutorial de la inversión guiada. ¡Pulsa aquí para comenzar!''';
+
+  static const String startInvestmentText =
+      'Pulsa en el botón verde para comenzar';
+
+  static const String continueInvestmentText =
+      'Pulsa en el botón verde para continuar';
+
+  static const String finishInvestmentText =
+      'Pulsa en el botón "Ver Resultados" para continuar.';
 
   // Investment Result
   static const String investmentResultTitle = 'Resultados de Inversión';

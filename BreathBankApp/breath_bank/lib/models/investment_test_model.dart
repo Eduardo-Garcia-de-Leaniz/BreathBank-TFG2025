@@ -27,7 +27,7 @@ class InvestmentTestModel {
     this.tipoInversion = tipoInversion;
     timeLimit = duracionMinutos * 60;
     targetBreaths = calculateNumBreaths(listonInversion, duracionMinutos);
-    duracionFase = 0.25 * listonInversion + 2.5;
+    duracionFase = 0.20 * listonInversion;
     this.listonInversion = listonInversion;
   }
 
@@ -41,7 +41,7 @@ class InvestmentTestModel {
         secondsElapsed++;
         if (tipoInversion == 'Guiada' &&
             secondsElapsed % duracionFase.floor() == 0) {
-          _playBeep(phaseCounter % 2 == 0 ? 1 : 2); // Pitido según la fase
+          _playBeep(phaseCounter % 2 == 0 ? 1 : 2);
           phaseCounter++;
           if (phaseCounter % 2 == 0) {
             breathCount++;
@@ -55,7 +55,6 @@ class InvestmentTestModel {
     isTimeUp = false;
   }
 
-  /// Detiene el temporizador
   void stopTimer() {
     _timer?.cancel();
     if (secondsElapsed >= timeLimit) {
@@ -64,7 +63,6 @@ class InvestmentTestModel {
     isRunning = false;
   }
 
-  /// Reinicia el temporizador
   void resetTimer() {
     _timer?.cancel();
     secondsElapsed = 0;
@@ -75,7 +73,6 @@ class InvestmentTestModel {
     isTimeUp = false;
   }
 
-  /// Marca una fase (solo para inversiones manuales)
   void markPhase() {
     if (tipoInversion == 'Manual' && isRunning) {
       phaseCounter++;

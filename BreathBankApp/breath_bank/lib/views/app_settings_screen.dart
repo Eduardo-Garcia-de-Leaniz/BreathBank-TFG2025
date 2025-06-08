@@ -117,9 +117,6 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
     required VoidCallback onTap,
     bool disabled = false,
     Color backgroundColor = kPrimaryColor,
-    Color iconColor = kWhiteColor,
-    Color titleColor = kWhiteColor,
-    Color arrowColor = kWhiteColor,
   }) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -127,9 +124,9 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
-        leading: Icon(icon, color: iconColor),
-        title: Text(title, style: TextStyle(color: titleColor)),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: arrowColor),
+        leading: Icon(icon, color: kWhiteColor),
+        title: Text(title, style: TextStyle(color: kWhiteColor)),
+        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: kWhiteColor),
         onTap: onTap,
       ),
     );

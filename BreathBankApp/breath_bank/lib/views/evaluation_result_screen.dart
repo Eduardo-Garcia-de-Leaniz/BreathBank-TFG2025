@@ -126,7 +126,7 @@ class EvaluationResultScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(icon, color: kWhiteColor, size: 40),
+            Icon(icon, color: kWhiteColor, size: 36),
             const SizedBox(width: 40),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,14 +136,14 @@ class EvaluationResultScreen extends StatelessWidget {
                   children: [
                     Text(
                       label,
-                      style: const TextStyle(fontSize: 20, color: kWhiteColor),
+                      style: const TextStyle(fontSize: 18, color: kWhiteColor),
                     ),
                   ],
                 ),
                 Text(
                   '$value $unit',
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: kLevelColor,
                   ),
