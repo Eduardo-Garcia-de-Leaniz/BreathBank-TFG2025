@@ -46,7 +46,7 @@ void main() {
 
       final button = find.widgetWithText(
         ElevatedButton,
-        'Comenzar inversión guiada',
+        Strings.startInvestment,
       );
       expect(button, findsOneWidget);
 

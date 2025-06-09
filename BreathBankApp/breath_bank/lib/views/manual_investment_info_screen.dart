@@ -1,6 +1,6 @@
 import 'package:breath_bank/widgets/arrow_next_symbol.dart';
 import 'package:breath_bank/widgets/arrow_previous_symbol.dart';
-import 'package:breath_bank/widgets/image.dart';
+import 'package:breath_bank/widgets/page_content.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/constants/strings.dart';
@@ -137,9 +137,13 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
-                  FirstPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageWidth: 250,
+                    imageHeight: 250,
+                    titleText: Strings.beforeStartManualInvestmentTitle,
+                    descText: Strings.beforeStartManualInvestmentDesc,
+                    imagePath:
+                        'assets/images/reloj_inicio_inversion_manual.png',
                   ),
                 ],
               ),
@@ -147,9 +151,12 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
-                  SecondPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageWidth: 250,
+                    imageHeight: 250,
+                    titleText: Strings.countdownManualInvestmentTitle,
+                    descText: Strings.countdownManualInvestmentDesc,
+                    imagePath: 'assets/images/countdown.png',
                   ),
                 ],
               ),
@@ -157,9 +164,13 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
-                  ThirdPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageWidth: 250,
+                    imageHeight: 250,
+                    titleText: Strings.duringManualInvestmentTitle,
+                    descText: Strings.duringManualInvestmentDesc,
+                    imagePath:
+                        'assets/images/reloj_corriendo_inversion_manual.png',
                   ),
                 ],
               ),
@@ -167,194 +178,21 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   const ArrowPreviousSymbol(),
                   const ArrowNextSymbol(),
-                  FourthPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageWidth: 200,
+                    imageHeight: 270,
+                    routeName: '/dashboard/newinvestmentmenu/manual',
                     args: args,
+                    isLastPage: true,
+                    titleText: Strings.endManualInvestmentTitle,
+                    descText: Strings.endManualInvestmentDesc,
+                    imagePath: 'assets/images/reloj_fin_inversion_manual.png',
                   ),
                 ],
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class FourthPageContent extends StatelessWidget {
-  const FourthPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-    required this.args,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-  final Map<String, dynamic> args;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.endManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 200,
-            imageHeight: 250,
-            photoString: 'assets/images/reloj_fin_inversion_manual.png',
-          ),
-          Text(
-            Strings.endManualInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/dashboard/newinvestmentmenu/manual',
-                  arguments: args,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: const Text(
-                Strings.startInvestment,
-                style: TextStyle(fontSize: 16, color: kWhiteColor),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ThirdPageContent extends StatelessWidget {
-  const ThirdPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.duringManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 250,
-            imageHeight: 250,
-            photoString: 'assets/images/reloj_corriendo_inversion_manual.png',
-          ),
-          Text(
-            Strings.duringManualInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SecondPageContent extends StatelessWidget {
-  const SecondPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.countdownManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 250,
-            imageHeight: 250,
-            photoString: 'assets/images/countdown.png',
-          ),
-          Text(
-            Strings.countdownManualInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FirstPageContent extends StatelessWidget {
-  const FirstPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.beforeStartManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 250,
-            imageHeight: 250,
-            photoString: 'assets/images/reloj_inicio_inversion_manual.png',
-          ),
-          Text(
-            Strings.beforeStartManualInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-        ],
       ),
     );
   }

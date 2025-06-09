@@ -1,6 +1,6 @@
 import 'package:breath_bank/widgets/arrow_next_symbol.dart';
 import 'package:breath_bank/widgets/arrow_previous_symbol.dart';
-import 'package:breath_bank/widgets/image.dart';
+import 'package:breath_bank/widgets/page_content.dart';
 import 'package:flutter/material.dart';
 import 'package:breath_bank/constants/constants.dart';
 import 'package:breath_bank/constants/strings.dart';
@@ -120,7 +120,7 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                               ),
                             ),
                             child: const Text(
-                              'Comenzar inversión guiada',
+                              Strings.startInvestment,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: kWhiteColor,
@@ -137,9 +137,12 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
-                  FirstPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageHeight: 250,
+                    imageWidth: 170,
+                    titleText: Strings.beforeStartManualInvestmentTitle,
+                    descText: Strings.beforeStartGuidedInvestmentDesc,
+                    imagePath: 'assets/images/inicio_inversion_guiada.png',
                   ),
                 ],
               ),
@@ -147,9 +150,12 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
-                  SecondPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageHeight: 250,
+                    imageWidth: 170,
+                    titleText: Strings.countdownManualInvestmentTitle,
+                    descText: Strings.countdownManualInvestmentDesc,
+                    imagePath: 'assets/images/countdown_inversion_guiada.png',
                   ),
                 ],
               ),
@@ -157,9 +163,12 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
-                  ThirdPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageHeight: 250,
+                    imageWidth: 170,
+                    titleText: Strings.duringManualInvestmentTitle,
+                    descText: Strings.duringGuidedInvestmentDesc,
+                    imagePath: 'assets/images/corriendo_inversion_guiada.png',
                   ),
                 ],
               ),
@@ -167,194 +176,21 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                 children: [
                   const ArrowPreviousSymbol(),
                   const ArrowNextSymbol(),
-                  FourthPageContent(
-                    titlesStyle: titlesStyle,
-                    descStyle: descStyle,
+                  PageContent(
+                    imageHeight: 250,
+                    imageWidth: 190,
+                    routeName: '/dashboard/newinvestmentmenu/guided',
+                    isLastPage: true,
                     args: args,
+                    titleText: Strings.endManualInvestmentTitle,
+                    descText: Strings.endGuidedInvestmentDesc,
+                    imagePath: 'assets/images/fin_inversion_guiada.png',
                   ),
                 ],
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class FourthPageContent extends StatelessWidget {
-  const FourthPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-    required this.args,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-  final Map<String, dynamic> args;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.endManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 190,
-            imageHeight: 250,
-            photoString: 'assets/images/fin_inversion_guiada.png',
-          ),
-          Text(
-            Strings.endGuidedInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/dashboard/newinvestmentmenu/guided',
-                  arguments: args,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimaryColor,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: const Text(
-                Strings.startInvestment,
-                style: TextStyle(fontSize: 16, color: kWhiteColor),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ThirdPageContent extends StatelessWidget {
-  const ThirdPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.duringManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 170,
-            imageHeight: 250,
-            photoString: 'assets/images/corriendo_inversion_guiada.png',
-          ),
-          Text(
-            Strings.duringGuidedInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SecondPageContent extends StatelessWidget {
-  const SecondPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.countdownManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 170,
-            imageHeight: 250,
-            photoString: 'assets/images/countdown_inversion_guiada.png',
-          ),
-          Text(
-            Strings.countdownManualInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FirstPageContent extends StatelessWidget {
-  const FirstPageContent({
-    super.key,
-    required this.titlesStyle,
-    required this.descStyle,
-  });
-
-  final TextStyle titlesStyle;
-  final TextStyle descStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            Strings.beforeStartManualInvestmentTitle,
-            style: titlesStyle,
-            textAlign: TextAlign.center,
-          ),
-          const ImageWidget(
-            imageWidth: 170,
-            imageHeight: 250,
-            photoString: 'assets/images/inicio_inversion_guiada.png',
-          ),
-          Text(
-            Strings.beforeStartGuidedInvestmentDesc,
-            style: descStyle,
-            textAlign: TextAlign.justify,
-          ),
-        ],
       ),
     );
   }
