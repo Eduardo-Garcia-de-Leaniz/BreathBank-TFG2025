@@ -69,6 +69,7 @@ void main() {
             home: Scaffold(
               body: PageContent(
                 titleText: 'Last Page',
+                routeName: '/dashboard/newinvestmentmenu/manual',
                 descText: 'Desc',
                 imagePath: 'assets/images/corriendo_inversion_guiada.png',
                 imageWidth: 80,
