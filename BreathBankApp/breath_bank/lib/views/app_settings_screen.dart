@@ -125,8 +125,12 @@ class _AppSettingsScreenState extends State<AppSettingsScreen> {
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         leading: Icon(icon, color: kWhiteColor),
-        title: Text(title, style: TextStyle(color: kWhiteColor)),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: kWhiteColor),
+        title: Text(title, style: const TextStyle(color: kWhiteColor)),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: kWhiteColor,
+        ),
         onTap: onTap,
       ),
     );

@@ -56,11 +56,7 @@ class PageContent extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/dashboard/newinvestmentmenu/manual',
-                    arguments: args,
-                  );
+                  Navigator.pushNamed(context, routeName, arguments: args);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor,

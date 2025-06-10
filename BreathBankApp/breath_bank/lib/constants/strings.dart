@@ -364,5 +364,6 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String seeEvaluations = 'Ver evaluaciones';
   static const String evaluationNotAvailable =
       'Debes llegar a 100 respiraciones de saldo para desbloquear una nueva evaluación';
-  static const String evaluationAvailable = '¡Evaluación disponible!';
+  static const String evaluationAvailable =
+      '¡Enhorabuena! Ya puedes realizar una nueva evaluación para subir de nivel';
 }

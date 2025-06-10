@@ -241,6 +241,7 @@ class _AccountSettingsConsultDataScreenState
                 FocusScope.of(context).unfocus();
                 await saveChanges();
                 await cargarDatos();
+                Navigator.pushNamed(context, '/dashboard');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: kPrimaryColor,
