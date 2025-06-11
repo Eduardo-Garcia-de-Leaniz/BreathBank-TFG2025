@@ -181,7 +181,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Container(
               color:
                   evalDisponible
-                      ? Color.fromARGB(255, 255, 247, 205)
+                      ? const Color.fromARGB(255, 255, 247, 205)
                       : const Color.fromARGB(255, 228, 185, 185),
               padding: const EdgeInsets.only(
                 left: 8.0,

@@ -238,9 +238,12 @@ class _AccountSettingsConsultDataScreenState
                   );
                   return;
                 }
+
                 FocusScope.of(context).unfocus();
                 await saveChanges();
                 await cargarDatos();
+                if (!mounted) return;
+                // ignore: use_build_context_synchronously
                 Navigator.pushNamed(context, '/dashboard');
               },
               style: ElevatedButton.styleFrom(
