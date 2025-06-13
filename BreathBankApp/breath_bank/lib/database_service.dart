@@ -396,7 +396,6 @@ class DatabaseService {
       await db.collection('Inversiones').doc(doc.id).delete();
     }
 
-    // Reset user's investment-related fields in 'Usuarios' collection
     final userSnapshot = await read(collectionPath: 'Usuarios', docId: userId);
     if (userSnapshot != null && userSnapshot.data() != null) {
       final data = userSnapshot.data()!;
@@ -407,7 +406,6 @@ class DatabaseService {
           kNumeroInversiones: 0,
           kSaldo: 0,
           kFechaUltimaInversion: null,
-          // Keep other fields unchanged
           kNombre: data[kNombre],
           kFechaCreacion: data[kFechaCreacion],
           kFechaUltimoAcceso: data[kFechaUltimoAcceso],

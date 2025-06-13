@@ -8,12 +8,10 @@ ValueNotifier<AuthenticationService> authenticationService = ValueNotifier(
 class AuthenticationService {
   final FirebaseAuth firebaseAuth;
 
-  // 👇 Nuevo: Notificador del usuario actual
   final ValueNotifier<User?> userNotifier = ValueNotifier(null);
 
   AuthenticationService({FirebaseAuth? firebaseAuth})
     : firebaseAuth = firebaseAuth ?? FirebaseAuth.instance {
-    // Escuchar cambios de login y actualizar el notifier
     this.firebaseAuth.authStateChanges().listen((user) {
       userNotifier.value = user;
     });
@@ -31,7 +29,7 @@ class AuthenticationService {
       email: email,
       password: password,
     );
-    userNotifier.value = result.user; // 🔄 actualizar notifier
+    userNotifier.value = result.user;
     return result;
   }
 
