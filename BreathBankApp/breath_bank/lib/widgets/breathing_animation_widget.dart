@@ -88,7 +88,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
     _controller.reset();
     _currentDuration = widget.initialDuration;
     _controller.duration = Duration(seconds: _currentDuration.toInt());
-    _breathCount = 1;
+    _breathCount = 0;
     _isInhaling = true;
     setState(() {});
   }
@@ -116,7 +116,7 @@ class BreathingAnimationWidgetState extends State<BreathingAnimationWidget>
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _isInhaling ? kPrimaryColor : Colors.red,
+                  color: _isInhaling ? kPrimaryColor : kRedAccentColor,
                 ),
               ),
             );

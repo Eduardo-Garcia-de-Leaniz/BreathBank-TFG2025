@@ -54,6 +54,8 @@ class Strings {
   static const String newLevel = 'Nuevo nivel de inversor';
   static const String updateEvaluationData =
       'Se ha actualizado el nivel de inversor y el saldo se ha restablecido.';
+  static const String finishEvaluationText =
+      'Pulsa en Siguiente para continuar o en el botón rojo para reiniciar la prueba';
 
   // Evaluation Statistics
   static const String bestInvestorLevel = 'Mejor nivel inversor';
@@ -235,11 +237,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
 
   Hasta aquí el tutorial de la inversión guiada. ¡Pulsa aquí para comenzar!''';
 
-  static const String startInvestmentText =
-      'Pulsa en el botón verde para comenzar';
-
-  static const String continueInvestmentText =
-      'Pulsa en el botón verde para continuar';
+  static const String startInvestmentText = 'Pulsa en el botón {0} para {1}';
 
   static const String finishInvestmentText =
       'Pulsa en el botón "Ver Resultados" para continuar.';

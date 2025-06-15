@@ -90,6 +90,30 @@ class Test2ScreenState extends State<Test2Screen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        if (!controller.isRunning && controller.elapsedSeconds == 0)
+          Text(
+            Strings.startInvestmentText
+                .replaceAll('{0}', 'azul')
+                .replaceAll('{1}', 'comenzar'),
+            style: TextStyle(
+              fontSize: 15,
+              fontStyle: FontStyle.italic,
+              color: kPrimaryColor,
+            ),
+          ),
+        if (!controller.isRunning && controller.elapsedSeconds > 0)
+          Container(
+            padding: const EdgeInsets.only(left: 35.0, right: 35.0),
+            child: Text(
+              Strings.finishEvaluationText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 15,
+                color: kPrimaryColor,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
         const SizedBox(height: 10),
         Text(
           '${controller.elapsedSeconds}',

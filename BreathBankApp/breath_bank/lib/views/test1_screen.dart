@@ -130,6 +130,7 @@ class Test1ScreenState extends State<Test1Screen>
               fontWeight: FontWeight.w600,
             ),
           ),
+          const SizedBox(height: 7),
 
           if (controller.isRunning && controller.remainingTime > 0)
             Text(
@@ -139,11 +140,39 @@ class Test1ScreenState extends State<Test1Screen>
               ),
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 13,
+                fontSize: 15,
                 color: kPrimaryColor,
                 fontStyle: FontStyle.italic,
               ),
             ),
+          if (!controller.isRunning && controller.remainingTime > 0)
+            Text(
+              Strings.startInvestmentText
+                  .replaceAll('{0}', 'azul')
+                  .replaceAll(
+                    '{1}',
+                    controller.remainingTime < 60 ? 'reanudar' : 'comenzar',
+                  ),
+              style: TextStyle(
+                fontSize: 15,
+                fontStyle: FontStyle.italic,
+                color: kPrimaryColor,
+              ),
+            ),
+          if (controller.remainingTime == 0)
+            Container(
+              padding: const EdgeInsets.only(left: 35.0, right: 35.0),
+              child: Text(
+                Strings.finishEvaluationText,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: kPrimaryColor,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+
           const SizedBox(height: 20),
           Stack(
             alignment: Alignment.center,

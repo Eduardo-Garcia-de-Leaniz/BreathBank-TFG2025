@@ -99,8 +99,10 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
               ),
             if (!model.isTimeUp && !model.isRunning && model.hasStarted)
-              const Text(
-                Strings.continueInvestmentText,
+              Text(
+                Strings.startInvestmentText
+                    .replaceFirst('{0}', 'verde')
+                    .replaceAll('{1}', 'reanudar'),
                 style: TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.italic,
@@ -108,8 +110,10 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 ),
               ),
             if (!model.isTimeUp && !model.isRunning && !model.hasStarted)
-              const Text(
-                Strings.startInvestmentText,
+              Text(
+                Strings.startInvestmentText
+                    .replaceFirst('{0}', 'verde')
+                    .replaceAll('{1}', 'comenzar'),
                 style: TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.italic,

@@ -83,8 +83,7 @@ void main() {
     key.currentState?.reset();
     await tester.pump();
 
-    // Después de reset, debe mostrar "Inspira" y contador en 1
     expect(find.text('Inspira'), findsOneWidget);
-    expect(find.textContaining('1 respiracion'), findsOneWidget);
+    expect(find.textContaining('0 respiraciones'), findsOneWidget);
   });
 }
