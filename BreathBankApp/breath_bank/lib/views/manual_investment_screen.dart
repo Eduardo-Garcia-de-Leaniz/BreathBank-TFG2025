@@ -103,7 +103,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 Strings.startInvestmentText
                     .replaceFirst('{0}', 'verde')
                     .replaceAll('{1}', 'reanudar'),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.italic,
                   color: kPrimaryColor,
@@ -114,7 +114,7 @@ class _ManualInvestmentScreenState extends State<ManualInvestmentScreen>
                 Strings.startInvestmentText
                     .replaceFirst('{0}', 'verde')
                     .replaceAll('{1}', 'comenzar'),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.italic,
                   color: kPrimaryColor,

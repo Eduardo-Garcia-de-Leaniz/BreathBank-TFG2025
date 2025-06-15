@@ -74,7 +74,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
             if (!model.isTimeUp && !model.isRunning && model.hasStarted)
               Text(
                 Strings.startInvestmentText.replaceAll('{0}', 'reanudar'),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.italic,
                   color: kPrimaryColor,
@@ -83,7 +83,7 @@ class _GuidedInvestmentScreenState extends State<GuidedInvestmentScreen> {
             if (!model.isTimeUp && !model.isRunning && !model.hasStarted)
               Text(
                 Strings.startInvestmentText.replaceAll('{0}', 'comenzar'),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontStyle: FontStyle.italic,
                   color: kPrimaryColor,

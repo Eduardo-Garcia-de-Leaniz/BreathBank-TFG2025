@@ -153,7 +153,7 @@ class Test1ScreenState extends State<Test1Screen>
                     '{1}',
                     controller.remainingTime < 60 ? 'reanudar' : 'comenzar',
                   ),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 fontStyle: FontStyle.italic,
                 color: kPrimaryColor,
@@ -162,10 +162,10 @@ class Test1ScreenState extends State<Test1Screen>
           if (controller.remainingTime == 0)
             Container(
               padding: const EdgeInsets.only(left: 35.0, right: 35.0),
-              child: Text(
+              child: const Text(
                 Strings.finishEvaluationText,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   color: kPrimaryColor,
                   fontStyle: FontStyle.italic,

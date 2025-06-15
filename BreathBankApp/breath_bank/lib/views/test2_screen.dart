@@ -95,7 +95,7 @@ class Test2ScreenState extends State<Test2Screen> {
             Strings.startInvestmentText
                 .replaceAll('{0}', 'azul')
                 .replaceAll('{1}', 'comenzar'),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15,
               fontStyle: FontStyle.italic,
               color: kPrimaryColor,
@@ -104,10 +104,10 @@ class Test2ScreenState extends State<Test2Screen> {
         if (!controller.isRunning && controller.elapsedSeconds > 0)
           Container(
             padding: const EdgeInsets.only(left: 35.0, right: 35.0),
-            child: Text(
+            child: const Text(
               Strings.finishEvaluationText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 color: kPrimaryColor,
                 fontStyle: FontStyle.italic,
