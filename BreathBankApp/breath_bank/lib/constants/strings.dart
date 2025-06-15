@@ -96,8 +96,8 @@ Se puede consultar el historial de evaluaciones y estadísticas de las mismas en
   static const String investmentCompleted = '¡Inversión completada!';
   static const String investmentSuccess =
       '¡Has superado con éxito la inversión!';
-  static const String investmentFail =
-      'No has superado el objetivo. ¡Sigue practicando!';
+  static const String investmentFail = '''No has superado el objetivo.
+  ¡Sigue practicando!''';
   static const String investmentResults =
       'Aquí están los resultados de tu inversión:';
   static const String deleteInvestmentsTitle = 'Borrar inversiones';
@@ -160,16 +160,17 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String finishInvestment = '¡Tiempo finalizado!';
   static const String instructionManualInvestment =
       'Pulsa cuando termines de {0}';
-  static const String manualInvestmentInstructions =
-      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la inversión.\n'
-      '\n'
+  static const String step2 =
       '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
-      '\n'
-      '3. Durante la inversión respira al ritmo que tú quieras, sin hacer pausa entre inspiración y expiración.\n'
-      '\n'
-      '4. Cada vez que termines de inspirar o expirar, pulsa en la pantalla para registrar la respiración.\n'
-      '\n'
-      '5. Cuando hayas completado el número de respiraciones deseado, pulsa en el botón "Finalizar inversión".';
+      '\n';
+  static const String step1 =
+      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono indicado para comenzar.\n'
+      '\n';
+  static const String step5 =
+      '5. Cuando se haya acabado el tiempo o finalizado la prueba, pulsa en el botón de la parte inferior.';
+
+  static const String manualInvestmentInstructions =
+      '$step1${step2}3. Durante la inversión respira al ritmo que tú quieras, sin hacer pausa entre inspiración y expiración.\n\n4. Cada vez que termines de inspirar o expirar, pulsa en la pantalla para registrar la respiración.\n\n$step5';
   static const String manualInvestmentInfoTitle =
       'Información sobre la inversión manual';
   static const String investmentResume = 'Datos de la inversión:';
@@ -300,15 +301,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test1Description =
       'Se contabilizará el número de respiraciones en reposo que realice el usuario durante 60 segundos. ';
   static const String test1Instructions =
-      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la prueba\n'
-      '\n'
-      '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
-      '\n'
-      '3. Durante la prueba respira normalmente. Cada vez que termines de inspirar, pulsa en la pantalla y comienza a expirar, y viceversa (cada vez que completes una respiración se actualizará el contador).\n'
-      '\n'
-      '4. Cuando haya finalizado el tiempo, se registrará el número de respiraciones que has realizado. Si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n'
-      '\n'
-      '5. Finalmente, pulsa en el botón "Siguiente" para guardar el resultado.';
+      '$step1${step2}3. Durante la prueba respira normalmente. Cada vez que termines de inspirar, pulsa en la pantalla y comienza a expirar, y viceversa (cada vez que completes una respiración se actualizará el contador).\n\n4. Cuando haya finalizado el tiempo, se registrará el número de respiraciones que has realizado. Si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step5';
   static const String breathCountText = 'Llevas {0} {1}';
   static const String breathPhaseText = 'Pulsa cuando termines de {0}';
   static const String test1Label = 'Ingresa el número de respiraciones';
@@ -319,15 +312,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test2Description =
       'Se contabilizará el tiempo máximo que tarda el usuario en realizar 3 respiraciones completas.';
   static const String test2Instructions =
-      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la prueba\n'
-      '\n'
-      '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
-      '\n'
-      '3. Durante la prueba respira lo más lentamente posible, sin hacer pausa entre inspiración y expiración.\n'
-      '\n'
-      '4. Cuando hayas completado 3 respiraciones, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el tiempo que has tardado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n'
-      '\n'
-      '5. Finalmente, pulsa en el botón "Siguiente" para guardar el resultado.';
+      '$step1${step2}3. Durante la prueba respira lo más lentamente posible, sin hacer pausa entre inspiración y expiración.\n\n4. Cuando hayas completado 3 respiraciones, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el tiempo que has tardado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step5';
 
   static const String test2Label = 'Ingresa el número de segundos';
   static const String test2Hint = 'Número de segundos';
@@ -337,15 +322,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test3Description =
       'Se contabilizará el número de la última respiración que el usuario sea capaz de completar al ritmo marcado por la prueba.';
   static const String test3Instructions =
-      '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono azul para comenzar la prueba\n'
-      '\n'
-      '2. A continuación, saltará una cuenta atrás. Justo cuando finalice, comienza tu primera inspiración.\n'
-      '\n'
-      '3. Durante la prueba respira al ritmo marcado por la animación, sin hacer pausa entre inspiración y expiración.\n'
-      '\n'
-      '4. Cuando no hayas podido realizar la respiración correspondiente de forma completa, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el número de la última respiración que has realizado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n'
-      '\n'
-      '5. Finalmente, pulsa en el botón "Siguiente" para guardar el resultado.';
+      '$step1${step2}3. Durante la prueba respira al ritmo marcado por la animación, sin hacer pausa entre inspiración y expiración.\n\n4. Cuando no hayas podido realizar la respiración correspondiente de forma completa, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el número de la última respiración que has realizado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step5';
 
   static const String test3Label = 'Ingresa el número de la última respiración';
   static const String test3Hint = 'Número de la última respiración completada';

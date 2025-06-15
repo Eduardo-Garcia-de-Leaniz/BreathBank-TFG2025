@@ -168,11 +168,11 @@ class InvestmentResultScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: textColor),
-          const SizedBox(width: 16),
+          Icon(icon, size: 30, color: textColor),
           Expanded(
             child: Text(
               message,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 color: textColor,

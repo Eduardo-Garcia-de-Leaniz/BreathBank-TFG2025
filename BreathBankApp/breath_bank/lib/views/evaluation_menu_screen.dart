@@ -97,9 +97,16 @@ class EvaluationMenuScreen extends StatelessWidget {
                             return ListTile(
                               leading: Text(
                                 'Prueba ${resultados.keys.toList().indexOf(entry.key) + 1}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontStyle: FontStyle.italic,
+                                ),
                               ),
                               dense: true,
-                              trailing: Text(entry.value.toString()),
+                              trailing: Text(
+                                entry.value.toString(),
+                                style: const TextStyle(fontSize: 16),
+                              ),
                             );
                           }).toList(),
                     );
