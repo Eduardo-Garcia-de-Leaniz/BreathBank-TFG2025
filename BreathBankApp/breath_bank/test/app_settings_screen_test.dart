@@ -81,4 +81,24 @@ void main() {
     // ListView is present and scrollable
     expect(find.byType(ListView), findsOneWidget);
   });
+
+  testWidgets(
+    'Tapping "Acerca de la app" navega a /dashboard/appsettings/info',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.tap(find.text('Acerca de la app'));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('info_screen')), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Tapping "Privacidad" navega a /dashboard/appsettings/privacysettings',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
+      await tester.tap(find.text('Privacidad'));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('privacy_screen')), findsOneWidget);
+    },
+  );
 }

@@ -15,6 +15,9 @@ void main() {
       ),
     );
 
+    expect(find.byType(Center), findsOneWidget);
+    expect(find.byType(Text), findsOneWidget);
+    expect(find.byType(AppButton), findsOneWidget);
     expect(find.text('Presionar'), findsOneWidget);
     await tester.tap(find.text('Presionar'));
     expect(tapped, isTrue);
