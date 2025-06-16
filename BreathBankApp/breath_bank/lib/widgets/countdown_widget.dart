@@ -2,8 +2,8 @@ import 'package:breath_bank/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class CountdownOverlay extends StatefulWidget {
-  final int initialCountdown; // Tiempo inicial del countdown
-  final VoidCallback onCountdownComplete; // Acción al finalizar el countdown
+  final int initialCountdown;
+  final VoidCallback onCountdownComplete;
 
   const CountdownOverlay({
     super.key,

@@ -1,9 +1,7 @@
 class Strings {
-  // General
   static const String appTitle = 'BreathBank';
   static const String welcome = '¡Bienvenido a BreathBank!';
 
-  // Login & Register
   static const String login = 'Iniciar sesión';
   static const String register = 'Registrarse';
   static const String email = 'Correo electrónico';
@@ -31,7 +29,6 @@ class Strings {
   static const String errorRegister = 'Error al registrar el usuario';
   static const String hintName = 'Ingrese su nombre de usuario';
 
-  // Evaluation
   static const String evaluationTitle = 'Evaluación';
   static const String pluralEvaluation = 'Evaluaciones';
   static const String evaluationDescription =
@@ -57,7 +54,6 @@ class Strings {
   static const String finishEvaluationText =
       'Pulsa en Siguiente para continuar o en el botón rojo para reiniciar la prueba';
 
-  // Evaluation Statistics
   static const String bestInvestorLevel = 'Mejor nivel inversor';
   static const String totalEvaluations = 'Total de evaluaciones';
   static const String averageInvestorLevel = 'Promedio nivel inversor';
@@ -67,7 +63,6 @@ class Strings {
   static const String lastEvaluationDate = 'Última evaluación';
   static const String levelVariation = 'Variación del nivel';
 
-  // Evaluation Info
   static const String evaluationInfoTitle =
       'Información sobre las evaluaciones';
   static const String evaluationInfo =
@@ -89,7 +84,6 @@ Una vez finalizada la evaluación, el saldo de respiraciones se restablece a cer
 
 Se puede consultar el historial de evaluaciones y estadísticas de las mismas en el menú Evaluaciones.''';
 
-  // Investment
   static const String investmentTitle = 'Inversión';
   static const String pluralInvestment = 'Inversiones';
   static const String newInvestment = 'Nueva inversión';
@@ -127,7 +121,6 @@ Se puede consultar el historial de evaluaciones y estadísticas de las mismas en
       'Si ya los conoces, pulsa aquí para ir a la inversión';
   static const String startInvestmentButton = 'Comenzar inversión';
 
-  // Investment Statistics
   static const String guidedInvestments = 'Inversiones guiadas';
   static const String totalInvestments = 'Total de inversiones';
   static const String manualInvestments = 'Inversiones manuales';
@@ -137,7 +130,6 @@ Se puede consultar el historial de evaluaciones y estadísticas de las mismas en
   static const String lastInvestmentDate = 'Última inversión';
   static const String passedInvestments = 'Inversiones superadas';
 
-  // Investment Info
   static const String investmentInfoTitle = 'Información sobre las inversiones';
   static const String investmentInfo =
       '''Las inversiones son el eje principal de la práctica dentro de BreathBank. Se trata de ejercicios de respiración consciente que el usuario realiza con el objetivo de mejorar sus capacidades pulmonares y obtener beneficios para su bienestar físico y mental. El término hace referencia a la idea de invertir tiempo y atención en uno mismo, con la expectativa de recoger resultados positivos a medio y largo plazo.
@@ -154,7 +146,6 @@ Con cada inversión completada, el usuario acumula respiraciones en su saldo per
 
 Se puede consultar el historial de inversiones y estadísticas de las mismas en el menú Inversiones.''';
 
-  // Manual Investment
   static const String manualInvestmentTitle = 'Inversión Manual';
   static const String breaths = 'Respiraciones';
   static const String finishInvestment = '¡Tiempo finalizado!';
@@ -175,7 +166,6 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
       'Información sobre la inversión manual';
   static const String investmentResume = 'Datos de la inversión:';
 
-  // Steps for Manual Investment
   static const String beforeStartManualInvestmentTitle =
       '1. Antes de comenzar la inversión';
   static const String beforeStartManualInvestmentDesc =
@@ -207,14 +197,12 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
       
   Hasta aquí el tutorial de la inversión manual. ¡Pulsa aquí para comenzar!''';
 
-  // Guided Investment
   static const String guidedInvestmentTitle = 'Inversión Guiada';
   static const String completedBreaths = 'Resp. completadas';
   static const String remainingBreaths = 'Resp. restantes';
   static const String guidedInvestmentInfoTitle =
       'Información sobre la inversión guiada';
 
-  // Steps for Guided Investment
   static const String beforeStartGuidedInvestmentDesc =
       '''Lo primero que verá será una pantalla como la de la imagen. En ella se pueden diferencia varios elementos:
 
@@ -243,14 +231,12 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String finishInvestmentText =
       'Pulsa en el botón "Ver Resultados" para continuar.';
 
-  // Investment Result
   static const String investmentResultTitle = 'Resultados de Inversión';
   static const String investmentResultDuration = 'Duración';
   static const String investmentResultBreaths = 'Respiraciones realizadas';
   static const String investmentResultTarget = 'Límite de respiraciones';
   static const String investmentResultSeconds = 'Tiempo por respiración';
 
-  // Account Settings
   static const String accountSettingsTitle = 'Configuración de la cuenta';
   static const String consultDataTitle = 'Consultar mis datos';
   static const String changePasswordTitle = 'Cambiar contraseña';
@@ -270,7 +256,6 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String logout = 'Cerrar sesión';
   static const String loading = 'Cargando...';
 
-  // Others
   static const String yes = 'Sí';
   static const String no = 'No';
   static const String seconds = 'segundos';
@@ -291,12 +276,10 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String maxRhythmGuidedInvestment =
       'Ritmo de la inversión: \n{0} segundos por inhalación/exhalación';
 
-  // Pruebas
   static const String description = 'Descripción de la prueba';
   static const String instructions = 'Instrucciones paso a paso';
   static const String swipeToStart = '¡Desliza para comenzar la prueba!';
 
-  // Test 1
   static const String test1Title = 'Nº respiraciones en reposo';
   static const String test1Description =
       'Se contabilizará el número de respiraciones en reposo que realice el usuario durante 60 segundos. ';
@@ -307,7 +290,6 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test1Label = 'Ingresa el número de respiraciones';
   static const String test1Hint = 'Número de respiraciones';
 
-  // Test 2
   static const String test2Title = 'Tiempo de 3 respiraciones';
   static const String test2Description =
       'Se contabilizará el tiempo máximo que tarda el usuario en realizar 3 respiraciones completas.';
@@ -317,7 +299,6 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test2Label = 'Ingresa el número de segundos';
   static const String test2Hint = 'Número de segundos';
 
-  // Test 3
   static const String test3Title = 'Prueba de respiración guiada';
   static const String test3Description =
       'Se contabilizará el número de la última respiración que el usuario sea capaz de completar al ritmo marcado por la prueba.';
@@ -327,7 +308,6 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test3Label = 'Ingresa el número de la última respiración';
   static const String test3Hint = 'Número de la última respiración completada';
 
-  // Dashboard
   static const String buttonToDashboard = 'Ir a mi Dashboard';
   static const String dashboardTitle = 'Dashboard';
   static const String dashboardWelcome = 'Bienvenid@, {0}';

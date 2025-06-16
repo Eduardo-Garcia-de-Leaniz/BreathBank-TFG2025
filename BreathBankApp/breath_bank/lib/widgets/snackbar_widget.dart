@@ -14,9 +14,8 @@ class SnackBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Muestra el SnackBar con los parámetros personalizados
     Future.delayed(Duration.zero, () {
-      if (!context.mounted) return; // Verifica si el contexto está montado
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
@@ -26,6 +25,6 @@ class SnackBarWidget extends StatelessWidget {
       );
     });
 
-    return const SizedBox.shrink(); // Este widget no renderiza nada visualmente
+    return const SizedBox.shrink();
   }
 }

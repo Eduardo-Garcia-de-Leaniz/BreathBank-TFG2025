@@ -26,7 +26,6 @@ void main() {
       });
       expect(controller.isRunning, true);
 
-      // Simula 2 segundos de timer
       await Future.delayed(const Duration(seconds: 2));
       controller.pauseClock((value) {});
       expect(controller.isRunning, false);

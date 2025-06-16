@@ -22,13 +22,11 @@ void main() {
         ),
       );
 
-      // Check for Container with correct padding
       final containerFinder = find.byType(Container);
       expect(containerFinder, findsOneWidget);
       final containerWidget = tester.widget<Container>(containerFinder);
       expect(containerWidget.padding, const EdgeInsets.all(40));
 
-      // Check for Image.asset with correct properties
       final imageFinder = find.byType(Image);
       expect(imageFinder, findsOneWidget);
       final imageWidget = tester.widget<Image>(imageFinder);
@@ -36,7 +34,6 @@ void main() {
       expect(imageWidget.height, testHeight);
       expect(imageWidget.fit, BoxFit.cover);
 
-      // Check that the image uses the correct asset
       final imageProvider = imageWidget.image as AssetImage;
       expect(imageProvider.assetName, testImage);
     },

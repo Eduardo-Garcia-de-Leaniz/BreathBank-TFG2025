@@ -21,16 +21,13 @@ void main() {
       ),
     );
 
-    // Debe mostrar solo los primeros 3
     expect(find.text('Item 0'), findsOneWidget);
     expect(find.text('Item 1'), findsOneWidget);
     expect(find.text('Item 2'), findsOneWidget);
     expect(find.text('Item 3'), findsNothing);
 
-    // Botón "Ver más"
     expect(find.text('Ver más'), findsOneWidget);
 
-    // Expande la lista
     await tester.tap(find.text('Ver más'));
     await tester.pumpAndSettle();
     expect(find.text('Item 4'), findsOneWidget);

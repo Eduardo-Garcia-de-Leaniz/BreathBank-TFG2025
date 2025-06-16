@@ -131,8 +131,8 @@ void main() {
 
       model.isRunning = false;
       model.markPhase();
-      expect(model.phaseCounter, 2); // No cambia
-      expect(model.breathCount, 1); // No cambia
+      expect(model.phaseCounter, 2);
+      expect(model.breathCount, 1);
     });
   });
 }

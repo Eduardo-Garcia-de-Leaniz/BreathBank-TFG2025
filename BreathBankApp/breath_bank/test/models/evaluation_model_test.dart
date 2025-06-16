@@ -52,9 +52,9 @@ void main() {
 
   group('calculateInversorLevel', () {
     test('calcula correctamente el nivel de inversor', () {
-      model.resultTest1 = 2; // 9
-      model.resultTest2 = 180; // 10
-      model.resultTest3 = 41; // 10
+      model.resultTest1 = 2;
+      model.resultTest2 = 180;
+      model.resultTest3 = 41;
       expect(
         model.calculateInversorLevel(),
         ((9 * 20 + 10 * 30 + 10 * 50) / 100).round(),

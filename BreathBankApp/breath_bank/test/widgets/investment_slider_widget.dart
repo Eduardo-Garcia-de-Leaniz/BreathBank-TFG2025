@@ -28,11 +28,9 @@ void main() {
     expect(find.text('1'), findsOneWidget);
     expect(find.text('10'), findsOneWidget);
 
-    // Cambia el valor del slider
     await tester.drag(find.byType(Slider), const Offset(100, 0));
     await tester.pump();
 
-    // El texto debería actualizarse (puedes ajustar el valor esperado según el drag)
     expect(find.textContaining('Listón de Inversión:'), findsOneWidget);
   });
 }

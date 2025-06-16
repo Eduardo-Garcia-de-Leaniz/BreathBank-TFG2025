@@ -20,16 +20,11 @@ void main() {
       ),
     );
 
-    // Debe mostrar "Inspira"
     expect(find.text('Inspira'), findsOneWidget);
 
-    // Simula iniciar la animación
     key.currentState?.resume();
-    await tester.pump(
-      const Duration(seconds: 2),
-    ); // Espera a que cambie de estado
+    await tester.pump(const Duration(seconds: 2));
 
-    // Ahora debería mostrar "Exhalar" o "Inhalar" dependiendo del ciclo
     expect(find.textContaining('respiracion'), findsOneWidget);
   });
 
@@ -50,13 +45,11 @@ void main() {
       ),
     );
 
-    // Inicia la animación
     key.currentState?.resume();
     await tester.pump(const Duration(milliseconds: 500));
     key.currentState?.pause();
     final breathCountAfterPause = key.currentState?.getCurrentBreathCount();
 
-    // Espera más tiempo, el contador no debe aumentar
     await tester.pump(const Duration(seconds: 2));
     expect(key.currentState?.getCurrentBreathCount(), breathCountAfterPause);
   });

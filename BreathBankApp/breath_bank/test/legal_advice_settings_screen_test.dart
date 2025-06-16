@@ -14,11 +14,9 @@ void main() {
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
 
-    // Title and icon
     expect(find.byIcon(Icons.gavel), findsOneWidget);
     expect(find.text(LegalStrings.screenTitle), findsWidgets);
 
-    // Section titles
     expect(find.text(LegalStrings.generalInfoTitle), findsOneWidget);
     expect(find.text(LegalStrings.noMedicalAdviceTitle), findsOneWidget);
     expect(find.text(LegalStrings.limitedResponsibilityTitle), findsOneWidget);
@@ -29,7 +27,6 @@ void main() {
     expect(find.text(LegalStrings.propertyRightsTitle), findsOneWidget);
     expect(find.text(LegalStrings.changesToPolicyTitle), findsOneWidget);
 
-    // Section descriptions
     expect(find.text(LegalStrings.descInfo), findsOneWidget);
     expect(find.text(LegalStrings.descNoMedicalAdvice), findsOneWidget);
     expect(find.text(LegalStrings.descLimitedResponsibility), findsOneWidget);
@@ -40,7 +37,6 @@ void main() {
     expect(find.text(LegalStrings.descPropertyRights), findsOneWidget);
     expect(find.text(LegalStrings.descChangesToPolicy), findsOneWidget);
 
-    // Date string
     final today = DateTime.now();
     final dateString = PrivacyStrings.date.replaceAll(
       '{0}',

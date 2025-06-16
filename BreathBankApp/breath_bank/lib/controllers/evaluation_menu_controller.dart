@@ -31,7 +31,6 @@ class EvaluationMenuController {
       );
 
       if (resultados != null && resultados.isNotEmpty) {
-        // Recolectamos los resultados exactamente igual que en historial
         final prueba1 =
             resultados.containsKey('ResultadoPrueba1')
                 ? resultados['ResultadoPrueba1']

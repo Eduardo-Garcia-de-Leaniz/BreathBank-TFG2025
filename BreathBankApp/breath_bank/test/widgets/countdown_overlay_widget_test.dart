@@ -33,17 +33,13 @@ void main() {
       ),
     );
 
-    // Pulsa el botón para mostrar el overlay
     await tester.tap(find.text('Mostrar overlay'));
-    await tester.pump(); // Overlay insertado
+    await tester.pump();
 
-    // Debe aparecer el widget CountdownOverlay (busca por tipo o por texto si lo tiene)
     expect(find.byType(Overlay), findsOneWidget);
 
-    // Espera a que termine el countdown
     await tester.pump(const Duration(seconds: 2));
 
-    // El callback debe haberse llamado
     expect(completed, isTrue);
   });
 }

@@ -10,7 +10,6 @@ void main() {
       MaterialApp(home: Stack(children: const [ArrowNextSymbol()])),
     );
 
-    // Busca el icono de flecha adelante
     expect(find.byIcon(Icons.arrow_forward_ios), findsOneWidget);
   });
 }

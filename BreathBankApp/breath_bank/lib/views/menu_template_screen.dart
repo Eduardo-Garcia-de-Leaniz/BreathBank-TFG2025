@@ -44,13 +44,13 @@ class _MenuTemplateScreenState extends State<MenuTemplateScreen>
         title: Text(
           widget.title,
           style: const TextStyle(
-            color: Colors.white,
+            color: kWhiteColor,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 7, 71, 94),
-        automaticallyImplyLeading: false, // Oculta la flecha de retroceso
+        backgroundColor: kPrimaryColor,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
@@ -58,9 +58,9 @@ class _MenuTemplateScreenState extends State<MenuTemplateScreen>
             color: const Color.fromARGB(255, 7, 71, 94),
             child: TabBar(
               controller: _tabController,
-              labelColor: const Color.fromARGB(255, 188, 252, 245),
-              unselectedLabelColor: Colors.white,
-              indicatorColor: const Color.fromARGB(255, 188, 252, 245),
+              labelColor: kBackgroundColor,
+              unselectedLabelColor: kWhiteColor,
+              indicatorColor: kBackgroundColor,
               tabs: widget.tabs,
             ),
           ),

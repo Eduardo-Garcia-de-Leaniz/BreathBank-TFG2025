@@ -371,7 +371,6 @@ void main() {
     final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
     final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
 
-    // Mock evaluaciones
     when(
       mockFirestore.collection('Evaluaciones'),
     ).thenReturn(mockEvalCollection);
@@ -394,7 +393,6 @@ void main() {
     when(mockEvalCollection.doc('eval1')).thenReturn(mockEvalDoc);
     when(mockEvalDoc.delete()).thenAnswer((_) async {});
 
-    // Mock inversiones
     when(mockFirestore.collection('Inversiones')).thenReturn(mockInvCollection);
     when(
       mockInvCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
@@ -405,7 +403,6 @@ void main() {
     when(mockInvCollection.doc('inv1')).thenReturn(mockDoc);
     when(mockDoc.delete()).thenAnswer((_) async {});
 
-    // Mock usuario
     when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
     when(mockSnapshot.exists).thenReturn(true);
     when(mockSnapshot.data()).thenReturn({
@@ -448,7 +445,6 @@ void main() {
     final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
     final mockUserDoc = MockDocumentReference<Map<String, dynamic>>();
 
-    // Mock evaluaciones
     when(
       mockFirestore.collection('Evaluaciones'),
     ).thenReturn(mockEvalCollection);
@@ -471,7 +467,6 @@ void main() {
     when(mockEvalCollection.doc('eval1')).thenReturn(mockEvalDoc);
     when(mockEvalDoc.delete()).thenAnswer((_) async {});
 
-    // Mock inversiones
     when(mockFirestore.collection('Inversiones')).thenReturn(mockInvCollection);
     when(
       mockInvCollection.where('IdUsuario', isEqualTo: anyNamed('isEqualTo')),
@@ -482,7 +477,6 @@ void main() {
     when(mockInvCollection.doc('inv1')).thenReturn(mockDoc);
     when(mockDoc.delete()).thenAnswer((_) async {});
 
-    // Mock usuario
     when(mockFirestore.collection('Usuarios')).thenReturn(mockCollection);
     when(mockCollection.doc('user123')).thenReturn(mockUserDoc);
     when(mockUserDoc.delete()).thenAnswer((_) async {});
@@ -535,7 +529,6 @@ void main() {
       final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
       final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
 
-      // Mock inversiones
       when(
         mockFirestore.collection('Inversiones'),
       ).thenReturn(mockInvCollection);
@@ -548,7 +541,6 @@ void main() {
       when(mockInvCollection.doc('inv1')).thenReturn(mockDoc);
       when(mockDoc.delete()).thenAnswer((_) async {});
 
-      // Mock usuario
       when(mockDoc.get()).thenAnswer((_) async => mockSnapshot);
       when(mockSnapshot.exists).thenReturn(true);
       when(mockSnapshot.data()).thenReturn({
@@ -574,7 +566,6 @@ void main() {
       final mockInvSnapshot = MockQuerySnapshot<Map<String, dynamic>>();
       final mockInvDocSnap = MockQueryDocumentSnapshot<Map<String, dynamic>>();
 
-      // Datos de ejemplo para la inversión
       final inversionData = {
         'IdUsuario': 'user123',
         'FechaInversión': DateTime(2023, 1, 1),
@@ -615,7 +606,6 @@ void main() {
       final mockEvalDocSnap2 =
           MockQueryDocumentSnapshot<Map<String, dynamic>>();
 
-      // Datos de ejemplo para las evaluaciones
       final evalData1 = {
         'IdUsuario': 'user123',
         'Fecha': Timestamp.fromDate(DateTime(2023, 1, 1)),

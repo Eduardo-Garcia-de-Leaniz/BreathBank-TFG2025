@@ -20,13 +20,11 @@ void main() {
         ),
       );
 
-      // Espera a que el SnackBar aparezca
-      await tester.pump(); // Primer frame
-      await tester.pump(const Duration(milliseconds: 100)); // SnackBar aparece
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text(testMessage), findsOneWidget);
 
-      // Opcional: verifica que haya un SnackBar en el árbol de widgets
       expect(find.byType(SnackBar), findsOneWidget);
     },
   );

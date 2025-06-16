@@ -67,7 +67,7 @@ void main() {
       expect(stats['listonMasAlto'], 7);
       expect(stats['totalRespiraciones'], 30);
       expect(stats['fechaUltimaInversion'], '01/07/2024');
-      expect(stats['porcentajeSuperadas'], 67); // 2 de 3
+      expect(stats['porcentajeSuperadas'], 67);
       expect(stats['inversionesManual'], 2);
       expect(stats['inversionesGuiadas'], 1);
       expect(stats['duracionMasElegida'], 40);

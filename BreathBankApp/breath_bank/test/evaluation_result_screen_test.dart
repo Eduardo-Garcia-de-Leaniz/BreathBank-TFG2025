@@ -7,7 +7,6 @@ void main() {
   testWidgets(
     'EvaluationResultScreen muestra resultados y navega al dashboard',
     (WidgetTester tester) async {
-      // Datos de prueba para los argumentos
       final args = {
         'nivelInversorFinal': 3,
         'result_test1': 12,
@@ -33,12 +32,10 @@ void main() {
         ),
       );
 
-      // Verifica textos principales
       expect(find.text(Strings.evaluationCompleted), findsOneWidget);
       expect(find.text(Strings.newLevel), findsOneWidget);
       expect(find.text('3'), findsOneWidget);
 
-      // Verifica los resultados de las pruebas
       expect(find.text(Strings.test1), findsOneWidget);
       expect(find.text('12 ${Strings.breathUnits}'), findsOneWidget);
       expect(find.text(Strings.test2), findsOneWidget);
@@ -46,7 +43,6 @@ void main() {
       expect(find.text(Strings.test3), findsOneWidget);
       expect(find.text('5 ${Strings.breathUnits}'), findsOneWidget);
 
-      // Verifica el botón y la navegación
       expect(find.text(Strings.buttonToDashboard), findsOneWidget);
       await tester.tap(find.text(Strings.buttonToDashboard));
       await tester.pumpAndSettle();

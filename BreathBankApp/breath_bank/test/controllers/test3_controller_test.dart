@@ -14,10 +14,7 @@ void main() {
     setUp(() {
       controller = Test3Controller();
       model = controller.model;
-      dummyKey =
-          GlobalKey<
-            BreathingAnimationWidgetState
-          >(); // No se usará funcionalmente en test unitarios
+      dummyKey = GlobalKey<BreathingAnimationWidgetState>();
     });
 
     test('Inicializa correctamente', () {
@@ -28,14 +25,11 @@ void main() {
     });
 
     test('startOrPauseBreathing alterna isRunning y actualiza resultado', () {
-      // Simula play
       controller.startOrPauseBreathing(dummyKey);
       expect(controller.isRunning, true);
 
-      // Simula pause
       controller.startOrPauseBreathing(dummyKey);
       expect(controller.isRunning, false);
-      // El resultado se actualiza aunque el widget real no está presente
       expect(controller.resultFieldController.text, '0');
       expect(model.testResult, 0);
     });

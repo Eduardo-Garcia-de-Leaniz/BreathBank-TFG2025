@@ -25,17 +25,13 @@ void main() {
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
 
-    // AppBar title
     expect(find.text('Configuración de la app'), findsWidgets);
 
-    // Avatar and icon
     expect(find.byType(CircleAvatar), findsOneWidget);
     expect(find.byIcon(Icons.settings), findsOneWidget);
 
-    // Subtitle
     expect(find.text('Configuración de la App'), findsOneWidget);
 
-    // Info text
     expect(
       find.textContaining(
         'Notificaciones y Personalizar interfaz estarán disponibles pronto.',
@@ -43,13 +39,11 @@ void main() {
       findsOneWidget,
     );
 
-    // Option tiles
     expect(find.byType(Card), findsNWidgets(5));
 
-    // Disabled tiles have correct color
     final cards = tester.widgetList<Card>(find.byType(Card)).toList();
-    expect(cards[0].color, isNotNull); // Notificaciones
-    expect(cards[1].color, isNotNull); // Personalizar interfaz
+    expect(cards[0].color, isNotNull);
+    expect(cards[1].color, isNotNull);
   });
 
   testWidgets(
@@ -57,10 +51,8 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
-      // Try to tap disabled tiles
       await tester.tap(find.text('Notificaciones'));
       await tester.pumpAndSettle();
-      // Should not navigate anywhere, still on the same screen
       expect(find.text('Configuración de la app'), findsWidgets);
 
       await tester.tap(find.text('Personalizar interfaz'));
@@ -74,11 +66,9 @@ void main() {
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
 
-    // Padding
     final padding = tester.widget<Padding>(find.byType(Padding).first);
     expect(padding.padding, const EdgeInsets.all(16.0));
 
-    // ListView is present and scrollable
     expect(find.byType(ListView), findsOneWidget);
   });
 

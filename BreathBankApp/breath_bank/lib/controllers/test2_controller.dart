@@ -8,11 +8,10 @@ class Test2Controller {
 
   void startClock(void Function() updateUI) {
     if (timer == null) {
-      // Solo inicia un nuevo temporizador si no hay uno activo
       isRunning = true;
       timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
         model.elapsedSeconds += 1;
-        updateUI(); // Actualiza la interfaz de usuario cada segundo
+        updateUI();
       });
     }
   }
@@ -22,16 +21,16 @@ class Test2Controller {
     timer?.cancel();
     timer = null;
     model.testResult = model.elapsedSeconds;
-    updateTextField(model.elapsedSeconds.toString()); // Actualiza el TextField
+    updateTextField(model.elapsedSeconds.toString());
   }
 
   void resetClock(void Function() updateUI) {
-    timer?.cancel(); // Detiene el temporizador actual
+    timer?.cancel();
     timer = null;
     isRunning = false;
-    model.elapsedSeconds = 0; // Restablece el tiempo transcurrido
-    model.testResult = 0; // Restablece el resultado del test
-    updateUI(); // Actualiza la interfaz de usuario
+    model.elapsedSeconds = 0;
+    model.testResult = 0;
+    updateUI();
   }
 
   int get elapsedSeconds => model.elapsedSeconds;

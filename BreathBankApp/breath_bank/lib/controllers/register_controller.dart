@@ -21,7 +21,7 @@ class RegisterController {
         nombre: credentials.name,
         fechaCreacion: DateTime.now(),
       );
-      return null; // No error
+      return null;
     } on FirebaseAuthException catch (e) {
       return e.message ?? 'Error desconocido';
     }
@@ -38,7 +38,7 @@ class RegisterController {
     if (credentials.password != credentials.confirmPassword) {
       return 'Las contraseñas no coinciden';
     }
-    return null; // No error
+    return null;
   }
 
   Future<void> postLoginTasks(String userId) async {

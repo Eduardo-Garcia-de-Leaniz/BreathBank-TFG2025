@@ -18,13 +18,10 @@ void main() {
         ),
       );
 
-      // Verifica el título
       expect(find.text('Prueba Widget'), findsOneWidget);
 
-      // Verifica la descripción
       expect(find.text('Descripción de la prueba'), findsOneWidget);
 
-      // Navega a la segunda página (PageView)
       final gesture = await tester.startGesture(const Offset(300, 300));
       await gesture.moveBy(const Offset(-400, 0));
       await tester.pumpAndSettle();

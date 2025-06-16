@@ -37,7 +37,6 @@ void main() {
     expect(find.text('Mensaje de prueba'), findsOneWidget);
     expect(find.text('OK'), findsOneWidget);
 
-    // Cierra el diálogo
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
     expect(find.text('Título'), findsNothing);

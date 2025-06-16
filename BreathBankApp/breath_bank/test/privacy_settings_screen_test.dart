@@ -40,7 +40,6 @@ void main() {
       findsOneWidget,
     );
 
-    // Date
     final today =
         '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
     expect(find.textContaining(today), findsOneWidget);

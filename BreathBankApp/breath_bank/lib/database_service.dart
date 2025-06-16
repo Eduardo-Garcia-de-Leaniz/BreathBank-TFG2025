@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// Constantes para los campos de usuario
 const String kFechaCreacion = 'FechaCreación';
 const String kFechaUltimoAcceso = 'FechaÚltimoAcceso';
 const String kFechaUltimaEvaluacion = 'FechaÚltimaEvaluación';

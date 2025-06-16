@@ -11,10 +11,8 @@ void main() {
         const MaterialApp(home: Scaffold(body: EvaluationInfoWidget())),
       );
 
-      // Check for the title text
       expect(find.text(Strings.evaluationInfoTitle), findsOneWidget);
 
-      // Check for the description text
       expect(find.text(Strings.evaluationInfo), findsOneWidget);
     });
 
@@ -44,12 +42,10 @@ void main() {
         ),
       );
 
-      // Try to scroll
       final gesture = await tester.startGesture(const Offset(0, 50));
       await gesture.moveBy(const Offset(0, -50));
       await tester.pump();
 
-      // If no exception, widget is scrollable
       expect(find.byType(SingleChildScrollView), findsOneWidget);
     });
   });

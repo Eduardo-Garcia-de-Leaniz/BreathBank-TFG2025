@@ -60,7 +60,6 @@ void main() {
           (w.title as Text).data == PrivacyStrings.futureUseConsentStatement,
     );
 
-    // Tap only the first checkbox
     await tester.ensureVisible(acceptanceCheckbox);
     await tester.tap(acceptanceCheckbox);
     await tester.pump();

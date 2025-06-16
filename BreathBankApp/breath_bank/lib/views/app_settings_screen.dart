@@ -159,9 +159,7 @@ class AppBarAppSettings extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      iconTheme: const IconThemeData(
-        color: kBackgroundColor,
-      ), // For other icons if needed
+      iconTheme: const IconThemeData(color: kBackgroundColor),
     );
   }
 }

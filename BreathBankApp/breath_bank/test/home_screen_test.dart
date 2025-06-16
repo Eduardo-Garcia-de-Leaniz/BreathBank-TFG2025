@@ -9,11 +9,9 @@ void main() {
   ) async {
     await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
-    // Verifica que el título y subtítulo estén presentes
     expect(find.text(Strings.appTitle), findsOneWidget);
     expect(find.text(Strings.welcome), findsOneWidget);
 
-    // Verifica que los botones estén presentes
     expect(find.text(Strings.login), findsOneWidget);
     expect(find.text(Strings.register), findsOneWidget);
   });
@@ -36,7 +34,6 @@ void main() {
       ),
     );
 
-    // Pulsa "Iniciar Sesión"
     await tester.tap(find.text(Strings.login));
     await tester.pumpAndSettle();
     expect(pushedRoutes.contains('/login'), isTrue);

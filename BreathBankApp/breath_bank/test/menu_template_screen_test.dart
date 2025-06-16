@@ -20,18 +20,14 @@ void main() {
       ),
     );
 
-    // Verifica el título del AppBar
     expect(find.text('Mi Menú'), findsOneWidget);
 
-    // Verifica los tabs
     expect(find.text('Tab 1'), findsOneWidget);
     expect(find.text('Tab 2'), findsOneWidget);
 
-    // Verifica el contenido inicial
     expect(find.text('Contenido 1'), findsOneWidget);
     expect(find.text('Contenido 2'), findsNothing);
 
-    // Cambia al segundo tab
     await tester.tap(find.text('Tab 2'));
     await tester.pumpAndSettle();
 

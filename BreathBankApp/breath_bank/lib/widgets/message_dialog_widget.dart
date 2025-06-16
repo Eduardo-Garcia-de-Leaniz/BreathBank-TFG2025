@@ -25,7 +25,6 @@ class MessageDialog extends StatelessWidget {
   }
 }
 
-// Función para mostrar el diálogo fácilmente
 Future<void> showCustomMessageDialog({
   required BuildContext context,
   required String title,

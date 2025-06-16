@@ -14,25 +14,21 @@ void main() {
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
 
-    // Title and icon
     expect(find.byIcon(Icons.help), findsOneWidget);
     expect(find.text(HelpStrings.screenTitle), findsWidgets);
 
-    // Section titles
     expect(find.text(HelpStrings.generalInfoTitle), findsOneWidget);
     expect(find.text(HelpStrings.frequentQuestionsTitle), findsOneWidget);
     expect(find.text(HelpStrings.contactAndSupportTitle), findsOneWidget);
     expect(find.text(HelpStrings.futureImplementationTitle), findsOneWidget);
     expect(find.text(HelpStrings.greetingsTitle), findsOneWidget);
 
-    // Section descriptions
     expect(find.text(HelpStrings.descInfo), findsOneWidget);
     expect(find.text(HelpStrings.descFrequentQuestions), findsOneWidget);
     expect(find.text(HelpStrings.descContactAndSupport), findsOneWidget);
     expect(find.text(HelpStrings.descFutureImplementation), findsOneWidget);
     expect(find.text(HelpStrings.descGreetings), findsOneWidget);
 
-    // Date string
     final today = DateTime.now();
     final dateString = PrivacyStrings.date.replaceAll(
       '{0}',

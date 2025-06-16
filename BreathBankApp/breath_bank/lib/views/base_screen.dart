@@ -82,7 +82,6 @@ class BaseScreen extends StatelessWidget {
   }
 }
 
-/// Animación de entrada: Fade + Slide + Escala
 class _AnimatedScreen extends StatefulWidget {
   final Widget child;
 
@@ -103,9 +102,7 @@ class _AnimatedScreenState extends State<_AnimatedScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(
-        milliseconds: 600,
-      ), // Duración extendida para más suavidad
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
@@ -113,9 +110,10 @@ class _AnimatedScreenState extends State<_AnimatedScreen>
       begin: const Offset(0.0, 0.05),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
-    _scale = Tween<double>(begin: 0.95, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
-    ); // Agregamos escala suave
+    _scale = Tween<double>(
+      begin: 0.95,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.forward();
   }

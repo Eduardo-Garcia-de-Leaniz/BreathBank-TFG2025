@@ -17,7 +17,7 @@ class TextFieldForm extends StatelessWidget {
     required this.icon,
     this.obscureText = false,
     this.validator,
-    this.fontSize = 16, // Valor por defecto
+    this.fontSize = 16,
   });
 
   @override
@@ -28,7 +28,7 @@ class TextFieldForm extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            fontSize: fontSize + 2, // Un poco más grande para el label
+            fontSize: fontSize + 2,
             fontWeight: FontWeight.bold,
             fontFamily: 'Arial',
             color: const Color.fromARGB(255, 7, 71, 94),
