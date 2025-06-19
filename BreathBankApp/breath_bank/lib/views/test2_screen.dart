@@ -92,8 +92,8 @@ class Test2ScreenState extends State<Test2Screen> {
       children: [
         if (controller.isRunning)
           const Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: const Text(
+            padding: EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Text(
               'Pulsa en el botón azul de pausa cuando hayas completado la 3ª respiración',
               textAlign: TextAlign.center,
               style: TextStyle(
