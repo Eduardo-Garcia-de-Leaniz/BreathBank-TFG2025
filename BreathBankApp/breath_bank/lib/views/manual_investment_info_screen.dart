@@ -138,8 +138,8 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                   PageContent(
-                    imageWidth: 250,
-                    imageHeight: 250,
+                    imageWidth: 200,
+                    imageHeight: 200,
                     titleText: Strings.beforeStartManualInvestmentTitle,
                     descText: Strings.beforeStartManualInvestmentDesc,
                     imagePath:
@@ -152,8 +152,8 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                   PageContent(
-                    imageWidth: 250,
-                    imageHeight: 250,
+                    imageWidth: 200,
+                    imageHeight: 200,
                     titleText: Strings.countdownManualInvestmentTitle,
                     descText: Strings.countdownManualInvestmentDesc,
                     imagePath: 'assets/images/countdown.png',
@@ -165,8 +165,8 @@ class ManualInvestmentInfoScreen extends StatelessWidget {
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                   PageContent(
-                    imageWidth: 250,
-                    imageHeight: 250,
+                    imageWidth: 200,
+                    imageHeight: 200,
                     titleText: Strings.duringManualInvestmentTitle,
                     descText: Strings.duringManualInvestmentDesc,
                     imagePath:

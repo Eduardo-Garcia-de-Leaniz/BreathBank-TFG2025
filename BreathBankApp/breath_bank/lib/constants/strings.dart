@@ -169,33 +169,37 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String beforeStartManualInvestmentTitle =
       '1. Antes de comenzar la inversión';
   static const String beforeStartManualInvestmentDesc =
-      '''Lo primero que verá será un reloj como el de la imagen. En él se pueden diferencia 3 partes:
+      '''Lo primero que verá será un reloj con 3 partes diferenciadas:
 
   - En la parte superior se muestran las respiraciones completas que llevas y el número de respiraciones máximas que se pueden hacer para superar la inversión con éxito.
 
   - En la parte central se muestra el tiempo restante de la inversión.
 
   - En la parte inferior aparecen dos botones. El verde es el que deberás pulsar para comenzar la inversión. El rojo sirve para restablecer la inversión y comenzar de nuevo.
-
-  Por último, aparece un mensaje indicando el ritmo máximo que puedes llevar por respiración para alcanzar las respiraciones objetivo. 
   
   Desliza a la derecha para ver el siguiente paso.''';
   static const String countdownManualInvestmentTitle =
       '2. Cuenta atrás para comenzar la inversión';
   static const String countdownManualInvestmentDesc =
-      '''Una vez que pulses el botón verde, comenzará una cuenta atrás de 3 segundos. Cuando finalice, deberás comenzar la primera inspiración. 
+      '''Una vez que pulses el botón verde, comenzará una cuenta atrás de 3 segundos.
+
+       Prepárate, ya que cuando finalice, deberás comenzar la primera inspiración. 
       
       Desliza a la derecha para ver el siguiente paso.''';
   static const String duringManualInvestmentTitle = '3. Durante la inversión';
   static const String duringManualInvestmentDesc =
-      '''Después de la cuenta atrás, el tiempo comenzará a correr. Durante toda la inversión, deberás ir inhalando y exhalando. Para no tener que estar pendiente de las respiraciones que llevas, debes pulsar en cualquier lugar de la pantalla cada vez que termines una inhalación o una exhalación (como se indica en la imagen). De esta forma, el contador de respiraciones se actualizará automáticamente. Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
+      '''Después de la cuenta atrás, el tiempo comenzará a correr.
+      
+       Durante toda la inversión, deberás ir inhalando y exhalando. Para no tener que estar pendiente de las respiraciones que llevas, debes pulsar en cualquier lugar de la pantalla cada vez que termines una inhalación o una exhalación (como se indica en la imagen). De esta forma, el contador de respiraciones se actualizará automáticamente.
+       
+        Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
       
       Desliza a la derecha para ver el siguiente paso.''';
   static const String endManualInvestmentTitle = '4. Fin de la inversión';
   static const String endManualInvestmentDesc =
       '''Al finalizar el tiempo de la inversión, saltará un mensaje indicando que el tiempo ha finalizado. Aparecerá entonces un botón para concluir la inversión y ver los resultados de la misma.
       
-  Hasta aquí el tutorial de la inversión manual. ¡Pulsa aquí para comenzar!''';
+       Hasta aquí el tutorial de la inversión manual. ¡Pulsa aquí para comenzar!''';
 
   static const String guidedInvestmentTitle = 'Inversión Guiada';
   static const String completedBreaths = 'Resp. completadas';
@@ -204,20 +208,22 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
       'Información sobre la inversión guiada';
 
   static const String beforeStartGuidedInvestmentDesc =
-      '''Lo primero que verá será una pantalla como la de la imagen. En ella se pueden diferencia varios elementos:
+      '''Lo primero que verá será una pantalla donde se pueden diferenciar varios elementos:
 
-  - En la parte superior se puede ver un texto indicando la acción a realizar, junto con dos contadores que muestran las respiraciones completadas y las restantes.
+  - En la parte superior aparece un texto indicando la acción a realizar, junto con dos contadores que muestran las respiraciones completadas y las restantes.
 
   - En la parte central se muestra el tiempo restante de la inversión.
 
   - En la parte inferior aparecen dos botones. El verde es el que deberás pulsar para comenzar la inversión. El rojo sirve para restablecer la inversión y comenzar de nuevo.
-
-  Por último, aparece un mensaje indicando el ritmo máximo que puedes llevar por respiración para alcanzar las respiraciones objetivo. 
   
   Desliza a la derecha para ver el siguiente paso.''';
 
   static const String duringGuidedInvestmentDesc =
-      '''Después de la cuenta atrás, el tiempo comenzará a correr. Durante toda la inversión, deberás ir inhalando y exhalando al ritmo indicado. Lo único que debes hacer es seguir las indicaciones visuales y sonoras. Un pitido indica el fin de la inhalación y comienzo de la expiración, dos pitidos significarán el fin de la expiración (y por lo tanto de la respiración completa) y deberás volver a inspirar. De esta forma, el contador de respiraciones se actualizará automáticamente. Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
+      '''Después de la cuenta atrás, el tiempo comenzará a correr. 
+      
+      Durante toda la inversión, deberás ir inhalando y exhalando al ritmo indicado. Ayúdate de las indicaciones visuales y sonoras. Un pitido indica el fin de la inhalación y comienzo de la expiración, dos pitidos significarán el fin de la expiración y deberás volver a inspirar. De esta forma, el contador de respiraciones se actualizará automáticamente. 
+      
+      Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
       
       Desliza a la derecha para ver el siguiente paso.''';
 
@@ -294,7 +300,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test2Description =
       'Se contabilizará el tiempo máximo que tarda el usuario en realizar 3 respiraciones completas.';
   static const String test2Instructions =
-      '$step1${step2}3. Durante la prueba respira lo más lentamente posible, sin hacer pausa entre inspiración y expiración.\n\n4. Cuando hayas completado 3 respiraciones, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el tiempo que has tardado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step5';
+      '$step1${step2}3. Durante la prueba respira lo más lento posible, sin parar entre inspiración y expiración.\n\n4. Cuando hayas completado 3 respiraciones, pulsa en el icono azul para detener la prueba. Se registrará el tiempo empleado, si lo deseas puedes editar este número para que se ajuste al resultado real.\n\n$step5';
 
   static const String test2Label = 'Ingresa el número de segundos';
   static const String test2Hint = 'Número de segundos';
@@ -303,7 +309,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test3Description =
       'Se contabilizará el número de la última respiración que el usuario sea capaz de completar al ritmo marcado por la prueba.';
   static const String test3Instructions =
-      '$step1${step2}3. Durante la prueba respira al ritmo marcado por la animación, sin hacer pausa entre inspiración y expiración.\n\n4. Cuando no hayas podido realizar la respiración correspondiente de forma completa, pulsa en el icono azul de nuevo para detener la prueba. Se registrará el número de la última respiración que has realizado, si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step5';
+      '$step1${step2}3. Durante la prueba respira al ritmo marcado por la animación, sin parar entre inspiración y expiración.\n\n4. Cuando no hayas finalizado la respiración correspondiente de forma completa, pulsa en el icono azul para detener la prueba. Se registrará el número de la última respiración realizada, si lo deseas puedes editarlo para que se ajuste al resultado real.\n\n$step5';
 
   static const String test3Label = 'Ingresa el número de la última respiración';
   static const String test3Hint = 'Número de la última respiración completada';

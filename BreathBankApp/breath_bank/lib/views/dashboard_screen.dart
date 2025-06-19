@@ -177,12 +177,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 8),
             Container(
-              color:
-                  evalDisponible
-                      ? const Color.fromARGB(255, 255, 247, 205)
-                      : const Color.fromARGB(255, 228, 185, 185),
+              color: evalDisponible ? greenColor : yellowColor,
               padding: const EdgeInsets.only(
                 left: 8.0,
                 right: 8.0,
@@ -195,7 +191,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     : Strings.evaluationNotAvailable,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: evalDisponible ? yellowColor : kRedAccentColor,
+                  color: kWhiteColor,
                   fontSize: 14,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,

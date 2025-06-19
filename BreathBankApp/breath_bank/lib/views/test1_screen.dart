@@ -178,14 +178,14 @@ class Test1ScreenState extends State<Test1Screen>
             alignment: Alignment.center,
             children: [
               SizedBox(
-                width: 200,
-                height: 200,
+                width: 160,
+                height: 160,
                 child: CircularProgressIndicator(
                   value: controller.animationController.value,
-                  strokeWidth: 10,
+                  strokeWidth: 8,
                   backgroundColor:
                       controller.remainingTime == 60
-                          ? const Color.fromARGB(255, 7, 71, 94)
+                          ? kPrimaryColor
                           : kRedAccentColor,
                   valueColor: const AlwaysStoppedAnimation<Color>(
                     kPrimaryColor,
@@ -195,7 +195,7 @@ class Test1ScreenState extends State<Test1Screen>
               Text(
                 '${controller.remainingTime}',
                 style: TextStyle(
-                  fontSize: 80,
+                  fontSize: 60,
                   fontWeight: FontWeight.bold,
                   color:
                       controller.remainingTime < 10

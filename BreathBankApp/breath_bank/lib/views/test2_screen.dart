@@ -56,7 +56,7 @@ class Test2ScreenState extends State<Test2Screen> {
           SizedBox(height: 10),
           Text(
             Strings.test2Description,
-            style: TextStyle(fontSize: 15, color: kPrimaryColor),
+            style: TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
           SizedBox(height: 15),
           Text(
@@ -70,7 +70,7 @@ class Test2ScreenState extends State<Test2Screen> {
           SizedBox(height: 10),
           Text(
             Strings.test2Instructions,
-            style: TextStyle(fontSize: 15, color: kPrimaryColor),
+            style: TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
           SizedBox(height: 15),
           Text(
@@ -90,6 +90,20 @@ class Test2ScreenState extends State<Test2Screen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        if (controller.isRunning)
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: const Text(
+              'Pulsa en el botón azul de pausa cuando hayas completado la 3ª respiración',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+                fontStyle: FontStyle.italic,
+
+                color: kPrimaryColor,
+              ),
+            ),
+          ),
         if (!controller.isRunning && controller.elapsedSeconds == 0)
           Text(
             Strings.startInvestmentText
@@ -162,6 +176,7 @@ class Test2ScreenState extends State<Test2Screen> {
             ElevatedButton(
               onPressed: () {
                 controller.resetClock(() => setState(() {}));
+                resultFieldController.clear();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.redAccent,

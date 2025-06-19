@@ -57,7 +57,7 @@ class Test3ScreenState extends State<Test3Screen> {
           SizedBox(height: 10),
           Text(
             Strings.test3Description,
-            style: TextStyle(fontSize: 15, color: kPrimaryColor),
+            style: TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
           SizedBox(height: 15),
           Text(
@@ -71,7 +71,7 @@ class Test3ScreenState extends State<Test3Screen> {
           SizedBox(height: 10),
           Text(
             Strings.test3Instructions,
-            style: TextStyle(fontSize: 15, color: kPrimaryColor),
+            style: TextStyle(fontSize: 14, color: kPrimaryColor),
           ),
           SizedBox(height: 15),
           Text(
@@ -137,6 +137,7 @@ class Test3ScreenState extends State<Test3Screen> {
                 setState(() {
                   controller.resetBreathing(breathingKey);
                   showCountdown = false;
+                  controller.resultFieldController.clear();
                 });
               },
               style: ElevatedButton.styleFrom(backgroundColor: kRedAccentColor),

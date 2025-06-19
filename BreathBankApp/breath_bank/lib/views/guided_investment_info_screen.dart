@@ -138,8 +138,8 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                   PageContent(
-                    imageHeight: 250,
-                    imageWidth: 170,
+                    imageHeight: 205,
+                    imageWidth: 150,
                     titleText: Strings.beforeStartManualInvestmentTitle,
                     descText: Strings.beforeStartGuidedInvestmentDesc,
                     imagePath: 'assets/images/inicio_inversion_guiada.png',
@@ -151,8 +151,8 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                   PageContent(
-                    imageHeight: 250,
-                    imageWidth: 170,
+                    imageHeight: 205,
+                    imageWidth: 150,
                     titleText: Strings.countdownManualInvestmentTitle,
                     descText: Strings.countdownManualInvestmentDesc,
                     imagePath: 'assets/images/countdown_inversion_guiada.png',
@@ -164,8 +164,8 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                   ArrowPreviousSymbol(),
                   ArrowNextSymbol(),
                   PageContent(
-                    imageHeight: 250,
-                    imageWidth: 170,
+                    imageHeight: 205,
+                    imageWidth: 150,
                     titleText: Strings.duringManualInvestmentTitle,
                     descText: Strings.duringGuidedInvestmentDesc,
                     imagePath: 'assets/images/corriendo_inversion_guiada.png',
@@ -177,8 +177,8 @@ class GuidedInvestmentInfoScreen extends StatelessWidget {
                   const ArrowPreviousSymbol(),
                   const ArrowNextSymbol(),
                   PageContent(
-                    imageHeight: 250,
-                    imageWidth: 190,
+                    imageHeight: 205,
+                    imageWidth: 150,
                     routeName: '/dashboard/newinvestmentmenu/guided',
                     isLastPage: true,
                     args: args,
