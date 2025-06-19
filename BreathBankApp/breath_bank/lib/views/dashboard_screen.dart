@@ -190,7 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ? Strings.evaluationAvailable
                     : Strings.evaluationNotAvailable,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: kWhiteColor,
                   fontSize: 14,
                   fontStyle: FontStyle.italic,

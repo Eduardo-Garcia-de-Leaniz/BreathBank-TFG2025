@@ -91,7 +91,7 @@ class Test2ScreenState extends State<Test2Screen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (controller.isRunning)
-          Padding(
+          const Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             child: const Text(
               'Pulsa en el botón azul de pausa cuando hayas completado la 3ª respiración',
