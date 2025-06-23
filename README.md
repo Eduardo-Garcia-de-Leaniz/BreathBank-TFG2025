@@ -19,12 +19,19 @@
 
 ## Estado del proyecto
 🚧 En desarrollo – Se siguen añadiendo funcionalidades y mejoras.
+
 ## Información del proyecto
 Este proyecto se ha llevado a cabo como parte de un Trabajo de Fin de Grado de la Universidad de Burgos.
+
+## Demo
+Puedes probar una demo online de BreathBank de 3 minutos sin ningún tipo de descarga en el siguiente enlace:
+https://appetize.io/app/b_4zmloqjccli6hvpvr7qbqmutme
+
 ## Contenidos
 
 ## Aplicación
 Aplicación para dispositivos Android.
+
 ## Autor 
 Eduardo García de Leániz Juarros
 
