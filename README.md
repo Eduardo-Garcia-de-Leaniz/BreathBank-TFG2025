@@ -25,7 +25,8 @@ Este proyecto se ha llevado a cabo como parte de un Trabajo de Fin de Grado de l
 
 ## Demo
 Puedes probar una demo online de BreathBank de 3 minutos sin ningún tipo de descarga en el siguiente enlace:  
-✨ [Demo online de BreathBank](https://appetize.io/app/b_4zmloqjccli6hvpvr7qbqmutme)
+👇  
+[Demo online de BreathBank](https://appetize.io/app/b_4zmloqjccli6hvpvr7qbqmutme)
 
 ## Contenidos
 
