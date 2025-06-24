@@ -55,8 +55,8 @@ Puedes probar una demo online de BreathBank de 3 minutos sin ningún tipo de des
 
 ## Contenidos
 
-## Aplicación
-Aplicación para dispositivos Android.
+## Licencia
+⚖️ Este repositorio utiliza la [Licencia MIT](./LICENSE) como marco legal de distribución.  
 
 ## Autor 
 Eduardo García de Leániz Juarros
