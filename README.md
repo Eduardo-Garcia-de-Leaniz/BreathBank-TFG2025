@@ -25,9 +25,22 @@
 - 🧠 Aumento de la claridad mental y de la capacidad de concentración.
    
 ## Herramientas de desarrollo y lenguaje de programación
-- 🚀 **Framework de desarrollo**: Flutter
-- 🔥 **Plataforma de backend**: Firebase
-- 💻 **Lenguaje de desarrollo**: Dart
+
+<p>
+  <img src="https://img.icons8.com/color/96/flutter.png" alt="Flutter" width="60" height="60"/> 
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://img.icons8.com/color/96/firebase.png" alt="Firebase" width="60" height="60"/>
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://img.icons8.com/color/96/dart.png" alt="Dart" width="60" height="60"/>
+</p>
+
+- **Framework de desarrollo**: Flutter  
+- **Plataforma de backend**: Firebase  
+- **Lenguaje de desarrollo**: Dart
+
+
+
+
 
 ## Estado del proyecto
 🚧 En desarrollo – Se siguen añadiendo funcionalidades y mejoras.
