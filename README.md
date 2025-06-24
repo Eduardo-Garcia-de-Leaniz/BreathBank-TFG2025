@@ -1,3 +1,16 @@
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-light.svg)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=bugs&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=code_smells&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=vulnerabilities&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)  
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=reliability_rating&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=security_rating&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=sqale_rating&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)  
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=ncloc&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=coverage&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=duplicated_lines_density&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
+
 # BreathBank 
 **BreathBank** es una herramienta para que todo tipo de usuarios se beneficien de las ventajas de la práctica de la respiración consciente. **Mejora de la capacidad pulmonar, reducción del estrés y la ansiedad** al alcance de la mano. **BreathBank y dale un respiro a tu vida**.
 
