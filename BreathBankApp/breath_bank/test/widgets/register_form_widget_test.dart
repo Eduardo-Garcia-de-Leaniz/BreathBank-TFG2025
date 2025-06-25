@@ -39,7 +39,7 @@ void main() {
     registerController = RegisterController(db: dbService);
   });
 
-  testWidgets('RegisterForm renders all fields and button', (
+  testWidgets('RegisterForm muestra todos los campos y el botón', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(

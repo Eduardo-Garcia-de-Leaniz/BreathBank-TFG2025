@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('InfoAppSettingsScreen renders correctly', (
+  testWidgets('InfoAppSettingsScreen se renderiza correctamente', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const MaterialApp(home: InfoAppSettingsScreen()));

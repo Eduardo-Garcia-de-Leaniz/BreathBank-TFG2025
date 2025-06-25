@@ -81,7 +81,7 @@ void main() {
           },
         );
 
-        async.elapse(const Duration(seconds: 61)); // 1 minuto + 1 segundo
+        async.elapse(const Duration(seconds: 61));
 
         expect(tickCount, greaterThan(0));
         expect(completed, isTrue);

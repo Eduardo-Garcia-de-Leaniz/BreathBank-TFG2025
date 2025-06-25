@@ -34,7 +34,7 @@ void main() {
   });
 
   group('RegisterController.validate', () {
-    test('returns error if name is empty', () async {
+    test('devuelve error si el nombre está vacío', () async {
       final credentials = UserCredentialsRegister(
         name: '',
         email: 'test@example.com',
@@ -45,7 +45,7 @@ void main() {
       expect(result, 'Introduce un nombre de usuario');
     });
 
-    test('returns error if email is empty', () async {
+    test('devuelve error si el correo electrónico está vacío', () async {
       final credentials = UserCredentialsRegister(
         name: 'Test',
         email: '',
@@ -56,7 +56,7 @@ void main() {
       expect(result, 'Introduce un correo electrónico');
     });
 
-    test('returns error if email is invalid', () async {
+    test('devuelve error si el correo electrónico no es válido', () async {
       final credentials = UserCredentialsRegister(
         name: 'Test',
         email: 'invalidemail',
@@ -67,7 +67,7 @@ void main() {
       expect(result, 'Correo electrónico inválido');
     });
 
-    test('returns error if password is empty', () async {
+    test('devuelve error si la contraseña está vacía', () async {
       final credentials = UserCredentialsRegister(
         name: 'Test',
         email: 'test@example.com',
@@ -78,7 +78,7 @@ void main() {
       expect(result, 'Introduce una contraseña');
     });
 
-    test('returns error if password is too short', () async {
+    test('devuelve error si la contraseña es demasiado corta', () async {
       final credentials = UserCredentialsRegister(
         name: 'Test',
         email: 'test@example.com',
@@ -89,7 +89,7 @@ void main() {
       expect(result, 'La contraseña debe tener al menos 6 caracteres');
     });
 
-    test('returns error if passwords do not match', () async {
+    test('devuelve error si las contraseñas no coinciden', () async {
       final credentials = UserCredentialsRegister(
         name: 'Test',
         email: 'test@example.com',
@@ -100,7 +100,7 @@ void main() {
       expect(result, 'Las contraseñas no coinciden');
     });
 
-    test('returns null if all fields are valid', () async {
+    test('devuelve null si todos los campos son válidos', () async {
       final credentials = UserCredentialsRegister(
         name: 'Test',
         email: 'test@example.com',

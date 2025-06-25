@@ -4,7 +4,7 @@ import 'package:breath_bank/widgets/image.dart';
 
 void main() {
   testWidgets(
-    'ImageWidget displays asset image with correct dimensions and padding',
+    'ImageWidget muestra la imagen con el tamaño y el padding correctos',
     (WidgetTester tester) async {
       const testImage = 'assets/images/reloj_inicio_inversion_manual.png';
       const testWidth = 100.0;
@@ -39,7 +39,7 @@ void main() {
     },
   );
 
-  testWidgets('ImageWidget renders with different image sizes', (
+  testWidgets('ImageWidget renderiza con diferentes tamaños de imagen', (
     WidgetTester tester,
   ) async {
     const testImage = 'assets/images/reloj_fin_inversion_manual.png';

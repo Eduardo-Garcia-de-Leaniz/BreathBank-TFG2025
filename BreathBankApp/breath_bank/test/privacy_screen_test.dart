@@ -16,7 +16,7 @@ void main() {
     );
   }
 
-  testWidgets('PrivacyScreen renders all sections and checkboxes', (
+  testWidgets('PrivacyScreen muestra todas las secciones y textos', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(makeTestableWidget(const PrivacyScreen()));
@@ -42,7 +42,7 @@ void main() {
     expect(buttonWidget.isDisabled, isTrue);
   });
 
-  testWidgets('Checkboxes enable the Continue button', (
+  testWidgets('Checkboxes habilitan el botón Continuar', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(makeTestableWidget(const PrivacyScreen()));
@@ -77,43 +77,44 @@ void main() {
     expect(buttonWidget.isDisabled, isFalse);
   });
 
-  testWidgets('Continue button navigates to /evaluation when enabled', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(makeTestableWidget(const PrivacyScreen()));
+  testWidgets(
+    'El botón Continuar navega a /evaluation cuando está habilitado',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(makeTestableWidget(const PrivacyScreen()));
 
-    final acceptanceCheckbox = find.byWidgetPredicate(
-      (w) =>
-          w is CheckboxListTile &&
-          w.title is Text &&
-          (w.title as Text).data == PrivacyStrings.acceptanceStatement,
-    );
-    final consentCheckbox = find.byWidgetPredicate(
-      (w) =>
-          w is CheckboxListTile &&
-          w.title is Text &&
-          (w.title as Text).data == PrivacyStrings.futureUseConsentStatement,
-    );
+      final acceptanceCheckbox = find.byWidgetPredicate(
+        (w) =>
+            w is CheckboxListTile &&
+            w.title is Text &&
+            (w.title as Text).data == PrivacyStrings.acceptanceStatement,
+      );
+      final consentCheckbox = find.byWidgetPredicate(
+        (w) =>
+            w is CheckboxListTile &&
+            w.title is Text &&
+            (w.title as Text).data == PrivacyStrings.futureUseConsentStatement,
+      );
 
-    await tester.ensureVisible(acceptanceCheckbox);
-    await tester.tap(acceptanceCheckbox);
-    await tester.pump();
-    await tester.ensureVisible(acceptanceCheckbox);
-    await tester.tap(consentCheckbox);
-    await tester.pump();
+      await tester.ensureVisible(acceptanceCheckbox);
+      await tester.tap(acceptanceCheckbox);
+      await tester.pump();
+      await tester.ensureVisible(acceptanceCheckbox);
+      await tester.tap(consentCheckbox);
+      await tester.pump();
 
-    final continueButton = find.widgetWithText(
-      AppButton,
-      Strings.continueButton,
-    );
-    await tester.ensureVisible(acceptanceCheckbox);
-    await tester.tap(continueButton);
-    await tester.pumpAndSettle();
+      final continueButton = find.widgetWithText(
+        AppButton,
+        Strings.continueButton,
+      );
+      await tester.ensureVisible(acceptanceCheckbox);
+      await tester.tap(continueButton);
+      await tester.pumpAndSettle();
 
-    expect(find.byType(Text), findsOneWidget);
-  });
+      expect(find.byType(Text), findsOneWidget);
+    },
+  );
 
-  testWidgets('PrivacyScreen displays today\'s date', (
+  testWidgets('PrivacyScreen muestra la fecha de hoy', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(makeTestableWidget(const PrivacyScreen()));

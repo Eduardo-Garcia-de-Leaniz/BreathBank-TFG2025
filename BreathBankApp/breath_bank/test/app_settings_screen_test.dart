@@ -20,7 +20,7 @@ void main() {
     );
   }
 
-  testWidgets('AppSettingsScreen displays main UI elements', (
+  testWidgets('AppSettingsScreen muestra todos los elementos principales', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
@@ -47,7 +47,7 @@ void main() {
   });
 
   testWidgets(
-    'AppSettingsScreen disables Notificaciones and Personalizar interfaz',
+    'AppSettingsScreen tiene Notificaciones y Personalizar deshabilitados',
     (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetUnderTest());
 
@@ -61,16 +61,17 @@ void main() {
     },
   );
 
-  testWidgets('AppSettingsScreen has correct padding and scrolls', (
-    WidgetTester tester,
-  ) async {
-    await tester.pumpWidget(createWidgetUnderTest());
+  testWidgets(
+    'AppSettingsScreen tiene el padding correcto y se puede hacer scroll',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(createWidgetUnderTest());
 
-    final padding = tester.widget<Padding>(find.byType(Padding).first);
-    expect(padding.padding, const EdgeInsets.all(16.0));
+      final padding = tester.widget<Padding>(find.byType(Padding).first);
+      expect(padding.padding, const EdgeInsets.all(16.0));
 
-    expect(find.byType(ListView), findsOneWidget);
-  });
+      expect(find.byType(ListView), findsOneWidget);
+    },
+  );
 
   testWidgets(
     'Tapping "Acerca de la app" navega a /dashboard/appsettings/info',

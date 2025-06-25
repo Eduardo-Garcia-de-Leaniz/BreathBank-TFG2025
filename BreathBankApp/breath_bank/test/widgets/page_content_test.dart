@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('PageContent Widget', () {
-    testWidgets('renders title, description, and image', (
+    testWidgets('muestra el título, la descripción y la imagen', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -29,7 +29,7 @@ void main() {
       expect(find.byType(ElevatedButton), findsNothing);
     });
 
-    testWidgets('shows ElevatedButton when isLastPage is true', (
+    testWidgets('muestra ElevatedButton cuando isLastPage es true', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(
@@ -52,7 +52,7 @@ void main() {
     });
 
     testWidgets(
-      'tapping button calls Navigator.pushNamed with correct arguments',
+      'el botón llama a Navigator.pushNamed con los argumentos correctos',
       (WidgetTester tester) async {
         final navigatorKey = GlobalKey<NavigatorState>();
         Map<String, dynamic>? receivedArgs;

@@ -8,7 +8,7 @@ void main() {
     return MaterialApp(home: child);
   }
 
-  testWidgets('PrivacySettingsScreen renders all sections and texts', (
+  testWidgets('PrivacySettingsScreen muestra todas las secciones y textos', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(makeTestableWidget(const PrivacySettingsScreen()));
@@ -46,7 +46,7 @@ void main() {
   });
 
   testWidgets(
-    'PrivacySettingsScreen shows acceptance and consent texts if present',
+    'PrivacySettingsScreen muestra el texto de aceptación y declaración',
     (WidgetTester tester) async {
       await tester.pumpWidget(
         makeTestableWidget(const PrivacySettingsScreen()),
@@ -59,7 +59,7 @@ void main() {
   );
 
   testWidgets(
-    'PrivacySettingsScreen has correct styles for titles and descriptions',
+    'PrivacySettingsScreen tiene los estilos correctos para títulos y descripciones',
     (WidgetTester tester) async {
       await tester.pumpWidget(
         makeTestableWidget(const PrivacySettingsScreen()),

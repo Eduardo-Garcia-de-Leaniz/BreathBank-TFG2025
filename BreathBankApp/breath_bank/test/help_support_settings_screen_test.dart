@@ -9,7 +9,7 @@ void main() {
     return const MaterialApp(home: HelpSupportSettingsScreen());
   }
 
-  testWidgets('HelpSupportSettingsScreen displays all help sections', (
+  testWidgets('HelpSupportSettingsScreen muestra todos los textos', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
@@ -37,7 +37,7 @@ void main() {
     expect(find.text(dateString), findsOneWidget);
   });
 
-  testWidgets('HelpSupportSettingsScreen uses correct styles', (
+  testWidgets('HelpSupportSettingsScreen utiliza los estilos correctos', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());

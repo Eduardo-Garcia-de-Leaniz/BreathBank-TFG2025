@@ -9,7 +9,7 @@ void main() {
     return const MaterialApp(home: LegalAdviceSettingsScreen());
   }
 
-  testWidgets('LegalAdviceSettingsScreen displays all legal sections', (
+  testWidgets('LegalAdviceSettingsScreen muestra todos los textos', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());
@@ -45,7 +45,7 @@ void main() {
     expect(find.text(dateString), findsOneWidget);
   });
 
-  testWidgets('LegalAdviceSettingsScreen uses correct styles', (
+  testWidgets('LegalAdviceSettingsScreen utiliza los estilos correctos', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(createWidgetUnderTest());

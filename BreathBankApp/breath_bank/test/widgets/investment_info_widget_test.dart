@@ -6,7 +6,9 @@ import 'package:breath_bank/constants/strings.dart';
 
 void main() {
   group('InvestmentInfoWidget', () {
-    testWidgets('renders title and description', (WidgetTester tester) async {
+    testWidgets('muestra el título y la descripción', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(home: Scaffold(body: InvestmentInfoWidget())),
       );
@@ -16,7 +18,7 @@ void main() {
       expect(find.text(Strings.investmentInfo), findsOneWidget);
     });
 
-    testWidgets('has correct text styles', (WidgetTester tester) async {
+    testWidgets('tiene estilos correctos', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(home: Scaffold(body: InvestmentInfoWidget())),
       );
@@ -33,7 +35,7 @@ void main() {
       expect(descriptionText.textAlign, TextAlign.justify);
     });
 
-    testWidgets('is scrollable', (WidgetTester tester) async {
+    testWidgets('se puede desplazar', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(

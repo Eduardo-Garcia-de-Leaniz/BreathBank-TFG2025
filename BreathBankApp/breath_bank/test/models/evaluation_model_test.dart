@@ -8,7 +8,7 @@ void main() {
     model = EvaluationModel();
   });
 
-  group('calculateTest1Result', () {
+  group('Resultados Test1', () {
     test('devuelve 10 para resultado <= 1', () {
       expect(model.calculateTest1Result(0), 10);
       expect(model.calculateTest1Result(1), 10);
@@ -22,7 +22,7 @@ void main() {
     });
   });
 
-  group('calculateTest2Result', () {
+  group('Resultados Test2', () {
     test('devuelve 10 para resultado >= 180', () {
       expect(model.calculateTest2Result(180), 10);
       expect(model.calculateTest2Result(200), 10);
@@ -35,7 +35,7 @@ void main() {
     });
   });
 
-  group('calculateTest3Result', () {
+  group('Resultados Test3', () {
     test('devuelve 0 para resultado <= 2', () {
       expect(model.calculateTest3Result(1), 0);
       expect(model.calculateTest3Result(2), 0);
@@ -50,7 +50,7 @@ void main() {
     });
   });
 
-  group('calculateInversorLevel', () {
+  group('Resultados nivel de inversor', () {
     test('calcula correctamente el nivel de inversor', () {
       model.resultTest1 = 2;
       model.resultTest2 = 180;
@@ -62,7 +62,7 @@ void main() {
     });
   });
 
-  group('testCompleted', () {
+  group('Test completados', () {
     test('por defecto todos los tests están en false', () {
       expect(model.testCompleted['test1'], isFalse);
       expect(model.testCompleted['test2'], isFalse);

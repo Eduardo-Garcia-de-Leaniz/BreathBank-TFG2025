@@ -6,7 +6,9 @@ import 'package:breath_bank/constants/strings.dart';
 
 void main() {
   group('EvaluationInfoWidget', () {
-    testWidgets('renders title and description', (WidgetTester tester) async {
+    testWidgets('muestra el título y la descripción', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(home: Scaffold(body: EvaluationInfoWidget())),
       );
@@ -16,7 +18,9 @@ void main() {
       expect(find.text(Strings.evaluationInfo), findsOneWidget);
     });
 
-    testWidgets('has correct text styles', (WidgetTester tester) async {
+    testWidgets('tiene estilos de texto correctos', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(home: Scaffold(body: EvaluationInfoWidget())),
       );

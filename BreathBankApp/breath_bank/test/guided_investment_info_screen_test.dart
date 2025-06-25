@@ -27,7 +27,7 @@ void main() {
   group('ManualInvestmentInfoScreen', () {
     final args = {'liston': 'Barra 1', 'duracion': 5};
 
-    testWidgets('displays main info page with correct data', (
+    testWidgets('muestra los textos e información correctos', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestableWidget(args: args));
@@ -38,23 +38,24 @@ void main() {
       expect(find.textContaining('5 minutos'), findsOneWidget);
       expect(find.text(Strings.investmentResume), findsOneWidget);
     });
-    testWidgets('navigates to guided investment on button tap', (
-      WidgetTester tester,
-    ) async {
-      await tester.pumpWidget(buildTestableWidget(args: args));
-      await tester.pumpAndSettle();
+    testWidgets(
+      'navega a la pantalla de inversión guiada al presionar el botón',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(buildTestableWidget(args: args));
+        await tester.pumpAndSettle();
 
-      final button = find.widgetWithText(
-        ElevatedButton,
-        Strings.startInvestment,
-      );
-      expect(button, findsOneWidget);
+        final button = find.widgetWithText(
+          ElevatedButton,
+          Strings.startInvestment,
+        );
+        expect(button, findsOneWidget);
 
-      await tester.tap(button, warnIfMissed: false);
-      await tester.pumpAndSettle();
-    });
+        await tester.tap(button, warnIfMissed: false);
+        await tester.pumpAndSettle();
+      },
+    );
 
-    testWidgets('shows FirstPageContent when swiped', (
+    testWidgets('muestra la primera página al deslizar', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestableWidget(args: args));
@@ -76,7 +77,9 @@ void main() {
       );
     });
 
-    testWidgets('shows SecondPageContent', (WidgetTester tester) async {
+    testWidgets('muestra la segunda página al deslizar', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
@@ -91,7 +94,9 @@ void main() {
       expect(find.text(Strings.countdownManualInvestmentDesc), findsOneWidget);
     });
 
-    testWidgets('shows ThirdPageContent', (WidgetTester tester) async {
+    testWidgets('muestra la tercera página al deslizar', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(buildTestableWidget(args: args));
       await tester.pumpAndSettle();
 
@@ -106,7 +111,7 @@ void main() {
       expect(find.text(Strings.duringGuidedInvestmentDesc), findsOneWidget);
     });
 
-    testWidgets('shows FourthPageContent and button works', (
+    testWidgets('muestra la cuarta página al deslizar y el botón funciona', (
       WidgetTester tester,
     ) async {
       await tester.pumpWidget(buildTestableWidget(args: args));
