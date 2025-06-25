@@ -4,6 +4,7 @@ class EvaluationModel {
   int resultTest3 = 0;
   int inversorLevel = 0;
 
+  // Pesos establecidos por el creador de la aplicación.
   int weightTest1 = 20;
   int weightTest2 = 30;
   int weightTest3 = 50;
@@ -14,6 +15,7 @@ class EvaluationModel {
     'test3': false,
   };
 
+  // Calificaciones estimadas por el creador de la aplicación.
   int calculateTest1Result(int resultTest1) {
     if (resultTest1 <= 1) return 10;
     if (resultTest1 == 2) return 9;

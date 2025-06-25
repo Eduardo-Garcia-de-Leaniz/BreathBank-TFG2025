@@ -157,11 +157,11 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String step1 =
       '1. Siéntate en un lugar tranquilo y cómodo. Cuando estés listo, pulsa en el icono indicado para comenzar.\n'
       '\n';
-  static const String step5 =
-      '5. Cuando se haya acabado el tiempo o finalizado la prueba, pulsa en el botón de la parte inferior.';
+  static const String step6 =
+      '6. Cuando se haya acabado el tiempo o finalizado la prueba, pulsa en el botón de la parte inferior.';
 
   static const String manualInvestmentInstructions =
-      '$step1${step2}3. Durante la inversión respira al ritmo que tú quieras, sin hacer pausa entre inspiración y expiración.\n\n4. Cada vez que termines de inspirar o expirar, pulsa en la pantalla para registrar la respiración.\n\n$step5';
+      '$step1${step2}3. Durante la inversión respira al ritmo que tú quieras, sin hacer pausa entre inspiración y expiración.\n\n4. Cada vez que termines de inspirar o expirar, pulsa en la pantalla para registrar la respiración.\n\n$step6';
   static const String manualInvestmentInfoTitle =
       'Información sobre la inversión manual';
   static const String investmentResume = 'Datos de la inversión:';
@@ -190,7 +190,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String duringManualInvestmentDesc =
       '''Después de la cuenta atrás, el tiempo comenzará a correr.
       
-       Durante toda la inversión, deberás ir inhalando y exhalando. Para no tener que estar pendiente de las respiraciones que llevas, debes pulsar en cualquier lugar de la pantalla cada vez que termines una inhalación o una exhalación (como se indica en la imagen). De esta forma, el contador de respiraciones se actualizará automáticamente.
+       Durante toda la inversión, deberás ir inhalando y exhalando. Para no tener que estar pendiente de las respiraciones que llevas, debes pulsar en cualquier lugar de la pantalla cada vez que termines una inhalación o una exhalación (como se indica en la imagen). De esta forma, el contador de respiraciones se actualizará automáticamente (1 respiración = 1 inhalación + 1 exhalación, es decir hay que tocar la pantalla 2 veces para sumar 1 respiración).
        
         Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
       
@@ -221,7 +221,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String duringGuidedInvestmentDesc =
       '''Después de la cuenta atrás, el tiempo comenzará a correr. 
       
-      Durante toda la inversión, deberás ir inhalando y exhalando al ritmo indicado. Ayúdate de las indicaciones visuales y sonoras. Un pitido indica el fin de la inhalación y comienzo de la expiración, dos pitidos significarán el fin de la expiración y deberás volver a inspirar. De esta forma, el contador de respiraciones se actualizará automáticamente. 
+      Durante toda la inversión, deberás ir inhalando y exhalando al ritmo indicado. Ayúdate de las indicaciones visuales y sonoras. Un pitido indica el fin de la inhalación y comienzo de la expiración, dos pitidos significarán el fin de la expiración y deberás volver a inspirar. De esta forma, el contador de respiraciones se actualizará automáticamente (1 respiración = 1 inhalación + 1 exhalación, es decir hay que tocar la pantalla 2 veces para sumar 1 respiración). 
       
       Recuerda que en cualquier momento se puede parar, reanudar o restablecer la inversión. 
       
@@ -290,7 +290,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test1Description =
       'Se contabilizará el número de respiraciones en reposo que realice el usuario durante 60 segundos. ';
   static const String test1Instructions =
-      '$step1${step2}3. Durante la prueba respira normalmente. Cada vez que termines de inspirar, pulsa en la pantalla y comienza a expirar, y viceversa (cada vez que completes una respiración se actualizará el contador).\n\n4. Cuando haya finalizado el tiempo, se registrará el número de respiraciones que has realizado. Si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step5';
+      '$step1${step2}3. Durante la prueba solo debes respirar a tu ritmo y seguir las instrucciones. Cada respiración completa se compone de dos fases: inspiración y espiración.\n\n4. La dinámica es la siguiente: coges aire por la nariz (inspiración), cuando no quepa más aire en tus pulmones pulsa en cualquier lugar de la pantalla y comienza a soltar el aire por la boca, cuando hayas soltado todo el aire (espiración) pulsa de nuevo en cualquier lugar de la pantalla y comienza a inspirar. Debes repetir este proceso durante el tiempo que dure la prueba (cada vez que termines una respiración completa se actualizará el contador).\n\n5. Cuando haya finalizado el tiempo, se registrará el número de respiraciones que has realizado. Si lo deseas puedes editar el resultado para que se ajuste al resultado real.\n\n$step6';
   static const String breathCountText = 'Llevas {0} {1}';
   static const String breathPhaseText = 'Pulsa cuando termines de {0}';
   static const String test1Label = 'Ingresa el número de respiraciones';
@@ -300,7 +300,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test2Description =
       'Se contabilizará el tiempo máximo que tarda el usuario en realizar 3 respiraciones completas.';
   static const String test2Instructions =
-      '$step1${step2}3. Durante la prueba respira lo más lento posible, sin parar entre inspiración y expiración.\n\n4. Cuando hayas completado 3 respiraciones, pulsa en el icono azul para detener la prueba. Se registrará el tiempo empleado, si lo deseas puedes editar este número para que se ajuste al resultado real.\n\n$step5';
+      '$step1${step2}3. Durante la prueba respira a tu ritmo y sigue las instrucciones. Recuerda que cada respiración se compone de dos fases: inspiración y espiración.\n\n4. Coge aire profundamente por la nariz (inspiración) y cuando no puedas más suéltalo por la boca (espiración) y vuelve a inspirar. En esta prueba no debes hacer nada más excepto comenzar y parar la prueba. Repite este proceso 3 veces.\n\n5. Cuando hayas completado 3 respiraciones, pulsa en el icono azul para detener la prueba. Se registrará el tiempo empleado, si lo deseas puedes editar este número para que se ajuste al resultado real.\n\n$step6';
 
   static const String test2Label = 'Ingresa el número de segundos';
   static const String test2Hint = 'Número de segundos';
@@ -309,7 +309,7 @@ Se puede consultar el historial de inversiones y estadísticas de las mismas en 
   static const String test3Description =
       'Se contabilizará el número de la última respiración que el usuario sea capaz de completar al ritmo marcado por la prueba.';
   static const String test3Instructions =
-      '$step1${step2}3. Durante la prueba respira al ritmo marcado por la animación, sin parar entre inspiración y expiración.\n\n4. Cuando no hayas finalizado la respiración correspondiente de forma completa, pulsa en el icono azul para detener la prueba. Se registrará el número de la última respiración realizada, si lo deseas puedes editarlo para que se ajuste al resultado real.\n\n$step5';
+      '$step1${step2}3. Durante la prueba respira al ritmo marcado por la animación.\n\n4. Mientras el círculo sea de color azul y vaya aumentando de tamaño debes coger aire por la nariz (inspiración). Cuando el círculo sea de color rojo y vaya reduciendo su tamaño debes expulsar el aire por la boca (espiración). Este proceso se irá repitiendo con respiraciones más largas cada vez.\n\n5. Cuando necesites inspirar o espirar antes de que lo marque la animación, pulsa en el icono azul para detener la prueba. Se registrará el número de la última respiración realizada, si lo deseas puedes editarlo para que se ajuste al resultado real.\n\n$step6';
 
   static const String test3Label = 'Ingresa el número de la última respiración';
   static const String test3Hint = 'Número de la última respiración completada';
