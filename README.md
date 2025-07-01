@@ -17,6 +17,11 @@
   <img src="BreathBankApp/breath_bank/assets/images/LogoPrincipalBreathBank.png" alt="BreathBank" width="200">
 </p>
 
+## Estructura del repositorio
+- **BreathBankApp/...** : contiene todo el código fuente de la aplicación.
+- **Documentación**: archivos con toda la infroamción sobre el desarrollo del proyecto.
+- **Realease**: archivo .apk para la instalación de la aplicación en el dispositivo.
+
 ## Beneficios de la respiración consciente
 - 🫁 Mejora de las capacidades pulmonar y respiratoria.
 - 🧘‍♂️ Disminución del estrés y de la ansiedad.
