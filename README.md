@@ -48,9 +48,6 @@ Puedes probar una demo online de BreathBank de 3 minutos sin ningún tipo de des
 👇  
 [Demo online de BreathBank](https://appetize.io/app/b_4zmloqjccli6hvpvr7qbqmutme)
 
-## Estado del proyecto
-🚧 En desarrollo – Se siguen añadiendo funcionalidades y mejoras.
-
 ## Información del proyecto
 Este proyecto se ha llevado a cabo como parte de un Trabajo de Fin de Grado de la Universidad de Burgos.
 
