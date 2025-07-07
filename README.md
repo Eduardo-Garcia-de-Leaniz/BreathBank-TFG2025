@@ -11,7 +11,7 @@
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025&metric=duplicated_lines_density&token=f8cf2af5abe61744d9ebc82a59f7f07fed0cac0d)](https://sonarcloud.io/summary/new_code?id=Eduardo-Garcia-de-Leaniz_BreathBank-TFG2025)
 
 # BreathBank 
-**BreathBank** es una herramienta para que todo tipo de usuarios se beneficien de las ventajas de la práctica de la respiración consciente. **Mejora de la capacidad pulmonar, reducción del estrés y la ansiedad** al alcance de la mano. **BreathBank y dale un respiro a tu vida**.
+**BreathBank** es una herramienta para que todo tipo de usuarios se beneficien de las ventajas de la práctica de la respiración consciente. **Mejora de la capacidad pulmonar, reducción del estrés y la ansiedad** al alcance de la mano. **Conviértete en un inversor de tu bienestar**.
 
 <p align="center">
   <img src="BreathBankApp/breath_bank/assets/images/LogoPrincipalBreathBank.png" alt="BreathBank" width="200">
